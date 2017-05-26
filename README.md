@@ -1,7 +1,7 @@
 Non-Commutative Monads from Commutative/Non-Commutative Adjoint Models
 ----------------------------------------------------------------------
 
-Benton and Wadler [@Benton:1996] state the following:
+Benton and Wadler [Benton:1996] state the following:
 
 "We do not yet know if it is possible to define a non-commutative linear calculus which corresponds to a wider class of monads."
 
