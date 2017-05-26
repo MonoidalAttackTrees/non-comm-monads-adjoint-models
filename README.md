@@ -7,4 +7,4 @@ Benton and Wadler [Benton:1996] state the following:
 
 We provide a solution to this open problem using commutative/non-commutative adjoint models.
 
-[@Benton:1996] : http://dl.acm.org/citation.cfm?id=788785
+[Benton:1996] : http://dl.acm.org/citation.cfm?id=788785
