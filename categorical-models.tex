@@ -1,0 +1,256 @@
+\begin{definition}
+\label{def:mc}
+  A \textbf{monoidal category} $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ is a category $\cat{M}$
+  consists of
+  \begin{itemize}
+  \item a bifunctor $\otimes:\cat{M}\times\cat{M}\rightarrow\cat{M}$, called the tensor product;
+  \item an object $I$, called the unit object;
+  \item three natural isomorphisms $\alpha$, $\lambda$, and $\rho$ with components
+        $$\alpha_{A,B,C}:(A\otimes B)\otimes C\rightarrow A\otimes(B\otimes C)$$
+        $$\lambda_A:I\otimes A\rightarrow A$$
+        $$\rho_A:A\otimes I\rightarrow A$$
+        where $\alpha$ is called associator, $\lambda$ is left unitor, and $\rho$ is right
+        unitor,
+  \end{itemize}
+  such that the following diagrams commute for any objects $A$, $B$, $C$ in $\cat{M}$:
+  \begin{mathpar}
+  \bfig
+    \square/`->`->`->/<2100,400>[
+      ((A\otimes B)\otimes C)\otimes D`
+      A\otimes((B\otimes C)\otimes D)`
+      (A\otimes B)\otimes(C\otimes D)`
+      A\otimes(B\otimes(C\otimes D));
+      `
+      \alpha_{A\otimes B,C,D}`
+      id_A\otimes\alpha_{B,C,D}`
+      \alpha_{A,B,C\otimes D}]
+    \morphism(0,400)<1100,0>[
+      ((A\otimes B)\otimes C)\otimes D`
+      (A\otimes(B\otimes C))\otimes D;
+      \alpha_{A,B,C}\otimes id_D]
+    \morphism(1100,400)<1000,0>[
+      (A\otimes(B\otimes C))\otimes D`
+      A\otimes((B\otimes C)\otimes D);
+      \alpha_{A,B\otimes C,D}]
+  \efig
+  \and
+  \bfig
+    \Vtriangle<400,400>[
+      (A\otimes I)\otimes B`
+      A\otimes(I\otimes B)`
+      A\otimes B;
+      \alpha_{A,I,B}`
+      \rho_A\otimes id_B`
+      id_A\otimes\lambda_B]
+  \efig
+  \end{mathpar}
+\end{definition}
+
+\begin{definition}
+  A \textbf{Lambek category} (or a \textbf{biclosed monoidal category}) is a monoidal category
+  $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ equipped with two bifunctors
+  $\rightharpoonup:\cat{M}^{op}\times\cat{M}\rightarrow\cat{M}$ and
+  $\leftharpoonup:\cat{M}\times\cat{M}^{op}\rightarrow\cat{M}$ that are both right adjoint to
+  the tensor product. That is, the following natural bijections hold:
+  \begin{center}
+  \begin{math}
+  \begin{array}{lll}
+    \Hom{L}{X\otimes A}{B}\cong\Hom{L}{X}{A\lto B} & \quad\quad\quad\quad & 
+    \Hom{L}{A\otimes X}{B}\cong\Hom{L}{X}{B\rto A}
+  \end{array}
+  \end{math}
+  \end{center}
+\end{definition}
+
+\begin{definition}
+  A \textbf{symmetric monoidal category} is a monoidal category
+  $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ together with a natural transformation with
+  components $\e{A,B}:A\otimes B\rightarrow B\otimes A$, called exchange, such that the
+  following diagrams commute:
+  \begin{mathpar}
+  \bfig
+    \Vtriangle<300,400>[A\otimes I`I\otimes A`A;\e{A,I}`\rho_A`\lambda_A]
+  \efig
+  \and
+  \bfig
+    \Vtriangle/=`->`<-/<300,400>[
+      A\otimes B`A\otimes B`B\otimes A;
+      id_{A\otimes B}`\e{A,B}`\e{B,A}]
+  \efig
+  \and
+  \bfig
+    \hSquares/->`->`->``->`->`->/<400>[
+      (A\otimes B)\otimes C`A\otimes(B\otimes C)`(B\otimes C)\otimes A`
+      (B\otimes A)\otimes C`B\otimes(A\otimes C)`B\otimes(C\otimes A);
+      \alpha_{A,B,C}`\e{A,B\otimes C}`\e{A,B}\otimes id_C``
+      \alpha_{B,A,C}`\alpha_{B,A,C}`id_B\otimes\e{A,C}]
+  \efig
+  \end{mathpar}
+\end{definition}
+
+\begin{definition}
+  A \textbf{symmetric monoidal closed category} $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ is a
+  symmetric monoidal category equipped with a bifunctor
+  $\limp:\cat{M}^{op}\times\cat{M}\rightarrow\cat{M}$ that is right adjoint to the tensor
+  product. That is, the following natural bijection
+  $\Hom{\cat{M}}{X\otimes A}{B}\cong\Hom{\cat{M}}{X}{A\limp B}$ holds.
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:internal-homs-collapse}
+  Let $A$ and $B$ be two objects in a Lambek category with the exchange natural transformation.
+  Then $(A \lto B) \cong (B \rto A)$.
+\end{lemma}
+\begin{proof}
+  First, notice that for any object $C$ we have
+  \begin{center}
+  \begin{math}
+  \small
+  \begin{array}{lllll}
+    Hom[C,A\lto B]
+    & \cong & Hom[C\otimes A,B] & \cat{L}\text{ is a Lambek category}\\
+    & \cong & Hom[A\otimes C,B] & \text{By the exchange }\e{C,A}\\
+    & \cong & Hom[C,B\rto A]    & \cat{L}\text{ is a Lambek category}
+  \end{array}
+  \end{math}
+  \end{center}  
+  Thus, $A\lto B\cong B\rto A$ by the Yoneda lemma.
+\end{proof}
+\begin{corollary}
+  \label{corollary:LC-with-ex-mc}
+  A Lambek category with exchange is symmetric monoidal closed.
+\end{corollary}
+
+\begin{definition}
+  Let $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ and
+  $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$ be monoidal categories. A \textbf{monoidal
+  functor} $(F,\m{})$ from $\cat{M}$ to $\cat{M'}$ is a functor $F:\cat{M}\rightarrow\cat{M'}$
+  together with a morphism $\m{I}:I'\rightarrow F(I)$ and a natural transformation
+  $\m{A,B}:FA'\otimes FB'\rightarrow F(A\otimes B)$, such that the following diagrams commute
+  for any objects $A$, $B$, and $C$ in $\cat{M}$:
+  \begin{mathpar}
+  \bfig
+    \hSquares/->`->`->``->`->`->/<400>[
+      (FA\otimes'FB)\otimes'FC`FA\otimes'(FB\otimes'FC)`FA\otimes'F(B\otimes C)`
+      F(A\otimes B)\otimes'FC`F((A\otimes B)\otimes C)`F(A\otimes(B\otimes C));
+      \alpha'_{FA,FB,FC}`id_{FA}\otimes'\m{A,B}`\m{A,B}\otimes'id_{FC}``
+      \m{A,B\otimes C}`\m{A\otimes B,C}`F\alpha_{A,B,C}]
+  \efig
+  \and
+  \bfig
+    \square/->`->`<-`->/<600,400>[
+      I'\otimes'FA`FA`FI\otimes'FA`F(I\otimes A);
+      \lambda'_{FA}`\m{I}\otimes id_{FA}`F\lambda_A`\m{I,A}]
+  \efig
+  \and
+  \bfig
+    \square/->`->`<-`->/<600,400>[
+      FA\otimes'I'`FA`FA\otimes'FI`F(A\otimes I);
+      \rho'_{FA}`\id_{FA}\otimes\m{I}`F\rho_A`\m{A,I}]
+  \efig
+  \end{mathpar}
+\end{definition}
+
+\begin{definition}
+  An \textbf{adjunction} between categories $\cat{C}$ and $\cat{D}$ consists of
+  \begin{itemize}
+  \item a functor $F:\cat{D}\rightarrow\cat{C}$, called the \textbf{left adjoint}
+  \item a functor $G:\cat{C}\rightarrow\cat{D}$, called the \textbf{right adjoint}
+  \item a natural isomorphism $\phi:\Hom{\cat{C}}{F-}{-}\rightarrow\Hom{\cat{D}}{-}{G-}$
+  \item a natural transformation $\eta:id_\cat{D}\rightarrow GF$, called the \textbf{unit}
+  \item a natural transformation $\varepsilon:FG\rightarrow id_\cat{C}$, called the
+        \textbf{counit}
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  Let $(F,\m{})$ and $(G,\n{})$ be monoidal functors from a monoidal category $\cat{M}$ to a
+  monoidal category $\cat{M'}$. A \textbf{monoidal natural transformation} from $(F,\m{})$ to 
+  $(G,\n{})$ is a natural transformation $\theta:(F,\m{})\rightarrow(G,\n{})$ such that the
+  following diagrams commute for any objects $A$ and $B$ in $\cat{M}$:
+  \begin{mathpar}
+  \bfig
+    \square<700,400>[
+      FA\otimes'FB`F(A\otimes B)`GA\otimes'GB`G(A\otimes B);
+      \m{A,B}`\theta_A\otimes'\theta_B`\theta_{A\otimes B}`\n{A,B}]
+  \efig
+  \and
+  \bfig
+    \Vtriangle/->`<-`<-/<400,400>[fI`GI`I';\theta_I`\m{I}`\n{I}]
+  \efig
+  \end{mathpar}
+\end{definition}
+
+\begin{definition}
+  Let $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ and
+  $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$ be monoidal categories,
+  $F:\cat{M}\rightarrow\cat{M'}$ and $G:\cat{M}'\rightarrow\cat{M}$ be functors. The adjunction
+  $F:\cat{M}\dashv\cat{M'}:G$ is a \textbf{monoidal adjunction} if $F$ and $G$ are monoidal
+  functors, and the unit $\eta:id_\cat{M}\rightarrow GF$ and the counit
+  $\varepsilon:FG\rightarrow id_\cat{M'}$ are monoidal natural transformations, where
+  $id_\cat{M}$ and $id_\cat{M'}$ are the identity functors on $\cat{M}$ and $\cat{M'}$
+  respectively.
+\end{definition}
+
+\begin{lemma}
+  Let $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$ be a symmetric monoidal closed category and
+  $(\cat{L},\otimes',I',\alpha',\lambda',\rho')$ be a Lambek category. Since $\cat{C}$ and
+  $\cat{L}$ are both monoidal, let $F:\cat{C}\rightarrow\cat{L}$ and
+  $G:\cat{L}\rightarrow\cat{C}$ be monoidal functors. Then the adjunction
+  $F:\cat{M}\dashv\cat{M'}:G$ is monoidal.
+\end{lemma}
+\begin{proof}
+  Proving the adjunction being monoidal is equivalent to proving the unit $\eta$ and the counit
+  $\varepsilon$ are monoidal natural transformations. First, we show that $\eta$ and
+  $\varepsilon$ are natural transformations, i.e. the following diagrams commute:
+  \begin{mathpar}
+  \bfig
+    
+  \efig
+  \end{mathpar}
+\end{proof}
+
+\begin{lemma}
+  Let $\cat{C}$ be a category. A \textbf{monad} on $\cat{C}$ consists of an endofunctor
+  $T:\cat{C}\rightarrow\cat{C}$ together with two natural transformations
+  $\eta:id_\cat{C}\rightarrow T$ and $\mu:T^2\rightarrow id_\cat{C}$, where $id_\cat{C}$
+  is the identity functor on $\cat{C}$, such that the following diagrams commute:
+  \begin{mathpar}
+  \bfig
+    \square<400,400>[T^3`T^2`T^2`T;T\mu`\mu_T`\mu`\mu]
+  \efig
+  \and
+  \bfig
+    \square<400,400>[T`T^2`T^2`T;\eta_T`T\eta`\mu`\mu]
+    \morphism(0,400)/=/<400,-400>[T`T;]
+  \efig
+  \end{mathpar}
+\end{lemma}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: main.tex
+%%% End: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

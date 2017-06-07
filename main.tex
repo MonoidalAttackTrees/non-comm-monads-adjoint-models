@@ -1,0 +1,195 @@
+\documentclass[a4paper,UKenglish]{lipics-v2016}
+
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{cmll}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{stmaryrd}
+\usepackage{todonotes}
+\usepackage{mathpartir}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage[barr]{xy}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage[inline]{enumitem}
+
+\usepackage{caption}
+\captionsetup[figure]{name=Diagram}
+
+%% This renames Barr's \to to \mto.  This allows us to use \to for imp
+%% and \mto for a inline morphism.
+\let\mto\to
+\let\to\relax
+\newcommand{\to}{\rightarrow}
+\newcommand{\ndto}[1]{\to_{#1}}
+\newcommand{\ndwedge}[1]{\wedge_{#1}}
+\newcommand{\rto}{\leftharpoonup}
+\newcommand{\lto}{\rightharpoonup}
+
+% Commands that are useful for writing about type theory and programming language design.
+%% \newcommand{\case}[4]{\text{case}\ #1\ \text{of}\ #2\text{.}#3\text{,}#2\text{.}#4}
+\newcommand{\interp}[1]{\llbracket #1 \rrbracket}
+\newcommand{\normto}[0]{\rightsquigarrow^{!}}
+\newcommand{\join}[0]{\downarrow}
+\newcommand{\redto}[0]{\rightsquigarrow}
+\newcommand{\nat}[0]{\mathbb{N}}
+\newcommand{\fun}[2]{\lambda #1.#2}
+\newcommand{\CRI}[0]{\text{CR-Norm}}
+\newcommand{\CRII}[0]{\text{CR-Pres}}
+\newcommand{\CRIII}[0]{\text{CR-Prog}}
+\newcommand{\subexp}[0]{\sqsubseteq}
+%% Must include \usepackage{mathrsfs} for this to work.
+
+\date{}
+
+\let\b\relax
+\let\d\relax
+\let\t\relax
+\let\r\relax
+\let\c\relax
+\let\j\relax
+\let\wn\relax
+\let\H\relax
+
+% Cat commands.
+\newcommand{\powerset}[1]{\mathcal{P}(#1)}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\func}[1]{\mathsf{#1}}
+\newcommand{\iso}[0]{\mathsf{iso}}
+\newcommand{\H}[0]{\func{H}}
+\newcommand{\J}[0]{\func{J}}
+\newcommand{\catop}[1]{\cat{#1}^{\mathsf{op}}}
+\newcommand{\Hom}[3]{\mathsf{Hom}_{\cat{#1}}(#2,#3)}
+\newcommand{\limp}[0]{\multimap}
+\newcommand{\colimp}[0]{\multimapdotinv}
+\newcommand{\dial}[1]{\mathsf{Dial_{#1}}(\mathsf{Sets^{op}})}
+\newcommand{\dialSets}[1]{\mathsf{Dial_{#1}}(\mathsf{Sets})}
+\newcommand{\dcSets}[1]{\mathsf{DC_{#1}}(\mathsf{Sets})}
+\newcommand{\sets}[0]{\mathsf{Sets}}
+\newcommand{\obj}[1]{\mathsf{Obj}(#1)}
+\newcommand{\mor}[1]{\mathsf{Mor(#1)}}
+\newcommand{\id}[0]{\mathsf{id}}
+\newcommand{\lett}[0]{\mathsf{let}\,}
+\newcommand{\inn}[0]{\,\mathsf{in}\,}
+\newcommand{\cur}[1]{\mathsf{cur}(#1)}
+\newcommand{\curi}[1]{\mathsf{cur}^{-1}(#1)}
+
+\newcommand{\w}[1]{\mathsf{weak}_{#1}}
+\newcommand{\c}[1]{\mathsf{contra}_{#1}}
+\newcommand{\cL}[1]{\mathsf{contraL}_{#1}}
+\newcommand{\cR}[1]{\mathsf{contraR}_{#1}}
+\newcommand{\e}[1]{\mathsf{ex}_{#1}}
+
+\newcommand{\m}[1]{\mathsf{m}_{#1}}
+\newcommand{\n}[1]{\mathsf{n}_{#1}}
+\newcommand{\b}[1]{\mathsf{b}_{#1}}
+\newcommand{\d}[1]{\mathsf{d}_{#1}}
+\newcommand{\h}[1]{\mathsf{h}_{#1}}
+\newcommand{\p}[1]{\mathsf{p}_{#1}}
+\newcommand{\q}[1]{\mathsf{q}_{#1}}
+\newcommand{\t}[0]{\mathsf{t}}
+\newcommand{\r}[1]{\mathsf{r}_{#1}}
+\newcommand{\s}[1]{\mathsf{s}_{#1}}
+\newcommand{\j}[1]{\mathsf{j}_{#1}}
+\newcommand{\jinv}[1]{\mathsf{j}^{-1}_{#1}}
+\newcommand{\wn}[0]{\mathop{?}}
+\newcommand{\codiag}[1]{\bigtriangledown_{#1}}
+
+\newcommand{\seq}{\rhd}
+
+\newenvironment{changemargin}[2]{%
+  \begin{list}{}{%
+    \setlength{\topsep}{0pt}%
+    \setlength{\leftmargin}{#1}%
+    \setlength{\rightmargin}{#2}%
+    \setlength{\listparindent}{\parindent}%
+    \setlength{\itemindent}{\parindent}%
+    \setlength{\parsep}{\parskip}%
+  }%
+  \item[]}{\end{list}}
+
+\newenvironment{diagram}{
+  \begin{center}
+    \begin{math}
+      \bfig
+}{
+      \efig
+    \end{math}
+  \end{center}
+}
+
+%% Ott
+% \input{Elle-inc}
+
+\title{On Linear Based Intuitionistic Substructural Logics}
+\author[1]{Harley Eades III}
+\author[2]{Jiaming Jiang}
+\affil[1]{Computer Science, Augusta University, Augusta, Georgia, USA\\
+  \texttt{heades@augusta.edu}}
+\affil[2]{Computer Science, North Carolina State University, Raleigh, North Carolina, USA\\
+  \texttt{jjiang13@ncsu.edu}}
+
+\Copyright{Harley E. Open and Jiaming J. Access}
+
+\subjclass{TODO}
+\keywords{TODO}
+
+\begin{document}
+
+\maketitle 
+
+\begin{abstract}
+  TODO
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+% \input{introduction-ott}
+% section introduction (end)
+
+\section{Main Ideas}
+\label{sec:main_ideas}
+
+% section main_ideas (end)
+
+\section{Categorical Models}
+\label{sec:categorical_models}
+\input{categorical-models}
+% section categorical_models (end)
+
+\section{Logic}
+\label{sec:logic}
+% section logic (end)
+
+\section{Applications}
+\label{sec:applications}
+% section applications (end)
+
+\section{Related Work}
+\label{sec:related_work}
+TODO
+% section related_work (end)
+
+\section{Conclusion}
+\label{sec:conclusion}
+TODO
+% section conclusion (end)
+
+%\bibliographystyle{plainurl}
+%\bibliography{ref}
+
+\appendix
+\section{Appendix}
+\label{sec:appendix}
+% \input{appendix}
+% section appendix (end)
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
