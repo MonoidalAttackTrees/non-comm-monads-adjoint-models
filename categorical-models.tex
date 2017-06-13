@@ -152,15 +152,35 @@
 \end{definition}
 
 \begin{definition}
-  An \textbf{adjunction} between categories $\cat{C}$ and $\cat{D}$ consists of
-  \begin{itemize}
-  \item a functor $F:\cat{D}\rightarrow\cat{C}$, called the \textbf{left adjoint}
-  \item a functor $G:\cat{C}\rightarrow\cat{D}$, called the \textbf{right adjoint}
-  \item a natural isomorphism $\phi:\Hom{\cat{C}}{F-}{-}\rightarrow\Hom{\cat{D}}{-}{G-}$
-  \item a natural transformation $\eta:id_\cat{D}\rightarrow GF$, called the \textbf{unit}
-  \item a natural transformation $\varepsilon:FG\rightarrow id_\cat{C}$, called the
-        \textbf{counit}
-  \end{itemize}
+  Let $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ and
+  $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$ be monoidal categories. A \textbf{symmetric
+  monoidal functor} $F:\cat{M}\rightarrow\cat{M'}$ is a monoidal functor $(F,m)$ that satisfies
+  the following coherence diagram:
+  \begin{mathpar}
+  \bfig
+    \square<700,400>[
+      FA\otimes'FB`FB\otimes'FA`F(A\otimes B)`F(B\otimes A);
+      \e{FA,FB}`\m{A,B}`\m{B,A}`F\e{A,B}]
+  \efig
+  \end{mathpar}
+\end{definition}
+
+\begin{definition}
+  An \textbf{adjunction} between categories $\cat{C}$ and $\cat{D}$ consists of two functors
+  $F:\cat{D}\rightarrow\cat{C}$, called the \textbf{left adjoint}, and
+  $G:\cat{C}\rightarrow\cat{D}$, called the \textbf{right adjoint}, and two natural
+  transformations $\eta:id_\cat{D}\rightarrow GF$, called the \textbf{unit}, and
+  $\varepsilon:FG\rightarrow id_\cat{C}$, called the \textbf{counit}, such that the following
+  diagrams commute for any object $A$ in $\cat{C}$ and $B$ in $\cat{D}$:
+  \begin{mathpar}
+  \bfig
+    \Vtriangle/->`=`->/<400,400>[FB`FGFB`FB;F\eta_B``\varepsilon_{FB}]
+  \efig
+  \and
+  \bfig
+    \Vtriangle/->`=`->/<400,400>[GA`GFGA`GA;\eta_{GA}``G\varepsilon_A]
+  \efig
+  \end{mathpar}
 \end{definition}
 
 \begin{definition}
@@ -176,7 +196,7 @@
   \efig
   \and
   \bfig
-    \Vtriangle/->`<-`<-/<400,400>[fI`GI`I';\theta_I`\m{I}`\n{I}]
+    \Vtriangle/->`<-`<-/<400,400>[FI`GI`I';\theta_I`\m{I}`\n{I}]
   \efig
   \end{mathpar}
 \end{definition}
@@ -186,31 +206,61 @@
   $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$ be monoidal categories,
   $F:\cat{M}\rightarrow\cat{M'}$ and $G:\cat{M}'\rightarrow\cat{M}$ be functors. The adjunction
   $F:\cat{M}\dashv\cat{M'}:G$ is a \textbf{monoidal adjunction} if $F$ and $G$ are monoidal
-  functors, and the unit $\eta:id_\cat{M}\rightarrow GF$ and the counit
-  $\varepsilon:FG\rightarrow id_\cat{M'}$ are monoidal natural transformations, where
-  $id_\cat{M}$ and $id_\cat{M'}$ are the identity functors on $\cat{M}$ and $\cat{M'}$
-  respectively.
+  functors, and the unit $\eta$ and the counit $\varepsilon$ are monoidal natural
+  transformations.
 \end{definition}
 
-\begin{lemma}
-  Let $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$ be a symmetric monoidal closed category and
-  $(\cat{L},\otimes',I',\alpha',\lambda',\rho')$ be a Lambek category. Since $\cat{C}$ and
-  $\cat{L}$ are both monoidal, let $F:\cat{C}\rightarrow\cat{L}$ and
-  $G:\cat{L}\rightarrow\cat{C}$ be monoidal functors. Then the adjunction
-  $F:\cat{M}\dashv\cat{M'}:G$ is monoidal.
-\end{lemma}
-\begin{proof}
-  Proving the adjunction being monoidal is equivalent to proving the unit $\eta$ and the counit
-  $\varepsilon$ are monoidal natural transformations. First, we show that $\eta$ and
-  $\varepsilon$ are natural transformations, i.e. the following diagrams commute:
-  \begin{mathpar}
-  \bfig
-    
-  \efig
-  \end{mathpar}
-\end{proof}
+\begin{definition}
+  A \textbf{SMCC-Lambek model} consists of
+  \begin{itemize}
+  \item a symmetric monoidal closed category $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$;
+  \item a Lambek category $(\cat{L},\otimes',I',\alpha',\lambda',\rho')$;
+  \item a monoidal adjunction $F:\cat{C}\dashv\cat{L}:G$, where $F:\cat{C}\rightarrow\cat{L}$
+        and $G:\cat{L}\rightarrow\cat{C}$ are monoidal functors.
+  \end{itemize}
+\end{definition}
 
-\begin{lemma}
+Thus, in a SMCC-Lambek model, the following four diagrams commute because $\eta$ and
+$\varepsilon$ are monoidal natural transformations:
+\begin{mathpar}
+\bfig
+  \square/=`->`->`/<1600,400>[
+    A\otimes B`A\otimes B`GFA\otimes GFB`GF(A\otimes B);
+    id_{A\otimes B}`\eta_A\otimes\eta_B`\eta_{A\otimes B}`]
+  \morphism<800,0>[GFA\otimes GFB`G(FA\otimes FB);\n{FA,FB}]
+  \morphism(800,0)<800,0>[G(FA\otimes FB)`GF(A\otimes B);G\m{A,B}]
+\efig
+\and
+\bfig
+  \square/->`=`<-`->/<400,400>[I`GFI`I`GI';\eta_I``G\m{I}`\n{I'}]
+\efig
+\end{mathpar}
+\begin{mathpar}
+\bfig
+  \square/`->`->`=/<1600,400>[
+    FGA\otimes FGB`FG(A\otimes B)`A\otimes B`A\otimes B;
+    `
+    \varepsilon_A\otimes\varepsilon_B`\varepsilon_{A\otimes B}`]
+  \morphism(0,400)<800,0>[FGA\otimes FGB`F(GA\otimes GB);\m{GA,GB}]
+  \morphism(800,400)<800,0>[F(GA\otimes GB)`FG(A\otimes B);F\n{A,B}]
+\efig
+\and
+\bfig
+  \square/->`<-`=`<-/<400,400>[FGI'`I'`FI`I';\varepsilon_{I'}`F\n{I'}``\m{I}]
+\efig
+\end{mathpar}
+And the following two diagrams commute because of the adjunction:
+\begin{mathpar}
+\bfig
+  \Vtriangle/->`=`->/<400,400>[FA`FGFA`FA;F\eta_A``\varepsilon_{FA}]
+\efig
+\and
+\bfig
+  \Vtriangle/->`=`->/<400,400>[GB`GFGB`GB;\eta_{GX}``G\varepsilon_B]
+\efig
+\end{mathpar}
+
+\begin{definition}
   Let $\cat{C}$ be a category. A \textbf{monad} on $\cat{C}$ consists of an endofunctor
   $T:\cat{C}\rightarrow\cat{C}$ together with two natural transformations
   $\eta:id_\cat{C}\rightarrow T$ and $\mu:T^2\rightarrow id_\cat{C}$, where $id_\cat{C}$
@@ -225,7 +275,150 @@
     \morphism(0,400)/=/<400,-400>[T`T;]
   \efig
   \end{mathpar}
+\end{definition}
+
+\begin{lemma}
+  The monad on the SMCC $\cat{C}$ in a SMCC-Lambek model is monoidal.
 \end{lemma}
+\begin{proof}
+  We define the monad $T$ on the $\cat{C}$ in the adjunction of a SMCC-Lambek model as $T=GF$,
+  and the two corresponding natural transformations $\eta:id_\cat{C}\rightarrow T$ and
+  $\mu:T^2\rightarrow T$ are defined as
+  $$\eta:id_\cat{C}\rightarrow GF$$
+  $$\mu=GF\varepsilon_A=\varepsilon_{GFA}:GFGF\rightarrow GF$$
+  where $\eta$ is the unit and $\mu$ is the counit in the adjunction $F:\cat{C}\dashv\cat{L}:G$,
+  and $(F,m)$ and $(G,n)$ are monoidal functors. \\
+  Thus, we have
+  $$\q{A,B}=G\m{A,B}\circ\n{FA,FB}:TA\otimes TB\rightarrow T(A\otimes B)$$
+  $$\q{I}=G\m{I}\circ\n{I'}:I\rightarrow TI$$
+  The monad $T$ being monoidal means
+  \begin{enumerate}
+  \item $T$ is a monoidal functor i.e. the folllowing diagrams commute:
+        \begin{mathpar}
+        \bfig
+          \hSquares/->`->`->``->`->`->/<400>[
+            (TA\otimes TB)\otimes TC`TA\otimes(TB\otimes TC)`TA\otimes T(B\otimes C)`
+            T(A\otimes B)\otimes TC`T((A\otimes B)\otimes C)`T(A\otimes(B\otimes C));
+            \alpha_{TA,TB,TC}`id_{TA}\otimes\q{B,C}`\q{A,B}\otimes id_{TC}``
+            \q{A,B\otimes C}`\q{A\otimes B,C}`T\alpha_{A,B,C}]
+        \efig
+        \and
+        \bfig
+          \square/->`->`<-`->/<600,400>[
+            I\otimes TA`TA`TI\otimes TA`T(I\otimes A);
+            \lambda_{TA}`\q{I}\otimes id_{TA}`T\lambda_A`\q{I,A}]
+        \efig
+        \and
+        \bfig
+          \square/->`->`<-`->/<600,400>[
+            TA\otimes I`TA`TA\otimes TI`T(A\otimes I);
+            \rho_{TA}`id_{TA}\otimes\q{I}`T\rho_A`\q{A,I}]
+        \efig
+        \end{mathpar}
+        We write $GF$ instead of $T$ in the diagram chasings for clarity. \\
+        By replacing $\q{}$ with its definition, the first diagram above commutes by the
+        following diagram chasing, where the two hexagons commute because $G$ and $F$ are
+        monoidal functors, and the two quadrilaterals commute by the naturality of $\n{}$.
+        \begin{mathpar}
+        \bfig
+          \iiixiii/->`->`->``->```->`<-`->``/<1400,400>[
+            (GFA\otimes GFB)\otimes GFC`GFA\otimes(GFB\otimes GFC)`GFA\otimes G(FB\otimes'FC)`
+            G(FA\otimes'FB)\otimes GFC`G(FA\otimes'(FB\otimes'FC))`GFA\otimes GF(B\otimes C)`
+            GF(A\otimes B)\otimes GFC`G((FA\otimes'FB)\otimes'FC)`G(FA\otimes'F(B\otimes C));
+            \alpha_{GFA,GFB,GFC}`id_{GFA}\otimes\n{FB,FC}`\n{FA,FB}\otimes id_{GFC}``
+            id_{GFA}\otimes G\m{B,C}```G\m{A,B}\otimes id_{GFC}`G\alpha'_{FA,FB,FC}`
+            \n{FA,F(B\otimes C)}``]
+          \morphism(2800,800)|m|<-1400,-400>[
+            GFA\otimes G(FB\otimes'FC)`G(FA\otimes'(FB\otimes'FC));\n{FA,FB\otimes'FC}]
+          \morphism(0,400)|m|<1400,-400>[
+            G(FA\otimes'FB)\otimes GFC`G((FA\otimes'FB)\otimes'FC);\n{FA\otimes'FB,FC}]
+          \morphism(1400,400)|m|<1400,-400>[
+            G(FA\otimes'(FB\otimes'FC))`G(FA\otimes'F(B\otimes C));G(id_{FA}\otimes'\m{B,C})]
+          \ptriangle(0,-400)|mlm|/`->`->/<1400,400>[
+            GF(A\otimes B)\otimes GFC`G((FA\otimes'FB)\otimes'FC)`G(F(A\otimes B)\otimes'FC);
+            `\n{F(A\otimes B),FC}`G(\m{A,B}\otimes id_{FC})]
+          \morphism(0,-400)|b|<1400,0>[
+            G(F(A\otimes B)\otimes'FC)`GF((A\otimes B)\otimes C);G\m{A\otimes B,C}]
+          \dtriangle(1400,-400)|mrb|/`->`->/<1400,400>[
+            G(FA\otimes'F(B\otimes C))`GF((A\otimes B)\otimes C)`GF(A\otimes(B\otimes C));
+            `G\m{A,B\otimes C}`GF\alpha_{A,B,C}]
+        \efig
+        \end{mathpar}
+        The first square above commutes by the following diagram chasing, in which the top
+        quadrilateral commutes because $G$ is monoidal, the right quadrilateral commutes because
+        $F$ is monoidal, and the left square commutes by the naturality of $\n{}$.
+        \begin{mathpar}
+        \bfig
+          \ptriangle/->`->`/<1600,400>[
+            I\otimes GFA`GFA`GI'\otimes GFA;\lambda_{GFA}`\n{I'}\otimes id_{GFA}`]
+          \square(0,-400)|lmmb|<800,400>[
+            GI'\otimes GFA`G(I'\otimes'FA)`GFI\otimes GFA`G(FI\otimes'FA);
+            \n{I',FA}`G\m{I}\otimes id_{GFA}`G(\m{I}\otimes'id_{FA})`\n{FI,FA}]
+          \morphism(800,0)|m|<800,400>[G(I'\otimes'FA)`GFA;G\lambda'_{FA}]
+          \dtriangle(800,-400)/`<-`->/<800,800>[
+            GFA`G(FI\otimes'FA)`GF(I\otimes A);
+            `GF\lambda_A`G\m{I,A}]
+        \efig
+        \end{mathpar}
+        Similarly, the second square above commutes by the following diagram chasing:
+        \begin{mathpar}
+        \bfig
+          \ptriangle/->`->`/<1600,400>[
+            GFA\otimes I`GFA`GFA\otimes GI';\rho_{GFA}`id_{GFA}\otimes\n{I'}`]
+          \square(0,-400)|lmmb|<800,400>[
+            GFA\otimes GI'`G(FA\otimes'I')`GFA\otimes GFI`G(FA\otimes'FI);
+            \n{FA,I'}`id_{GFA}\otimes G\m{I}`G(id_{FA}\otimes\m{I})`\n{FA,FI}]
+          \morphism(800,0)|m|<800,400>[G(FA\otimes'I')`GFA;G\rho'_{FA}]
+          \dtriangle(800,-400)/`<-`->/<800,800>[
+            GFA`G(FA\otimes'FI)`GF(A\otimes I);
+            `GF\rho_A`G\m{A,I}]
+        \efig
+        \end{mathpar}
+  \item $\eta$ is a monoidal natural transformation, i.e. the following diagrams commute. In
+        fact, since $\eta$ is the unit of the monoidal adjunction, $\eta$ is monoidal and thus
+        the following two diagrams commute.
+        \begin{mathpar}
+        \bfig
+          \square/=`->`->`->/<600,400>[
+            A\otimes B`A\otimes B`TA\otimes TB`T(A\otimes B);
+            `\eta_A\otimes\eta_B`\eta_{A\otimes B}`\q{A,B}]
+        \efig
+        \and
+        \bfig
+          \Vtriangle/->`=`<-/<400,400>[I`TI`I;\eta_I``\q{I}]
+        \efig
+        \end{mathpar}
+  \item $\mu$ is a monoidal natural transformation, i.e. the following diagrams commute. Since
+        $\mu=\varepsilon_{GFA}$, $\mu$ is obviously also monoidal since $\varepsilon$ also is.
+        Thus the following diagrams commute.
+        \begin{mathpar}
+        \bfig
+          \square/`->`->`->/<1500,400>[
+            T^2A\otimes T^2B`T^2(A\otimes B)`TA\otimes TB`T(A\otimes B);
+            `\mu_A\otimes\mu_B`\mu_{A\otimes B}`\q{A,B}]
+          \morphism(0,400)<800,0>[T^2A\otimes T^2B`T(TA\otimes TB);\q{TA,TB}]
+          \morphism(800,400)<700,0>[T(TA\otimes TB)`T^2(A\otimes B);T\q{A,B}]
+        \efig
+        \and
+        \bfig
+          \square/->`<-`<-`<-/<400,400>[T^2I`TI`TI`I;\mu_I`T\q{I}`\q{I}`\q{I}]
+        \efig
+        \end{mathpar}
+  \end{enumerate}
+\end{proof}
+
+However, the monad $T$ we get from the SMCC-Lambek model is not symmetric because the following
+diagram does not commute:
+\begin{mathpar}
+\bfig
+  \hSquares/->`->`->``->`->`->/<400>[
+    GFA\otimes GFB`GFB\otimes GFA`G(FB\otimes'FA)`G(FA\otimes'FB)`GF(A\otimes B)`GF(B\otimes A);
+    \e{GFA,GFB}`\n{FB,FA}`\n{FA,FB}``G\m{B,A}`G\m{A,B}`GF\e{A,B}]
+\efig
+\end{mathpar}
+
+Therefore, the monad is non-commutative.
+
 
 
 %%% Local Variables: 
