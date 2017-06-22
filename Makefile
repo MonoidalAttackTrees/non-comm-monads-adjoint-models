@@ -6,7 +6,7 @@ SKIM := skim_revert.sh
 SKIMRevinPath := $(shell command -v $(SKIM) 2> /dev/null)
 PDF := main.pdf
 
-all: pdf
+all: pdf clean
   # This is for my private machine.  It forces my PDF reader to reload.
   # It should not run unless "skim_revert.sh" is in your PATH
   ifdef SKIMRevinPath
@@ -15,7 +15,7 @@ all: pdf
 	@$(SKIM) $(PDF) &>/dev/null
   endif
 
-pdf : main.pdf
+pdf : main.pdf ref.bib
 
 # quick : main.tex ref.bib Makefile
 quick : main.tex Makefile
@@ -30,7 +30,7 @@ quick : main.tex Makefile
 
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
-main.pdf : main.tex Makefile categorical-models.tex
+main.pdf : main.tex Makefile categorical-models.tex ref.bib
 	$(PDFLATEX) -jobname=main main.tex
 	$(BIBTEX) main
 	$(PDFLATEX) -jobname=main main.tex
