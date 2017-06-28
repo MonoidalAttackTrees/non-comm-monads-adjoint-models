@@ -18,7 +18,6 @@
 
 \begin{document}
 
-\noindent
 Deriving exchange in Elle comonadicly:
 
 \begin{center}
@@ -181,10 +180,101 @@ Deriving weakening in Elle comonadicly:
             \,
           }{[[. |- triv : Unit]]}
         }{[[x0 : Gf A ; . |- weak x0 in triv : Unit]]}
-      }{[[x1 : F Gf A ; . |- let x1 : F Gf A be F x0 in weak x0 in triv : Unit]]}
+      }{[[. ; x1 : F Gf A |- let x1 : F Gf A be F x0 in weak x0 in triv : Unit]]}
     }{[[. ; . |- \l x1 : F Gf A . let x1 : F Gf A be F x0 in weak x0 in triv : (F Gf A) -> (Unit)]]}
   \end{math}
 \end{center}
+
+$GF$ is a monad:
+\begin{itemize}
+\item Deriving $\eta$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impR}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny Gr}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny Gl}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny Fl}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny Gl}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny ax}] {
+                  \,
+                }{[[. ; x0 : F X |- x0 : F X]]}
+              }{[[x1 : Gf F X ; . |- let x1 : Gf F X be Gf x0 in x0 : F X]]}
+            }{[[. ; x2 : F Gf F X |- let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0) : F X]]}
+          }{[[x3 : Gf F Gf F X ; . |- let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0)) : F X]]}
+        }{[[x3 : Gf F Gf F X |- Gf (let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0))) : Gf F X]]}
+      }{[[ . |- \l x3 : Gf F Gf F X . Gf (let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0))) : (Gf F Gf F X) -> (Gf F X)]]}
+    \end{math}
+  \end{center}
+\item Deriving $\mu$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impR}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny Gr}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny Fr}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny ax}] {
+              \,
+            }{[[x : X |- x : X]]}
+          }{[[x : X ; . |- F x : F X]]} 
+        }{[[x : X |- Gf F x : Gf F X]]}
+      }{[[. |- \l x : X . Gf F x : (X) -> (Gf F X)]]}
+    \end{math}
+  \end{center}
+\end{itemize}
+
+The monad $GF$ is strong:
+\begin{itemize}
+\item Deriving the tensorial strength $\tau$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impR}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenL}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny Gr}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny Gl}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny Fl}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny Fr}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny tenR}] {
+                      $$\mprset{flushleft}
+                      \inferrule* [right={\tiny ax}] {
+                        \,
+                      }{[[x0 : X |- x0 : X]]}
+                      $$\mprset{flushleft}
+                      \inferrule* [right={\tiny ax}] {
+                        \,
+                      }{[[y0 : Y |- y0 : Y]]}
+                    }{[[x0 : X , y0 : Y |- x0 (x) y0 : h(X) (x) Y]]}
+                  }{[[x0 : X , y0 : Y ; . |- F (x0 (x) y0) : F (h(X) (x) Y)]]}
+                }{[[x0 : X ; y1 : F Y |- let y1 : F Y be F y0 in F (x0 (x) y0) : F (h(X) (x) Y)]]}
+              }{[[y2 : Gf F Y , x0 : X ; . |- let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0)) : F (h(X) (x) Y)]]}
+            }{[[y2 : Gf F Y , x0 : X |- Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))) : Gf F (h(X) (x) Y)]]}
+          }{[[x1 : X , y3 : Gf F Y |- ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0)))) : Gf F (h(X) (x) Y)]]}
+        }{[[z : h(X) (x) Gf F Y |- let z : h(X) (x) Gf F Y be x1 (x) y3 in (ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))))) : Gf F (h(X) (x) Y)]]}
+      }{[[. |- \l z : h(X) (x) Gf F Y . let z : h(X) (x) Gf F Y be x1 (x) y3 in (ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))))) : (h(X) (x) Gf F Y) -> (Gf F (h(X) (x) Y))]]}
+    \end{math}
+  \end{center}
+\end{itemize}
+
 
 \appendix
 
