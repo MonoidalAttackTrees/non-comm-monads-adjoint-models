@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{supertabular}
+\usepackage{cmll}
+\usepackage{txfonts}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{mathpartir}
+
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=-1.5pt] {\strut #1};}
+
+\newcommand{\circop}[1]{\mathop{\encircle{#1}}}
+
+
+\input{Elle-ott}
+
+\begin{document}
+
+Deriving exchange in Elle comonadicly:
+
+\begin{center}
+  \tiny
+  \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny impR}] {
+      $$\mprset{flushleft}
+    \inferrule* [right={\tiny tenL}] {
+      $$\mprset{flushleft}
+    \inferrule* [right={\tiny Fl}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny Fl}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny beta}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny Fr}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny ax}] {
+                \,
+              }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \vdash  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B} }
+            }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}  }
+            \\
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny Fr}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny ax}] {
+                \,
+              }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \vdash  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A} }
+            }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+          }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{,}  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+        }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{,}  \ottmv{y_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}   \cdot   \vdash   \mathsf{ex}\, \ottmv{y_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+      }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}  \ottmv{y_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}    \vdash   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{ex}\, \ottmv{y_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+    }{ \cdot   \ottsym{;}  \ottmv{x_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{,}  \ottmv{y_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}    \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{ex}\, \ottmv{y_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+    }{ \cdot   \ottsym{;}  \ottmv{z}  \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \vdash   \mathsf{let}\, \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\, \ottmv{x_{{\mathrm{2}}}}  \otimes  \ottmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{ex}\, \ottmv{y_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+    }{ \cdot   \ottsym{;}   \cdot   \vdash   \lambda_l  \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}   .  \mathsf{let}\, \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\, \ottmv{x_{{\mathrm{2}}}}  \otimes  \ottmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{ex}\, \ottmv{y_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}    \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \rightharpoonup  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+  \end{math}
+\end{center}
+
+
+
+Deriving right contraction in Elle comonadicly:
+\begin{center}
+  \tiny
+  \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny impR}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenL}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny Fl}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny Fl}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny contrR}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny tenR}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny Fr}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny ax}] {
+                    \,
+                  }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \vdash  \ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A} }
+                }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+                \\
+                \inferrule* [right={\tiny tenR}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny Fr}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny ax}] {
+                      \,
+                    }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \vdash  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B} }
+                  }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}  }
+                  \\
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny Fr}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny ax}] {
+                      \,
+                    }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \vdash  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A} }
+                  }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+                }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{,}  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+              }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{,}  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{,}  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash    \mathsf{F} \ottmv{x_{{\mathrm{1}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}  \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+            }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{,}  \ottmv{x_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{contrR}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{1}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}  \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+          }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}  \ottmv{x_{{\mathrm{3}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}    \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrR}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{1}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}  \ottsym{)}   \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+        }{ \cdot   \ottsym{;}  \ottmv{y_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{,}  \ottmv{x_{{\mathrm{3}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}    \vdash   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrR}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{1}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}  \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+      }{ \cdot   \ottsym{;}  \ottmv{z}  \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \vdash   \mathsf{let}\, \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\, \ottmv{y_{{\mathrm{1}}}}  \otimes  \ottmv{x_{{\mathrm{3}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrR}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{1}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}  \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+    }{ \cdot   \ottsym{;}   \cdot   \vdash   \lambda_l  \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}   .  \mathsf{let}\, \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\, \ottmv{y_{{\mathrm{1}}}}  \otimes  \ottmv{x_{{\mathrm{3}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrR}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{1}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{1}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}  \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}    \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}  \rightharpoonup  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{B}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}  \ottsym{)}}
+  \end{math}
+\end{center}
+
+
+
+Deriving left contraction in Elle comonadicly:
+\begin{center}
+  \tiny
+  \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny impR}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenL}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny Fl}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny Fl}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny contrR}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny tenR}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny tenR}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny Fr}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny ax}] {
+                      \,
+                    }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \vdash  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A} }
+                  }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{x_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+                  \\
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny Fr}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny ax}] {
+                      \,
+                    }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \vdash  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B} }
+                  }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}  }
+                }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{,}  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}   \cdot   \vdash    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}  }
+                \\
+                \inferrule* [right={\tiny Fr}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny ax}] {
+                    \,
+                  }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \vdash  \ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A} }
+                }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+              }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{,}  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{,}  \ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash  \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{)}  \otimes   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+            }{\ottmv{x_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{,}  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{B}   \ottsym{;}   \cdot   \vdash   \mathsf{contrL}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}  \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{)}  \otimes   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{)}   \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+          }{\ottmv{x_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}  \ottmv{y_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}    \vdash   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrL}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}  \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{)}  \otimes   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{)}   \ottsym{)}   \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+        }{ \cdot   \ottsym{;}  \ottmv{x_{{\mathrm{3}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{,}  \ottmv{y_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{B}    \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrL}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}  \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{)}  \otimes   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+      }{ \cdot   \ottsym{;}  \ottmv{z}  \ottsym{:}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \vdash   \mathsf{let}\, \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\, \ottmv{x_{{\mathrm{3}}}}  \otimes  \ottmv{y_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrL}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}  \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{y_{{\mathrm{0}}}}   \ottsym{)}  \otimes   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}  }
+    }{ \cdot   \ottsym{;}   \cdot   \vdash   \lambda_l  \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}   .  \mathsf{let}\, \ottmv{z}  :    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\, \ottmv{x_{{\mathrm{3}}}}  \otimes  \ottmv{y_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{3}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{B}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{contrL}\, \ottmv{x_{{\mathrm{2}}}} \,\mathsf{as}\, \ottmv{x_{{\mathrm{0}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{in}\, \ottsym{(}    \mathsf{F} \ottmv{x_{{\mathrm{0}}}}    \otimes  \ottsym{(}    \mathsf{F} \ottmv{y_{{\mathrm{0}}}}    \otimes   \mathsf{F} \ottmv{x_{{\mathrm{1}}}}   \ottsym{)}  \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}    \ottsym{:}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \rightharpoonup  \ottsym{(}  \ottsym{(}    \mathsf{F}  \mathsf{G} \ottnt{A}     \otimes   \mathsf{F}  \mathsf{G} \ottnt{B}    \ottsym{)}  \otimes   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}}
+  \end{math}
+\end{center}
+
+
+
+Deriving weakening in Elle comonadicly:
+\begin{center}
+  \tiny
+  \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny impR}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny Fl}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny weak}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{ \cdot   \vdash   \mathsf{triv}   \ottsym{:}   \mathsf{Unit} }
+        }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{;}   \cdot   \vdash   \mathsf{weak}\, \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\,  \mathsf{triv}    \ottsym{:}   \mathsf{Unit} }
+      }{ \cdot   \ottsym{;}  \ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G} \ottnt{A}    \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{weak}\, \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\,  \mathsf{triv}     \ottsym{:}   \mathsf{Unit} }
+    }{ \cdot   \ottsym{;}   \cdot   \vdash   \lambda_l  \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   .  \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{F}  \mathsf{G} \ottnt{A}   \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{weak}\, \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\,  \mathsf{triv}      \ottsym{:}  \ottsym{(}   \mathsf{F}  \mathsf{G} \ottnt{A}    \ottsym{)}  \rightharpoonup  \ottsym{(}   \mathsf{Unit}   \ottsym{)}}
+  \end{math}
+\end{center}
+
+$GF$ is a monad:
+\begin{itemize}
+\item Deriving $\eta$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impR}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny Gr}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny Gl}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny Fl}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny Gl}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny ax}] {
+                  \,
+                }{ \cdot   \ottsym{;}  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{F} \ottnt{X}   \vdash  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}   \mathsf{F} \ottnt{X} }
+              }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{G}  \mathsf{F} \ottnt{X}    \ottsym{;}   \cdot   \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{X}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottmv{x_{{\mathrm{0}}}}   \ottsym{:}   \mathsf{F} \ottnt{X} }
+            }{ \cdot   \ottsym{;}  \ottmv{x_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}     \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}    \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{X}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{:}   \mathsf{F} \ottnt{X} }
+          }{\ottmv{x_{{\mathrm{3}}}}  \ottsym{:}   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}      \ottsym{;}   \cdot   \vdash   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}     \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}    \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{X}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{:}   \mathsf{F} \ottnt{X} }
+        }{\ottmv{x_{{\mathrm{3}}}}  \ottsym{:}   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}      \vdash   \mathsf{G} \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}     \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}    \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{X}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}   \mathsf{G}  \mathsf{F} \ottnt{X}  }
+      }{ \cdot   \vdash   \lambda_l  \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}     .  \mathsf{G} \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{3}}}}  :   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}     \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{2}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{2}}}}  :   \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}    \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{x_{{\mathrm{1}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{X}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x_{{\mathrm{0}}}}  \,\mathsf{in}\, \ottmv{x_{{\mathrm{0}}}}   \ottsym{)}   \ottsym{)}   \ottsym{)}    \ottsym{:}  \ottsym{(}   \mathsf{G}  \mathsf{F}  \mathsf{G}  \mathsf{F} \ottnt{X}      \ottsym{)}  \rightharpoonup  \ottsym{(}   \mathsf{G}  \mathsf{F} \ottnt{X}    \ottsym{)}}
+    \end{math}
+  \end{center}
+\item Deriving $\mu$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impR}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny Gr}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny Fr}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny ax}] {
+              \,
+            }{\ottmv{x}  \ottsym{:}  \ottnt{X}  \vdash  \ottmv{x}  \ottsym{:}  \ottnt{X}}
+          }{\ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottmv{x}   \ottsym{:}   \mathsf{F} \ottnt{X} } 
+        }{\ottmv{x}  \ottsym{:}  \ottnt{X}  \vdash   \mathsf{G}  \mathsf{F} \ottmv{x}    \ottsym{:}   \mathsf{G}  \mathsf{F} \ottnt{X}  }
+      }{ \cdot   \vdash   \lambda_l  \ottmv{x}  :  \ottnt{X} .  \mathsf{G}  \mathsf{F} \ottmv{x}     \ottsym{:}  \ottsym{(}  \ottnt{X}  \ottsym{)}  \rightharpoonup  \ottsym{(}   \mathsf{G}  \mathsf{F} \ottnt{X}    \ottsym{)}}
+    \end{math}
+  \end{center}
+\end{itemize}
+
+The monad $GF$ is strong:
+\begin{itemize}
+\item Deriving the tensorial strength $\tau$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impR}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenL}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny Gr}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny Gl}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny Fl}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny Fr}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny tenR}] {
+                      $$\mprset{flushleft}
+                      \inferrule* [right={\tiny ax}] {
+                        \,
+                      }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}  \vdash  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}}
+                      $$\mprset{flushleft}
+                      \inferrule* [right={\tiny ax}] {
+                        \,
+                      }{\ottmv{y_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{Y}  \vdash  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{Y}}
+                    }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{Y}  \vdash  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}   \ottnt{X}   \otimes  \ottnt{Y}}
+                  }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{Y}  \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}   \ottsym{:}   \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)} }
+                }{\ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}  \ottsym{;}  \ottmv{y_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{F} \ottnt{Y}   \vdash   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F} \ottnt{Y}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}    \ottsym{:}   \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)} }
+              }{\ottmv{y_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{G}  \mathsf{F} \ottnt{Y}    \ottsym{,}  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}  \ottsym{;}   \cdot   \vdash   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F} \ottnt{Y}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}    \ottsym{)}   \ottsym{:}   \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)} }
+            }{\ottmv{y_{{\mathrm{2}}}}  \ottsym{:}   \mathsf{G}  \mathsf{F} \ottnt{Y}    \ottsym{,}  \ottmv{x_{{\mathrm{0}}}}  \ottsym{:}  \ottnt{X}  \vdash   \mathsf{G} \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F} \ottnt{Y}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}    \ottsym{)}   \ottsym{)}   \ottsym{:}   \mathsf{G}  \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)}  }
+          }{\ottmv{x_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y_{{\mathrm{3}}}}  \ottsym{:}   \mathsf{G}  \mathsf{F} \ottnt{Y}    \vdash   \mathsf{ex}\, \ottmv{y_{{\mathrm{3}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{2}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{G} \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F} \ottnt{Y}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}    \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}   \mathsf{G}  \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)}  }
+        }{\ottmv{z}  \ottsym{:}   \ottnt{X}   \otimes   \mathsf{G}  \mathsf{F} \ottnt{Y}    \vdash   \mathsf{let}\, \ottmv{z}  :   \ottnt{X}   \otimes   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\, \ottmv{x_{{\mathrm{1}}}}  \otimes  \ottmv{y_{{\mathrm{3}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{ex}\, \ottmv{y_{{\mathrm{3}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{2}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{G} \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F} \ottnt{Y}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}    \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{:}   \mathsf{G}  \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)}  }
+      }{ \cdot   \vdash   \lambda_l  \ottmv{z}  :   \ottnt{X}   \otimes   \mathsf{G}  \mathsf{F} \ottnt{Y}   .  \mathsf{let}\, \ottmv{z}  :   \ottnt{X}   \otimes   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\, \ottmv{x_{{\mathrm{1}}}}  \otimes  \ottmv{y_{{\mathrm{3}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{ex}\, \ottmv{y_{{\mathrm{3}}}} , \ottmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \ottmv{y_{{\mathrm{2}}}} , \ottmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \ottsym{(}   \mathsf{G} \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{2}}}}  :   \mathsf{G}  \mathsf{F} \ottnt{Y}   \,\mathsf{be}\,  \mathsf{G}\, \ottmv{y_{{\mathrm{1}}}}  \,\mathsf{in}\, \ottsym{(}   \mathsf{let}\, \ottmv{y_{{\mathrm{1}}}}  :   \mathsf{F} \ottnt{Y}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{y_{{\mathrm{0}}}}  \,\mathsf{in}\,  \mathsf{F} \ottsym{(}  \ottmv{x_{{\mathrm{0}}}}  \otimes  \ottmv{y_{{\mathrm{0}}}}  \ottsym{)}    \ottsym{)}   \ottsym{)}   \ottsym{)}   \ottsym{)}    \ottsym{:}  \ottsym{(}   \ottnt{X}   \otimes   \mathsf{G}  \mathsf{F} \ottnt{Y}    \ottsym{)}  \rightharpoonup  \ottsym{(}   \mathsf{G}  \mathsf{F} \ottsym{(}   \ottnt{X}   \otimes  \ottnt{Y}  \ottsym{)}    \ottsym{)}}
+    \end{math}
+  \end{center}
+\end{itemize}
+
+
+\appendix
+
+\section{Full Ott Spec}
+\label{sec:full_ott_spec}
+\footnotesize
+\ottall
+% section full_ott_spec (end)
+
+\end{document}
