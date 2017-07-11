@@ -204,57 +204,12 @@
 }}
 
 
-\newcommand{\ottdruleTXXbetaName}[0]{\ottdrulename{T\_beta}}
-\newcommand{\ottdruleTXXbeta}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \Delta  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{Z}}%
-}{
-\Gamma  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \ottmv{w}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta  \vdash   \mathsf{ex}\, \ottmv{w} , \ottmv{z} \,\mathsf{with}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{t}   \ottsym{:}  \ottnt{Z}}{%
-{\ottdruleTXXbetaName}{}%
-}}
-
-
-\newcommand{\ottdruleTXXcontrRName}[0]{\ottdrulename{T\_contrR}}
-\newcommand{\ottdruleTXXcontrR}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{Y}}%
-}{
-\Gamma_{{\mathrm{1}}}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \vdash   \mathsf{contrR}\, \ottmv{z} \,\mathsf{as}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{t}   \ottsym{:}  \ottnt{Y}}{%
-{\ottdruleTXXcontrRName}{}%
-}}
-
-
-\newcommand{\ottdruleTXXcontrLName}[0]{\ottdrulename{T\_contrL}}
-\newcommand{\ottdruleTXXcontrL}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{Y}}%
-}{
-\Gamma_{{\mathrm{1}}}  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \vdash   \mathsf{contrL}\, \ottmv{z} \,\mathsf{as}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{t}   \ottsym{:}  \ottnt{Y}}{%
-{\ottdruleTXXcontrLName}{}%
-}}
-
-
-\newcommand{\ottdruleTXXweakName}[0]{\ottdrulename{T\_weak}}
-\newcommand{\ottdruleTXXweak}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{,}  \Delta  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{Y}  \quad   \ottmv{x}  \not\in |  \Gamma ,  \Delta  |  }%
-}{
-\Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta  \vdash   \mathsf{weak}\, \ottmv{x} \,\mathsf{in}\, \ottnt{t}   \ottsym{:}  \ottnt{Y}}{%
-{\ottdruleTXXweakName}{}%
-}}
-
-
-\newcommand{\ottdruleTXXcutName}[0]{\ottdrulename{T\_cut}}
-\newcommand{\ottdruleTXXcut}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \vdash  \ottnt{t_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{X}  \quad  \Delta_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta_{{\mathrm{2}}}  \vdash  \ottnt{t_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{Y} }%
-}{
-\Delta_{{\mathrm{1}}}  \ottsym{,}  \Gamma  \ottsym{,}  \Delta_{{\mathrm{2}}}  \vdash  \ottsym{[}  \ottnt{t_{{\mathrm{1}}}}  \ottsym{/}  \ottmv{x}  \ottsym{]}  \ottnt{t_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{Y}}{%
-{\ottdruleTXXcutName}{}%
-}}
-
-
-\newcommand{\ottdruleTXXGrName}[0]{\ottdrulename{T\_Gr}}
-\newcommand{\ottdruleTXXGr}[1]{\ottdrule[#1]{%
+\newcommand{\ottdruleTXXGIName}[0]{\ottdrulename{T\_GI}}
+\newcommand{\ottdruleTXXGI}[1]{\ottdrule[#1]{%
 \ottpremise{\Gamma  \ottsym{;}   \cdot   \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}}%
 }{
 \Gamma  \vdash   \mathsf{G} \ottnt{s}   \ottsym{:}   \mathsf{G} \ottnt{A} }{%
-{\ottdruleTXXGrName}{}%
+{\ottdruleTXXGIName}{}%
 }}
 
 \newcommand{\ottdefntty}[1]{\begin{ottdefnblock}[#1]{$\Gamma  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{X}$}{}
@@ -267,12 +222,7 @@
 \ottusedrule{\ottdruleTXXimplE{}}
 \ottusedrule{\ottdruleTXXimprI{}}
 \ottusedrule{\ottdruleTXXimprE{}}
-\ottusedrule{\ottdruleTXXbeta{}}
-\ottusedrule{\ottdruleTXXcontrR{}}
-\ottusedrule{\ottdruleTXXcontrL{}}
-\ottusedrule{\ottdruleTXXweak{}}
-\ottusedrule{\ottdruleTXXcut{}}
-\ottusedrule{\ottdruleTXXGr{}}
+\ottusedrule{\ottdruleTXXGI{}}
 \end{ottdefnblock}}
 
 %% defn sty
@@ -364,84 +314,30 @@
 }}
 
 
-\newcommand{\ottdruleSXXbetaName}[0]{\ottdrulename{S\_beta}}
-\newcommand{\ottdruleSXXbeta}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}}%
-}{
-\Gamma  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \ottmv{w}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \vdash   \mathsf{ex}\, \ottmv{w} , \ottmv{z} \,\mathsf{with}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
-{\ottdruleSXXbetaName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXweakName}[0]{\ottdrulename{S\_weak}}
-\newcommand{\ottdruleSXXweak}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}  \quad   \ottmv{x}  \not\in |  \Gamma ,  \Delta ,  \Psi  |  }%
-}{
-\Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \vdash   \mathsf{weak}\, \ottmv{x} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{B}}{%
-{\ottdruleSXXweakName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXcontrRName}[0]{\ottdrulename{S\_contrR}}
-\newcommand{\ottdruleSXXcontrR}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
-}{
-\Gamma_{{\mathrm{1}}}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \ottsym{;}  \Psi  \vdash   \mathsf{contrR}\, \ottmv{z} \,\mathsf{as}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{B}}{%
-{\ottdruleSXXcontrRName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXcontrLName}[0]{\ottdrulename{S\_contrL}}
-\newcommand{\ottdruleSXXcontrL}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
-}{
-\Gamma_{{\mathrm{1}}}  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Gamma_{{\mathrm{2}}}  \ottsym{,}  \Gamma_{{\mathrm{3}}}  \ottsym{;}  \Psi  \vdash   \mathsf{contrL}\, \ottmv{z} \,\mathsf{as}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{B}}{%
-{\ottdruleSXXcontrLName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXcutOneName}[0]{\ottdrulename{S\_cut1}}
-\newcommand{\ottdruleSXXcutOne}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{X}  \quad  \Delta_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta_{{\mathrm{2}}}  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A} }%
-}{
-\Delta_{{\mathrm{1}}}  \ottsym{,}  \Gamma  \ottsym{,}  \Delta_{{\mathrm{2}}}  \ottsym{;}  \Phi  \vdash  \ottsym{[}  \ottnt{t}  \ottsym{/}  \ottmv{x}  \ottsym{]}  \ottnt{s}  \ottsym{:}  \ottnt{A}}{%
-{\ottdruleSXXcutOneName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXcutTwoName}[0]{\ottdrulename{S\_cut2}}
-\newcommand{\ottdruleSXXcutTwo}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{A}  \quad  \Delta  \ottsym{;}  \Phi_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \ottsym{,}  \Phi_{{\mathrm{2}}}  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{B} }%
-}{
-\Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Phi_{{\mathrm{1}}}  \ottsym{,}  \Psi  \ottsym{,}  \Phi_{{\mathrm{2}}}  \vdash  \ottsym{[}  \ottnt{s_{{\mathrm{1}}}}  \ottsym{/}  \ottmv{x}  \ottsym{]}  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{B}}{%
-{\ottdruleSXXcutTwoName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXFrName}[0]{\ottdrulename{S\_Fr}}
-\newcommand{\ottdruleSXXFr}[1]{\ottdrule[#1]{%
+\newcommand{\ottdruleSXXFIName}[0]{\ottdrulename{S\_FI}}
+\newcommand{\ottdruleSXXFI}[1]{\ottdrule[#1]{%
 \ottpremise{\Gamma  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{X}}%
 }{
 \Gamma  \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottnt{t}   \ottsym{:}   \mathsf{F} \ottnt{X} }{%
-{\ottdruleSXXFrName}{}%
+{\ottdruleSXXFIName}{}%
 }}
 
 
-\newcommand{\ottdruleSXXFlName}[0]{\ottdrulename{S\_Fl}}
-\newcommand{\ottdruleSXXFl}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}}%
+\newcommand{\ottdruleSXXFEName}[0]{\ottdrulename{S\_FE}}
+\newcommand{\ottdruleSXXFE}[1]{\ottdrule[#1]{%
+\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash   \mathsf{F} \ottmv{x}   \ottsym{:}   \mathsf{F} \ottnt{X}   \quad  \Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{;}  \Phi  \vdash  \ottmv{y}  \ottsym{:}  \ottnt{A} }%
 }{
-\Gamma  \ottsym{;}  \ottmv{z}  \ottsym{:}   \mathsf{F} \ottnt{X}   \ottsym{,}  \Psi  \vdash   \mathsf{let}\, \ottmv{z}  :   \mathsf{F} \ottnt{X}  \,\mathsf{be}\,  \mathsf{F}\, \ottmv{x}  \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
-{\ottdruleSXXFlName}{}%
+\Gamma  \ottsym{;}  \Psi  \ottsym{,}  \Phi  \vdash  \ottmv{y}  \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXFEName}{}%
 }}
 
 
-\newcommand{\ottdruleSXXGlName}[0]{\ottdrulename{S\_Gl}}
-\newcommand{\ottdruleSXXGl}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{;}  \Psi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
+\newcommand{\ottdruleSXXGEName}[0]{\ottdrulename{S\_GE}}
+\newcommand{\ottdruleSXXGE}[1]{\ottdrule[#1]{%
+\ottpremise{\Gamma  \vdash  \ottmv{x}  \ottsym{:}   \mathsf{G} \ottnt{A} }%
 }{
-\ottmv{z}  \ottsym{:}   \mathsf{G} \ottnt{A}   \ottsym{,}  \Gamma  \ottsym{;}  \Psi  \vdash   \mathsf{let}\, \ottmv{z}  :   \mathsf{G} \ottnt{A}  \,\mathsf{be}\,  \mathsf{G}\, \ottmv{x}  \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{B}}{%
-{\ottdruleSXXGlName}{}%
+\Gamma  \ottsym{;}   \cdot   \vdash  \ottmv{x}  \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXGEName}{}%
 }}
 
 \newcommand{\ottdefnsty}[1]{\begin{ottdefnblock}[#1]{$\Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}$}{}
@@ -455,15 +351,9 @@
 \ottusedrule{\ottdruleSXXimplE{}}
 \ottusedrule{\ottdruleSXXimprI{}}
 \ottusedrule{\ottdruleSXXimprE{}}
-\ottusedrule{\ottdruleSXXbeta{}}
-\ottusedrule{\ottdruleSXXweak{}}
-\ottusedrule{\ottdruleSXXcontrR{}}
-\ottusedrule{\ottdruleSXXcontrL{}}
-\ottusedrule{\ottdruleSXXcutOne{}}
-\ottusedrule{\ottdruleSXXcutTwo{}}
-\ottusedrule{\ottdruleSXXFr{}}
-\ottusedrule{\ottdruleSXXFl{}}
-\ottusedrule{\ottdruleSXXGl{}}
+\ottusedrule{\ottdruleSXXFI{}}
+\ottusedrule{\ottdruleSXXFE{}}
+\ottusedrule{\ottdruleSXXGE{}}
 \end{ottdefnblock}}
 
 

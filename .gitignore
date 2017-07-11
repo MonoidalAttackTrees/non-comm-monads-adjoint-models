@@ -1,2 +1,10 @@
 *.aux
 *.log
+
+Elle/implementation
+
+Elle/implementation.hi
+
+Elle/implementation.o
+
+.main.tex.swp

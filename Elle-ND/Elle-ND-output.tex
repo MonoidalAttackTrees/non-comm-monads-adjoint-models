@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{supertabular}
+\usepackage{cmll}
+\usepackage{txfonts}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{mathpartir}
+
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=-1.5pt] {\strut #1};}
+
+\newcommand{\circop}[1]{\mathop{\encircle{#1}}}
+
+
+\input{Elle-ND-ott}
+
+\begin{document}
+
+\appendix
+
+\section{Term Assignment for Natural Deduction Formulation of Elle}
+\label{sec:nd_ott}
+\footnotesize
+\ottall
+% section nd_ott (end)
+
+\end{document}
