@@ -80,6 +80,8 @@ s :: 'term_' ::=
   {{tex \mathsf{contrL}\,[[x1]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
   | weak x in s :: :: Weak
   {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[s]] }}
+  | derelict t :: :: Derelict
+  {{tex \mathsf{derelict}\,[[t]] }}
   | [ s1 / x ] s2 :: M :: Subst
   | [ t / x ] s   :: M :: Subst2
   | ( s )         :: S :: parens
@@ -177,9 +179,9 @@ by
   ---------------- :: unitI
   . |- triv : Unit
 
-  D |- x : Unit && G |- t : Y
+  D |- t1 : Unit && G |- t2 : Y
   --------------------------------------------- :: unitE
-  G, D |- let x : Unit be triv in t : Y
+  G, D |- let t1 : Unit be triv in t : Y
 
   G |- t1 : X && D |- t2 : Y
   -------------------------- :: tenI
@@ -193,17 +195,17 @@ by
   ---------------------- :: implI
   G |- \l x:X.t : X -> Y
   
-  G |- y : X -> Y && D |- x : X
+  G |- t1 : X -> Y && D |- t2 : X
   ----------------------------- :: implE
-  G, D |- appl y x : Y
+  G, D |- appl t1 t2 : Y
 
-  x : X,G |- t : Y
+  x : X, G |- t : Y
   ---------------------- :: imprI
   G |- \r x:X.t : Y <- X
   
-  G |- y : Y <- X && D |- x : X
+  G |- t1 : Y <- X && D |- t2 : X
   ----------------------------- :: imprE
-  G, D |- appr y x : Y
+  G, D |- appr t1 t2 : Y
 
   G ; . |- s : A
   ---------------- :: GI
@@ -219,9 +221,9 @@ by
   -------------------- :: unitI
   . ; . |- triv : Unit
 
-  D; I  |- x : Unit && G; P |- s : A
+  D; I  |- s1 : Unit && G; P |- s2 : A
   --------------------------------------------- :: unitE
-  G, D; P, I |- let x : Unit be triv in s : A
+  G, D; P, I |- let s1 : Unit be triv in s2 : A
 
   G;P |- s1 : A && D;I |- s2 : B
   ------------------------------ :: tenI
@@ -235,30 +237,30 @@ by
   --------------------------------------------------- :: tenE2
   G, D; I, P |- let z : A (x) B be x (x) y in s : C
 
-  G;P,x : A |- s : B
+  G; P, x : A |- s : B
   ------------------------ :: implI
-  G;P |- \l x:A.s : A -> B
+  G; P |- \l x:A.s : A -> B
 
-  G; P |- y : A -> B && D; I |- x : A
+  G; P |- s1 : A -> B && D; I |- s2 : A
   ------------------------------------ :: implE
-  G, D; P, I |- appl y x : B
+  G, D; P, I |- appl s1 s2 : B
 
   G;x : A,P |- s : B
   ------------------------ :: imprI
   G;P |- \r x:A.s : B <- A
 
-  G; P |- y : B <- A && D; I |- x : A
+  G; P |- s1 : B <- A && D; I |- s2 : A
   ------------------------------------ :: imprE
-  G, D; P, I |- appl y x : B
+  G, D; P, I |- appl s1 s2 : B
 
   G |- t : X
   ---------------- :: FI
   G;. |- F t : F X
 
-  G ; P |- F x : F X && G , x : X ; I |- y : A
+  G ; P |- y : F X && G , x : X ; I |- s2 : A
   ------------------------------------------ :: FE
-  G ; P , I |- y : A
+  G ; P , I |- let F x : F X be y in s2 : A
 
-  G |- x : Gf A
-  ------------- :: GE
-  G ; . |- x : A
+  G |- t : Gf A
+  ----------------------- :: GE
+  G ; . |- derelict t : A
