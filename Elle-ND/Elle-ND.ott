@@ -28,8 +28,7 @@ X, Y, Z :: 'sform_' ::=
   | Unit    ::   :: Unit
   {{tex \mathsf{Unit} }}
   | X (x) Y ::   :: Tensor        
-  | X -> Y  ::   :: LFun          
-  | X <- Y  ::   :: RFun          
+  | X -o Y  ::   :: Fun          
   | ( X )   :: M :: Parens 
   | h( X )  :: M :: HiddenParens 
   {{ tex [[X]] }}
@@ -66,6 +65,12 @@ s :: 'term_' ::=
   {{tex \lambda_r [[x]] : [[A]].[[s]] }}
   | \ x : A . s :: :: Fun
   {{tex \lambda [[x]] : [[A]].[[s]] }}  
+  | ( \l x : A . s1 ) s2 :: :: LFunApp
+  {{tex (\lambda_l [[x]] : [[A]].[[s1]])\,[[s2]] }}
+  | ( \r x : A . s1 ) s2 :: :: RFunApp
+  {{tex (\lambda_r [[x]] : [[A]].[[s1]])\,[[s2]] }}
+  | ( \ x : A . s1 ) s2 :: :: FunApp
+  {{tex (\lambda [[x]] : [[A]].[[s1]])\,[[s2]] }}
   | appl s1 s2   :: :: Appl
   {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
   | appr s1 s2   :: :: Appr
@@ -98,18 +103,12 @@ t :: 'sterm_' ::=
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
   | t1 (x) t2 :: :: Tensor
-  | \l x : X . t :: :: LFun
-  {{tex \lambda_l [[x]] : [[X]].[[t]] }}
-  | \r x : X . t :: :: RFun
-  {{tex \lambda_r [[x]] : [[X]].[[t]] }}
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
-  | appl t1 t2   :: :: Appl
-  {{tex \mathsf{app}_l\,[[t1]]\,[[t2]] }}
-  | appr t1 t2   :: :: Appr
-  {{tex \mathsf{app}_r\,[[t1]]\,[[t2]] }}
   | app t1 t2   :: :: App
   {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
+  | ( \ x : X . t1 ) t2 :: :: FunApp
+  {{tex (\lambda [[x]] : [[X]].[[t1]])\,[[t2]] }}
   | ex x1 , x2 with t1 , t2 in t3 :: :: Ex
   {{tex \mathsf{ex}\,[[x1]],[[x2]]\,\mathsf{with}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
   | contrR x1 as t1 , t2 in t3 :: :: ContrR
@@ -165,6 +164,8 @@ terminals :: 'terminals_' ::=
   {{tex \multimap }}
   | |-   :: :: Vdash
   {{tex \vdash }}
+  | ~>   :: :: To
+  {{tex \leadsto }}
  
 defns
   Jtype :: '' ::=
@@ -192,20 +193,12 @@ by
   G, D |- let t1 : X (x) Y be x (x) y in t2 : Z
 
   G, x : X |- t : Y
-  ---------------------- :: implI
-  G |- \l x:X.t : X -> Y
+  ---------------------- :: impI
+  G |- \ x:X.t : X -o Y
   
-  G |- t1 : X -> Y && D |- t2 : X
-  ----------------------------- :: implE
-  G, D |- appl t1 t2 : Y
-
-  x : X, G |- t : Y
-  ---------------------- :: imprI
-  G |- \r x:X.t : Y <- X
-  
-  G |- t1 : Y <- X && D |- t2 : X
-  ----------------------------- :: imprE
-  G, D |- appr t1 t2 : Y
+  G |- t1 : X -o Y && D |- t2 : X
+  ----------------------------- :: impE
+  G, D |- app t1 t2 : Y
 
   G ; . |- s : A
   ---------------- :: GI
@@ -251,7 +244,7 @@ by
 
   G; P |- s1 : B <- A && D; I |- s2 : A
   ------------------------------------ :: imprE
-  G, D; P, I |- appl s1 s2 : B
+  G, D; P, I |- appr s1 s2 : B
 
   G |- t : X
   ---------------- :: FI
@@ -264,3 +257,96 @@ by
   G |- t : Gf A
   ----------------------- :: GE
   G ; . |- derelict t : A
+
+
+
+defns
+  Reduction :: '' ::=
+
+defn
+  t1 ~> t2 :: :: tred :: 'Tred_'
+by 
+
+  --------------------------------- :: letU
+  let triv : Unit be triv in t ~> t
+
+  ---------------------------------------------------------- :: letT
+  let t1 (x) t2 : X (x) Y be x (x) y in t3 ~> [t1/x][t2/y]t3
+
+  ------------------------- :: lam
+  (\ x:X.t1) t2 ~> [t2/x]t1
+
+  t1 ~> t1'
+  ----------------------- :: app1
+  app t1 t2 ~> app t1' t2
+
+  t2 ~> t2'
+  ----------------------- :: app2
+  app t1 t2 ~> app t1 t2'
+
+
+
+defn
+  s1 ~> s2 :: :: sred :: 'Sred_'
+by 
+
+  --------------------------------- :: letU
+  let triv : Unit be triv in s ~> s
+
+  ---------------------------------------------------------- :: letT
+  let s1 (x) s2 : A (x) B be x (x) y in s3 ~> [s1/x][s2/y]s3
+
+  ----------------------------------- :: letF
+  let F t : F X be F x in s ~> [t/x]s
+
+  ------------------------- :: lamL
+  (\l x:A.s1) s2 ~> [s2/x]s1
+
+  ------------------------- :: lamR
+  (\r x:A.s1) s2 ~> [s2/x]s1
+
+  ------------------------- :: lam
+  (\ x:A.s1) s2 ~> [s2/x]s1
+  
+  s1 ~> s1'
+  ------------------------- :: appl1
+  appl s1 s2 ~> appl s1' s2
+
+  s2 ~> s2'
+  ------------------------- :: appl2
+  appl s1 s2 ~> appl s1 s2'
+
+  s1 ~> s1'
+  ------------------------- :: appr1
+  appr s1 s2 ~> appr s1' s2
+
+  s2 ~> s2'
+  ------------------------- :: appr2
+  appr s1 s2 ~> appr s1 s2'
+
+  s1 ~> s1'
+  ------------------------- :: app1
+  app s1 s2 ~> app s1' s2
+
+  s2 ~> s2'
+  ------------------------- :: app2
+  app s1 s2 ~> app s1 s2'
+
+  ------------------ :: derelict
+  derelict Gf s ~> s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

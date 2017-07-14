@@ -66,14 +66,20 @@ s :: 'term_' ::=
   {{tex \lambda_r [[x]] : [[A]].[[s]] }}
   | \ x : A . s :: :: Fun
   {{tex \lambda [[x]] : [[A]].[[s]] }}  
+  | ( \l x : A . s1 ) s2 :: :: LFunApp
+  {{tex (\lambda_l [[x]] : [[A]].[[s1]])\,[[s2]] }}
+  | ( \r x : A . s1 ) s2 :: :: RFunApp
+  {{tex (\lambda_r [[x]] : [[A]].[[s1]])\,[[s2]] }}
+  | ( \ x : A . s1 ) s2 :: :: FunApp
+  {{tex (\lambda [[x]] : [[A]].[[s1]])\,[[s2]] }}  
   | appl s1 s2   :: :: Appl
   {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
   | appr s1 s2   :: :: Appr
   {{tex \mathsf{app}_r\,[[s1]]\,[[s2]] }}
   | app s1 s2   :: :: App
   {{tex \mathsf{app}\,[[s1]]\,[[s2]] }}  
-  | ex x1 , x2 with s1 , s2 in s3 :: :: Ex
-  {{tex \mathsf{ex}\,[[x1]],[[x2]]\,\mathsf{with}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
+  | ex s1 , s2 with x1 , x2 in s3 :: :: Ex
+  {{tex \mathsf{ex}\,[[s1]],[[s2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[s3]] }}
   | contrR x1 as s1 , s2 in s3 :: :: ContrR
   {{tex \mathsf{contrR}\,[[x1]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
   | contrL x1 as s1 , s2 in s3 :: :: ContrL
@@ -102,14 +108,20 @@ t :: 'sterm_' ::=
   {{tex \lambda_r [[x]] : [[X]].[[t]] }}
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
+  | ( \l x : X . t1 ) t2 :: :: LFunApp
+  {{tex (\lambda_l [[x]] : [[X]].[[t1]])\,[[t2]] }}
+  | ( \r x : X . t1 ) t2 :: :: RFunApp
+  {{tex (\lambda_r [[x]] : [[X]].[[t1]])\,[[t2]] }}
+  | ( \ x : X . t1 ) t2 :: :: FunApp
+  {{tex (\lambda [[x]] : [[X]].[[t1]])\,[[t2]] }}  
   | appl t1 t2   :: :: Appl
   {{tex \mathsf{app}_l\,[[t1]]\,[[t2]] }}
   | appr t1 t2   :: :: Appr
   {{tex \mathsf{app}_r\,[[t1]]\,[[t2]] }}
   | app t1 t2   :: :: App
   {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
-  | ex x1 , x2 with t1 , t2 in t3 :: :: Ex
-  {{tex \mathsf{ex}\,[[x1]],[[x2]]\,\mathsf{with}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
+  | ex t1 , t2 with x1 , x2 in t3 :: :: Ex
+  {{tex \mathsf{ex}\,[[t1]],[[t2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[t3]] }}
   | contrR x1 as t1 , t2 in t3 :: :: ContrR
   {{tex \mathsf{contrR}\,[[x1]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
   | contrL x1 as t1 , t2 in t3 :: :: ContrL
@@ -163,6 +175,8 @@ terminals :: 'terminals_' ::=
   {{tex \multimap }}
   | |-   :: :: Vdash
   {{tex \vdash }}
+  | ~>   :: :: To
+  {{tex \leadsto }}
  
 defns
   Jtype :: '' ::=
@@ -265,7 +279,7 @@ by
 
   G |- t : X && D1,x : X,D2;P |- s : A
   ------------------------------------ :: cut1
-  D1,G,D2;I |- [t/x]s : A
+  D1,G,D2;P |- [t/x]s : A
 
   G;P |- s1 : A && D;I1,x : A,I2 |- s2 : B
   ---------------------------------------- :: cut2
@@ -318,3 +332,24 @@ by
   G;P,x : A |- s : B
   --------------------------------------------- :: Gl
   z : Gf A,G;P |- let z : Gf A be Gf x in s : B
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

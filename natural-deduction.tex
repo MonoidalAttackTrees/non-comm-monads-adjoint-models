@@ -1,0 +1,40 @@
+\subsection{Categorical Interpretation of Natural Deductions}
+
+$T$ rules: in the symmetric monoidal closed category of the adjunction model
+
+T\_identity: $id_X:X\rightarrow X$
+
+T\_unitI: 
+
+T\_unitE: given $t_1:\Delta\rightarrow Unit$ and $t_2:\Gamma\rightarrow Y$, returns
+$\lambda_Y\circ(t_1\otimes t_2):\Gamma\otimes\Delta\rightarrow Unit\otimes Y\rightarrow Y$
+
+T\_tenI: given $t_1:\Gamma\rightarrow X$ and $t_2:\Delta\rightarrow Y$, returns
+$t_1\otimes t_2:\Gamma\otimes\Delta\rightarrow X\otimes Y$
+
+T\_tenE: given $t_1:\Gamma\rightarrow X\otimes Y$ and
+$t_2:\Delta\otimes X\otimes Y\rightarrow Z$, returns \\
+$t_2\circ\e{X\otimes Y,\Delta}\circ t_1\otimes id_\Delta:\Gamma\otimes\Delta\rightarrow(X\otimes Y)\otimes\Delta\rightarrow\Delta\otimes(X\otimes Y)\rightarrow Z$
+
+T\_implI:
+
+T\_implE:
+
+T\_imprI:
+
+T\_imprE:
+
+T\_GI: given $s:FX_1\otimes'...\otimes' FX_n\rightarrow A$, returns \\
+$Gs\circ G\m{}^{-1}\circ\eta:X_1\otimes...\otimes X_n\rightarrow GF(X_1\otimes...\otimes X_n)\rightarrow G(FX_1\otimes'...\otimes'FX_n)\rightarrow GA$
+
+S rules: in the Lambek category of the adjunction model
+
+S\_identity: $id_A:A\rightarrow A$
+
+S\_unitI:
+
+S\_unitE:
+
+
+
+\subsection{Normaalization and Reduction}
