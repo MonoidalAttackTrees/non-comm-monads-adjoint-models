@@ -182,7 +182,7 @@ by
 
   D |- t1 : Unit && G |- t2 : Y
   --------------------------------------------- :: unitE
-  G, D |- let t1 : Unit be triv in t : Y
+  G, D |- let t1 : Unit be triv in t2 : Y
 
   G |- t1 : X && D |- t2 : Y
   -------------------------- :: tenI
