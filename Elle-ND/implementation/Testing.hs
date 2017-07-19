@@ -8,15 +8,15 @@ import Pretty
 -- Lambda testing                                                     --
 ------------------------------------------------------------------------
 
-lamtest0 = parseTester lamParse "\\(x:Unit).y"
+lamtest0_T = parseTester_T lamParse_T "\\(x:Unit).y"
 
-lamtest1 = parseTester lamParse "\\(x:Unit (x) Unit).y"
+lamtest1_T = parseTester_T lamParse_T "\\(x:Unit (x) Unit).y"
 
-lamtest' = parseTester lamParse "\\(x:Unit(x)Unit.(tens y z)"
+lamtest'_T = parseTester_T lamParse_T "\\(x:Unit(x)Unit.(tens y z)"
 
-lamtest2 = parseTester lamParse "\\(x:Unit-oUnit).y"
+lamtest2_T = parseTester_T lamParse_T "\\(x:Unit-oUnit).y"
 
-lamtest3 = parseTester lamParse "\\(x:Unit -o Unit).y"
+lamtest3_T = parseTester_T lamParse_T "\\(x:Unit -o Unit).y"
 
 
 

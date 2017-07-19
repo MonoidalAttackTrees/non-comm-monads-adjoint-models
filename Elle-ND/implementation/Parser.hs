@@ -46,104 +46,104 @@ unexpColon msg = unexpected msg
 ------------------------------------------------------------------------
 -- Type parsers                                                       --
 ------------------------------------------------------------------------
-tyUnit = do
+tyUnit_T = do
   reservedOp "Unit"
-  return Unit
+  return Unit_T
 
 ------------------------------------------------------------------------
 -- Type parser tables                                                 --
 ------------------------------------------------------------------------
-tyTable = [[binOp AssocLeft "(x)" (\d r -> Tensor d r)],
-           [binOp AssocRight "-o" (\d r -> Imp d r)]]
+tyTable_T = [[binOp AssocLeft "(x)" (\d r -> Tensor_T d r)],
+           [binOp AssocRight "-o" (\d r -> Imp_T d r)]]
 binOp assoc op f = Text.Parsec.Expr.Infix (do{ reservedOp op; return f}) assoc
-typeParser = buildExpressionParser tyTable typeParser'
-typeParser' = parens typeParser <|> tyUnit
+typeParser_T = buildExpressionParser tyTable_T typeParser'_T
+typeParser'_T = parens typeParser_T <|> tyUnit_T
 
 ------------------------------------------------------------------------
 -- Term parsers                                                       --
 ------------------------------------------------------------------------
-aterm = parens termParser <|> trivParse <|> var
-termParser = lamParse <|> try letTParse <|> letUParse <|> tensParse <|> appParse <?> "Parser error"
+aterm_T = parens termParser_T <|> trivParse_T <|> var_T
+termParser_T = lamParse_T <|> try letTParse_T <|> letUParse_T <|> tensParse_T <|> appParse_T <?> "Parser error"
 
-var = var' varName Var
-var' p c = do
-  var_name <- p
-  return (c var_name)
+var_T = var'_T varName_T Var_T
+var'_T p c = do
+  var_name_T <- p
+  return (c var_name_T)
 
-varName = varName' isUpper "Term variables must begin with a lowercase letter."
-varName' p msg = do
+varName_T = varName'_T isUpper "Term variables must begin with a lowercase letter."
+varName'_T p msg = do
   n <- identifier
   when ((length n) > 0) $
     let h = head n in
       when (p h || isNumber h) $ unexpColon (n++" : "++msg)
   return . s2n $ n
 
-trivParse = do
+trivParse_T = do
   reserved "triv"
-  return Triv
+  return Triv_T
 
-lamParse = do
+lamParse_T = do
   reserved "\\"
   symbol "("
-  name <- varName
+  name <- varName_T
   colon
-  ty <- typeParser
+  ty <- typeParser_T
   symbol ")"
   dot
-  body <- termParser
-  return $ Lam ty . bind name $ body
+  body <- termParser_T
+  return $ Lam_T ty . bind name $ body
 
-appParse = do
-  l <- many1 aterm
-  return $ foldl1 App l
+appParse_T = do
+  l <- many1 aterm_T
+  return $ foldl1 App_T l
 
-tensParse = do
+tensParse_T = do
   reserved "tens"
-  t1 <- termParser
+  t1 <- termParser_T
   symbol ","
-  t2 <- termParser
-  return $ Tens t1 t2
+  t2 <- termParser_T
+  return $ Tens_T t1 t2
 
-letUParse = do
+letUParse_T = do
   reserved "let"
   reserved "triv"
   reservedOp "="
-  t1 <- termParser     -- change to varName?
+  t1 <- termParser_T     -- change to varName?
   reserved "in"
-  t2 <- termParser
-  return $ LetU t1 t2
+  t2 <- termParser_T
+  return $ LetU_T t1 t2
 
-letTParse = do
+letTParse_T = do
   reserved "let"
-  x <- varName
+  x <- varName_T
   reservedOp "(x)"
-  y <- varName
+  y <- varName_T
   colon
-  ty1 <- typeParser
+  ty1 <- typeParser_T
   reservedOp "(x)"
-  ty2 <- typeParser
+  ty2 <- typeParser_T
   reservedOp "be"
-  t1 <- termParser
+  t1 <- termParser_T
   reserved "in"
-  t2 <- termParser
-  return $ LetT t1 (Tensor ty1 ty2) (bind x (bind y t2))
+  t2 <- termParser_T
+  return $ LetT_T t1 (Tensor_T ty1 ty2) (bind x (bind y t2))
 
 ------------------------------------------------------------------------
 -- Functions String -> Term or String -> Type                         --
 ------------------------------------------------------------------------
-parseTerm :: String -> Term
-parseTerm str =
-  case parse termParser "" str of
+parseTerm_T :: String -> Term_T
+parseTerm_T str =
+  case parse termParser_T "" str of
     Left e  -> error $ show e
     Right r -> r
 
-parseType :: String -> Type
-parseType str =
-  case parse typeParser "" str of
+parseType_T :: String -> Type_T
+parseType_T str =
+  case parse typeParser_T "" str of
     Left e  -> error $ show e
     Right r -> r
 
-parseTester p str =
+parseTester_T p str =
   case parse p "" str of
     Left e  -> error $ show e
     Right r -> r
@@ -151,16 +151,16 @@ parseTester p str =
 ------------------------------------------------------------------------
 -- Context Parser                                                     --
 ------------------------------------------------------------------------
-tmPairCtxParse = do
-  nm <- varName
+tmPairCtxParse_T = do
+  nm <- varName_T
   ws
   colon
   ws
-  ty <- typeParser
+  ty <- typeParser_T
   ws
   return (nm, ty)
 
-tmCtxParse = tmPairCtxParse `sepBy` (Token.symbol tokenizer ",")
+tmCtxParse_T = tmPairCtxParse_T `sepBy` (Token.symbol tokenizer ",")
 
 ------------------------------------------------------------------------
 -- Parsers for the REPL                                               --

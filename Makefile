@@ -35,8 +35,8 @@ quick : quick-pdf
 pdf : $(PDF)
 
 natural-deduction-ott.tex : natural-deduction.tex Elle-ND/Elle-ND.ott
-	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex
-		-tex_filter Elle-ND.tex Elle-ND-ott.tex
+	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex \
+		-tex_filter natural-deduction.tex natural-deduction-ott.tex
 
 ott : main.text natural-deduction-ott.tex Makefile
 
