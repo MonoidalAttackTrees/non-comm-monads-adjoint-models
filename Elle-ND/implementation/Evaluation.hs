@@ -1,7 +1,4 @@
 {-# LANGUAGE FlexibleContexts #-}
------------------------------------------------------------------------
--- One-step evaluation functions for the terms                       --
------------------------------------------------------------------------
 module Evaluation where
 
 import Text.Parsec
@@ -9,93 +6,109 @@ import Control.Monad.Except
 import Data.List
 
 import Syntax
-import TypeCheck
 
-eval_T :: Fresh m => Ctx_T -> Term_T -> ExceptT TypeException m Term_T
-eval_T _ Triv_T = return Triv_T
-eval_T g (LetU_T t1 t2) = do
-  ctx1 <- extractCtx_T g t1
-  ty <- typeCheck_T ctx1 t1
-  case ty of
-    Unit_T -> return t2
-    _ -> throwError InvalidTypeError
-eval_T g (LetT_T (Tens_T t1 t2) (Tensor_T ty1 ty2) b) = do
+-----------------------------------------------------------------------
+-- Checks if a T term is a value, i.e. cannot be further evaluated   --
+-----------------------------------------------------------------------
+isVal_T :: Fresh m => Term_T -> m Bool
+isVal_T Triv_T = return True
+isVal_T (Var_T x) = return True
+isVal_T (Tens_T t1 t2) = do
+  t1' <- isVal_T t1
+  case t1' of
+    True  -> isVal_T t2
+    False -> return False
+isVal_T (Lam_T ty b) = do
+  (x, t) <- unbind b
+  isVal_T t
+isVal_T (Gt_T s) = isVal_S s
+isVal_T _ = return False
+
+-----------------------------------------------------------------------
+-- Checks if a S term is a value, i.e. cannot be further evaluated   --
+-----------------------------------------------------------------------
+isVal_S :: Fresh m => Term_S -> m Bool
+isVal_S Triv_S = return True
+isVal_S (Var_S x) = return True
+isVal_S (Tens_S s1 s2) = do
+  s1' <- isVal_S s1
+  case s1' of
+    True  -> isVal_S s2
+    False -> return False
+isVal_S (LamL_S ty b) = do
+  (x, s) <- unbind b
+  isVal_S s
+isVal_S (LamR_S ty b) = do
+  (x, s) <- unbind b
+  isVal_S s
+isVal_S (Ft_S t) = isVal_T t
+isVal_S _ = return False
+
+-----------------------------------------------------------------------
+-- One-step evaluation functions for the T terms                     --
+-----------------------------------------------------------------------
+eval_T :: Fresh m => Term_T -> m Term_T
+eval_T (LetU_T t1 t2) = return t2
+eval_T (LetT_T (Tens_T t1 t2) (Tensor_T ty1 ty2) b) = do
   (tm1, b') <- unbind b
   (tm2, t) <- unbind b'
-  ctx1 <- extractCtx_T g t1
-  ctx2 <- extractCtx_T g t2
-  ty1' <- typeCheck_T ctx1 t1
-  ty2' <- typeCheck_T ctx2 t2
-  if ((ty1', ty2') == (ty1, ty2))
-    then return (subst tm2 t2 (subst tm1 t1 t))
-    else throwError InvalidTypeError
-eval_T g (App_T (Lam_T ty b) t) = do
+  return $ subst tm2 t2 (subst tm1 t1 t)
+eval_T (App_T (Lam_T ty b) t) = do
   (tm, t') <- unbind b
-  ctx <- extractCtx_T g t
-  ty' <- typeCheck_T ctx t
-  if (ty' == ty)
-    then return (subst tm t t')
-    else throwError InvalidTypeError
-eval_T g (App_T t1 t2) = do
-  ctx1 <- extractCtx_T g t1
-  ctx2 <- extractCtx_T g t2
-  t1' <- eval_T ctx1 t1
-  t2' <- eval_T ctx2 t2
+  return $ subst tm t t'
+eval_T (App_T t1 t2) = do
+  t1' <- eval_T t1
+  t2' <- eval_T t2
   return (App_T t1' t2')
+eval_T t = return t
 
-
-
-eval_S :: Fresh m => Ctx_T -> Ctx_S -> Term_S -> ExceptT TypeException m Term_S
-eval_S _ _ Triv_S = return Triv_S
-eval_S g d (LetU_S s1 s2) = do
-  d' <- extractCtx_S d s1
-  ty <- typeCheck_S g d' s1
-  case ty of
-    Unit_S -> return s2
-    _      -> throwError InvalidTypeError
-eval_S g d (LetT_S (Tens_S s1 s2) (Tensor_S ty1 ty2) b) = do
+-----------------------------------------------------------------------
+-- One-step evaluation functions for the S terms                     --
+-----------------------------------------------------------------------
+eval_S :: Fresh m => Term_S -> m Term_S
+eval_S (LetU_S s1 s2) = return s2
+eval_S (LetT_S (Tens_S s1 s2) (Tensor_S ty1 ty2) b) = do
   (x1, b') <- unbind b
   (x2, s) <- unbind b'
-  ctx1 <- extractCtx_S d s1
-  ctx2 <- extractCtx_S d s2
-  ty1' <- typeCheck_S g ctx1 s1
-  ty2' <- typeCheck_S g ctx2 s2
-  if ((ty1', ty2') == (ty1, ty2))
-    then return $ subst x2 s2 (subst x1 s1 s)
-    else throwError InvalidTypeError
-eval_S g d (AppL_S (LamL_S ty b) s) = do
+  return $ subst x2 s2 (subst x1 s1 s)
+eval_S (AppL_S (LamL_S ty b) s) = do
   (x, s') <- unbind b
-  ctx <- extractCtx_S d s
-  ty' <- typeCheck_S g ctx s
-  if (ty' == ty)
-    then return $ subst x s s'
-    else throwError InvalidTypeError
-eval_S g d (AppR_S (LamR_S ty b) s) = do
+  return $ subst x s s'
+eval_S (AppR_S (LamR_S ty b) s) = do
   (x, s') <- unbind b
-  ctx <- extractCtx_S d s
-  ty' <- typeCheck_S g ctx s
-  if (ty' == ty)
-    then return $ subst x s s'
-    else throwError InvalidTypeError
-eval_S g d (AppL_S s1 s2) = do
-  ctx1 <- extractCtx_S d s1
-  ctx2 <- extractCtx_S d s2
-  s1' <- eval_S g ctx1 s1
-  s2' <- eval_S g ctx2 s2
+  return $ subst x s s'
+eval_S (AppL_S s1 s2) = do
+  s1' <- eval_S s1
+  s2' <- eval_S s2
   return (AppL_S s1' s2')
-eval_S g d (AppR_S s1 s2) = do
-  ctx1 <- extractCtx_S d s1
-  ctx2 <- extractCtx_S d s2
-  s1' <- eval_S g ctx1 s1
-  s2' <- eval_S g ctx2 s2
+eval_S (AppR_S s1 s2) = do
+  s1' <- eval_S s1
+  s2' <- eval_S s2
   return (AppL_S s1' s2')
-eval_S g d (Derelict_S s) = do
-  case s of
-    Gt_T s' -> return s'
-    _       -> throwError InvalidArgError
+eval_S (Derelict_S (Gt_T s)) = return s
+eval_S s = return s
 
+-----------------------------------------------------------------------
+-- Recursive Evaluation for T                                        --
+-----------------------------------------------------------------------
+evalRec_T :: Fresh m => Term_T -> m Term_T
+evalRec_T t = do
+  t' <- eval_T t
+  val <- isVal_T t'
+  if val
+    then return t'
+    else evalRec_T t'
 
-
+-----------------------------------------------------------------------
+-- Recursive Evaluation for S                                        --
+-----------------------------------------------------------------------
+evalRec_S :: Fresh m => Term_S -> m Term_S
+evalRec_S s = do
+  s' <- eval_S s
+  val <- isVal_S s'
+  if val
+    then return s'
+    else evalRec_S s'
 
 
 

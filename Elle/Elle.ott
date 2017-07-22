@@ -66,12 +66,6 @@ s :: 'term_' ::=
   {{tex \lambda_r [[x]] : [[A]].[[s]] }}
   | \ x : A . s :: :: Fun
   {{tex \lambda [[x]] : [[A]].[[s]] }}  
-  | ( \l x : A . s1 ) s2 :: :: LFunApp
-  {{tex (\lambda_l [[x]] : [[A]].[[s1]])\,[[s2]] }}
-  | ( \r x : A . s1 ) s2 :: :: RFunApp
-  {{tex (\lambda_r [[x]] : [[A]].[[s1]])\,[[s2]] }}
-  | ( \ x : A . s1 ) s2 :: :: FunApp
-  {{tex (\lambda [[x]] : [[A]].[[s1]])\,[[s2]] }}  
   | appl s1 s2   :: :: Appl
   {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
   | appr s1 s2   :: :: Appr
@@ -80,10 +74,10 @@ s :: 'term_' ::=
   {{tex \mathsf{app}\,[[s1]]\,[[s2]] }}  
   | ex s1 , s2 with x1 , x2 in s3 :: :: Ex
   {{tex \mathsf{ex}\,[[s1]],[[s2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[s3]] }}
-  | contrR x1 as s1 , s2 in s3 :: :: ContrR
-  {{tex \mathsf{contrR}\,[[x1]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
-  | contrL x1 as s1 , s2 in s3 :: :: ContrL
-  {{tex \mathsf{contrL}\,[[x1]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
+  | contrR x as s1 , s2 in s3 :: :: ContrR
+  {{tex \mathsf{contrR}\,[[x]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
+  | contrL x as s1 , s2 in s3 :: :: ContrL
+  {{tex \mathsf{contrL}\,[[x]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
   | weak x in s :: :: Weak
   {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[s]] }}
   | [ s1 / x ] s2 :: M :: Subst
@@ -108,12 +102,6 @@ t :: 'sterm_' ::=
   {{tex \lambda_r [[x]] : [[X]].[[t]] }}
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
-  | ( \l x : X . t1 ) t2 :: :: LFunApp
-  {{tex (\lambda_l [[x]] : [[X]].[[t1]])\,[[t2]] }}
-  | ( \r x : X . t1 ) t2 :: :: RFunApp
-  {{tex (\lambda_r [[x]] : [[X]].[[t1]])\,[[t2]] }}
-  | ( \ x : X . t1 ) t2 :: :: FunApp
-  {{tex (\lambda [[x]] : [[X]].[[t1]])\,[[t2]] }}  
   | appl t1 t2   :: :: Appl
   {{tex \mathsf{app}_l\,[[t1]]\,[[t2]] }}
   | appr t1 t2   :: :: Appr
@@ -122,12 +110,12 @@ t :: 'sterm_' ::=
   {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
   | ex t1 , t2 with x1 , x2 in t3 :: :: Ex
   {{tex \mathsf{ex}\,[[t1]],[[t2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[t3]] }}
-  | contrR x1 as t1 , t2 in t3 :: :: ContrR
-  {{tex \mathsf{contrR}\,[[x1]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
-  | contrL x1 as t1 , t2 in t3 :: :: ContrL
-  {{tex \mathsf{contrL}\,[[x1]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
+  | contrR x as t1 , t2 in t3 :: :: ContrR
+  {{tex \mathsf{contrR}\,[[x]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
+  | contrL x as t1 , t2 in t3 :: :: ContrL
+  {{tex \mathsf{contrR}\,[[x]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
   | weak x in t :: :: Weak
-  {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[t]] }}  
+  {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[t]] }}
   | [ t1 / x ] t2 :: M :: Subst
   | ( t )         :: S :: parens
   | h( t )        :: M :: hparen
@@ -195,19 +183,19 @@ by
   ---------------- :: unitR
   . |- triv : Unit
 
-  G, x : X, y : Y,D |- t : Z
-  --------------------------------------------- :: beta
-  G, z : Y, w : X,D |- ex w,z with x,y in t : Z
+  G, x : X, y : Y, D |- t : Z
+  ------------------------------------------------ :: beta
+  G, z : Y, w : X, D |- ex w, z with x, y in t : Z
 
   G1, x : X, G2, y : X, G3 |- t : Y
-  --------------------------------------------- :: contrR
-  G1, G2, z : X, G3 |- contrR z as x,y in t : Y
+  ---------------------------------------------- :: contrR
+  G1, G2, z : X, G3 |- contrR z as x, y in t : Y
 
   G1, x : X, G2, y : X, G3 |- t : Y
-  --------------------------------------------- :: contrL
-  G1, z : X, G2, G3 |- contrL z as x,y in t : Y
+  ---------------------------------------------- :: contrL
+  G1, z : X, G2, G3 |- contrR z as x, y in t : Y
 
-  G, D |- t : Y && x nin2 |G,D|
+  G, D |- t : Y && x nin2 |G, D|
   ------------------------------ :: weak
   G, x : X, D |- weak x in t : Y
 
@@ -265,17 +253,17 @@ by
   ----------------------------------------------- :: beta
   G, z : Y, w : X,D;P |- ex w,z with x,y in s : A
 
-  G, D ; P |- s : B && x nin1 |G,D,P|
-  ----------------------------------- :: weak
+  G1, x : X, G2, y : X, G3 ; P |- s : B
+  -------------------------------------------------- :: contrR
+  G1, G2, z : X, G3 ; P |- contrR z as x, y in s : B
+
+  G1, x : X, G2, y : X, G3 ; P |- s : B
+  -------------------------------------------------- :: contrL
+  G1, z : X, G2, G3 ; P |- contrR z as x, y in s : B
+
+  G, D ; P |- s : B && x nin1 |G, D, P|
+  ------------------------------------- :: weak
   G, x : X, D ; P |- weak x in s : B
-
-  G1, x : X, G2, y : X, G3 ; P |- s : B
-  ------------------------------------------------- :: contrR
-  G1, G2, z : X, G3 ; P |- contrR z as x,y in s : B
-
-  G1, x : X, G2, y : X, G3 ; P |- s : B
-  ------------------------------------------------- :: contrL
-  G1, z : X, G2, G3 ; P |- contrL z as x,y in s : B
 
   G |- t : X && D1,x : X,D2;P |- s : A
   ------------------------------------ :: cut1

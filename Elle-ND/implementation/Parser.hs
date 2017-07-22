@@ -50,17 +50,28 @@ tyUnit_T = do
   reservedOp "Unit"
   return Unit_T
 
+tyUnit_S = do
+  reservedOp "Unit"
+  return Unit_S
+
 ------------------------------------------------------------------------
 -- Type parser tables                                                 --
 ------------------------------------------------------------------------
-tyTable_T = [[binOp AssocLeft "(x)" (\d r -> Tensor_T d r)],
-           [binOp AssocRight "-o" (\d r -> Imp_T d r)]]
-binOp assoc op f = Text.Parsec.Expr.Infix (do{ reservedOp op; return f}) assoc
+tyTable_T = [[binOp_T AssocLeft "(x)" (\d r -> Tensor_T d r)],
+           [binOp_T AssocRight "-o" (\d r -> Imp_T d r)]]
+binOp_T assoc op f = Text.Parsec.Expr.Infix (do{ reservedOp op; return f}) assoc
 typeParser_T = buildExpressionParser tyTable_T typeParser'_T
 typeParser'_T = parens typeParser_T <|> tyUnit_T
 
+tyTable_S = [[binOp_S AssocLeft "(x)" (\d r -> Tensor_S d r)],
+           [binOp_S AssocRight "->" (\d r -> ImpL_S d r)],
+           [binOp_S AssocRight "<-" (\d r -> ImpR_S d r)]]
+binOp_S assoc op f = Text.Parsec.Expr.Infix (do{ reservedOp op; return f}) assoc
+typeParser_S = buildExpressionParser tyTable_S typeParser'_S
+typeParser'_S = parens typeParser_S <|> tyUnit_S
+
 ------------------------------------------------------------------------
--- Term parsers                                                       --
+-- Term_T parsers                                                     --
 ------------------------------------------------------------------------
 aterm_T = parens termParser_T <|> trivParse_T <|> var_T
 termParser_T = lamParse_T <|> try letTParse_T <|> letUParse_T <|> tensParse_T <|> appParse_T <?> "Parser error"
@@ -129,7 +140,104 @@ letTParse_T = do
   return $ LetT_T t1 (Tensor_T ty1 ty2) (bind x (bind y t2))
 
 ------------------------------------------------------------------------
--- Functions String -> Term or String -> Type                         --
+-- Term_S parsers                                                     --
+------------------------------------------------------------------------
+aterm_S = parens termParser_S <|> trivParse_S <|> var_S
+termParser_S = lamLParse_S <|> lamRParse_S <|> try letTParse_S <|> letUParse_S <|> tensParse_S <|> appLParse_S <|> appRParse_S <|> exParse_S <?> "Parser error"
+
+var_S = var'_S varName_S Var_S
+var'_S p c = do
+  var_name_S <- p
+  return (c var_name_S)
+
+varName_S = varName'_S isUpper "Term variables must begin with a lowercase letter."
+varName'_S p msg = do
+  n <- identifier
+  when ((length n) > 0) $
+    let h = head n in
+      when (p h || isNumber h) $ unexpColon (n++" : "++msg)
+  return . s2n $ n
+
+trivParse_S = do
+  reserved "triv"
+  return Triv_S
+
+lamLParse_S = do
+  reserved "\\l"
+  symbol "("
+  name <- varName_S
+  colon
+  ty <- typeParser_S
+  symbol ")"
+  dot
+  body <- termParser_S
+  return $ LamL_S ty . bind name $ body
+
+lamRParse_S = do
+  reserved "\\r"
+  symbol "("
+  name <- varName_S
+  colon
+  ty <- typeParser_S
+  symbol ")"
+  dot
+  body <- termParser_S
+  return $ LamR_S ty . bind name $ body
+
+appLParse_S = do
+  l <- many1 aterm_S
+  return $ foldl1 AppL_S l
+
+appRParse_S = do
+  l <- many1 aterm_S
+  return $ foldl1 AppR_S l
+
+tensParse_S = do
+  reserved "tens"
+  s1 <- termParser_S
+  symbol ","
+  s2 <- termParser_S
+  return $ Tens_S s1 s2
+
+letUParse_S = do
+  reserved "let"
+  reserved "triv"
+  reservedOp "="
+  s1 <- termParser_S     -- change to varName?
+  reserved "in"
+  s2 <- termParser_S
+  return $ LetU_S s1 s2
+
+letTParse_S = do
+  reserved "let"
+  x <- varName_S
+  reservedOp "(x)"
+  y <- varName_S
+  colon
+  ty1 <- typeParser_S
+  reservedOp "(x)"
+  ty2 <- typeParser_S
+  reservedOp "be"
+  s1 <- termParser_S
+  reserved "in"
+  s2 <- termParser_S
+  return $ LetT_S s1 (Tensor_S ty1 ty2) (bind x (bind y s2))
+
+exParse_S = do
+  reserved "ex"
+  t1 <- termParser_T
+  reserved ", "
+  t2 <- termParser_T
+  reserved "with"
+  x <- varName_S
+  comma
+  y <- varName_S
+  reserved "in"
+  s <- termParser_S
+  return $ Ex_S t1 t2 (bind x (bind y s))
+
+------------------------------------------------------------------------
+-- Functions String -> Term_T or String -> Type_T                     --
 ------------------------------------------------------------------------
 parseTerm_T :: String -> Term_T
 parseTerm_T str =
@@ -149,6 +257,26 @@ parseTester_T p str =
     Right r -> r
 
 ------------------------------------------------------------------------
+-- Functions String -> Term_S or String -> Type_S                     --
+------------------------------------------------------------------------
+parseTerm_S :: String -> Term_S
+parseTerm_S str =
+  case parse termParser_S "" str of
+    Left e  -> error $ show e
+    Right r -> r
+
+parseType_S :: String -> Type_S
+parseType_S str =
+  case parse typeParser_S "" str of
+    Left e  -> error $ show e
+    Right r -> r
+
+parseTester_S p str =
+  case parse p "" str of
+    Left e  -> error $ show e
+    Right r -> r
+
+------------------------------------------------------------------------
 -- Context Parser                                                     --
 ------------------------------------------------------------------------
 tmPairCtxParse_T = do
@@ -162,6 +290,16 @@ tmPairCtxParse_T = do
 
 tmCtxParse_T = tmPairCtxParse_T `sepBy` (Token.symbol tokenizer ",")
 
+tmPairCtxParse_S = do
+  nm <- varName_T
+  ws
+  colon
+  ws
+  ty <- typeParser_T
+  ws
+  return (nm, ty)
+
+tmCtxParse_S = tmPairCtxParse_S `sepBy` (Token.symbol tokenizer ",")
 ------------------------------------------------------------------------
 -- Parsers for the REPL                                               --
 ------------------------------------------------------------------------

@@ -58,10 +58,6 @@ data Term_T = Triv_T
           -- LetT_T t1 (X * Y) (Bind x (Bind y t2))
           -- let t1 : X * Y be x * y in t2
           | LetT_T Term_T Type_T (Bind TmName_T (Bind TmName_T Term_T))
-          -- LetG_T t (Gt_T ty) (Bind x s)
-          -- let t : (Gt_T ty) be x in s
-          -- ?
-          | LetG_T Term_T Type_T (Bind TmName_T Term_T)
           | Tens_T Term_T Term_T
           | Lam_T Type_T (Bind TmName_T Term_T)
           | App_T Term_T Term_T
@@ -73,17 +69,22 @@ type TmName_S = Name Term_S
 data Term_S = Triv_S
             | Var_S TmName_S
             | LetU_S Term_S Term_S
+            -- LetT_S s ty (Bind x (Bind y s'))
+            -- let (x*y) : ty be s in s'
             | LetT_S Term_S Type_S (Bind TmName_S (Bind TmName_S Term_S))
-            -- ?
+            -- LetF_S s (Fty_S ty) (Bind x s')
+            -- let F x : F ty be s in s'
             | LetF_S Term_S Type_S (Bind TmName_S Term_S)
+            -- LetG_T t (Gty_T ty) (Bind x s)
+            -- let G x : G ty be s in s'
+            | LetG_S Term_T Type_T (Bind TmName_S Term_S)
             | Tens_S Term_S Term_S
             | LamL_S Type_S (Bind TmName_S Term_S)
             | LamR_S Type_S (Bind TmName_S Term_S)
             | AppL_S Term_S Term_S
             | AppR_S Term_S Term_S
-            | Ex_S Term_S Term_S (Bind TmName_S (Bind TmName_S Term_S))
+            | Ex_S Term_T Term_T (Bind TmName_S (Bind TmName_S Term_S))
             | Ft_S Term_T
-            | Derelict_S Term_T     -- Term_T must be Gt_T Term_S
             deriving (Show)
 
 

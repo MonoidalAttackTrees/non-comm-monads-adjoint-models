@@ -65,12 +65,6 @@ s :: 'term_' ::=
   {{tex \lambda_r [[x]] : [[A]].[[s]] }}
   | \ x : A . s :: :: Fun
   {{tex \lambda [[x]] : [[A]].[[s]] }}  
-  | ( \l x : A . s1 ) s2 :: :: LFunApp
-  {{tex (\lambda_l [[x]] : [[A]].[[s1]])\,[[s2]] }}
-  | ( \r x : A . s1 ) s2 :: :: RFunApp
-  {{tex (\lambda_r [[x]] : [[A]].[[s1]])\,[[s2]] }}
-  | ( \ x : A . s1 ) s2 :: :: FunApp
-  {{tex (\lambda [[x]] : [[A]].[[s1]])\,[[s2]] }}
   | appl s1 s2   :: :: Appl
   {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
   | appr s1 s2   :: :: Appr
@@ -79,12 +73,6 @@ s :: 'term_' ::=
   {{tex \mathsf{app}\,[[s1]]\,[[s2]] }}  
   | ex x1 , x2 with s1 , s2 in s3 :: :: Ex
   {{tex \mathsf{ex}\,[[x1]],[[x2]]\,\mathsf{with}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
-  | contrR x1 as s1 , s2 in s3 :: :: ContrR
-  {{tex \mathsf{contrR}\,[[x1]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
-  | contrL x1 as s1 , s2 in s3 :: :: ContrL
-  {{tex \mathsf{contrL}\,[[x1]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
-  | weak x in s :: :: Weak
-  {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[s]] }}
   | derelict t :: :: Derelict
   {{tex \mathsf{derelict}\,[[t]] }}
   | [ s1 / x ] s2 :: M :: Subst
@@ -107,16 +95,6 @@ t :: 'sterm_' ::=
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
   | app t1 t2   :: :: App
   {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
-  | ( \ x : X . t1 ) t2 :: :: FunApp
-  {{tex (\lambda [[x]] : [[X]].[[t1]])\,[[t2]] }}
-  | ex x1 , x2 with t1 , t2 in t3 :: :: Ex
-  {{tex \mathsf{ex}\,[[x1]],[[x2]]\,\mathsf{with}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
-  | contrR x1 as t1 , t2 in t3 :: :: ContrR
-  {{tex \mathsf{contrR}\,[[x1]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
-  | contrL x1 as t1 , t2 in t3 :: :: ContrL
-  {{tex \mathsf{contrL}\,[[x1]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
-  | weak x in t :: :: Weak
-  {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[t]] }}  
   | [ t1 / x ] t2 :: M :: Subst
   | ( t )         :: S :: parens
   | h( t )        :: M :: hparen
@@ -274,7 +252,7 @@ by
   let t1 (x) t2 : X (x) Y be x (x) y in t3 ~> [t1/x][t2/y]t3
 
   ------------------------- :: lam
-  (\ x:X.t1) t2 ~> [t2/x]t1
+  app (\ x:X.t1) t2 ~> [t2/x]t1
 
   t1 ~> t1'
   ----------------------- :: app1
@@ -300,13 +278,13 @@ by
   let F t : F X be F x in s ~> [t/x]s
 
   ------------------------- :: lamL
-  (\l x:A.s1) s2 ~> [s2/x]s1
+  app (\l x:A.s1) s2 ~> [s2/x]s1
 
   ------------------------- :: lamR
-  (\r x:A.s1) s2 ~> [s2/x]s1
+  app (\r x:A.s1) s2 ~> [s2/x]s1
 
   ------------------------- :: lam
-  (\ x:A.s1) s2 ~> [s2/x]s1
+  app (\ x:A.s1) s2 ~> [s2/x]s1
   
   s1 ~> s1'
   ------------------------- :: appl1

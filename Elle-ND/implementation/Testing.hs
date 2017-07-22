@@ -9,6 +9,7 @@ import Pretty
 ------------------------------------------------------------------------
 
 lamtest0_T = parseTester_T lamParse_T "\\(x:Unit).y"
+lamtest0_S = parseTester_T lamParse_T "\\l(x:Unit).y"
 
 lamtest1_T = parseTester_T lamParse_T "\\(x:Unit (x) Unit).y"
 
