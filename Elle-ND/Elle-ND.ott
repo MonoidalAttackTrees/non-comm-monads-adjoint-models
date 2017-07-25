@@ -12,7 +12,7 @@ A, B, C :: 'lform_' ::=
   {{tex \mathsf{B} }}
   | Unit    ::   :: Unit
   {{tex \mathsf{Unit} }}
-  | A (x) B ::   :: Tensor        
+  | A (>) B ::   :: Lambek
   | A -> B  ::   :: RFun          
   | A <- B  ::   :: LFun          
   | ( A )   :: M :: Parens 
@@ -46,6 +46,7 @@ p :: 'pattern_' ::=
   | triv :: :: triv
   {{tex \mathsf{triv} }}
   | p (x) p' :: :: ten
+  | p (>) p' :: :: lambek
   | F p :: :: LeftAdj
   {{tex \mathsf{F}\,[[p]] }}
   | Gf p     ::   :: RightAdj
@@ -58,21 +59,15 @@ s :: 'term_' ::=
   {{tex \mathsf{triv} }}
   | let s1 : T be p in s2 :: :: let
   {{tex \mathsf{let}\,[[s1]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
-  | s1 (x) s2 :: :: Tensor
+  | s1 (>) s2 :: :: Tensor
   | \l x : A . s :: :: LFun
   {{tex \lambda_l [[x]] : [[A]].[[s]] }}
   | \r x : A . s :: :: RFun
   {{tex \lambda_r [[x]] : [[A]].[[s]] }}
-  | \ x : A . s :: :: Fun
-  {{tex \lambda [[x]] : [[A]].[[s]] }}  
   | appl s1 s2   :: :: Appl
   {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
   | appr s1 s2   :: :: Appr
-  {{tex \mathsf{app}_r\,[[s1]]\,[[s2]] }}
-  | app s1 s2   :: :: App
-  {{tex \mathsf{app}\,[[s1]]\,[[s2]] }}  
-  | ex x1 , x2 with s1 , s2 in s3 :: :: Ex
-  {{tex \mathsf{ex}\,[[x1]],[[x2]]\,\mathsf{with}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
+  {{tex \mathsf{app}_r\,[[s1]]\,[[s2]] }}  
   | derelict t :: :: Derelict
   {{tex \mathsf{derelict}\,[[t]] }}
   | [ s1 / x ] s2 :: M :: Subst
@@ -128,6 +123,8 @@ terminals :: 'terminals_' ::=
   {{tex \mathsf{Unit} }}
   | (x)  :: :: Tensor
   {{tex \otimes }}
+  | (>)  :: :: Lambek
+  {{tex \triangleright }}
   | (e)  :: :: ETensor
   {{tex \circop{e} }}  
   | (w)  :: :: WTensor
@@ -198,31 +195,31 @@ by
 
   G;P |- s1 : A && D;I |- s2 : B
   ------------------------------ :: tenI
-  G,D;P,I |- s1 (x) s2 : A (x) B
+  G,D;P,I |- s1 (>) s2 : A (>) B
 
   G |- z : X (x) Y && D, x : X, y : Y; P |- s : A
   --------------------------------------------------- :: tenE1
   D, G; P |- let z : X (x) Y be x (x) y in s : A
 
-  G; P |- z : A (x) B && D; I, x : A, y : B |- s : C
+  G; P |- z : A (>) B && D; I, x : A, y : B |- s : C
   --------------------------------------------------- :: tenE2
-  G, D; I, P |- let z : A (x) B be x (x) y in s : C
+  G, D; I, P |- let z : A (>) B be x (>) y in s : C
 
   G; P, x : A |- s : B
   ------------------------ :: implI
-  G; P |- \l x:A.s : A -> B
+  G; P |- \r x:A.s : A -> B
 
   G; P |- s1 : A -> B && D; I |- s2 : A
   ------------------------------------ :: implE
-  G, D; P, I |- appl s1 s2 : B
+  G, D; P, I |- appr s1 s2 : B
 
   G;x : A,P |- s : B
   ------------------------ :: imprI
-  G;P |- \r x:A.s : B <- A
+  G;P |- \l x:A.s : B <- A
 
   G; P |- s1 : B <- A && D; I |- s2 : A
   ------------------------------------ :: imprE
-  G, D; P, I |- appr s1 s2 : B
+  G, D; P, I |- appl s1 s2 : B
 
   G |- t : X
   ---------------- :: FI
@@ -272,19 +269,16 @@ by
   let triv : Unit be triv in s ~> s
 
   ---------------------------------------------------------- :: letT
-  let s1 (x) s2 : A (x) B be x (x) y in s3 ~> [s1/x][s2/y]s3
+  let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3
 
   ----------------------------------- :: letF
   let F t : F X be F x in s ~> [t/x]s
 
-  ------------------------- :: lamL
-  app (\l x:A.s1) s2 ~> [s2/x]s1
+  ------------------------------- :: lamL
+  appl (\l x:A.s1) s2 ~> [s2/x]s1
 
-  ------------------------- :: lamR
-  app (\r x:A.s1) s2 ~> [s2/x]s1
-
-  ------------------------- :: lam
-  app (\ x:A.s1) s2 ~> [s2/x]s1
+  ------------------------------- :: lamR
+  appr (\r x:A.s1) s2 ~> [s2/x]s1
   
   s1 ~> s1'
   ------------------------- :: appl1
@@ -301,14 +295,6 @@ by
   s2 ~> s2'
   ------------------------- :: appr2
   appr s1 s2 ~> appr s1 s2'
-
-  s1 ~> s1'
-  ------------------------- :: app1
-  app s1 s2 ~> app s1' s2
-
-  s2 ~> s2'
-  ------------------------- :: app2
-  app s1 s2 ~> app s1 s2'
 
   ------------------ :: derelict
   derelict Gf s ~> s
