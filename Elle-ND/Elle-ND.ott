@@ -70,6 +70,8 @@ s :: 'term_' ::=
   {{tex \mathsf{app}_r\,[[s1]]\,[[s2]] }}  
   | derelict t :: :: Derelict
   {{tex \mathsf{derelict}\,[[t]] }}
+  | ex s1 , s2 with x1 , x2 in s3 :: :: Ex
+  {{tex \mathsf{ex}\,[[s1]],[[s2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[s3]] }}
   | [ s1 / x ] s2 :: M :: Subst
   | [ t / x ] s   :: M :: Subst2
   | ( s )         :: S :: parens
@@ -90,6 +92,8 @@ t :: 'sterm_' ::=
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
   | app t1 t2   :: :: App
   {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
+  | ex t1 , t2 with x1 , x2 in t3 :: :: Ex
+  {{tex \mathsf{ex}\,[[t1]],[[t2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[t3]] }}
   | [ t1 / x ] t2 :: M :: Subst
   | ( t )         :: S :: parens
   | h( t )        :: M :: hparen
@@ -178,6 +182,10 @@ by
   G ; . |- s : A
   ---------------- :: GI
   G |- Gf s : Gf A
+  
+  G, x : X, y : Y, D |- t : Z 
+  ------------------------------------------------ :: beta
+  G, z : Y, w : X, D |- ex w, z with x, y in t : Z
 
 defn
   G ; P |- s : A :: :: sty :: 'S_'
@@ -233,6 +241,10 @@ by
   ----------------------- :: GE
   G ; . |- derelict t : A
 
+
+  G, x : X, y : Y,D;P |- s : A
+  ----------------------------------------------- :: beta
+  G, z : Y, w : X,D;P |- ex w,z with x,y in s : A
 
 
 defns

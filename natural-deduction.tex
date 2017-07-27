@@ -1,15 +1,82 @@
-The term assignment for natural deduction is defined in Figure~\ref{fig:elle-nd}.
+The term assignment for natural deduction of the non-commutative part of the model, i.e. the
+SMCC of the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for
+the commutative part, i.e. the Lambek category of the adjunction, is defined in
+Figure~\ref{fig:elle-nd-lambek}. $[[P]]$ and $[[I]]$ are contexts for the non-commutative part
+and they are lists. $[[G]]$ and $[[D]]$ are contexts for the commutative part and they are
+multisets, therefore the following exchange rules are implicit.
+\scriptsize
+\begin{mathpar}
+  \ottdruleTXXbeta{} \qquad\qquad \ottdruleSXXbeta{}
+\end{mathpar}
 
 \begin{figure}
  \scriptsize
   \begin{mdframed}
     \begin{mathpar}
-      \druleTXXunitE{}
+      \ottdruleTXXidentity{} \qquad\qquad \ottdruleTXXunitI{} \qquad\qquad \ottdruleTXXunitE{} \\
+      \ottdruleTXXtenI{} \qquad\qquad \ottdruleTXXtenE{} \\
+      \ottdruleTXXimpI{} \qquad\qquad \ottdruleTXXimpE{} \qquad\qquad \ottdruleTXXGI{}
     \end{mathpar}
   \end{mdframed}
-\caption{Term Assigment for Natural Deduction}
-\label{fig:fig:elle-nd}
+\caption{Commutative Part}
+\label{fig:elle-nd-smcc}
 \end{figure}
+
+\begin{figure}
+ \scriptsize
+  \begin{mdframed}
+    \begin{mathpar}
+      \ottdruleSXXidentity{} \qquad\qquad \ottdruleSXXunitI{} \qquad\qquad \ottdruleSXXunitE{} \\
+      \ottdruleSXXtenI{} \qquad\qquad \ottdruleSXXtenEOne{} \\
+      \ottdruleSXXtenETwo{} \qquad\qquad \ottdruleSXXimplI{} \\
+      \ottdruleSXXimplE{} \qquad\qquad \ottdruleSXXimprI{} \\
+      \ottdruleSXXimprE{} \qquad\qquad \ottdruleSXXFI{} \\
+      \ottdruleSXXFE{} \qquad\qquad \ottdruleSXXGE{}
+    \end{mathpar}
+  \end{mdframed}
+\caption{Non-Commutative Part}
+\label{fig:elle-nd-lambek}
+\end{figure}
+
+\begin{center}
+  \tiny
+  \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny impR}] {
+      $$\mprset{flushleft}
+    \inferrule* [right={\tiny tenL}] {
+      $$\mprset{flushleft}
+    \inferrule* [right={\tiny Fl}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny FI}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny beta}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenI}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny FI}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny identity}] {
+                \,
+              }{[[y0 : Gf B |- y0 : Gf B]]}
+            }{[[y0 : Gf B; . |- F y0 : F Gf B]]}
+            \\
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny FI}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny identity}] {
+                \,
+              }{[[x0 : Gf A |- x0 : Gf A]]}
+            }{[[x0 : Gf A; . |- F x0 : F Gf A]]}
+          }{[[y0 : Gf B, x0 : Gf A ; . |- h(F y0) (>) F x0 : h(F Gf B) (>) F Gf A]]}
+        }{[[x1 : Gf A, y1 : Gf B ; . |- ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0) : h(F Gf B) (>) F Gf A]]}
+      }{[[x1 : Gf A ; y2 : F Gf B |- let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0)) : h(F Gf B) (x) F Gf A]]}
+    }{[[. ; x2 : F Gf A, y2 : F Gf B |- let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0))) : h(F Gf B) (x) F Gf A]]}
+    }{[[. ; z : h(F Gf A) (x) F Gf B |- let z : h(F Gf A) (x) F Gf B be x2 (x) y2 in (let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0)))) : (h(F Gf B) (x) F Gf A)]]}
+    }{[[. ; . |- \l z : h(F Gf A) (x) F Gf B . let z : h(F Gf A) (x) F Gf B be x2 (x) y2 in (let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0)))) : (h(F Gf A) (x) F Gf B) -> (h(F Gf B) (x) F Gf A)]]}
+  \end{math}
+\end{center}
+
 
 \subsection{Categorical Interpretation of Natural Deductions}
 
