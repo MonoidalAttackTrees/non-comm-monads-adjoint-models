@@ -1,14 +1,15 @@
+
 \begin{definition}
 \label{def:mc}
-  A \textbf{monoidal category} $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ is a category $\cat{M}$
+  A \textbf{monoidal category} $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ is a category $\cat{M}$
   consists of
   \begin{itemize}
-  \item a bifunctor $\otimes:\cat{M}\times\cat{M}\rightarrow\cat{M}$, called the tensor product;
+  \item a bifunctor $\tri:\cat{M}\times\cat{M}\rightarrow\cat{M}$, called the tensor product;
   \item an object $I$, called the unit object;
   \item three natural isomorphisms $\alpha$, $\lambda$, and $\rho$ with components
-        $$\alpha_{A,B,C}:(A\otimes B)\otimes C\rightarrow A\otimes(B\otimes C)$$
-        $$\lambda_A:I\otimes A\rightarrow A$$
-        $$\rho_A:A\otimes I\rightarrow A$$
+        $$\alpha_{A,B,C}:(A\tri B)\tri C\rightarrow A\tri(B\tri C)$$
+        $$\lambda_A:I\tri A\rightarrow A$$
+        $$\rho_A:A\tri I\rightarrow A$$
         where $\alpha$ is called associator, $\lambda$ is left unitor, and $\rho$ is right
         unitor,
   \end{itemize}
@@ -16,53 +17,54 @@
   \begin{mathpar}
   \bfig
     \square/`->`->`->/<2100,400>[
-      ((A\otimes B)\otimes C)\otimes D`
-      A\otimes((B\otimes C)\otimes D)`
-      (A\otimes B)\otimes(C\otimes D)`
-      A\otimes(B\otimes(C\otimes D));
+      ((A\tri B)\tri C)\tri D`
+      A\tri((B\tri C)\tri D)`
+      (A\tri B)\tri(C\tri D)`
+      A\tri(B\tri(C\tri D));
       `
-      \alpha_{A\otimes B,C,D}`
-      id_A\otimes\alpha_{B,C,D}`
-      \alpha_{A,B,C\otimes D}]
+      \alpha_{A\tri B,C,D}`
+      id_A\tri\alpha_{B,C,D}`
+      \alpha_{A,B,C\tri D}]
     \morphism(0,400)<1100,0>[
-      ((A\otimes B)\otimes C)\otimes D`
-      (A\otimes(B\otimes C))\otimes D;
-      \alpha_{A,B,C}\otimes id_D]
+      ((A\tri B)\tri C)\tri D`
+      (A\tri(B\tri C))\tri D;
+      \alpha_{A,B,C}\tri id_D]
     \morphism(1100,400)<1000,0>[
-      (A\otimes(B\otimes C))\otimes D`
-      A\otimes((B\otimes C)\otimes D);
-      \alpha_{A,B\otimes C,D}]
+      (A\tri(B\tri C))\tri D`
+      A\tri((B\tri C)\tri D);
+      \alpha_{A,B\tri C,D}]
   \efig
   \and
   \bfig
     \Vtriangle<400,400>[
-      (A\otimes I)\otimes B`
-      A\otimes(I\otimes B)`
-      A\otimes B;
+      (A\tri I)\tri B`
+      A\tri(I\tri B)`
+      A\tri B;
       \alpha_{A,I,B}`
-      \rho_A\otimes id_B`
-      id_A\otimes\lambda_B]
+      \rho_A\tri id_B`
+      id_A\tri\lambda_B]
   \efig
   \end{mathpar}
 \end{definition}
 
 \begin{definition}
   A \textbf{Lambek category} (or a \textbf{biclosed monoidal category}) is a monoidal category
-  $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ equipped with two bifunctors
+  $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ equipped with two bifunctors
   $\rightharpoonup:\cat{M}^{op}\times\cat{M}\rightarrow\cat{M}$ and
   $\leftharpoonup:\cat{M}\times\cat{M}^{op}\rightarrow\cat{M}$ that are both right adjoint to
   the tensor product. That is, the following natural bijections hold:
   \begin{center}
   \begin{math}
   \begin{array}{lll}
-    \Hom{L}{X\otimes A}{B}\cong\Hom{L}{X}{A\lto B} & \quad\quad\quad\quad & 
-    \Hom{L}{A\otimes X}{B}\cong\Hom{L}{X}{B\rto A}
+    \Hom{L}{X\tri A}{B}\cong\Hom{L}{X}{A\lto B} & \quad\quad\quad\quad & 
+    \Hom{L}{A\tri X}{B}\cong\Hom{L}{X}{B\rto A}
   \end{array}
   \end{math}
   \end{center}
 \end{definition}
 
 \begin{definition}
+  \label{def:smcc}
   A \textbf{symmetric monoidal category} (SMCC) is a monoidal category
   $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ together with a natural transformation with
   components $\e{A,B}:A\otimes B\rightarrow B\otimes A$, called \textbf{exchange}, such that the
@@ -87,6 +89,8 @@
   \efig
   \end{mathpar}
 \end{definition}
+
+We use $\tri$ for non-symmetric monoidal categories while $\otimes$ for symmetric ones.
 
 \begin{definition}
   A \textbf{symmetric monoidal closed category} $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ is a
@@ -122,31 +126,31 @@
 \end{corollary}
 
 \begin{definition}
-  Let $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ and
-  $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$ be monoidal categories. A \textbf{monoidal
+  Let $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ and
+  $(\cat{M'},\tri',I',\alpha',\lambda',\rho')$ be monoidal categories. A \textbf{monoidal
   functor} $(F,\m{})$ from $\cat{M}$ to $\cat{M'}$ is a functor $F:\cat{M}\rightarrow\cat{M'}$
   together with a morphism $\m{I}:I'\rightarrow F(I)$ and a natural transformation
-  $\m{A,B}:FA'\otimes FB'\rightarrow F(A\otimes B)$, such that the following diagrams commute
+  $\m{A,B}:FA'\tri FB'\rightarrow F(A\tri B)$, such that the following diagrams commute
   for any objects $A$, $B$, and $C$ in $\cat{M}$:
   \begin{mathpar}
   \bfig
     \hSquares/->`->`->``->`->`->/<400>[
-      (FA\otimes'FB)\otimes'FC`FA\otimes'(FB\otimes'FC)`FA\otimes'F(B\otimes C)`
-      F(A\otimes B)\otimes'FC`F((A\otimes B)\otimes C)`F(A\otimes(B\otimes C));
-      \alpha'_{FA,FB,FC}`id_{FA}\otimes'\m{A,B}`\m{A,B}\otimes'id_{FC}``
-      \m{A,B\otimes C}`\m{A\otimes B,C}`F\alpha_{A,B,C}]
+      (FA\tri'FB)\tri'FC`FA\tri'(FB\tri'FC)`FA\tri'F(B\tri C)`
+      F(A\tri B)\tri'FC`F((A\tri B)\tri C)`F(A\tri(B\tri C));
+      \alpha'_{FA,FB,FC}`id_{FA}\tri'\m{A,B}`\m{A,B}\tri'id_{FC}``
+      \m{A,B\tri C}`\m{A\tri B,C}`F\alpha_{A,B,C}]
   \efig
   \and
   \bfig
     \square/->`->`<-`->/<600,400>[
-      I'\otimes'FA`FA`FI\otimes'FA`F(I\otimes A);
-      \lambda'_{FA}`\m{I}\otimes id_{FA}`F\lambda_A`\m{I,A}]
+      I'\tri'FA`FA`FI\tri'FA`F(I\tri A);
+      \lambda'_{FA}`\m{I}\tri id_{FA}`F\lambda_A`\m{I,A}]
   \efig
   \and
   \bfig
     \square/->`->`<-`->/<600,400>[
-      FA\otimes'I'`FA`FA\otimes'FI`F(A\otimes I);
-      \rho'_{FA}`\id_{FA}\otimes\m{I}`F\rho_A`\m{A,I}]
+      FA\tri'I'`FA`FA\tri'FI`F(A\tri I);
+      \rho'_{FA}`\id_{FA}\tri\m{I}`F\rho_A`\m{A,I}]
   \efig
   \end{mathpar}
 \end{definition}
@@ -184,15 +188,16 @@
 \end{definition}
 
 \begin{definition}
-  Let $(F,\m{})$ and $(G,\n{})$ be monoidal functors from a monoidal category $\cat{M}$ to a
-  monoidal category $\cat{M'}$. A \textbf{monoidal natural transformation} from $(F,\m{})$ to 
-  $(G,\n{})$ is a natural transformation $\theta:(F,\m{})\rightarrow(G,\n{})$ such that the
-  following diagrams commute for any objects $A$ and $B$ in $\cat{M}$:
+  Let $(F,\m{})$ and $(G,\n{})$ be monoidal functors from a monoidal category
+  $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ to a monoidal category
+  $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$. A \textbf{monoidal natural transformation}
+  from $(F,\m{})$ to $(G,\n{})$ is a natural transformation $\theta:(F,\m{})\rightarrow(G,\n{})$
+  such that the following diagrams commute for any objects $A$ and $B$ in $\cat{M}$:
   \begin{mathpar}
   \bfig
     \square<700,400>[
-      FA\otimes'FB`F(A\otimes B)`GA\otimes'GB`G(A\otimes B);
-      \m{A,B}`\theta_A\otimes'\theta_B`\theta_{A\otimes B}`\n{A,B}]
+      FA\tri'FB`F(A\tri B)`GA\tri'GB`G(A\tri B);
+      \m{A,B}`\theta_A\tri'\theta_B`\theta_{A\tri B}`\n{A,B}]
   \efig
   \and
   \bfig
@@ -202,8 +207,8 @@
 \end{definition}
 
 \begin{definition}
-  Let $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ and
-  $(\cat{M'},\otimes',I',\alpha',\lambda',\rho')$ be monoidal categories,
+  Let $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ and
+  $(\cat{M'},\tri',I',\alpha',\lambda',\rho')$ be monoidal categories,
   $F:\cat{M}\rightarrow\cat{M'}$ and $G:\cat{M}'\rightarrow\cat{M}$ be functors. The adjunction
   $F:\cat{M}\dashv\cat{M'}:G$ is a \textbf{monoidal adjunction} if $F$ and $G$ are monoidal
   functors, and the unit $\eta$ and the counit $\varepsilon$ are monoidal natural
@@ -229,35 +234,35 @@
 
 \begin{definition}
   \label{def:strong-monad}
-  Let $(\cat{M},\otimes,I,\alpha,\lambda,\rho)$ be a monoidal category and $(T,\eta,\mu)$ be a
+  Let $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ be a monoidal category and $(T,\eta,\mu)$ be a
   monad on $\cat{M}$. $T$ is a \textbf{strong monad} if there is natural transformation $\tau$, 
   called the \textbf{tensorial strength}, with components
-  $\tau_{A,B}:A\otimes TB\rightarrow T(A\otimes B)$ such that the following diagrams commute:
+  $\tau_{A,B}:A\tri TB\rightarrow T(A\tri B)$ such that the following diagrams commute:
   \begin{mathpar}
   \bfig
-    \Vtriangle<400,400>[I\otimes TA`T(I\otimes A)`TA;\tau_{I,A}`\lambda_{TA}`T\lambda_A]
+    \Vtriangle<400,400>[I\tri TA`T(I\tri A)`TA;\tau_{I,A}`\lambda_{TA}`T\lambda_A]
   \efig
   \and
   \bfig
     \Vtriangle<400,400>[
-      A\otimes B`A\otimes TB`T(A\otimes B);id_A\otimes\eta_B`\eta_{A\otimes B}`\tau_{A,B}]
+      A\tri B`A\tri TB`T(A\tri B);id_A\tri\eta_B`\eta_{A\tri B}`\tau_{A,B}]
   \efig
   \and
   \bfig
     \square/->`->`->`/<1800,400>[
-      (A\otimes B)\otimes TC`T((A\otimes B)\otimes C)`
-      A\otimes(B\otimes TC)`T(A\otimes(B\otimes C));
-      \tau_{A\otimes B,C}`\alpha_{A,B,TC}`T\alpha_{A,B,C}`]
-    \morphism<900,0>[A\otimes(B\otimes TC)`A\otimes T(B\otimes C);id_A\otimes\tau_{B,C}]
-    \morphism(900,0)<900,0>[A\otimes T(B\otimes C)`T(A\otimes(B\otimes C));\tau_{A,B\otimes C}]
+      (A\tri B)\tri TC`T((A\tri B)\tri C)`
+      A\tri(B\tri TC)`T(A\tri(B\tri C));
+      \tau_{A\tri B,C}`\alpha_{A,B,TC}`T\alpha_{A,B,C}`]
+    \morphism<900,0>[A\tri(B\tri TC)`A\tri T(B\tri C);id_A\tri\tau_{B,C}]
+    \morphism(900,0)<900,0>[A\tri T(B\tri C)`T(A\tri(B\tri C));\tau_{A,B\tri C}]
   \efig
   \and
   \bfig
     \square/`->`->`->/<1400,400>[
-      A\otimes T^2B`T^2(A\otimes B)`A\otimes TB`T(A\otimes B);
-      `id_A\otimes\mu_B`\mu_{A\otimes B}`\tau_{A,B}]
-    \morphism(0,400)<700,0>[A\otimes T^2B`T(A\otimes TB);\tau_{A,TB}]
-    \morphism(700,400)<700,0>[T(A\otimes TB)`T^2(A\otimes B);T\tau_{A,B}]
+      A\tri T^2B`T^2(A\tri B)`A\tri TB`T(A\tri B);
+      `id_A\tri\mu_B`\mu_{A\tri B}`\tau_{A,B}]
+    \morphism(0,400)<700,0>[A\tri T^2B`T(A\tri TB);\tau_{A,TB}]
+    \morphism(700,400)<700,0>[T(A\tri TB)`T^2(A\tri B);T\tau_{A,B}]
   \efig
   \end{mathpar}
 \end{definition}
