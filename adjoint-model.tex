@@ -436,6 +436,7 @@ comonad.
 \end{proof}
 
 \begin{lemma}
+  \label{lem:em-ex}
   The following diagrams commute in the co-Eilenberg-Moore category $\cat{L}^S$:
   \begin{mathpar}
   \bfig
@@ -592,14 +593,63 @@ comonad.
     \morphism(3100,200)//<0,0>[`;(5)]
   \efig
   \end{mathpar}
-  TODO:
+  The third diagram commutes as follows, which uses Lemma~\ref{lem:emex}.
   \begin{mathpar}
   \bfig
-    \hSquares/->`->`->``->`->`->/<400>[
-      (A\tri B)\tri C`A\tri(B\tri C)`(B\tri C)\tri A`
-      (B\tri A)\tri C`B\tri(A\tri C)`B\tri(C\tri A);
-      \alpha_{A,B,C}`\e{A,B\tri C}^S`\e{A,B}^S\tri id_C``
-      \alpha_{B,A,C}`\alpha_{B,A,C}`id_B\tri\e{A,C}^S]
+    \morphism(0,400)<1600,0>[(A\tri B)\tri C`A\tri(B\tri C);\alpha_{A,B,C}']
+    \Vtriangle(1600,0)|amm|/->`=`->/<800,400>[
+      A\tri(B\tri C)`FGA\tri FG(B\tri C)`A\tri(B\tri C);
+      h_A\tri h_{B\tri C}``\varepsilon_A\tri\varepsilon_{B\tri C}]
+    \morphism(800,0)|m|<-800,400>[
+      FG((A\tri B)\tri C)`(A\tri B)\tri C;\varepsilon_{(A\tri B)\tri C}]
+    \qtriangle(800,-400)|mmm|/`->`<-/<1600,400>[
+      FG((A\tri B)\tri C)`A\tri(B\tri C)`FG(A\tri(B\tri C));
+      `FG\alpha_{A,B,C}'`\varepsilon_{A\tri(B\tri C)}]
+    \Ctriangle(2400,-1200)|mrm|/`->`<-/<800,800>[
+      FGA\tri FG(B\tri C)`FG(A\tri(B\tri C))`F(GA\otimes G(B\tri C));
+      `\m{GA,G(B\tri C)}`F\n{A,B\tri C}]
+    \morphism(800,-400)<0,400>[F(G(A\tri B)\otimes GC)`FG((A\tri B)\tri C);F\n{A\tri B,C}]
+    \btriangle(800,-800)|mmm|/<-``->/<1400,400>[
+      F(G(A\tri B)\otimes GC)`F((GA\otimes GB)\otimes GC)`F(GA\otimes(GB\otimes GC));
+      F(\n{A,B}\otimes id_{GC})``F\alpha_{GA,GB,GC}]
+    \morphism(800,-800)|m|<0,-400>[
+      F((GA\otimes GB)\otimes GC)`F((GB\otimes GA)\otimes GC);F(\e{A,B}\otimes id_{GC})]
+    \morphism(2200,-800)|m|<1000,-400>[
+      F(GA\otimes(GB\otimes GC))`F(GA\otimes G(B\tri C));F(id_{GA}\otimes\n{B,C})]
+    \morphism(2200,-800)|m|<0,-400>[
+      F(GA\otimes(GB\otimes GC))`F((GB\otimes GC)\otimes GA);F\e{GA,GB\otimes GC}]
+    \qtriangle(2200,-1600)|mmr|/`->`->/<1000,400>[
+      F((GB\otimes GC)\otimes GA)`F(GA\otimes G(B\tri C))`F(G(B\tri C)\otimes GA);
+      `F(\n{B,C}\otimes id_{GA})`F\e{A,B\tri C}]
+    \morphism(800,-1200)|m|<0,-400>[
+      F((GB\otimes GA)\otimes GC)`F(G(B\tri A)\otimes GC);F(\n{B,A}\otimes id_{GC})]
+    \morphism(2200,-1200)|m|<0,-300>[
+      F((GB\otimes GC)\otimes GA)`F(GB\otimes(GC\otimes GA));F\alpha_{GB,GC,GA}]
+    \morphism(800,-1200)|m|<700,-600>[
+      F((GB\otimes GA)\otimes GC)`F(GB\otimes(GA\otimes GC));F\alpha]
+    \morphism(2200,-1500)|m|<-700,-300>[
+      F(GB\otimes(GC\otimes GA))`F(GB\otimes(GA\otimes GC));F(id_{GC}\otimes\e{C,A})]
+    \morphism(800,-1600)|m|<0,-400>[F(G(B\tri A)\otimes GC)`FG((B\tri A)\tri C);F\n{B\tri A,C}]
+    \morphism(2200,-1500)|m|<0,-500>[
+      F(GB\otimes(GC\otimes GA))`F(GB\otimes G(C\tri A));F(id_{GB}\otimes\n{C,A})]
+    \morphism(2200,-2000)|m|<0,-400>[
+      F(GB\otimes G(C\tri A))`FG(B\tri(C\tri A));F\n{B,C\tri A}]
+    \morphism(1500,-1800)|m|<0,-400>[
+      F(GB\otimes(GA\otimes GC))`F(GB\otimes G(A\tri C));F(id_{GB}\otimes\n{A,C})]
+    \morphism(1500,-2200)|m|<0,-400>[F(GB\otimes G(A\tri C))`FG(B\tri(A\tri C));F\n{B,A\tri C}]
+    \morphism(0,400)|l|<0,-2000>[(A\tri B)\tri C`(B\tri A)\tri C;\e{A,B}^S\tri id_C]
+    \morphism(800,-2000)|m|<-800,400>[
+      FG((B\tri A)\tri C)`(B\tri A)\tri C;\varepsilon_{(B\tri A)\tri C}]
+    \morphism(0,-1600)|l|<0,-1000>[(B\tri A)\tri C`B\tri(A\tri C);\alpha_{B,A,C}']
+    \morphism(1500,-2600)|m|<-1500,0>[
+      FG(B\tri(A\tri C))`B\tri(A\tri C);\varepsilon_{B\tri(A\tri C)}]
+    \morphism(0,-2600)|l|<0,-400>[B\tri(A\tri C)`B\tri(C\tri A);\id_B\tri\e{A,C}^S]
+    \morphism(1600,-3000)|b|<-1600,0>[(B\tri C)\tri A`B\tri(C\tri A);\alpha_{B,C,A}']
+    \morphism(3200,-1600)|r|<0,-1400>[
+      F(G(B\tri C)\otimes GA)`FG((B\tri C)\tri A);F\n{B\tri C,A}]
+    \morphism(3200,-3000)|m|<-1000,600>[FG((B\tri C)\tri A)`FG(B\tri(C\tri A));FG\alpha_{B,C,A}]
+    \morphism(3200,-3000)|b|<-1600,0>[
+      FG((B\tri C)\tri A)`(B\tri C)\tri A;\varepsilon_{(B\tri C)\tri A}]
   \efig
   \end{mathpar}
 \end{proof}
