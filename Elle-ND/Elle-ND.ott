@@ -10,8 +10,8 @@ grammar
 A, B, C :: 'lform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
-  | Unit    ::   :: Unit
-  {{tex \mathsf{Unit} }}
+  | UnitS   ::   :: UnitS
+  {{tex \mathsf{UnitS} }}
   | A (>) B ::   :: Lambek
   | A -> B  ::   :: RFun          
   | A <- B  ::   :: LFun          
@@ -25,8 +25,8 @@ A, B, C :: 'lform_' ::=
 X, Y, Z :: 'sform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
-  | Unit    ::   :: Unit
-  {{tex \mathsf{Unit} }}
+  | UnitT   ::   :: UnitT
+  {{tex \mathsf{UnitT} }}
   | X (x) Y ::   :: Tensor        
   | X -o Y  ::   :: Fun          
   | ( X )   :: M :: Parens 
@@ -43,8 +43,10 @@ p :: 'pattern_' ::=
   | - :: :: hole
   {{tex \star }}
   | x :: :: var
-  | triv :: :: triv
-  {{tex \mathsf{triv} }}
+  | trivT :: :: trivT
+  {{tex \mathsf{trivT} }}
+  | trivS :: :: trivS
+  {{tex \mathsf{trivS} }}
   | p (x) p' :: :: ten
   | p (>) p' :: :: lambek
   | F p :: :: LeftAdj
@@ -55,10 +57,12 @@ p :: 'pattern_' ::=
 s :: 'term_' ::=
   | x :: :: Var
   | b :: :: Const
-  | triv :: :: Unit
-  {{tex \mathsf{triv} }}
-  | let s1 : T be p in s2 :: :: let
+  | trivS :: :: UnitS
+  {{tex \mathsf{trivS} }}
+  | let s1 : T be p in s2 :: :: let1
   {{tex \mathsf{let}\,[[s1]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
+  | let t : T be p in s :: :: let2
+  {{tex \mathsf{let}\,[[t]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s]] }}
   | s1 (>) s2 :: :: Tensor
   | \l x : A . s :: :: LFun
   {{tex \lambda_l [[x]] : [[A]].[[s]] }}
@@ -83,8 +87,8 @@ s :: 'term_' ::=
 t :: 'sterm_' ::=
   | x :: :: Var
   | b :: :: Const
-  | triv :: :: Unit
-  {{tex \mathsf{triv} }}
+  | trivT :: :: UnitT
+  {{tex \mathsf{trivT} }}
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
   | t1 (x) t2 :: :: Tensor
@@ -156,12 +160,12 @@ by
   -------------- :: id
   x : X |- x : X
 
-  ---------------- :: unitI
-  . |- triv : Unit
+  ------------------ :: unitI
+  . |- trivT : UnitT
 
-  D |- t1 : Unit && G |- t2 : Y
+  D |- t1 : UnitT && G |- t2 : Y
   --------------------------------------------- :: unitE
-  G, D |- let t1 : Unit be triv in t2 : Y
+  G, D |- let t1 : UnitT be trivT in t2 : Y
 
   G |- t1 : X && D |- t2 : Y
   -------------------------- :: tenI
@@ -188,63 +192,75 @@ by
   G, z : Y, w : X, D |- ex w, z with x, y in t : Z
 
 defn
-  G ; P |- s : A :: :: sty :: 'S_'
+  P |- s : A :: :: sty :: 'S_'
 by
 
-  ------------------ :: id
-  . ; x : A |- x : A
+  --------------- :: id
+  x : A |- x : A
 
-  -------------------- :: unitI
-  . ; . |- triv : Unit
+  ------------------ :: unitI
+  . |- trivS : UnitS
 
-  D; I  |- s1 : Unit && G; P |- s2 : A
-  --------------------------------------------- :: unitE
-  G, D; P, I |- let s1 : Unit be triv in s2 : A
+  P  |- s1 : UnitS && I |- s2 : A
+  ---------------------------------------- :: unitE1
+  P, I |- let s1 : UnitS be trivS in s2 : A
 
-  G;P |- s1 : A && D;I |- s2 : B
+  P  |- s1 : UnitS && I |- s2 : A
+  ---------------------------------------- :: unitE2
+  I, P |- let s1 : UnitS be trivS in s2 : A
+
+  G  |- t : UnitT && I |- s : A
+  ---------------------------------------- :: unitE3
+  G, I |- let t : UnitT be trivT in s : A
+
+  G  |- t : UnitT && I |- s : A
+  ---------------------------------------- :: unitE4
+  I, G |- let t : UnitT be trivT in s : A
+
+  I |- s1 : A && P |- s2 : B
   ------------------------------ :: tenI
-  G,D;P,I |- s1 (>) s2 : A (>) B
+  I, P |- s1 (>) s2 : A (>) B
 
-  G |- z : X (x) Y && D, x : X, y : Y; P |- s : A
-  --------------------------------------------------- :: tenE1
-  D, G; P |- let z : X (x) Y be x (x) y in s : A
+  G |- t : X (x) Y && I, x : X, y : Y |- s : A
+  -------------------------------------------- :: tenE1
+  I, G |- let t : X (x) Y be x (x) y in s : A
 
-  G; P |- z : A (>) B && D; I, x : A, y : B |- s : C
-  --------------------------------------------------- :: tenE2
-  G, D; I, P |- let z : A (>) B be x (>) y in s : C
+  P |- s1 : A (>) B && I, x : A, y : B |- s2 : C
+  ---------------------------------------------- :: tenE2
+  I, P |- let s1 : A (>) B be x (>) y in s2 : C
 
-  G; P, x : A |- s : B
-  ------------------------ :: implI
-  G; P |- \r x:A.s : A -> B
+  I, x : A |- s : B
+  ---------------------- :: imprI
+  I |- \r x:A.s : A -> B
 
-  G; P |- s1 : A -> B && D; I |- s2 : A
-  ------------------------------------ :: implE
-  G, D; P, I |- appr s1 s2 : B
+  I |- s1 : A -> B && P |- s2 : A
+  ------------------------------- :: imprE
+  I, P |- appr s1 s2 : B
 
-  G;x : A,P |- s : B
-  ------------------------ :: imprI
-  G;P |- \l x:A.s : B <- A
+  x : A, x : A |- s : B
+  ---------------------- :: implI
+  I |- \l x:A.s : B <- A
 
-  G; P |- s1 : B <- A && D; I |- s2 : A
-  ------------------------------------ :: imprE
-  G, D; P, I |- appl s1 s2 : B
+  I |- s1 : B <- A && P |- s2 : A
+  ------------------------------- :: implE
+  I, P |- appl s1 s2 : B
 
   G |- t : X
   ---------------- :: FI
   G;. |- F t : F X
 
-  G ; P |- y : F X && G , x : X ; I |- s2 : A
+  P |- y : F X && I1, x : X, I2 |- s : A
   ------------------------------------------ :: FE
-  G ; P , I |- let F x : F X be y in s2 : A
+  I1, P, I2 |- let F x : F X be y in s : A
 
   G |- t : Gf A
   ----------------------- :: GE
   G ; . |- derelict t : A
 
 
-  G, x : X, y : Y,D;P |- s : A
+  I, x : X, y : Y, P |- s : A
   ----------------------------------------------- :: beta
-  G, z : Y, w : X,D;P |- ex w,z with x,y in s : A
+  I, z : Y, w : X, P |- ex w,z with x,y in s : A
 
 
 defns
@@ -254,8 +270,8 @@ defn
   t1 ~> t2 :: :: tred :: 'Tred_'
 by 
 
-  --------------------------------- :: letU
-  let triv : Unit be triv in t ~> t
+  ------------------------------------ :: letU
+  let trivT : UnitT be trivT in t ~> t
 
   ---------------------------------------------------------- :: letT
   let t1 (x) t2 : X (x) Y be x (x) y in t3 ~> [t1/x][t2/y]t3
@@ -277,8 +293,11 @@ defn
   s1 ~> s2 :: :: sred :: 'Sred_'
 by 
 
-  --------------------------------- :: letU
-  let triv : Unit be triv in s ~> s
+  ------------------------------------ :: letU1
+  let trivS : UnitS be trivS in s ~> s
+
+  ------------------------------------ :: letU2
+  let trivT : UnitT be trivT in s ~> s
 
   ---------------------------------------------------------- :: letT
   let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3

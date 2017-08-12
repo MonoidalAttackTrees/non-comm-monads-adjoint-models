@@ -35,7 +35,7 @@
 \newcommand{\ottA}{
 \ottrulehead{\ottnt{A}  ,\ \ottnt{B}  ,\ \ottnt{C}}{::=}{}\ottprodnewline
 \ottfirstprodline{|}{ \mathsf{B} }{}{}{}{}\ottprodnewline
-\ottprodline{|}{ \mathsf{Unit} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{UnitS} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{A}  \triangleright  \ottnt{B}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{A}  \rightharpoonup  \ottnt{B}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{A}  \leftharpoonup  \ottnt{B}}{}{}{}{}\ottprodnewline
@@ -44,7 +44,7 @@
 \newcommand{\ottX}{
 \ottrulehead{\ottnt{X}  ,\ \ottnt{Y}  ,\ \ottnt{Z}}{::=}{}\ottprodnewline
 \ottfirstprodline{|}{ \mathsf{B} }{}{}{}{}\ottprodnewline
-\ottprodline{|}{ \mathsf{Unit} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{UnitT} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{X}  \otimes  \ottnt{Y}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{X}  \multimap  \ottnt{Y}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \mathsf{G} \ottnt{A} }{}{}{}{}}
@@ -58,7 +58,8 @@
 \ottrulehead{\ottnt{p}}{::=}{}\ottprodnewline
 \ottfirstprodline{|}{ \star }{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottmv{x}}{}{}{}{}\ottprodnewline
-\ottprodline{|}{ \mathsf{triv} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{trivT} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{trivS} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{p}  \otimes  \ottnt{p'}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{p}  \triangleright  \ottnt{p'}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \mathsf{F}\, \ottnt{p} }{}{}{}{}\ottprodnewline
@@ -68,8 +69,9 @@
 \ottrulehead{\ottnt{s}}{::=}{}\ottprodnewline
 \ottfirstprodline{|}{\ottmv{x}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottmv{b}}{}{}{}{}\ottprodnewline
-\ottprodline{|}{ \mathsf{triv} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{trivS} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \mathsf{let}\, \ottnt{s_{{\mathrm{1}}}}  :  \ottnt{T} \,\mathsf{be}\, \ottnt{p} \,\mathsf{in}\, \ottnt{s_{{\mathrm{2}}}} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{let}\, \ottnt{t}  :  \ottnt{T} \,\mathsf{be}\, \ottnt{p} \,\mathsf{in}\, \ottnt{s} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{s_{{\mathrm{1}}}}  \triangleright  \ottnt{s_{{\mathrm{2}}}}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \lambda_l  \ottmv{x}  :  \ottnt{A} . \ottnt{s} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \lambda_r  \ottmv{x}  :  \ottnt{A} . \ottnt{s} }{}{}{}{}\ottprodnewline
@@ -84,7 +86,7 @@
 \ottrulehead{\ottnt{t}}{::=}{}\ottprodnewline
 \ottfirstprodline{|}{\ottmv{x}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottmv{b}}{}{}{}{}\ottprodnewline
-\ottprodline{|}{ \mathsf{triv} }{}{}{}{}\ottprodnewline
+\ottprodline{|}{ \mathsf{trivT} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \mathsf{let}\, \ottnt{t_{{\mathrm{1}}}}  :  \ottnt{X} \,\mathsf{be}\, \ottnt{p} \,\mathsf{in}\, \ottnt{t_{{\mathrm{2}}}} }{}{}{}{}\ottprodnewline
 \ottprodline{|}{\ottnt{t_{{\mathrm{1}}}}  \otimes  \ottnt{t_{{\mathrm{2}}}}}{}{}{}{}\ottprodnewline
 \ottprodline{|}{ \lambda  \ottmv{x}  :  \ottnt{X} . \ottnt{t} }{}{}{}{}\ottprodnewline
@@ -114,27 +116,27 @@
 % defnss
 % defns Jtype
 %% defn tty
-\newcommand{\ottdruleTXXidentityName}[0]{\ottdrulename{T\_identity}}
-\newcommand{\ottdruleTXXidentity}[1]{\ottdrule[#1]{%
+\newcommand{\ottdruleTXXidName}[0]{\ottdrulename{T\_id}}
+\newcommand{\ottdruleTXXid}[1]{\ottdrule[#1]{%
 }{
 \ottmv{x}  \ottsym{:}  \ottnt{X}  \vdash  \ottmv{x}  \ottsym{:}  \ottnt{X}}{%
-{\ottdruleTXXidentityName}{}%
+{\ottdruleTXXidName}{}%
 }}
 
 
 \newcommand{\ottdruleTXXunitIName}[0]{\ottdrulename{T\_unitI}}
 \newcommand{\ottdruleTXXunitI}[1]{\ottdrule[#1]{%
 }{
- \cdot   \vdash   \mathsf{triv}   \ottsym{:}   \mathsf{Unit} }{%
+ \cdot   \vdash   \mathsf{trivT}   \ottsym{:}   \mathsf{UnitT} }{%
 {\ottdruleTXXunitIName}{}%
 }}
 
 
 \newcommand{\ottdruleTXXunitEName}[0]{\ottdrulename{T\_unitE}}
 \newcommand{\ottdruleTXXunitE}[1]{\ottdrule[#1]{%
-\ottpremise{ \Delta  \vdash  \ottnt{t_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{Unit}   \quad  \Gamma  \vdash  \ottnt{t_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{Y} }%
+\ottpremise{ \Delta  \vdash  \ottnt{t_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{UnitT}   \quad  \Gamma  \vdash  \ottnt{t_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{Y} }%
 }{
-\Gamma  \ottsym{,}  \Delta  \vdash   \mathsf{let}\, \ottnt{t_{{\mathrm{1}}}}  :   \mathsf{Unit}  \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \ottnt{t_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{Y}}{%
+\Gamma  \ottsym{,}  \Delta  \vdash   \mathsf{let}\, \ottnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \ottnt{t_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{Y}}{%
 {\ottdruleTXXunitEName}{}%
 }}
 
@@ -177,7 +179,7 @@
 
 \newcommand{\ottdruleTXXGIName}[0]{\ottdrulename{T\_GI}}
 \newcommand{\ottdruleTXXGI}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{;}   \cdot   \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}}%
+\ottpremise{\texttt{\textcolor{red}{<<no parses (char 5):   G ;*** . \mbox{$\mid$}- s : A >>}}}%
 }{
 \Gamma  \vdash   \mathsf{G} \ottnt{s}   \ottsym{:}   \mathsf{G} \ottnt{A} }{%
 {\ottdruleTXXGIName}{}%
@@ -193,7 +195,7 @@
 }}
 
 \newcommand{\ottdefntty}[1]{\begin{ottdefnblock}[#1]{$\Gamma  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{X}$}{}
-\ottusedrule{\ottdruleTXXidentity{}}
+\ottusedrule{\ottdruleTXXid{}}
 \ottusedrule{\ottdruleTXXunitI{}}
 \ottusedrule{\ottdruleTXXunitE{}}
 \ottusedrule{\ottdruleTXXtenI{}}
@@ -205,91 +207,118 @@
 \end{ottdefnblock}}
 
 %% defn sty
-\newcommand{\ottdruleSXXidentityName}[0]{\ottdrulename{S\_identity}}
-\newcommand{\ottdruleSXXidentity}[1]{\ottdrule[#1]{%
+\newcommand{\ottdruleSXXidName}[0]{\ottdrulename{S\_id}}
+\newcommand{\ottdruleSXXid}[1]{\ottdrule[#1]{%
 }{
- \cdot   \ottsym{;}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \vdash  \ottmv{x}  \ottsym{:}  \ottnt{A}}{%
-{\ottdruleSXXidentityName}{}%
+\ottmv{x}  \ottsym{:}  \ottnt{A}  \vdash  \ottmv{x}  \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXidName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXunitIName}[0]{\ottdrulename{S\_unitI}}
 \newcommand{\ottdruleSXXunitI}[1]{\ottdrule[#1]{%
 }{
- \cdot   \ottsym{;}   \cdot   \vdash   \mathsf{triv}   \ottsym{:}   \mathsf{Unit} }{%
+ \cdot   \vdash   \mathsf{trivS}   \ottsym{:}   \mathsf{UnitS} }{%
 {\ottdruleSXXunitIName}{}%
 }}
 
 
-\newcommand{\ottdruleSXXunitEName}[0]{\ottdrulename{S\_unitE}}
-\newcommand{\ottdruleSXXunitE}[1]{\ottdrule[#1]{%
-\ottpremise{ \Delta  \ottsym{;}  \Phi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{Unit}   \quad  \Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
+\newcommand{\ottdruleSXXunitEOneName}[0]{\ottdrulename{S\_unitE1}}
+\newcommand{\ottdruleSXXunitEOne}[1]{\ottdrule[#1]{%
+\ottpremise{ \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{UnitS}   \quad  \Phi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
 }{
-\Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \ottsym{,}  \Phi  \vdash   \mathsf{let}\, \ottnt{s_{{\mathrm{1}}}}  :   \mathsf{Unit}  \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{A}}{%
-{\ottdruleSXXunitEName}{}%
+\Psi  \ottsym{,}  \Phi  \vdash   \mathsf{let}\, \ottnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXunitEOneName}{}%
+}}
+
+
+\newcommand{\ottdruleSXXunitETwoName}[0]{\ottdrulename{S\_unitE2}}
+\newcommand{\ottdruleSXXunitETwo}[1]{\ottdrule[#1]{%
+\ottpremise{ \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}   \mathsf{UnitS}   \quad  \Phi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
+}{
+\Phi  \ottsym{,}  \Psi  \vdash   \mathsf{let}\, \ottnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXunitETwoName}{}%
+}}
+
+
+\newcommand{\ottdruleSXXunitEThreeName}[0]{\ottdrulename{S\_unitE3}}
+\newcommand{\ottdruleSXXunitEThree}[1]{\ottdrule[#1]{%
+\ottpremise{ \Gamma  \vdash  \ottnt{t}  \ottsym{:}   \mathsf{UnitT}   \quad  \Phi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A} }%
+}{
+\Gamma  \ottsym{,}  \Phi  \vdash   \mathsf{let}\, \ottnt{t}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXunitEThreeName}{}%
+}}
+
+
+\newcommand{\ottdruleSXXunitEFourName}[0]{\ottdrulename{S\_unitE4}}
+\newcommand{\ottdruleSXXunitEFour}[1]{\ottdrule[#1]{%
+\ottpremise{ \Gamma  \vdash  \ottnt{t}  \ottsym{:}   \mathsf{UnitT}   \quad  \Phi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A} }%
+}{
+\Phi  \ottsym{,}  \Gamma  \vdash   \mathsf{let}\, \ottnt{t}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
+{\ottdruleSXXunitEFourName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXtenIName}[0]{\ottdrulename{S\_tenI}}
 \newcommand{\ottdruleSXXtenI}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{A}  \quad  \Delta  \ottsym{;}  \Phi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{B} }%
+\ottpremise{ \Phi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{A}  \quad  \Psi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{B} }%
 }{
-\Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \ottsym{,}  \Phi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \triangleright  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A}  \triangleright  \ottnt{B}}{%
+\Phi  \ottsym{,}  \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \triangleright  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A}  \triangleright  \ottnt{B}}{%
 {\ottdruleSXXtenIName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXtenEOneName}[0]{\ottdrulename{S\_tenE1}}
 \newcommand{\ottdruleSXXtenEOne}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \vdash  \ottmv{z}  \ottsym{:}  \ottnt{X}  \otimes  \ottnt{Y}  \quad  \Delta  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{Y}  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A} }%
+\ottpremise{ \Gamma  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{X}  \otimes  \ottnt{Y}  \quad  \Phi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{Y}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A} }%
 }{
-\Delta  \ottsym{,}  \Gamma  \ottsym{;}  \Psi  \vdash   \mathsf{let}\, \ottmv{z}  :  \ottnt{X}  \otimes  \ottnt{Y} \,\mathsf{be}\, \ottmv{x}  \otimes  \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
+\Phi  \ottsym{,}  \Gamma  \vdash   \mathsf{let}\, \ottnt{t}  :  \ottnt{X}  \otimes  \ottnt{Y} \,\mathsf{be}\, \ottmv{x}  \otimes  \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
 {\ottdruleSXXtenEOneName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXtenETwoName}[0]{\ottdrulename{S\_tenE2}}
 \newcommand{\ottdruleSXXtenETwo}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash  \ottmv{z}  \ottsym{:}  \ottnt{A}  \triangleright  \ottnt{B}  \quad  \Delta  \ottsym{;}  \Phi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{B}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{C} }%
+\ottpremise{ \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{A}  \triangleright  \ottnt{B}  \quad  \Phi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{B}  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{C} }%
 }{
-\Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Phi  \ottsym{,}  \Psi  \vdash   \mathsf{let}\, \ottmv{z}  :  \ottnt{A}  \triangleright  \ottnt{B} \,\mathsf{be}\, \ottmv{x}  \triangleright  \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{C}}{%
+\Phi  \ottsym{,}  \Psi  \vdash   \mathsf{let}\, \ottnt{s_{{\mathrm{1}}}}  :  \ottnt{A}  \triangleright  \ottnt{B} \,\mathsf{be}\, \ottmv{x}  \triangleright  \ottmv{y} \,\mathsf{in}\, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{C}}{%
 {\ottdruleSXXtenETwoName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXimplIName}[0]{\ottdrulename{S\_implI}}
-\newcommand{\ottdruleSXXimplI}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{;}  \Psi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
-}{
-\Gamma  \ottsym{;}  \Psi  \vdash   \lambda_r  \ottmv{x}  :  \ottnt{A} . \ottnt{s}   \ottsym{:}  \ottnt{A}  \rightharpoonup  \ottnt{B}}{%
-{\ottdruleSXXimplIName}{}%
-}}
-
-
-\newcommand{\ottdruleSXXimplEName}[0]{\ottdrulename{S\_implE}}
-\newcommand{\ottdruleSXXimplE}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{A}  \rightharpoonup  \ottnt{B}  \quad  \Delta  \ottsym{;}  \Phi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
-}{
-\Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \ottsym{,}  \Phi  \vdash   \mathsf{app}_r\, \ottnt{s_{{\mathrm{1}}}} \, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{B}}{%
-{\ottdruleSXXimplEName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXimprIName}[0]{\ottdrulename{S\_imprI}}
 \newcommand{\ottdruleSXXimprI}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{;}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \ottsym{,}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
+\ottpremise{\Phi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
 }{
-\Gamma  \ottsym{;}  \Psi  \vdash   \lambda_l  \ottmv{x}  :  \ottnt{A} . \ottnt{s}   \ottsym{:}  \ottnt{B}  \leftharpoonup  \ottnt{A}}{%
+\Phi  \vdash   \lambda_r  \ottmv{x}  :  \ottnt{A} . \ottnt{s}   \ottsym{:}  \ottnt{A}  \rightharpoonup  \ottnt{B}}{%
 {\ottdruleSXXimprIName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXimprEName}[0]{\ottdrulename{S\_imprE}}
 \newcommand{\ottdruleSXXimprE}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{B}  \leftharpoonup  \ottnt{A}  \quad  \Delta  \ottsym{;}  \Phi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
+\ottpremise{ \Phi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{A}  \rightharpoonup  \ottnt{B}  \quad  \Psi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
 }{
-\Gamma  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \ottsym{,}  \Phi  \vdash   \mathsf{app}_l\, \ottnt{s_{{\mathrm{1}}}} \, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{B}}{%
+\Phi  \ottsym{,}  \Psi  \vdash   \mathsf{app}_r\, \ottnt{s_{{\mathrm{1}}}} \, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{B}}{%
 {\ottdruleSXXimprEName}{}%
+}}
+
+
+\newcommand{\ottdruleSXXimplIName}[0]{\ottdrulename{S\_implI}}
+\newcommand{\ottdruleSXXimplI}[1]{\ottdrule[#1]{%
+\ottpremise{\ottmv{x}  \ottsym{:}  \ottnt{A}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{A}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{B}}%
+}{
+\Phi  \vdash   \lambda_l  \ottmv{x}  :  \ottnt{A} . \ottnt{s}   \ottsym{:}  \ottnt{B}  \leftharpoonup  \ottnt{A}}{%
+{\ottdruleSXXimplIName}{}%
+}}
+
+
+\newcommand{\ottdruleSXXimplEName}[0]{\ottdrulename{S\_implE}}
+\newcommand{\ottdruleSXXimplE}[1]{\ottdrule[#1]{%
+\ottpremise{ \Phi  \vdash  \ottnt{s_{{\mathrm{1}}}}  \ottsym{:}  \ottnt{B}  \leftharpoonup  \ottnt{A}  \quad  \Psi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
+}{
+\Phi  \ottsym{,}  \Psi  \vdash   \mathsf{app}_l\, \ottnt{s_{{\mathrm{1}}}} \, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{B}}{%
+{\ottdruleSXXimplEName}{}%
 }}
 
 
@@ -297,16 +326,16 @@
 \newcommand{\ottdruleSXXFI}[1]{\ottdrule[#1]{%
 \ottpremise{\Gamma  \vdash  \ottnt{t}  \ottsym{:}  \ottnt{X}}%
 }{
-\Gamma  \ottsym{;}   \cdot   \vdash   \mathsf{F} \ottnt{t}   \ottsym{:}   \mathsf{F} \ottnt{X} }{%
+\texttt{\textcolor{red}{<<no parses (char 4):   G;***. \mbox{$\mid$}- F t : F X >>}}}{%
 {\ottdruleSXXFIName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXFEName}[0]{\ottdrulename{S\_FE}}
 \newcommand{\ottdruleSXXFE}[1]{\ottdrule[#1]{%
-\ottpremise{ \Gamma  \ottsym{;}  \Psi  \vdash  \ottmv{y}  \ottsym{:}   \mathsf{F} \ottnt{X}   \quad  \Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{;}  \Phi  \vdash  \ottnt{s_{{\mathrm{2}}}}  \ottsym{:}  \ottnt{A} }%
+\ottpremise{ \Psi  \vdash  \ottmv{y}  \ottsym{:}   \mathsf{F} \ottnt{X}   \quad  \Phi_{{\mathrm{1}}}  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Phi_{{\mathrm{2}}}  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A} }%
 }{
-\Gamma  \ottsym{;}  \Psi  \ottsym{,}  \Phi  \vdash   \mathsf{let}\,  \mathsf{F} \ottmv{x}   :   \mathsf{F} \ottnt{X}  \,\mathsf{be}\, \ottmv{y} \,\mathsf{in}\, \ottnt{s_{{\mathrm{2}}}}   \ottsym{:}  \ottnt{A}}{%
+\Phi_{{\mathrm{1}}}  \ottsym{,}  \Psi  \ottsym{,}  \Phi_{{\mathrm{2}}}  \vdash   \mathsf{let}\,  \mathsf{F} \ottmv{x}   :   \mathsf{F} \ottnt{X}  \,\mathsf{be}\, \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
 {\ottdruleSXXFEName}{}%
 }}
 
@@ -315,30 +344,33 @@
 \newcommand{\ottdruleSXXGE}[1]{\ottdrule[#1]{%
 \ottpremise{\Gamma  \vdash  \ottnt{t}  \ottsym{:}   \mathsf{G} \ottnt{A} }%
 }{
-\Gamma  \ottsym{;}   \cdot   \vdash   \mathsf{derelict}\, \ottnt{t}   \ottsym{:}  \ottnt{A}}{%
+\texttt{\textcolor{red}{<<no parses (char 5):   G ;*** . \mbox{$\mid$}- derelict t : A >>}}}{%
 {\ottdruleSXXGEName}{}%
 }}
 
 
 \newcommand{\ottdruleSXXbetaName}[0]{\ottdrulename{S\_beta}}
 \newcommand{\ottdruleSXXbeta}[1]{\ottdrule[#1]{%
-\ottpremise{\Gamma  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}}%
+\ottpremise{\Phi  \ottsym{,}  \ottmv{x}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \ottmv{y}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}}%
 }{
-\Gamma  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \ottmv{w}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Delta  \ottsym{;}  \Psi  \vdash   \mathsf{ex}\, \ottmv{w} , \ottmv{z} \,\mathsf{with}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
+\Phi  \ottsym{,}  \ottmv{z}  \ottsym{:}  \ottnt{Y}  \ottsym{,}  \ottmv{w}  \ottsym{:}  \ottnt{X}  \ottsym{,}  \Psi  \vdash   \mathsf{ex}\, \ottmv{w} , \ottmv{z} \,\mathsf{with}\, \ottmv{x} , \ottmv{y} \,\mathsf{in}\, \ottnt{s}   \ottsym{:}  \ottnt{A}}{%
 {\ottdruleSXXbetaName}{}%
 }}
 
-\newcommand{\ottdefnsty}[1]{\begin{ottdefnblock}[#1]{$\Gamma  \ottsym{;}  \Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}$}{}
-\ottusedrule{\ottdruleSXXidentity{}}
+\newcommand{\ottdefnsty}[1]{\begin{ottdefnblock}[#1]{$\Psi  \vdash  \ottnt{s}  \ottsym{:}  \ottnt{A}$}{}
+\ottusedrule{\ottdruleSXXid{}}
 \ottusedrule{\ottdruleSXXunitI{}}
-\ottusedrule{\ottdruleSXXunitE{}}
+\ottusedrule{\ottdruleSXXunitEOne{}}
+\ottusedrule{\ottdruleSXXunitETwo{}}
+\ottusedrule{\ottdruleSXXunitEThree{}}
+\ottusedrule{\ottdruleSXXunitEFour{}}
 \ottusedrule{\ottdruleSXXtenI{}}
 \ottusedrule{\ottdruleSXXtenEOne{}}
 \ottusedrule{\ottdruleSXXtenETwo{}}
-\ottusedrule{\ottdruleSXXimplI{}}
-\ottusedrule{\ottdruleSXXimplE{}}
 \ottusedrule{\ottdruleSXXimprI{}}
 \ottusedrule{\ottdruleSXXimprE{}}
+\ottusedrule{\ottdruleSXXimplI{}}
+\ottusedrule{\ottdruleSXXimplE{}}
 \ottusedrule{\ottdruleSXXFI{}}
 \ottusedrule{\ottdruleSXXFE{}}
 \ottusedrule{\ottdruleSXXGE{}}
@@ -354,7 +386,7 @@
 \newcommand{\ottdruleTredXXletUName}[0]{\ottdrulename{Tred\_letU}}
 \newcommand{\ottdruleTredXXletU}[1]{\ottdrule[#1]{%
 }{
- \mathsf{let}\,  \mathsf{triv}   :   \mathsf{Unit}  \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \ottnt{t}   \leadsto  \ottnt{t}}{%
+ \mathsf{let}\,  \mathsf{trivT}   :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \ottnt{t}   \leadsto  \ottnt{t}}{%
 {\ottdruleTredXXletUName}{}%
 }}
 
@@ -401,11 +433,19 @@
 \end{ottdefnblock}}
 
 %% defn sred
-\newcommand{\ottdruleSredXXletUName}[0]{\ottdrulename{Sred\_letU}}
-\newcommand{\ottdruleSredXXletU}[1]{\ottdrule[#1]{%
+\newcommand{\ottdruleSredXXletUOneName}[0]{\ottdrulename{Sred\_letU1}}
+\newcommand{\ottdruleSredXXletUOne}[1]{\ottdrule[#1]{%
 }{
- \mathsf{let}\,  \mathsf{triv}   :   \mathsf{Unit}  \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \ottnt{s}   \leadsto  \ottnt{s}}{%
-{\ottdruleSredXXletUName}{}%
+ \mathsf{let}\,  \mathsf{trivS}   :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \ottnt{s}   \leadsto  \ottnt{s}}{%
+{\ottdruleSredXXletUOneName}{}%
+}}
+
+
+\newcommand{\ottdruleSredXXletUTwoName}[0]{\ottdrulename{Sred\_letU2}}
+\newcommand{\ottdruleSredXXletUTwo}[1]{\ottdrule[#1]{%
+}{
+ \mathsf{let}\,  \mathsf{trivT}   :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \ottnt{s}   \leadsto  \ottnt{s}}{%
+{\ottdruleSredXXletUTwoName}{}%
 }}
 
 
@@ -485,7 +525,8 @@
 }}
 
 \newcommand{\ottdefnsred}[1]{\begin{ottdefnblock}[#1]{$\ottnt{s_{{\mathrm{1}}}}  \leadsto  \ottnt{s_{{\mathrm{2}}}}$}{}
-\ottusedrule{\ottdruleSredXXletU{}}
+\ottusedrule{\ottdruleSredXXletUOne{}}
+\ottusedrule{\ottdruleSredXXletUTwo{}}
 \ottusedrule{\ottdruleSredXXletT{}}
 \ottusedrule{\ottdruleSredXXletF{}}
 \ottusedrule{\ottdruleSredXXlamL{}}
