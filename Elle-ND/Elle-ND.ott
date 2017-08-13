@@ -127,8 +127,10 @@ formula :: 'formula_' ::=
   {{tex [[x]] \not\in | [[G]], [[D]] | }}
 
 terminals :: 'terminals_' ::=
-  | Unit :: :: Unit
-  {{tex \mathsf{Unit} }}
+  | UnitT :: :: UnitT
+  {{tex \mathsf{UnitT} }}
+  | UnitS :: :: UnitS
+  {{tex \mathsf{UnitS} }}
   | (x)  :: :: Tensor
   {{tex \otimes }}
   | (>)  :: :: Lambek
