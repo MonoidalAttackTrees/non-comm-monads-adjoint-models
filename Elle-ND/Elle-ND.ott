@@ -104,13 +104,20 @@ t :: 'sterm_' ::=
   | Gf s           ::   :: RightAdj
   {{tex \mathsf{G}[[s]] }}
 
-G {{tex \Gamma}}, D {{tex \Delta}}, I {{tex \Phi}}, P {{tex \Psi}} :: 'Ctx_' ::=
-  | .       :: :: Empty
+I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
+  | .       ::   :: Empty
   {{tex \cdot }}
-  | G1 , G2 :: :: Ext
-  | x : A   :: :: El
+  | I1 , I2 ::   :: Ext
+  | x : X   ::   :: ElC
+  | ( I )   :: S :: Paren
+
+G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | x : A   ::   :: El
+  | I       ::   :: CCtx
+  | G1 , G2 ::   :: Ext
   | ( G )   :: S :: Paren
-  | x : X   ::   :: EParen
 
 formula :: 'formula_' ::=
   | judgement            ::   :: judgement
@@ -156,7 +163,7 @@ defns
   Jtype :: '' ::=
 
 defn
-  G |- t : X :: :: tty :: 'T_'
+  I |- t : X :: :: tty :: 'T_'
 by 
 
   -------------- :: id
@@ -165,36 +172,36 @@ by
   ------------------ :: unitI
   . |- trivT : UnitT
 
-  D |- t1 : UnitT && G |- t2 : Y
+  I |- t1 : UnitT && P |- t2 : Y
   --------------------------------------------- :: unitE
-  G, D |- let t1 : UnitT be trivT in t2 : Y
+  I, P |- let t1 : UnitT be trivT in t2 : Y
 
-  G |- t1 : X && D |- t2 : Y
+  I |- t1 : X && I |- t2 : Y
   -------------------------- :: tenI
-  G,D |- t1 (x) t2 : X (x) Y  
+  I,P |- t1 (x) t2 : X (x) Y  
 
-  G |- t1 : X (x) Y && D, x : X, y : Y |- t2 : Z
-  ------------------------------------------------------ :: tenE
-  G, D |- let t1 : X (x) Y be x (x) y in t2 : Z
+  I |- t1 : X (x) Y && P1, x : X, y : Y,P2 |- t2 : Z
+  -------------------------------------------------- :: tenE
+  P1,I,P2 |- let t1 : X (x) Y be x (x) y in t2 : Z
 
-  G, x : X |- t : Y
+  I, x : X |- t : Y
   ---------------------- :: impI
-  G |- \ x:X.t : X -o Y
+  I |- \ x:X.t : X -o Y
   
-  G |- t1 : X -o Y && D |- t2 : X
+  I |- t1 : X -o Y && P |- t2 : X
   ----------------------------- :: impE
-  G, D |- app t1 t2 : Y
+  I, P |- app t1 t2 : Y
 
-  G ; . |- s : A
+  I |- s : A
   ---------------- :: GI
-  G |- Gf s : Gf A
+  I |- Gf s : Gf A
   
-  G, x : X, y : Y, D |- t : Z 
-  ------------------------------------------------ :: beta
-  G, z : Y, w : X, D |- ex w, z with x, y in t : Z
+  % I, x : X, y : Y, P |- t : Z 
+  % ------------------------------------------------ :: beta
+  % I, z : Y, w : X, P |- ex w, z with x, y in t : Z
 
 defn
-  P |- s : A :: :: sty :: 'S_'
+  G |- s : A :: :: sty :: 'S_'
 by
 
   --------------- :: id
@@ -203,66 +210,65 @@ by
   ------------------ :: unitI
   . |- trivS : UnitS
 
-  P  |- s1 : UnitS && I |- s2 : A
+  G  |- s1 : UnitS && D |- s2 : A
   ---------------------------------------- :: unitE1
-  P, I |- let s1 : UnitS be trivS in s2 : A
+  G, D |- let s1 : UnitS be trivS in s2 : A
 
-  P  |- s1 : UnitS && I |- s2 : A
+  % G  |- s1 : UnitS && D |- s2 : A
+  % ---------------------------------------- :: unitE2
+  % G, D |- let s1 : UnitS be trivS in s2 : A
+
+  I  |- t : UnitT && G |- s : A
   ---------------------------------------- :: unitE2
-  I, P |- let s1 : UnitS be trivS in s2 : A
-
-  G  |- t : UnitT && I |- s : A
-  ---------------------------------------- :: unitE3
-  G, I |- let t : UnitT be trivT in s : A
-
-  G  |- t : UnitT && I |- s : A
-  ---------------------------------------- :: unitE4
   I, G |- let t : UnitT be trivT in s : A
 
-  I |- s1 : A && P |- s2 : B
+  % I  |- t : UnitT && G |- s : A
+  % ---------------------------------------- :: unitE4
+  % I, G |- let t : UnitT be trivT in s : A
+
+  G |- s1 : A && D |- s2 : B
   ------------------------------ :: tenI
-  I, P |- s1 (>) s2 : A (>) B
+  G, D |- s1 (>) s2 : A (>) B
 
-  G |- t : X (x) Y && I, x : X, y : Y |- s : A
-  -------------------------------------------- :: tenE1
-  I, G |- let t : X (x) Y be x (x) y in s : A
+  I |- t : X (x) Y && G1, x : X, y : Y,G2 |- s : A
+  ------------------------------------------------ :: tenE1
+  G1, I, G2 |- let t : X (x) Y be x (x) y in s : A
 
-  P |- s1 : A (>) B && I, x : A, y : B |- s2 : C
-  ---------------------------------------------- :: tenE2
-  I, P |- let s1 : A (>) B be x (>) y in s2 : C
+  G |- s1 : A (>) B && D1, x : A, y : B,D2 |- s2 : C
+  -------------------------------------------------- :: tenE2
+  D1,G,D2  |- let s1 : A (>) B be x (>) y in s2 : C
 
-  I, x : A |- s : B
+  G, x : A |- s : B
   ---------------------- :: imprI
-  I |- \r x:A.s : A -> B
+  G |- \r x:A.s : A -> B
 
-  I |- s1 : A -> B && P |- s2 : A
+  G |- s1 : A -> B && D |- s2 : A
   ------------------------------- :: imprE
-  I, P |- appr s1 s2 : B
+  G, D |- appr s1 s2 : B
 
-  x : A, x : A |- s : B
+  x : A,G |- s : B
   ---------------------- :: implI
-  I |- \l x:A.s : B <- A
+  G |- \l x:A.s : B <- A
 
-  I |- s1 : B <- A && P |- s2 : A
+  G |- s1 : B <- A && D |- s2 : A
   ------------------------------- :: implE
-  I, P |- appl s1 s2 : B
+  G, D |- appl s1 s2 : B
 
-  G |- t : X
-  ---------------- :: FI
-  G;. |- F t : F X
+  I |- t : X
+  -------------- :: FI
+  I |- F t : F X
 
-  P |- y : F X && I1, x : X, I2 |- s : A
-  ------------------------------------------ :: FE
-  I1, P, I2 |- let F x : F X be y in s : A
+  G |- y : F X && D1, x : X, D2 |- s : A
+  ---------------------------------------- :: FE
+  D1, G, D2 |- let F x : F X be y in s : A
 
-  G |- t : Gf A
-  ----------------------- :: GE
-  G ; . |- derelict t : A
+  I |- t : Gf A
+  ------------------- :: GE
+  I |- derelict t : A
 
-
-  I, x : X, y : Y, P |- s : A
-  ----------------------------------------------- :: beta
-  I, z : Y, w : X, P |- ex w,z with x,y in s : A
+  % I, x : X, y : Y, P |- s : A
+  % ----------------------------------------------- :: beta
+  % I, z : Y, w : X, P |- ex w,z with x,y in s : A
 
 
 defns
