@@ -310,11 +310,11 @@ by
 
   G, x : X, D |-l s : A
   --------------------------------------------- :: Fl
-  G, y : F X, D |-l let z : F X be F x in s : A
+  G, y : F X, D |-l let y : F X be F x in s : A
 
   G, x : A, D |-l s : B
   ------------------------------------------------ :: Gl
-  G, y : Gf A, D |-l let z : Gf A be Gf x in s : B
+  G, y : Gf A, D |-l let y : Gf A be Gf x in s : B
 
 
 

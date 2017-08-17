@@ -24,7 +24,7 @@ Deriving exchange in Elle comonadicly:
   \tiny
   \begin{math}
     $$\mprset{flushleft}
-    \inferrule* [right={\tiny impR}] {
+    \inferrule* [right={\tiny imprR}] {
       $$\mprset{flushleft}
     \inferrule* [right={\tiny tenL}] {
       $$\mprset{flushleft}
@@ -40,22 +40,22 @@ Deriving exchange in Elle comonadicly:
               $$\mprset{flushleft}
               \inferrule* [right={\tiny ax}] {
                 \,
-              }{[[y0 : Gf B |- y0 : Gf B]]}
-            }{[[y0 : Gf B; . |- F y0 : F Gf B]]}
+              }{[[y0 : Gf B |-c y0 : Gf B]]}
+            }{[[y0 : Gf B |-l F y0 : F Gf B]]}
             \\
             $$\mprset{flushleft}
             \inferrule* [right={\tiny Fr}] {
               $$\mprset{flushleft}
               \inferrule* [right={\tiny ax}] {
                 \,
-              }{[[x0 : Gf A |- x0 : Gf A]]}
-            }{[[x0 : Gf A; . |- F x0 : F Gf A]]}
-          }{[[y0 : Gf B, x0 : Gf A ; . |- h(F y0) (x) F x0 : h(F Gf B) (x) F Gf A]]}
-        }{[[x1 : Gf A, y1 : Gf B ; . |- ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0) : h(F Gf B) (x) F Gf A]]}
-      }{[[x1 : Gf A ; y2 : F Gf B |- let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0)) : h(F Gf B) (x) F Gf A]]}
-    }{[[. ; x2 : F Gf A, y2 : F Gf B |- let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0))) : h(F Gf B) (x) F Gf A]]}
-    }{[[. ; z : h(F Gf A) (x) F Gf B |- let z : h(F Gf A) (x) F Gf B be x2 (x) y2 in (let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0)))) : (h(F Gf B) (x) F Gf A)]]}
-    }{[[. ; . |- \l z : h(F Gf A) (x) F Gf B . let z : h(F Gf A) (x) F Gf B be x2 (x) y2 in (let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (x) F x0)))) : (h(F Gf A) (x) F Gf B) -> (h(F Gf B) (x) F Gf A)]]}
+              }{[[x0 : Gf A |-c x0 : Gf A]]}
+            }{[[x0 : Gf A |-l F x0 : F Gf A]]}
+          }{[[y0 : Gf B, x0 : Gf A |-l h(F y0) (>) F x0 : h(F Gf B) (>) F Gf A]]}
+        }{[[x1 : Gf A, y1 : Gf B |-l ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0) : h(F Gf B) (>) F Gf A]]}
+      }{[[x1 : Gf A , y2 : F Gf B |-l let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)) : h(F Gf B) (>) F Gf A]]}
+    }{[[x2 : F Gf A, y2 : F Gf B |-l let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0))) : h(F Gf B) (>) F Gf A]]}
+    }{[[z : h(F Gf A) (>) F Gf B |-l let z : h(F Gf A) (>) F Gf B be x2 (>) y2 in (let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)))) : (h(F Gf B) (>) F Gf A)]]}
+    }{[[. |-l \r z : h(F Gf A) (>) F Gf B . let z : h(F Gf A) (>) F Gf B be x2 (>) y2 in (let x2 : F Gf A be F x1 in (let y2 : F Gf B be F y1 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)))) : (h(F Gf A) (>) F Gf B) -> (h(F Gf B) (>) F Gf A)]]}
   \end{math}
 \end{center}
 
@@ -66,7 +66,7 @@ Deriving right contraction in Elle comonadicly:
   \tiny
   \begin{math}
     $$\mprset{flushleft}
-    \inferrule* [right={\tiny impR}] {
+    \inferrule* [right={\tiny imprR}] {
       $$\mprset{flushleft}
       \inferrule* [right={\tiny tenL}] {
         $$\mprset{flushleft}
@@ -82,8 +82,8 @@ Deriving right contraction in Elle comonadicly:
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny ax}] {
                     \,
-                  }{[[x1 : Gf A |- x1 : Gf A]]}
-                }{[[x1 : Gf A; . |- F x1 : F Gf A]]}
+                  }{[[x1 : Gf A |-c x1 : Gf A]]}
+                }{[[x1 : Gf A |-l F x1 : F Gf A]]}
                 \\
                 \inferrule* [right={\tiny tenR}] {
                   $$\mprset{flushleft}
@@ -91,23 +91,23 @@ Deriving right contraction in Elle comonadicly:
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny ax}] {
                       \,
-                    }{[[y0 : Gf B |- y0 : Gf B]]}
-                  }{[[y0 : Gf B; . |- F y0 : F Gf B]]}
+                    }{[[y0 : Gf B |-c y0 : Gf B]]}
+                  }{[[y0 : Gf B |-l F y0 : F Gf B]]}
                   \\
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny Fr}] {
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny ax}] {
                       \,
-                    }{[[x0 : Gf A |- x0 : Gf A]]}
-                  }{[[x0 : Gf A; . |- F x0 : F Gf A]]}
-                }{[[y0 : Gf B, x0 : Gf A ; . |- h(F y0) (x) F x0 : h(F Gf B) (x) F Gf A]]}
-              }{[[x1 : Gf A, y0 : Gf B, x0 : Gf A ; . |- h(F x1) (x) (h(F y0) (x) F x0) : h(F Gf A) (x) (h(F Gf B) (x) F Gf A)]]}
-            }{[[y0 : Gf B, x2 : Gf A ; . |- contrR x2 as x1, x0 in (h(F x1) (x) (h(F y0) (x) F x0)) : h(F Gf A) (x) (h(F Gf B) (x) F Gf A)]]}
-          }{[[y0 : Gf B ; x3 : F Gf A |- let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (x) (h(F y0) (x) F x0))) : h(F Gf A) (x) (h(F Gf B) (x) F Gf A)]]}
-        }{[[. ; y1 : F Gf B, x3 : F Gf A |- let y1 : F Gf B be F y0 in (let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (x) (h(F y0) (x) F x0)))) : h(F Gf A) (x) (h(F Gf B) (x) F Gf A)]]}
-      }{[[. ; z : h(F Gf B) (x) F Gf A |- let z : h(F Gf B) (x) F Gf A be y1 (x) x3 in (let y1 : F Gf B be F y0 in (let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (x) (h(F y0) (x) F x0))))) : h(F Gf A) (x) (h(F Gf B) (x) F Gf A)]]}
-    }{[[. ; . |- \l z : h(F Gf B) (x) F Gf A . let z : h(F Gf B) (x) F Gf A be y1 (x) x3 in (let y1 : F Gf B be F y0 in (let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (x) (h(F y0) (x) F x0))))) : (h(F Gf B) (x) F Gf A) -> (h(F Gf A) (x) (h(F Gf B) (x) F Gf A))]]}
+                    }{[[x0 : Gf A |-c x0 : Gf A]]}
+                  }{[[x0 : Gf A |-l F x0 : F Gf A]]}
+                }{[[y0 : Gf B, x0 : Gf A |-l h(F y0) (>) F x0 : h(F Gf B) (>) F Gf A]]}
+              }{[[x1 : Gf A, y0 : Gf B, x0 : Gf A |-l h(F x1) (>) (h(F y0) (>) F x0) : h(F Gf A) (>) (h(F Gf B) (>) F Gf A)]]}
+            }{[[y0 : Gf B, x2 : Gf A |-l contrR x2 as x1, x0 in (h(F x1) (>) (h(F y0) (>) F x0)) : h(F Gf A) (>) (h(F Gf B) (>) F Gf A)]]}
+          }{[[y0 : Gf B , x3 : F Gf A |-l let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (>) (h(F y0) (>) F x0))) : h(F Gf A) (>) (h(F Gf B) (>) F Gf A)]]}
+        }{[[y1 : F Gf B, x3 : F Gf A |-l let y1 : F Gf B be F y0 in (let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (>) (h(F y0) (>) F x0)))) : h(F Gf A) (>) (h(F Gf B) (>) F Gf A)]]}
+      }{[[z : h(F Gf B) (>) F Gf A |-l let z : h(F Gf B) (>) F Gf A be y1 (>) x3 in (let y1 : F Gf B be F y0 in (let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (>) (h(F y0) (>) F x0))))) : h(F Gf A) (>) (h(F Gf B) (>) F Gf A)]]}
+    }{[[. |-l \r z : h(F Gf B) (>) F Gf A . let z : h(F Gf B) (>) F Gf A be y1 (>) x3 in (let y1 : F Gf B be F y0 in (let x3 : F Gf A be F x2 in (contrR x2 as x1, x0 in (h(F x1) (>) (h(F y0) (>) F x0))))) : (h(F Gf B) (>) F Gf A) -> (h(F Gf A) (>) (h(F Gf B) (>) F Gf A))]]}
   \end{math}
 \end{center}
 
@@ -118,7 +118,7 @@ Deriving left contraction in Elle comonadicly:
   \tiny
   \begin{math}
     $$\mprset{flushleft}
-    \inferrule* [right={\tiny impR}] {
+    \inferrule* [right={\tiny imprR}] {
       $$\mprset{flushleft}
       \inferrule* [right={\tiny tenL}] {
         $$\mprset{flushleft}
@@ -136,30 +136,30 @@ Deriving left contraction in Elle comonadicly:
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny ax}] {
                       \,
-                    }{[[x0 : Gf A |- x0 : Gf A]]}
-                  }{[[x0 : Gf A; . |- F x0 : F Gf A]]}
+                    }{[[x0 : Gf A |-c x0 : Gf A]]}
+                  }{[[x0 : Gf A |-l F x0 : F Gf A]]}
                   \\
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny Fr}] {
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny ax}] {
                       \,
-                    }{[[y0 : Gf B |- y0 : Gf B]]}
-                  }{[[y0 : Gf B; . |- F y0 : F Gf B]]}
-                }{[[x0 : Gf A, y0 : Gf B ; . |- h(F x0) (x) F y0 : h(F Gf A) (x) F Gf B]]}
+                    }{[[y0 : Gf B |-c y0 : Gf B]]}
+                  }{[[y0 : Gf B |-l F y0 : F Gf B]]}
+                }{[[x0 : Gf A, y0 : Gf B |-l h(F x0) (>) F y0 : h(F Gf A) (>) F Gf B]]}
                 \\
                 \inferrule* [right={\tiny Fr}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny ax}] {
                     \,
-                  }{[[x1 : Gf A |- x1 : Gf A]]}
-                }{[[x1 : Gf A; . |- F x1 : F Gf A]]}
-              }{[[x0 : Gf A, y0 : Gf B, x1 : Gf A ; . |- (h(F x0) (x) F y0) (x) F x1 : (h(F Gf A) (x) F Gf B) (x) F Gf A]]}
-            }{[[x2 : Gf A, y0 : Gf B ; . |- contrL x2 as x0, x1 in ((h(F x0) (x) F y0) (x) F x1) : (h(F Gf A) (x) F Gf B) (x) F Gf A]]}
-          }{[[x2 : Gf A ; y1 : F Gf B |- let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in ((h(F x0) (x) F y0) (x) F x1)) : (h(F Gf A) (x) F Gf B) (x) F Gf A]]}
-        }{[[. ; x3 : F Gf A, y1 : F Gf B |- let x3 : F Gf A be F x2 in (let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in ((h(F x0) (x) F y0) (x) F x1))) : (h(F Gf A) (x) F Gf B) (x) F Gf A]]}
-      }{[[. ; z : h(F Gf A) (x) F Gf B |- let z : h(F Gf A) (x) F Gf B be x3 (x) y1 in (let x3 : F Gf A be F x2 in (let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in ((h(F x0) (x) F y0) (x) F x1)))) : (h(F Gf A) (x) F Gf B) (x) F Gf A]]}
-    }{[[. ; . |- \l z : h(F Gf A) (x) F Gf B . let z : h(F Gf A) (x) F Gf B be x3 (x) y1 in (let x3 : F Gf A be F x3 in (let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in (h(F x0) (x) (h(F y0) (x) F x1))))) : (h(F Gf A) (x) F Gf B) -> ((h(F Gf A) (x) F Gf B) (x) F Gf A)]]}
+                  }{[[x1 : Gf A |-c x1 : Gf A]]}
+                }{[[x1 : Gf A |-l F x1 : F Gf A]]}
+              }{[[x0 : Gf A, y0 : Gf B, x1 : Gf A |-l (h(F x0) (>) F y0) (>) F x1 : (h(F Gf A) (>) F Gf B) (>) F Gf A]]}
+            }{[[x2 : Gf A, y0 : Gf B |-l contrL x2 as x0, x1 in ((h(F x0) (>) F y0) (>) F x1) : (h(F Gf A) (>) F Gf B) (>) F Gf A]]}
+          }{[[x2 : Gf A , y1 : F Gf B |-l let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in ((h(F x0) (>) F y0) (>) F x1)) : (h(F Gf A) (>) F Gf B) (>) F Gf A]]}
+        }{[[x3 : F Gf A, y1 : F Gf B |-l let x3 : F Gf A be F x2 in (let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in ((h(F x0) (>) F y0) (>) F x1))) : (h(F Gf A) (>) F Gf B) (>) F Gf A]]}
+      }{[[z : h(F Gf A) (>) F Gf B |-l let z : h(F Gf A) (>) F Gf B be x3 (>) y1 in (let x3 : F Gf A be F x2 in (let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in ((h(F x0) (>) F y0) (>) F x1)))) : (h(F Gf A) (>) F Gf B) (>) F Gf A]]}
+    }{[[. |-l \r z : h(F Gf A) (>) F Gf B . let z : h(F Gf A) (>) F Gf B be x3 (>) y1 in (let x3 : F Gf A be F x3 in (let y1 : F Gf B be F y0 in (contrL x2 as x0, x1 in (h(F x0) (>) (h(F y0) (>) F x1))))) : (h(F Gf A) (>) F Gf B) -> ((h(F Gf A) (>) F Gf B) (>) F Gf A)]]}
   \end{math}
 \end{center}
 
@@ -170,7 +170,7 @@ Deriving weakening in Elle comonadicly:
   \tiny
   \begin{math}
     $$\mprset{flushleft}
-    \inferrule* [right={\tiny impR}] {
+    \inferrule* [right={\tiny imprR}] {
       $$\mprset{flushleft}
       \inferrule* [right={\tiny Fl}] {
         $$\mprset{flushleft}
@@ -178,10 +178,10 @@ Deriving weakening in Elle comonadicly:
           $$\mprset{flushleft}
           \inferrule* [right={\tiny unitR}] {
             \,
-          }{[[. |- triv : Unit]]}
-        }{[[x0 : Gf A ; . |- weak x0 in triv : Unit]]}
-      }{[[. ; x1 : F Gf A |- let x1 : F Gf A be F x0 in weak x0 in triv : Unit]]}
-    }{[[. ; . |- \l x1 : F Gf A . let x1 : F Gf A be F x0 in weak x0 in triv : (F Gf A) -> (Unit)]]}
+          }{[[. |-l trivS : UnitS]]}
+        }{[[x0 : Gf A |-l weak x0 in trivS : UnitS]]}
+      }{[[x1 : F Gf A |-l let x1 : F Gf A be F x0 in weak x0 in trivS : UnitS]]}
+    }{[[. |-l \r x1 : F Gf A . let x1 : F Gf A be F x0 in weak x0 in trivS : (F Gf A) -> (UnitS)]]}
   \end{math}
 \end{center}
 
@@ -192,7 +192,7 @@ $GF$ is a monad:
     \tiny
     \begin{math}
       $$\mprset{flushleft}
-      \inferrule* [right={\tiny impR}] {
+      \inferrule* [right={\tiny imprR}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny Gr}] {
           $$\mprset{flushleft}
@@ -204,12 +204,12 @@ $GF$ is a monad:
                 $$\mprset{flushleft}
                 \inferrule* [right={\tiny ax}] {
                   \,
-                }{[[. ; x0 : F X |- x0 : F X]]}
-              }{[[x1 : Gf F X ; . |- let x1 : Gf F X be Gf x0 in x0 : F X]]}
-            }{[[. ; x2 : F Gf F X |- let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0) : F X]]}
-          }{[[x3 : Gf F Gf F X ; . |- let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0)) : F X]]}
-        }{[[x3 : Gf F Gf F X |- Gf (let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0))) : Gf F X]]}
-      }{[[ . |- \l x3 : Gf F Gf F X . Gf (let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0))) : (Gf F Gf F X) -> (Gf F X)]]}
+                }{[[x0 : F X |-l x0 : F X]]}
+              }{[[x1 : Gf F X |-l let x1 : Gf F X be Gf x0 in x0 : F X]]}
+            }{[[x2 : F Gf F X |-l let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0) : F X]]}
+          }{[[x3 : Gf F Gf F X |-l let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0)) : F X]]}
+        }{[[x3 : Gf F Gf F X |-c Gf (let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0))) : Gf F X]]}
+      }{[[ . |-c \ x3 : Gf F Gf F X . Gf (let x3 : Gf F Gf F X be Gf x2 in (let x2 : F Gf F X be F x1 in (let x1 : Gf F X be Gf x0 in x0))) : (Gf F Gf F X) -o (Gf F X)]]}
     \end{math}
   \end{center}
 \item Deriving $\mu$:
@@ -217,7 +217,7 @@ $GF$ is a monad:
     \tiny
     \begin{math}
       $$\mprset{flushleft}
-      \inferrule* [right={\tiny impR}] {
+      \inferrule* [right={\tiny imprR}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny Gr}] {
           $$\mprset{flushleft}
@@ -225,10 +225,10 @@ $GF$ is a monad:
             $$\mprset{flushleft}
             \inferrule* [right={\tiny ax}] {
               \,
-            }{[[x : X |- x : X]]}
-          }{[[x : X ; . |- F x : F X]]} 
-        }{[[x : X |- Gf F x : Gf F X]]}
-      }{[[. |- \l x : X . Gf F x : (X) -> (Gf F X)]]}
+            }{[[x : X |-c x : X]]}
+          }{[[x : X |-l F x : F X]]} 
+        }{[[x : X |-c Gf F x : Gf F X]]}
+      }{[[. |-c \ x : X . Gf F x : (X) -o (Gf F X)]]}
     \end{math}
   \end{center}
 \end{itemize}
@@ -240,7 +240,7 @@ The monad $GF$ is strong:
     \tiny
     \begin{math}
       $$\mprset{flushleft}
-      \inferrule* [right={\tiny impR}] {
+      \inferrule* [right={\tiny imprR}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny tenL}] {
           $$\mprset{flushleft}
@@ -258,19 +258,19 @@ The monad $GF$ is strong:
                       $$\mprset{flushleft}
                       \inferrule* [right={\tiny ax}] {
                         \,
-                      }{[[x0 : X |- x0 : X]]}
+                      }{[[x0 : X |-c x0 : X]]}
                       $$\mprset{flushleft}
                       \inferrule* [right={\tiny ax}] {
                         \,
-                      }{[[y0 : Y |- y0 : Y]]}
-                    }{[[x0 : X , y0 : Y |- x0 (x) y0 : h(X) (x) Y]]}
-                  }{[[x0 : X , y0 : Y ; . |- F (x0 (x) y0) : F (h(X) (x) Y)]]}
-                }{[[x0 : X ; y1 : F Y |- let y1 : F Y be F y0 in F (x0 (x) y0) : F (h(X) (x) Y)]]}
-              }{[[y2 : Gf F Y , x0 : X ; . |- let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0)) : F (h(X) (x) Y)]]}
-            }{[[y2 : Gf F Y , x0 : X |- Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))) : Gf F (h(X) (x) Y)]]}
-          }{[[x1 : X , y3 : Gf F Y |- ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0)))) : Gf F (h(X) (x) Y)]]}
-        }{[[z : h(X) (x) Gf F Y |- let z : h(X) (x) Gf F Y be x1 (x) y3 in (ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))))) : Gf F (h(X) (x) Y)]]}
-      }{[[. |- \l z : h(X) (x) Gf F Y . let z : h(X) (x) Gf F Y be x1 (x) y3 in (ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))))) : (h(X) (x) Gf F Y) -> (Gf F (h(X) (x) Y))]]}
+                      }{[[y0 : Y |-c y0 : Y]]}
+                    }{[[x0 : X , y0 : Y |-c x0 (x) y0 : h(X) (x) Y]]}
+                  }{[[x0 : X , y0 : Y |-l F (x0 (x) y0) : F (h(X) (x) Y)]]}
+                }{[[x0 : X , y1 : F Y |-l let y1 : F Y be F y0 in F (x0 (x) y0) : F (h(X) (x) Y)]]}
+              }{[[y2 : Gf F Y , x0 : X |-l let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0)) : F (h(X) (x) Y)]]}
+            }{[[y2 : Gf F Y , x0 : X |-c Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))) : Gf F (h(X) (x) Y)]]}
+          }{[[x1 : X , y3 : Gf F Y |-c ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0)))) : Gf F (h(X) (x) Y)]]}
+        }{[[z : h(X) (x) Gf F Y |-c let z : h(X) (x) Gf F Y be x1 (x) y3 in (ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))))) : Gf F (h(X) (x) Y)]]}
+      }{[[. |-c \ z : h(X) (x) Gf F Y . let z : h(X) (x) Gf F Y be x1 (x) y3 in (ex y3 , x1 with y2 , x0 in (Gf (let y2 : Gf F Y be Gf y1 in (let y1 : F Y be F y0 in F (x0 (x) y0))))) : (h(X) (x) Gf F Y) -o (Gf F (h(X) (x) Y))]]}
     \end{math}
   \end{center}
 \end{itemize}
