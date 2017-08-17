@@ -29,11 +29,12 @@ multisets, therefore the following exchange rules are implicit.
  \scriptsize
   \begin{mdframed}
     \begin{mathpar}
-      \ottdruleSXXid{} \qquad\qquad \ottdruleSXXunitI{} \qquad\qquad \ottdruleSXXunitE{} \\
-      \ottdruleSXXtenI{} \qquad\qquad \ottdruleSXXtenEOne{} \\
-      \ottdruleSXXtenETwo{} \qquad\qquad \ottdruleSXXimplI{} \\
-      \ottdruleSXXimplE{} \qquad\qquad \ottdruleSXXimprI{} \\
-      \ottdruleSXXimprE{} \qquad\qquad \ottdruleSXXFI{} \\
+      \ottdruleSXXid{} \qquad\qquad \ottdruleSXXunitI{} \qquad\qquad \ottdruleSXXunitEOne{} \\
+      \ottdruleSXXunitETwo{} \qquad\qquad \ottdruleSXXunitEThree{} \\
+      \ottdruleSXXunitEFour{} \qquad\qquad \ottdruleSXXtenI{} \\
+      \ottdruleSXXtenEOne{} \qquad\qquad \ottdruleSXXtenETwo{} \\
+      \ottdruleSXXimprI{} \qquad\qquad \ottdruleSXXimprE{} \qquad\qquad \ottdruleSXXimplI{} \\
+      \ottdruleSXXimplE{} \qquad\qquad \ottdruleSXXFI{} \\
       \ottdruleSXXFE{} \qquad\qquad \ottdruleSXXGE{}
     \end{mathpar}
   \end{mdframed}
@@ -45,25 +46,25 @@ multisets, therefore the following exchange rules are implicit.
   \tiny
   \begin{math}
   $$\mprset{flushleft}
-  \inferrule* [right={\tiny implI}] {
+  \inferrule* [right={\tiny imprI}] {
     $$\mprset{flushleft}
     \inferrule* [right={\tiny tenE2}] {
       $$\mprset{flushleft}
       \inferrule* [right={\tiny id}] {
         \,
-      }{[[. ; z : h(F Gf A) (>) F Gf B |- z : h(F Gf A) (>) F Gf B]]}
+      }{[[z : h(F Gf A) (>) F Gf B |-l z : h(F Gf A) (>) F Gf B]]}
         $$\mprset{flushleft}
         \inferrule* [right={\tiny FE}] {
           $$\mprset{flushleft}
           \inferrule* [right={\tiny id}] {
             \,
-          }{[[. ; x2 : F Gf A |- x2 : F Gf A]]}
+          }{[[x2 : F Gf A |-l x2 : F Gf A]]}
             $$\mprset{flushleft}
             \inferrule* [right={\tiny FE}] {
               $$\mprset{flushleft}
               \inferrule* [right={\tiny id}] {
                 \,
-              }{[[. ; y2 : F Gf B |- y2 : F Gf B]]}
+              }{[[y2 : F Gf B |-l y2 : F Gf B]]}
               \inferrule* [right={\tiny beta}] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\tiny FE}] {
@@ -72,21 +73,21 @@ multisets, therefore the following exchange rules are implicit.
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny id}] {
                       \,
-                    }{[[y0 : Gf B |- y0 : Gf B]]}
-                  }{[[y0 : Gf B; . |- F y0 : F Gf B]]}
+                    }{[[y0 : Gf B |-c y0 : Gf B]]}
+                  }{[[y0 : Gf B |-l F y0 : F Gf B]]}
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny FI}] {
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny id}] {
                       \,
-                    }{[[x0 : Gf A |- x0 : Gf A]]}
-                  }{[[x0 : Gf A; . |- F x0 : F Gf A]]}
-                }{[[y0 : Gf B, x0 : Gf A ; . |- h(F y0) (>) F x0 : h(F Gf B) (>) F Gf A]]}
-              }{[[x1 : Gf A, y1 : Gf B ; . |- ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0) : h(F Gf B) (>) F Gf A]]}
-            }{[[x1 : Gf A ; y2 : F Gf B |- let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)) : h(F Gf B) (>) F Gf A]]}
-          }{[[. ; x2 : F Gf A , y2 : F Gf B |- let F x1 : F Gf A be x2 in (let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0))) : h(F Gf B) (>) F Gf A]]}
-        }{[[. ; z : h(F Gf A) (>) F Gf B |- let z : h(F Gf A) (>) F Gf B be x2 (>) y2 in (let F x1 : F Gf A be x2 in (let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)))) : h(F Gf B) (>) F Gf A]]}
-      }{[[ . ; . |- \l z : h(F Gf A) (>) F Gf B.let z : h(F Gf A) (>) F Gf B be x2 (>) y2 in (let F x1 : F Gf A be x2 in (let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)))) : (h(F Gf A) (>) F Gf B) -> (h(F Gf B) (>) F Gf A)]]}
+                    }{[[x0 : Gf A |-c x0 : Gf A]]}
+                  }{[[x0 : Gf A |-l F x0 : F Gf A]]}
+                }{[[y0 : Gf B, x0 : Gf A |-l h(F y0) (>) F x0 : h(F Gf B) (>) F Gf A]]}
+              }{[[x1 : Gf A, y1 : Gf B |-l ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0) : h(F Gf B) (>) F Gf A]]}
+            }{[[x1 : Gf A , y2 : F Gf B |-l let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)) : h(F Gf B) (>) F Gf A]]}
+          }{[[x2 : F Gf A , y2 : F Gf B |-l let F x1 : F Gf A be x2 in (let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0))) : h(F Gf B) (>) F Gf A]]}
+        }{[[z : h(F Gf A) (>) F Gf B |-l let z : h(F Gf A) (>) F Gf B be x2 (>) y2 in (let F x1 : F Gf A be x2 in (let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)))) : h(F Gf B) (>) F Gf A]]}
+      }{[[ . |-l \r z : h(F Gf A) (>) F Gf B.let z : h(F Gf A) (>) F Gf B be x2 (>) y2 in (let F x1 : F Gf A be x2 in (let F y1 : F Gf B be y2 in (ex y1 , x1 with y0 , x0 in (h(F y0) (>) F x0)))) : (h(F Gf A) (>) F Gf B) -> (h(F Gf B) (>) F Gf A)]]}
   \end{math}
 \end{center}
 

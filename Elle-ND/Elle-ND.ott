@@ -198,9 +198,9 @@ by
   ----------------- :: GI
   I |-c Gf s : Gf A
   
-  % I, x : X, y : Y, P |- t : Z 
-  % ------------------------------------------------ :: beta
-  % I, z : Y, w : X, P |- ex w, z with x, y in t : Z
+  I, x : X, y : Y, P |-c t : Z 
+  ------------------------------------------------ :: beta
+  I, z : Y, w : X, P |-c ex w, z with x, y in t : Z
 
 defn
   G |-l s : A :: :: sty :: 'S_'
@@ -268,9 +268,9 @@ by
   -------------------- :: GE
   I |-l derelict t : A
 
-  % I, x : X, y : Y, P |-l s : A
-  % ----------------------------------------------- :: beta
-  % I, z : Y, w : X, P |-l ex w,z with x,y in s : A
+  G, x : X, y : Y, D |-l s : A
+  ----------------------------------------------- :: beta
+  G, z : Y, w : X, D |-l ex w,z with x,y in s : A
 
 
 defns
