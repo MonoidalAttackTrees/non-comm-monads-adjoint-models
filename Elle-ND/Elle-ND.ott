@@ -154,8 +154,10 @@ terminals :: 'terminals_' ::=
   {{tex \leftharpoonup }}
   | -o   :: :: Limp
   {{tex \multimap }}
-  | |-   :: :: Vdash
-  {{tex \vdash }}
+  | |-c   :: :: VdashC
+  {{tex \vdash_\mathcal{C} }}
+  | |-l   :: :: VdashL
+  {{tex \vdash_\mathcal{L} }}
   | ~>   :: :: To
   {{tex \leadsto }}
  
@@ -163,112 +165,112 @@ defns
   Jtype :: '' ::=
 
 defn
-  I |- t : X :: :: tty :: 'T_'
+  I |-c t : X :: :: tty :: 'T_'
 by 
 
-  -------------- :: id
-  x : X |- x : X
+  --------------- :: id
+  x : X |-c x : X
 
-  ------------------ :: unitI
-  . |- trivT : UnitT
+  ------------------- :: unitI
+  . |-c trivT : UnitT
 
-  I |- t1 : UnitT && P |- t2 : Y
-  --------------------------------------------- :: unitE
-  I, P |- let t1 : UnitT be trivT in t2 : Y
+  I |-c t1 : UnitT && P |-c t2 : Y
+  ------------------------------------------ :: unitE
+  I, P |-c let t1 : UnitT be trivT in t2 : Y
 
-  I |- t1 : X && I |- t2 : Y
-  -------------------------- :: tenI
-  I,P |- t1 (x) t2 : X (x) Y  
+  I |-c t1 : X && P |-c t2 : Y
+  ---------------------------- :: tenI
+  I, P |-c t1 (x) t2 : X (x) Y  
 
-  I |- t1 : X (x) Y && P1, x : X, y : Y,P2 |- t2 : Z
-  -------------------------------------------------- :: tenE
-  P1,I,P2 |- let t1 : X (x) Y be x (x) y in t2 : Z
+  I |-c t1 : X (x) Y && P1, x : X, y : Y, P2 |-c t2 : Z
+  ----------------------------------------------------- :: tenE
+  P1, I, P2 |-c let t1 : X (x) Y be x (x) y in t2 : Z
 
-  I, x : X |- t : Y
+  I, x : X |-c t : Y
   ---------------------- :: impI
-  I |- \ x:X.t : X -o Y
+  I |-c \ x:X.t : X -o Y
   
-  I |- t1 : X -o Y && P |- t2 : X
-  ----------------------------- :: impE
-  I, P |- app t1 t2 : Y
+  I |-c t1 : X -o Y && P |-c t2 : X
+  --------------------------------- :: impE
+  I, P |-c app t1 t2 : Y
 
-  I |- s : A
-  ---------------- :: GI
-  I |- Gf s : Gf A
+  I |-l s : A
+  ----------------- :: GI
+  I |-c Gf s : Gf A
   
   % I, x : X, y : Y, P |- t : Z 
   % ------------------------------------------------ :: beta
   % I, z : Y, w : X, P |- ex w, z with x, y in t : Z
 
 defn
-  G |- s : A :: :: sty :: 'S_'
+  G |-l s : A :: :: sty :: 'S_'
 by
 
   --------------- :: id
-  x : A |- x : A
+  x : A |-l x : A
 
-  ------------------ :: unitI
-  . |- trivS : UnitS
+  ------------------- :: unitI
+  . |-l trivS : UnitS
 
-  G  |- s1 : UnitS && D |- s2 : A
-  ---------------------------------------- :: unitE1
-  G, D |- let s1 : UnitS be trivS in s2 : A
+  G |-l s1 : UnitS && D |-l s2 : A
+  ------------------------------------------ :: unitE1
+  G, D |-l let s1 : UnitS be trivS in s2 : A
 
-  % G  |- s1 : UnitS && D |- s2 : A
-  % ---------------------------------------- :: unitE2
-  % G, D |- let s1 : UnitS be trivS in s2 : A
+  G |-l s1 : UnitS && D |-l s2 : A
+  ------------------------------------------ :: unitE2
+  D, G |-l let s1 : UnitS be trivS in s2 : A
 
-  I  |- t : UnitT && G |- s : A
-  ---------------------------------------- :: unitE2
-  I, G |- let t : UnitT be trivT in s : A
+  I |-c t : UnitT && G |-l s : A
+  ---------------------------------------- :: unitE3
+  I, G |-l let t : UnitT be trivT in s : A
 
-  % I  |- t : UnitT && G |- s : A
-  % ---------------------------------------- :: unitE4
-  % I, G |- let t : UnitT be trivT in s : A
+  I |-c t : UnitT && G |-l s : A
+  ---------------------------------------- :: unitE4
+  G, I |-l let t : UnitT be trivT in s : A
 
-  G |- s1 : A && D |- s2 : B
-  ------------------------------ :: tenI
-  G, D |- s1 (>) s2 : A (>) B
+  G |-l s1 : A && D |-l s2 : B
+  ---------------------------- :: tenI
+  G, D |-l s1 (>) s2 : A (>) B
 
-  I |- t : X (x) Y && G1, x : X, y : Y,G2 |- s : A
-  ------------------------------------------------ :: tenE1
-  G1, I, G2 |- let t : X (x) Y be x (x) y in s : A
+  G |-l s1 : A (>) B && D1, x : A, y : B,D2 |-l s2 : C
+  ---------------------------------------------------- :: tenE1
+  D1, G, D2  |-l let s1 : A (>) B be x (>) y in s2 : C
 
-  G |- s1 : A (>) B && D1, x : A, y : B,D2 |- s2 : C
-  -------------------------------------------------- :: tenE2
-  D1,G,D2  |- let s1 : A (>) B be x (>) y in s2 : C
+  I |-c t : X (x) Y && G1, x : X, y : Y,G2 |-l s : A
+  ------------------------------------------------ :: tenE2
+  G1, I, G2 |-l let t : X (x) Y be x (x) y in s : A
 
-  G, x : A |- s : B
-  ---------------------- :: imprI
-  G |- \r x:A.s : A -> B
+  G, x : A |-l s : B
+  ----------------------- :: imprI
+  G |-l \r x:A.s : A -> B
 
-  G |- s1 : A -> B && D |- s2 : A
-  ------------------------------- :: imprE
-  G, D |- appr s1 s2 : B
+  G |-l s1 : A -> B && D |-l s2 : A
+  --------------------------------- :: imprE
+  G, D |-l appr s1 s2 : B
 
-  x : A,G |- s : B
-  ---------------------- :: implI
-  G |- \l x:A.s : B <- A
+  x : A, G |-l s : B
+  ----------------------- :: implI
+  G |-l \l x:A.s : B <- A
 
-  G |- s1 : B <- A && D |- s2 : A
-  ------------------------------- :: implE
-  G, D |- appl s1 s2 : B
+  G |-l s1 : B <- A && D |-l s2 : A
+  --------------------------------- :: implE
+  G, D |-l appl s1 s2 : B
 
-  I |- t : X
-  -------------- :: FI
-  I |- F t : F X
+  I |-c t : X
+  --------------- :: FI
+  I |-l F t : F X
 
-  G |- y : F X && D1, x : X, D2 |- s : A
-  ---------------------------------------- :: FE
-  D1, G, D2 |- let F x : F X be y in s : A
+  G |-l y : F X && D1, x : X, D2 |-l s : A
+  ----------------------------------------- :: FE
+  D1, G, D2 |-l let F x : F X be y in s : A
 
-  I |- t : Gf A
-  ------------------- :: GE
-  I |- derelict t : A
+  I |-c t : Gf A
+  -------------------- :: GE
+  I |-l derelict t : A
 
-  % I, x : X, y : Y, P |- s : A
+  % I, x : X, y : Y, P |-l s : A
   % ----------------------------------------------- :: beta
-  % I, z : Y, w : X, P |- ex w,z with x,y in s : A
+  % I, z : Y, w : X, P |-l ex w,z with x,y in s : A
 
 
 defns
