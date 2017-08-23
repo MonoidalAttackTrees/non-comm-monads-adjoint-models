@@ -14,7 +14,7 @@ References := references.bib
 
 PDF := $(TexFileName).pdf
 
-all: pdf clean
+all: pdf
   # This is for my private machine.  It forces my PDF reader to reload.
   # It should not run unless "skim_revert.sh" is in your PATH
   ifdef SKIMRevinPath
@@ -49,7 +49,6 @@ ott : main.text natural-deduction-ott.tex sequent-calculus-ott.tex Makefile
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
 $(PDF) : main.tex Makefile adjoint-model.tex ref.bib natural-deduction-ott.tex sequent-calculus-ott.tex Makefile
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
-	# $(BIBTEX) main
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 
