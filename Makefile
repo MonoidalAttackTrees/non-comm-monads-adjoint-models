@@ -47,7 +47,7 @@ ott : main.text natural-deduction-ott.tex sequent-calculus-ott.tex Makefile
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile adjoint-model.tex ref.bib natural-deduction-ott.tex sequent-calculus-ott.tex Makefile
+$(PDF) : main.tex Makefile adjoint-model.tex ref.bib natural-deduction-ott.tex sequent-calculus-ott.tex introduction.tex Makefile
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)

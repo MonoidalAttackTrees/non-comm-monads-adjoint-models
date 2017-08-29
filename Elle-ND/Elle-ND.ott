@@ -202,6 +202,10 @@ by
   ------------------------------------------------ :: beta
   I, z : Y, w : X, P |-c ex w, z with x, y in t : Z
 
+  I |-c t1 : X && P1, x : X, P2 |-c t2 : Y
+  --------------------------------------- :: cut
+  P1, I, P2 |-c [t1/x]t2 : Y
+
 defn
   G |-l s : A :: :: sty :: 'S_'
 by
@@ -216,17 +220,9 @@ by
   ------------------------------------------ :: unitE1
   G, D |-l let s1 : UnitS be trivS in s2 : A
 
-  G |-l s1 : UnitS && D |-l s2 : A
-  ------------------------------------------ :: unitE2
-  D, G |-l let s1 : UnitS be trivS in s2 : A
-
   I |-c t : UnitT && G |-l s : A
-  ---------------------------------------- :: unitE3
+  ---------------------------------------- :: unitE2
   I, G |-l let t : UnitT be trivT in s : A
-
-  I |-c t : UnitT && G |-l s : A
-  ---------------------------------------- :: unitE4
-  G, I |-l let t : UnitT be trivT in s : A
 
   G |-l s1 : A && D |-l s2 : B
   ---------------------------- :: tenI
@@ -272,6 +268,13 @@ by
   ----------------------------------------------- :: beta
   G, z : Y, w : X, D |-l ex w,z with x,y in s : A
 
+  I |-c t : X && G1, x : X, G2 |-l s : A
+  -------------------------------------- :: cut1
+  G1, I, G1 |-l [t/x]s : A
+
+  G |-l s1 : A && D1, x : A, D2 |-l s2 : B
+  ---------------------------------------- :: cut2
+  D1, G, D2 |-l [s1/x]s2 : B
 
 defns
   Reduction :: '' ::=

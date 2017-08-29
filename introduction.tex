@@ -1,0 +1,30 @@
+Linear logic is a well-known resource-sensitive logic. It has been used extensively to model
+attack trees. This paper concerns a non-commutative variant of linear logic and combines the
+non-commutative variant with Girard's linear logic \cite{}. We will only focus on the
+multiplicative (i.e. $\otimes$, $\multimap$) part of linear logic for simplicity. We construct
+the non-commutative variant by using a non-commutative tensor product $\tri$ instead of the
+commutative $\otimes$, and two implications $\rto$ and $\lto$ for the two directions of
+$\multimap$.
+
+We model the non-commutative linear logic categorically using an ajunction between a symmetric
+monoidal closed category and a Lambek category. Our categorial adjoint model has a similar
+structure as Benton's adjoint model \cite{}, in which the multiplicative part of intuitionistic
+linear logic (ILL) is modeled using an adjunction between a cartesian closed category and a
+symmetric monoidal closed category. On the other hand, Moggi \cite{} uses monad models to map
+intuitionistic logic into ILL. As discussed in \cite{benton+Wadler}, Benton's adjoint models
+only gives rise to commutative monad models and the non-commutative part remained as an open
+problem. Therefore, by combining our adjoint models with Benton's, we would be able to get
+non-commutative monad models and thus non-commutative ILL.
+
+The rest of the paper is organized as follows. Section~\ref{sec:related_work} discusses existing
+approaches on constructing non-commutative linear logic.
+Section~\ref{sec:category_theory_basics} contains the basic definitions in category theory that
+we will be using in our adjoint model. Familiar readers may skip this section.
+Section~\ref{sec:adjoint_model} contains the definition and essential properties of our adjoint
+model. Section~\ref{sec:logic} discusses the sequent calculus and natural deduction rules for
+our non-commutative linear logic. We prove that our sequent calculus has the property of
+cut-elimination and the natural deduction is strongly normalizing. Section~\ref{sec:combining}
+talks about the preliminary result after combing our non-commutative model with Benton's
+commutative model. Section~\ref{sec:applications} briefly mentions how our model could be used
+in attack trees and other areas. Section~\ref{sec:conclusion} concludes this paper with future
+work.

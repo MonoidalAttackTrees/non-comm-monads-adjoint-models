@@ -1,21 +1,25 @@
 The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC of
 the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
 non-commutative part, i.e. the Lambek category of the adjunction, is defined in
-Figure~\ref{fig:elle-nd-lambek}. $[[P]]$ and $[[I]]$ are contexts for the non-commutative part
-and they are lists. $[[G]]$ and $[[D]]$ are contexts for the commutative part and they are
-multisets, therefore the following exchange rules are implicit.
-\scriptsize
-\begin{mathpar}
-  \ottdruleTXXbeta{} \qquad\qquad \ottdruleSXXbeta{}
-\end{mathpar}
+Figure~\ref{fig:elle-nd-lambek}. $[[P]]$ and $[[I]]$ are contexts for the commutative part
+and they are multisets. $[[G]]$ and $[[D]]$ are contexts for the mix of the commutative part and
+the non-commutative part, and they are lists. Therefore the following exchange rule is implicit.
 
 \begin{figure}[!h]
- \scriptsize
+  \scriptsize
+  \begin{mathpar}
+    \NDdruleTXXbeta{}
+  \end{mathpar}
+\end{figure}
+
+\begin{figure}[!h]
+  \scriptsize
   \begin{mdframed}
     \begin{mathpar}
-      \ottdruleTXXid{} \qquad\qquad \ottdruleTXXunitI{} \qquad\qquad \ottdruleTXXunitE{} \\
-      \ottdruleTXXtenI{} \qquad\qquad \ottdruleTXXtenE{} \\
-      \ottdruleTXXimpI{} \qquad\qquad \ottdruleTXXimpE{} \qquad\qquad \ottdruleTXXGI{}
+      \NDdruleTXXid{} \qquad\qquad \NDdruleTXXunitI{} \qquad\qquad \NDdruleTXXunitE{} \\
+      \NDdruleTXXtenI{} \qquad\qquad \NDdruleTXXtenE{} \\
+      \NDdruleTXXimpI{} \qquad\qquad \NDdruleTXXimpE{} \qquad\qquad \NDdruleTXXGI{} \\
+      \NDdruleSXXbeta{}
     \end{mathpar}
   \end{mdframed}
 \caption{Commutative Part}
@@ -26,18 +30,20 @@ multisets, therefore the following exchange rules are implicit.
  \scriptsize
   \begin{mdframed}
     \begin{mathpar}
-      \ottdruleSXXid{} \qquad\qquad \ottdruleSXXunitI{} \qquad\qquad \ottdruleSXXunitEOne{} \\
-      \ottdruleSXXunitETwo{} \qquad\qquad \ottdruleSXXunitEThree{} \\
-      \ottdruleSXXunitEFour{} \qquad\qquad \ottdruleSXXtenI{} \\
-      \ottdruleSXXtenEOne{} \qquad\qquad \ottdruleSXXtenETwo{} \\
-      \ottdruleSXXimprI{} \qquad\qquad \ottdruleSXXimprE{} \qquad\qquad \ottdruleSXXimplI{} \\
-      \ottdruleSXXimplE{} \qquad\qquad \ottdruleSXXFI{} \\
-      \ottdruleSXXFE{} \qquad\qquad \ottdruleSXXGE{}
+      \NDdruleSXXid{} \qquad\qquad \NDdruleSXXunitI{} \qquad\qquad \NDdruleSXXunitEOne{} \\
+      \NDdruleSXXunitEOne{} \qquad\qquad \NDdruleSXXunitETwo{} \\
+      \NDdruleSXXtenI{} \qquad\qquad \NDdruleSXXtenEOne{} \\
+      \NDdruleSXXtenETwo{} \qquad\qquad \NDdruleSXXimprI{} \\
+      \NDdruleSXXimprE{} \qquad\qquad \NDdruleSXXimplI{} \\
+      \NDdruleSXXimplE{} \qquad\qquad \NDdruleSXXGE{} \qquad\qquad \NDdruleSXXFI{} \\
+      \NDdruleSXXFE{}
     \end{mathpar}
   \end{mdframed}
 \caption{Non-Commutative Part}
 \label{fig:elle-nd-lambek}
 \end{figure}
+
+We could derive exchange comonadically as follows:
 
 \begin{center}
   \tiny
@@ -88,6 +94,21 @@ multisets, therefore the following exchange rules are implicit.
   \end{math}
 \end{center}
 
+We also have the three cut rules derivable in the natural deduction:
 
+\begin{figure}[!h]
+  \scriptsize
+  \begin{mathpar}
+    \NDdruleTXXcut{} \qquad\qquad \NDdruleSXXcutOne{} \qquad\qquad \NDdruleSXXcutTwo{}
+  \end{mathpar}
+\end{figure}
 
-
+\begin{center}
+  \tiny
+  \begin{math}
+  $$\mprset{flushleft}
+  \inferrule* [right={\tiny FI}] {
+    {[[I |-c t : X]]}
+  }{[[I |-l F t : F X]]}
+  \end{math}
+\end{center}
