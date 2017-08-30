@@ -34,20 +34,18 @@ quick : quick-pdf
 
 pdf : $(PDF)
 
-natural-deduction-ott.tex : natural-deduction.tex Elle-ND/Elle-ND.ott
+logic-ott.tex : natural-deduction.tex Elle-ND/Elle-ND.ott sequent-calculus.tex Elle/Elle.ott
 	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
-		-tex_filter natural-deduction.tex natural-deduction-ott.tex
-
-sequent-calculus-ott.tex : sequent-calculus.tex Elle/Elle.ott
+		-tex_filter logic.tex logic-ott1.tex
 	@$(OTT) $(OTT_FLAGS) -i Elle/Elle.ott -o Elle-inc.tex -tex_name_prefix Elle \
-		-tex_filter sequent-calculus.tex sequent-calculus-ott.tex
+		-tex_filter logic-ott1.tex logic-ott.tex
 
-ott : main.text natural-deduction-ott.tex sequent-calculus-ott.tex Makefile
+ott : main.text logic-ott.tex Makefile
 
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile adjoint-model.tex ref.bib natural-deduction-ott.tex sequent-calculus-ott.tex introduction.tex Makefile
+$(PDF) : main.tex Makefile adjoint-model.tex ref.bib logic-ott.tex introduction.tex category-theory-basics.tex logic.tex Makefile
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)

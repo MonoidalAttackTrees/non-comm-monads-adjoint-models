@@ -1,20 +1,22 @@
-Our adjoint model, SMCC-Lambek model, has a similar structure as Benton's LNL model \cite{}.
-Benton's LNL model consists of a symmetric monoidal adjunction $F:\cat{C}\dashv\cat{L}:G$
-between a cartesian closed category $\cat{C}$ and a symmetric monoidal closed category
-$\cat{L}$.
+Our adjoint model, Lambek Adjoint Model (LAM), has a similar structure as Benton's LNL model
+\cite{}. Benton's LNL model consists of a symmetric monoidal adjunction
+$F:\cat{C}\dashv\cat{L}:G$ between a cartesian closed category $\cat{C}$ and a symmetric
+monoidal closed category $\cat{L}$. LAM consists of a monoidal adjunction between a symmetric
+monoidal closed category and a Lambek category.
 
 \begin{definition}
-  A \textbf{SMCC-Lambek model} consists of
+  A \textbf{Lambek Adjoint Model (LAM)} $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ consists of
   \begin{itemize}
   \item a symmetric monoidal closed category $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$;
   \item a Lambek category $(\cat{L},\tri,I',\alpha',\lambda',\rho')$;
-  \item a monoidal adjunction $F:\cat{C}\dashv\cat{L}:G$, where $F:\cat{C}\rightarrow\cat{L}$
-        and $G:\cat{L}\rightarrow\cat{C}$ are monoidal functors.
+  \item a monoidal adjunction $F:\cat{C}\dashv\cat{L}:G$ with unit $\eta_X:X\rightarrow GFX$ and
+        counit $\varepsilon:FG\rightarrow id_\cat{L}$, where $(F:\cat{C}\rightarrow\cat{L}, m)$
+        and $(G:\cat{L}\rightarrow\cat{C}, n)$ are monoidal functors.
   \end{itemize}
 \end{definition}
 
-Thus, in a SMCC-Lambek model, the following four diagrams commute because $\eta$ and
-$\varepsilon$ are monoidal natural transformations:
+Thus, in LAM, the following four diagrams commute because $\eta$ and $\varepsilon$ are monoidal
+natural transformations:
 \begin{mathpar}
 \bfig
   \square/=`->`->`/<1600,400>[
@@ -42,7 +44,7 @@ $\varepsilon$ are monoidal natural transformations:
   \square/->`<-`=`<-/<400,400>[FGI'`I'`FI`I';\varepsilon_{I'}`F\n{I'}``\m{I}]
 \efig
 \end{mathpar}
-And the following two diagrams commute because of the adjunction:
+And the following two triangles commute because of the adjunction:
 \begin{mathpar}
 \bfig
   \Vtriangle/->`=`->/<400,400>[FX`FGFX`FX;F\eta_X``\varepsilon_{FX}]
@@ -52,26 +54,108 @@ And the following two diagrams commute because of the adjunction:
   \Vtriangle/->`=`->/<400,400>[GA`GFGA`GA;\eta_{GA}``G\varepsilon_A]
 \efig
 \end{mathpar}
+
 Following the tradition, we use letters $X$, $Y$, $Z$ for objects in $\cat{C}$ and $A$, $B$, $C$
-for objects in $\cat{L}$. The following lemmas and theorems establish the essential properties
-of the monad and the comomad derived from the adjunction.
+for objects in $\cat{L}$. The rest of this section proves essential properties of a LAM.
+
+
+
+\subsection{An Isomorphism}
+
+Let $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ be a LAM, where $(F,\m{})$ and $(G,\n{})$ are
+monoidal functors. Similarly as in Benton's LNL model, $\m{X,Y}$ are components of a natural
+isomorphism and $\m{I}$ is an isomorphism. This is essential for deriving certain rules of
+our non-commutative linear logic, such as tensor elimination in natural deduction.
+
+We define the inverses of $\m{X,Y}:FX\tri FY\rightarrow F(X\otimes Y)$ and
+$\m{I}:I'\rightarrow FI$ as:
+
+\begin{mathpar}
+\bfig
+  \morphism<1000,0>[\p{X,Y}:F(X\otimes Y)`F(GFX\otimes GFY);F(\eta_X\otimes\eta_Y)]
+  \morphism(1000,0)<900,0>[F(GFX\otimes GFY)`FG(FX\tri FY);F\n{FX,FY}]
+  \morphism(1900,0)<750,0>[FG(FX\tri FY)`FX\tri FY;\varepsilon_{FX\tri FX}]
+\efig
+\and
+\bfig
+  \morphism<500,0>[\p{I}:FI`FGI';F\n{I'}]
+  \morphism(500,0)<400,0>[FGI'`I';\varepsilon_{I'}]
+\efig
+\end{mathpar}
+
+\begin{theorem}
+  $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$.
+\end{theorem}
+\begin{proof}
+  We need to show that $\m{X,Y}\circ\p{X,Y}=id_{F(X\otimes Y)}$ and
+  $\p{X,Y}\circ\m{X,Y}=id_{FX\tri FX}$. The two equations hold because the following diagrams
+  commute: (1)-adjunction; (2)-$\eta$ is a monoidal natural transformation; (3)-naturality of
+  $\varepsilon$; (4)-adjunction; (5)-naturality of $\m{}$; (6)-$\varepsilon$ is a monoidal
+  natural transformation.
+  \begin{mathpar}
+  \bfig
+    \square/->`=`->`/<1600,800>[
+      F(X\otimes Y)`F(GFX\otimes GFY)`F(X\otimes Y)`FG(FX\tri FY);
+      F(\eta_X\otimes\eta_Y)``F\n{FX,FY}`]
+    \Atrianglepair|mmmbb|/->``->`<-`<-/<800,400>[
+      FGF(X\otimes Y)`F(X\otimes Y)`FX\tri FY`FG(FX\tri FY);
+      \varepsilon_{F(X\otimes Y)}``FG\m{X,Y}`\m{X,Y}`\varepsilon_{FX\tri FY}]
+    \morphism(0,800)|m|<800,-400>[F(X\otimes Y)`FGF(X\otimes Y);F\eta_{X\otimes Y}]
+    \morphism(300,450)//<0,0>[`;(1)]
+    \morphism(1200,600)//<0,0>[`;(2)]
+    \morphism(800,200)//<0,0>[`;(3)]
+  \efig
+  \and
+  \bfig
+    \square/->`=`->`/<1800,800>[
+      FX\tri FY`F(X\otimes Y)`FX\tri FY`F(GFX\otimes GFY);
+      \m{X,Y}``F(\eta_X\otimes\eta_Y)`]
+    \Atrianglepair|mmmbb|/->``->`<-`<-/<900,400>[
+      FGFX\tri FGFY`FX\tri FY`FG(FX\tri FY)`F(GFX\otimes GFY);
+      \varepsilon_{FX}\tri\varepsilon_{FY}``\m{GFX,GFY}`\varepsilon_{FX\tri FY}`F\n{FX,FY}]
+    \morphism(0,800)|m|<900,-400>[FX\tri FY`FGFX\tri FGFY;F\eta_X\tri F\eta_Y]
+    \morphism(300,450)//<0,0>[`;(4)]
+    \morphism(1300,600)//<0,0>[`;(5)]
+    \morphism(900,200)//<0,0>[`;(6)]
+  \efig
+  \end{mathpar}
+\end{proof}
+
+\begin{theorem}
+  $\m{I}$ is an isomorphism and its inverse is $\p{I}$.
+\end{theorem}
+\begin{proof}
+  This is equivalent to equations $\m{I}\circ\p{I}=id_{FI}$ and $\p{I}\circ\m{I}=id_{I'}$,
+  equivalent to the following diagrams, which commute because $\varepsilon$ is a monoidal
+  natural transformation.
+  \begin{mathpar}
+  \bfig
+    \square/->`=`->`<-/<400,400>[FI`FGI'`FI`I';F\n{I'}``\varepsilon_{I'}`\m{I}]
+  \efig
+  \and
+  \bfig
+    \square/->`=`->`<-/<400,400>[I'`FI`I'`FGI';\m{I}``F\n{I'}`\varepsilon_{I'}]
+  \efig
+  \end{mathpar}
+\end{proof}
+
+\subsection{Monad on $\cat{C}$}
+
+We first show that the monad on $\cat{C}$ in LAM is strong but non-commutative. In Benton's
+LNL model, the monad on the cartesian closed category is commutative.
 
 \begin{lemma}
-  \label{lem:monoidal-monad}
-  The monad on the symmetric monoidal closed category $\cat{C}$ in a SMCC-Lambek model is
-  monoidal.
+\label{lem:monoidal-monad}
+  The monad on the symmetric monoidal closed category $\cat{C}$ in LAM is monoidal.
 \end{lemma}
 \begin{proof}
-  We define the monad $T$ on the $\cat{C}$ in the adjunction of a SMCC-Lambek model as $T=GF$,
-  and the two corresponding natural transformations $\eta:id_\cat{C}\rightarrow T$ and
-  $\mu:T^2\rightarrow T$ as
-  $$\eta_X:X\rightarrow GFX \qquad\qquad\qquad \mu_X=G\varepsilon_{FX}:GFGFX\rightarrow GFX$$
-  where $\eta$ is the unit and $\varepsilon:FG\rightarrow id_\cat{L}$ is the counit of the
-  adjunction $F:\cat{C}\dashv\cat{L}:G$. Since the adjunction is monoidal, then $(F,\m{})$ and
-  $(G,\n{})$ are monoidal functors. Thus, we have
+  Let $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ be a LAM. We define the monad
+  $(T,\eta:id_\cat{C}\rightarrow T,\mu:T^2\rightarrow T)$ on $\cat{C}$ as
+  $$T=GF \qquad\qquad\qquad \eta_X:X\rightarrow GFX \qquad\qquad\qquad \mu_X=G\varepsilon_{FX}:GFGFX\rightarrow GFX$$
+  Since $(F,\m{})$ and $(G,\n{})$ are monoidal functors, we have
   $$\t{X,Y}=G\m{X,Y}\circ\n{FX,FY}:TX\otimes TY\rightarrow T(X\otimes Y)
   \qquad\qquad\qquad\t{I}=G\m{I}\circ\n{I'}:I\rightarrow TI$$
-  The monad $T$ being monoidal means
+  The monad $T$ being monoidal means:
   \begin{enumerate}
   \item $T$ is a monoidal functor, i.e. the folllowing diagrams commute:
         \begin{mathpar}
@@ -191,7 +275,7 @@ of the monad and the comomad derived from the adjunction.
 \end{proof}
 
 However, the monad is not symmetric becauase the following diagram does not commute, for the
-lambek category $\cat{L}$ is not symmetric.
+Lambek category $\cat{L}$ is not symmetric.
 \begin{mathpar}
 \bfig
   \ptriangle/->`->`/<900,400>[
@@ -205,15 +289,14 @@ lambek category $\cat{L}$ is not symmetric.
 
 \begin{lemma}
   \label{lem:strong-monad}
-  The monad on the symmetric monoidal closed category in a SMCC-Lambek model is strong.
+  The monad on the symmetric monoidal closed category in LAM is strong.
 \end{lemma}
 \begin{proof}
-  Let $F:\cat{C}\vdash\cat{L}:G$ be a SMCC-Lambek model, where
-  $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$ is symmetric monoidal closed,
-  $(\cat{L},\tri,I',\alpha',\lambda',\rho')$ is a Lambek category, and $(F,\m{})$ and
-  $(G,\n{})$ are monoidal functors. We have proved that the monad $(T=GF,\eta,\mu)$ is monoidal
-  with the natural transformation $\t{X,Y}:TX\otimes TY\rightarrow T(X\otimes Y)$ and the
-  morphism $\t{I}:I\rightarrow TI$ defined as in Lemma~\ref{lem:monoidal-monad}. \\
+  Let $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ be a LAM, where
+  $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$ is symmetric monoidal closed, \\
+  $(\cat{L},\tri,I',\alpha',\lambda',\rho')$ is Lambek. In Lemma~\ref{lem:monoidal-monad}, we
+  have proved that the monad $(T=GF,\eta,\mu)$ is monoidal with the natural transformation
+  $\t{X,Y}:TX\otimes TY\rightarrow T(X\otimes Y)$ and the morphism $\t{I}:I\rightarrow TI$. \\
   We define the tensorial strength $\tau_{X,Y}:X\otimes TY\rightarrow T(X\otimes Y)$ as
   $\tau_{X,Y}=\t{X,Y}\circ(\eta_X\otimes id_{TY})$. \\
   Since $\eta$ is a monoidal natural transformation, we have $\eta_I=G\m{I}\circ\n{I'}$.
@@ -239,7 +322,7 @@ lambek category $\cat{L}$ is not symmetric.
   \efig
   \end{mathpar}
   The first pentagon in the definition commutes by the following commutative diagrams, because
-  $\eta$ are $\alpha$ natural transformations and $T$ is monoidal:
+  $\eta$ and $\alpha$ are natural transformations and $T$ is monoidal:
   \begin{mathpar}
   \bfig
     \qtriangle|amm|/->`->`<-/<1000,400>[
@@ -291,26 +374,31 @@ lambek category $\cat{L}$ is not symmetric.
   \end{mathpar}
 \end{proof}
 
-\begin{lemma}[\cite{kock1970monads}]
+The following lemma is adopted from \cite{}.
+\begin{lemma}
+\label{lem:monad-com-iff-sym}
   Let $\cat{M}$ be a symmetric monoidal category and $T$ be a strong monad on $\cat{M}$. Then
-  $T$ is symmetric iff it is commutative.
+  $T$ is commutative iff it is symmetric.
 \end{lemma}
 
 \begin{theorem}
-  The monad on the SMCC in a SMCC-Lambek model is monoidal and non-commutative.
+  The monad on the SMCC in LAM is strong but non-commutative.
 \end{theorem}
+\begin{proof}
+  The proof is obvious. Based on Lemma~\ref{lem:strong-monad} and
+  Lemma~\ref{lem:monad-com-iff-sym}, the monad is non-commutative. 
+\end{proof}
+
+\subsection{Comonad on $\cat{L}$}
 
 \begin{lemma}
-  The comonad on the Lambek category in a SMCC-Lambek model is monoidal.
+  The comonad on the Lambek category in a LAM is monoidal.
 \end{lemma}
 \begin{proof}
-  We define the comonad $S$ on the Lambek category $\cat{L}$ in the adjunction
-  $F:\cat{C}\vdash\cat{L}:G$ of a SMCC-Lambek model as $S=FG$. The two corresponding natural
-  transformations $\varepsilon:S\rightarrow id_\cat{L}$ and $\delta:S\rightarrow S^2$ are
-  defined as
-  $$\varepsilon_A:SA\rightarrow A \qquad\qquad\qquad \delta_A=F\eta_{GA}:SA\rightarrow S^2A$$
-  where $\varepsilon$ is the counit and $\eta:id_\cat{L}\rightarrow GF$ is the unit of the
-  adjunction, and $(F,\m{})$ and $(G,\n{})$ are monoidal functors. Thus, we have
+  We define the comonad $(S,\varepsilon:S\rightarrow id_\cat{L},\delta:S\rightarrow S^2)$ on
+  the Lambek category $\cat{L}$ as:
+  $$S=FG \qquad\qquad\qquad \varepsilon_A:SA\rightarrow A \qquad\qquad\qquad \delta_A=F\eta_{GA}:SA\rightarrow S^2A$$
+  Thus, we have natural transformation $\s{}$ and morphism $\s{I}$ defined as:
   $$\s{A,B}=F\n{A,B}\circ\m{GA,GB}:SA\tri SB\rightarrow SA\tri SB \qquad\qquad\qquad
   \s{I}=F\n{I'}\circ\m{I}:I'\rightarrow SI'$$
   The comonad $S$ being monoidal means
@@ -369,9 +457,8 @@ lambek category $\cat{L}$ is not symmetric.
   Lemma~\ref{lem:monoidal-monad}. We do not include the proof here for simplicity.
 \end{proof}
 
-The comonad $S$ on the Lambek category $\cat{L}$ of the adjunction is clearly not symmetric
-because $\cat{L}$ is not. However, it is symmetric on the co-Eilenberg-Moore category of the
-comonad.
+We then show that the co-Eilenberg-Moore category of the comonad $S$ is symmetric monoidal
+closed.
 
 \begin{definition}
   Let $(S,\varepsilon,\delta)$ be a comonad on a category $\cat{L}$. Then the
@@ -398,8 +485,8 @@ comonad.
 
 \begin{lemma}
   \label{lem:em-exchange}
-  Given a SMCC-Lambek model $F:\cat{C}\dashv\cat{L}:G$ and the comonad $S$ on $\cat{L}$, the
-  co-Eilenberg-Moore category $\cat{L}^S$ of has an exchange natural transformation
+  Given a LAM $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ and the comonad $S$ on $\cat{L}$,
+  the co-Eilenberg-Moore category $\cat{L}^S$ has an exchange natural transformation
   $\e{A,B}^S:A\tri B\rightarrow B\tri A$.
 \end{lemma}
 \begin{proof}
@@ -412,8 +499,8 @@ comonad.
     \morphism(2900,0)<500,0>[FG(B\tri A)`B\tri A;\varepsilon_{B\tri A}]
   \efig$$
   in which $(F,\m{})$ and $(G,\n{})$ are monoidal functors, and $\e{}$ is the exchange for
-  $\cat{C}$. $\e{}^S$ is a natural transformation because the following diagrams commute for
-  morphisms $f:A\rightarrow A'$ and $g:B\rightarrow B'$:
+  $\cat{C}$. Then $\e{}^S$ is a natural transformation because the following diagrams commute
+  for morphisms $f:A\rightarrow A'$ and $g:B\rightarrow B'$:
   \begin{mathpar}
   \bfig
     \square|almb|<700,400>[
@@ -469,58 +556,58 @@ comonad.
   (6), (7), (8), (9), (10)--obvious; (11)--coalgebra.
   \begin{mathpar}
   \bfig
-    \Vtrianglepair|aammm|/->`->`<-``<-/<1000,400>[
+    \Vtrianglepair|aammm|/->`->`<-``<-/<1100,400>[
       F(G(A\tri B)\otimes GC)`FG((A\tri B)\tri C)`(A\tri B)\tri C`FG(A\tri B)\tri FGC;
       F\n{A\tri B,C}`\varepsilon_{(A\tri B)\tri C}`
       \m{G(A\tri B),GC}``\varepsilon_{A\tri B}\tri\varepsilon_C]
-    \qtriangle(2000,0)|amr|/=`<-`->/<1000,400>[
+    \qtriangle(2200,0)|amr|/=`<-`->/<1000,400>[
       (A\tri B)\tri C`(A\tri B)\tri C`(FGA\tri FGB)\tri C;
       `(\varepsilon_A\tri\varepsilon_B)\tri id_C`(h_A\tri h_B)\tri id_C]
     \morphism|l|<0,400>[
       F((GA\otimes GB)\otimes GC)`F(G(A\tri B)\otimes GC);F(\n{A,B}\otimes id_{GC})]
-    \dtriangle(1000,0)|mmm|/`<-`->/<1000,400>[
+    \dtriangle(1100,0)|mmm|/`<-`->/<1100,400>[
       (A\tri B)\tri C`FG(A\tri B)\tri FGC`FG(A\tri B)\tri C;
       `\varepsilon_{A\tri B}\tri id_C`id\tri\varepsilon_C]
-    \btriangle(0,-400)|lmm|/->`<-`/<1000,400>[
+    \btriangle(0,-400)|lmm|/->`<-`/<1100,400>[
       F((GA\otimes GB)\otimes GC)`F((GB\otimes GA)\otimes GC)`F(GA\otimes GB)\tri FGC;
       F(\e{A,B}\otimes id_{GC})`\m{GA\otimes GB,GC}`]
-    \btriangle(1000,-400)|mmm|/<-``->/<2000,400>[
+    \btriangle(1100,-400)|mmm|/<-``->/<2100,400>[
       FG(A\tri B)\tri FGC`F(GA\otimes GB)\tri FGC`F(GA\otimes GB)\tri C;
       F\n{A,B}\tri id_{FGC}``id_{F(GA\otimes GB)}\tri\varepsilon_C]
-    \qtriangle(2000,-400)|mmr|/`<-`->/<1000,400>[
+    \qtriangle(2200,-400)|mmr|/`<-`->/<1000,400>[
       FG(A\tri B)\tri C`(FGA\tri FGB)\tri C`F(GA\otimes GB)\tri C;
       `F\n{A,B}\otimes id_C`\m{GA,GB}\tri id_C]
-    \btriangle(0,-800)|lmm|/->`<-`/<2000,400>[
+    \btriangle(0,-800)|lmm|/->`<-`/<2200,400>[
       F((GB\otimes GA)\otimes GC)`F(G(B\tri A)\otimes GC)`F(GB\otimes GA)\tri FGC;
       F(\n{B,A}\otimes id_{GC})`\m{GB\otimes GA,GC}`]
-    \morphism(1000,-400)|m|<1000,-400>[
+    \morphism(1100,-400)|m|<1100,-400>[
       F(GA\otimes GB)\tri FGC`F(GB\otimes GA)\tri FGC;F\e{A,B}\tri id_{FGC}]
-    \dtriangle(2000,-800)|mra|/`->`->/<1000,400>[
+    \dtriangle(2200,-800)|mra|/`->`->/<1000,400>[
       F(GA\otimes GB)\tri C`F(GB\otimes GA)\tri FGC`F(GB\otimes GA)\tri C;
       `F\e{A,B}\tri id_C`id\tri\varepsilon_C]
-    \square(0,-1200)|almb|/<-`->`->`->/<1000,400>[
+    \square(0,-1300)|almb|/<-`->`->`->/<1100,500>[
       F(G(B\tri A)\otimes GC)`FG(B\tri A)\tri FGC`FG((B\tri A)\tri C)`(B\tri A)\tri C;
       \m{G(B\tri A),GC}`F\n{B\tri A,C}`
       \varepsilon_{B\tri A}\tri\varepsilon_C`\varepsilon_{(B\tri A)\tri C}]
-    \morphism(1000,-800)|b|/<-/<1000,0>[
+    \morphism(1100,-800)|b|/<-/<1100,0>[
       FG(B\tri A)\tri FGC`F(GB\otimes GA)\tri FGC;F\n{B,A}\tri id]
-    \dtriangle(1000,-1200)/`->`<-/<2000,400>[
+    \dtriangle(1100,-1300)/`->`<-/<2100,500>[
       F(GB\otimes GA)\tri C`(B\tri A)\tri C`FG(B\tri A)\tri C;
       `F\n{B,A}\tri id_C`\varepsilon_{B\tri A}\tri id_C]
-    \morphism(1000,-800)|m|<2000,-400>[
+    \morphism(1100,-800)|m|<2100,-500>[
       FG(B\tri A)\tri FGC`FG(B\tri A)\tri C;id_{FG(B\tri A)}\tri\varepsilon_C]
-    \morphism(500,50)//<0,0>[`;(1)]
-    \morphism(500,-300)//<0,0>[`;(2)]
+    \morphism(550,50)//<0,0>[`;(1)]
+    \morphism(550,-300)//<0,0>[`;(2)]
     \morphism(400,-550)//<0,0>[`;(3)]
-    \morphism(500,-950)//<0,0>[`;(4)]
-    \morphism(1000,300)//<0,0>[`;(5)]
-    \morphism(1600,200)//<0,0>[`;(6)]
+    \morphism(550,-1000)//<0,0>[`;(4)]
+    \morphism(1100,300)//<0,0>[`;(5)]
+    \morphism(1900,200)//<0,0>[`;(6)]
     \morphism(1800,-150)//<0,0>[`;(7)]
     \morphism(2400,-550)//<0,0>[`;(8)]
-    \morphism(1300,-950)//<0,0>[`;(9)]
-    \morphism(2700,-900)//<0,0>[`;(10)]
-    \morphism(2800,300)//<0,0>[`;(11)]
-    \morphism(2500,50)//<0,0>[`;(12)]
+    \morphism(1550,-1050)//<0,0>[`;(9)]
+    \morphism(2700,-950)//<0,0>[`;(10)]
+    \morphism(3000,300)//<0,0>[`;(11)]
+    \morphism(2700,50)//<0,0>[`;(12)]
   \efig
   \end{mathpar}
 \end{proof}
@@ -593,7 +680,10 @@ comonad.
     \morphism(3100,200)//<0,0>[`;(5)]
   \efig
   \end{mathpar}
-  The third diagram commutes as follows, which uses Lemma~\ref{lem:emex}.
+  The third diagram commutes as follows: (1) and (7)--Lemma~\ref{lem:em-ex}; (2)--naturality of
+  $\alpha'$; (3) and (8)--naturality of $\varepsilon$; (4), (6) and (12)--G is a monoidal
+  functor; (5)--$\cat{C}$ is symmetrical monoidal closed; (9)--coalgebra; (10)--$\varepsilon$
+  is a monoidal natural transformation; (11)--naturality of $\e{}$.
   \begin{mathpar}
   \bfig
     \morphism(0,400)<1600,0>[(A\tri B)\tri C`A\tri(B\tri C);\alpha_{A,B,C}']
@@ -632,24 +722,40 @@ comonad.
     \morphism(800,-1600)|m|<0,-400>[F(G(B\tri A)\otimes GC)`FG((B\tri A)\tri C);F\n{B\tri A,C}]
     \morphism(2200,-1500)|m|<0,-500>[
       F(GB\otimes(GC\otimes GA))`F(GB\otimes G(C\tri A));F(id_{GB}\otimes\n{C,A})]
-    \morphism(2200,-2000)|m|<0,-400>[
+    \morphism(2200,-2000)|m|<0,-600>[
       F(GB\otimes G(C\tri A))`FG(B\tri(C\tri A));F\n{B,C\tri A}]
     \morphism(1500,-1800)|m|<0,-400>[
       F(GB\otimes(GA\otimes GC))`F(GB\otimes G(A\tri C));F(id_{GB}\otimes\n{A,C})]
-    \morphism(1500,-2200)|m|<0,-400>[F(GB\otimes G(A\tri C))`FG(B\tri(A\tri C));F\n{B,A\tri C}]
+    \morphism(1500,-2200)|m|<-500,-400>[
+      F(GB\otimes G(A\tri C))`FG(B\tri(A\tri C));F\n{B,A\tri C}]
     \morphism(0,400)|l|<0,-2000>[(A\tri B)\tri C`(B\tri A)\tri C;\e{A,B}^S\tri id_C]
     \morphism(800,-2000)|m|<-800,400>[
       FG((B\tri A)\tri C)`(B\tri A)\tri C;\varepsilon_{(B\tri A)\tri C}]
     \morphism(0,-1600)|l|<0,-1000>[(B\tri A)\tri C`B\tri(A\tri C);\alpha_{B,A,C}']
-    \morphism(1500,-2600)|m|<-1500,0>[
+    \morphism(1000,-2600)|m|<-1000,0>[
       FG(B\tri(A\tri C))`B\tri(A\tri C);\varepsilon_{B\tri(A\tri C)}]
     \morphism(0,-2600)|l|<0,-400>[B\tri(A\tri C)`B\tri(C\tri A);\id_B\tri\e{A,C}^S]
     \morphism(1600,-3000)|b|<-1600,0>[(B\tri C)\tri A`B\tri(C\tri A);\alpha_{B,C,A}']
     \morphism(3200,-1600)|r|<0,-1400>[
       F(G(B\tri C)\otimes GA)`FG((B\tri C)\tri A);F\n{B\tri C,A}]
-    \morphism(3200,-3000)|m|<-1000,600>[FG((B\tri C)\tri A)`FG(B\tri(C\tri A));FG\alpha_{B,C,A}]
+    \morphism(3200,-3000)|m|<-1000,400>[FG((B\tri C)\tri A)`FG(B\tri(C\tri A));FG\alpha_{B,C,A}]
     \morphism(3200,-3000)|b|<-1600,0>[
       FG((B\tri C)\tri A)`(B\tri C)\tri A;\varepsilon_{(B\tri C)\tri A}]
+    \morphism(2200,-2600)|m|<-2200,-400>[
+      FG(B\tri(C\tri A))`B\tri(C\tri A);\varepsilon_{B\tri(C\tri A)}]
+    \morphism(800,-2000)|m|<200,-600>[FG((B\tri A)\tri C)`FG(B\tri(A\tri C));FG\alpha'_{B,A,C}]
+    \morphism(300,-700)//<0,0>[`;(1)]
+    \morphism(500,-2200)//<0,0>[`;(2)]
+    \morphism(1500,100)//<0,0>[`;(3)]
+    \morphism(1500,-500)//<0,0>[`;(4)]
+    \morphism(1500,-1100)//<0,0>[`;(5)]
+    \morphism(1100,-2200)//<0,0>[`;(6)]
+    \morphism(1800,-2400)//<0,0>[`;(7)]
+    \morphism(2000,-2800)//<0,0>[`;(8)]
+    \morphism(2450,200)//<0,0>[`;(9)]
+    \morphism(2900,-300)//<0,0>[`;(10)]
+    \morphism(2800,-1200)//<0,0>[`;(11)]
+    \morphism(2720,-2200)//<0,0>[`;(12)]
   \efig
   \end{mathpar}
 \end{proof}

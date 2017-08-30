@@ -1,3 +1,42 @@
+In a LAM, the SMCC $\cat{C}$ models the commutative linear logic and the Lambeck category
+$\cat{L}$ models the non-commutative variant. In Section~\ref{subsec:elle}, we will present the
+term assignment for sequent calculus of both sides and prove the cut elimination theorem. In
+Section~\ref{subsec:elle-nd}, we present the term assignment for natural deduction of both sides
+and prove the logic is strongly normalizing.
+
+A sequent in the commutative side is of the form $[[P,I |- t : X]]$. The types must be $X$, $Y$,
+$Z$, etc., which are objects in the SMCC $\cat{C}$. Tye typing contexts are multisets. Suppose
+$[[P]]$ is the set $x_1:X_1,
+
+\subsection{Sequent Calculus}
+\label{subsec:elle}
+
+The term assignment for sequent calculus of the commutative part of the model, i.e. the SMCC of
+the adjunction, is defined in Figure~\ref{fig:elle-smcc}. And the term assignme for the
+non-commutative part, i.e. the Lambek category of the adjunction, is defined in
+Figure~\ref{fig:elle-lambek}. $[[P]]$ and $[[I]]$ are contexts for the non-commutative part
+and they are lists. $[[G]]$ and $[[D]]$ are contexts for the commutative part and they are
+multisets, therefore the following exchange rules are implicit.
+
+\begin{mathpar}
+\scriptsize
+\end{mathpar}
+
+\begin{figure}[!h]
+ \scriptsize
+  \begin{mdframed}
+    \begin{mathpar}
+    \end{mathpar}
+  \end{mdframed}
+\caption{Commutative Part}
+\label{fig:elle-nd-smcc}
+\end{figure}
+
+
+
+\subsection{Natural Deduction}
+\label{subsec:elle-nd}
+
 The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC of
 the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
 non-commutative part, i.e. the Lambek category of the adjunction, is defined in

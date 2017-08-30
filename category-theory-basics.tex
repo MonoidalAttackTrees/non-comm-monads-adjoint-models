@@ -1,3 +1,7 @@
+This section contains the basic definitions in category theory that we will be using in our
+adjoint model. Our model is based on special kinds of monoidal categories: Lambek categories and
+symmetric monoidal closed categories and Lambek categories, as defined in
+Definitions~\ref{def:lambek-cat} and~\ref{def:smcc}.
 
 \begin{definition}
 \label{def:mc}
@@ -48,6 +52,7 @@
 \end{definition}
 
 \begin{definition}
+\label{def:lambek-cat}
   A \textbf{Lambek category} (or a \textbf{biclosed monoidal category}) is a monoidal category
   $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ equipped with two bifunctors
   $\rightharpoonup:\cat{M}^{op}\times\cat{M}\rightarrow\cat{M}$ and
@@ -100,6 +105,9 @@ We use $\tri$ for non-symmetric monoidal categories while $\otimes$ for symmetri
   $\Hom{\cat{M}}{X\otimes A}{B}\cong\Hom{\cat{M}}{X}{A\limp B}$ holds.
 \end{definition}
 
+The relation between SMMCs and Lambek categories are demonstrated in
+Lemma~\ref{lemma:internal-homs-collapse} and Corollary~\ref{corollary:LC-with-ex-mc}.
+
 \begin{lemma}
   \label{lemma:internal-homs-collapse}
   Let $A$ and $B$ be two objects in a Lambek category with the exchange natural transformation.
@@ -120,12 +128,17 @@ We use $\tri$ for non-symmetric monoidal categories while $\otimes$ for symmetri
   \end{center}  
   Thus, $A\lto B\cong B\rto A$ by the Yoneda lemma.
 \end{proof}
+
 \begin{corollary}
   \label{corollary:LC-with-ex-mc}
   A Lambek category with exchange is symmetric monoidal closed.
 \end{corollary}
 
+The essential component in our non-commutative adjoint model is a monoidal adjunction, defined
+in Definitions~\ref{def:monoidal-functor}-\ref{def:monoidal-adjunction}.
+
 \begin{definition}
+\label{def:monoidal-functor}
   Let $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ and
   $(\cat{M'},\tri',I',\alpha',\lambda',\rho')$ be monoidal categories. A \textbf{monoidal
   functor} $(F,\m{})$ from $\cat{M}$ to $\cat{M'}$ is a functor $F:\cat{M}\rightarrow\cat{M'}$
@@ -207,6 +220,7 @@ We use $\tri$ for non-symmetric monoidal categories while $\otimes$ for symmetri
 \end{definition}
 
 \begin{definition}
+\label{def:monoidal-adjunction}
   Let $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ and
   $(\cat{M'},\tri',I',\alpha',\lambda',\rho')$ be monoidal categories,
   $F:\cat{M}\rightarrow\cat{M'}$ and $G:\cat{M}'\rightarrow\cat{M}$ be functors. The adjunction
@@ -215,7 +229,11 @@ We use $\tri$ for non-symmetric monoidal categories while $\otimes$ for symmetri
   transformations.
 \end{definition}
 
+In Moggi's monad model \cite{}, the monad is required to be strong, as defined in
+Definitions~\ref{def:monad} and~\ref{def:strong-monad}.
+
 \begin{definition}
+\label{def:monad}
   Let $\cat{C}$ be a category. A \textbf{monad} on $\cat{C}$ consists of an endofunctor
   $T:\cat{C}\rightarrow\cat{C}$ together with two natural transformations
   $\eta:id_\cat{C}\rightarrow T$ and $\mu:T^2\rightarrow T$, where $id_\cat{C}$ is the identity
