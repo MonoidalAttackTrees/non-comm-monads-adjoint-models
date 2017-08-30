@@ -1,0 +1,114 @@
+The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC of
+the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
+non-commutative part, i.e. the Lambek category of the adjunction, is defined in
+Figure~\ref{fig:elle-nd-lambek}. $\Psi$ and $\Phi$ are contexts for the commutative part
+and they are multisets. $\Gamma$ and $\Delta$ are contexts for the mix of the commutative part and
+the non-commutative part, and they are lists. Therefore the following exchange rule is implicit.
+
+\begin{figure}[!h]
+  \scriptsize
+  \begin{mathpar}
+    \NDdruleTXXbeta{}
+  \end{mathpar}
+\end{figure}
+
+\begin{figure}[!h]
+  \scriptsize
+  \begin{mdframed}
+    \begin{mathpar}
+      \NDdruleTXXid{} \qquad\qquad \NDdruleTXXunitI{} \qquad\qquad \NDdruleTXXunitE{} \\
+      \NDdruleTXXtenI{} \qquad\qquad \NDdruleTXXtenE{} \\
+      \NDdruleTXXimpI{} \qquad\qquad \NDdruleTXXimpE{} \qquad\qquad \NDdruleTXXGI{} \\
+      \NDdruleSXXbeta{}
+    \end{mathpar}
+  \end{mdframed}
+\caption{Commutative Part}
+\label{fig:elle-nd-smcc}
+\end{figure}
+
+\begin{figure}[!h]
+ \scriptsize
+  \begin{mdframed}
+    \begin{mathpar}
+      \NDdruleSXXid{} \qquad\qquad \NDdruleSXXunitI{} \qquad\qquad \NDdruleSXXunitEOne{} \\
+      \NDdruleSXXunitEOne{} \qquad\qquad \NDdruleSXXunitETwo{} \\
+      \NDdruleSXXtenI{} \qquad\qquad \NDdruleSXXtenEOne{} \\
+      \NDdruleSXXtenETwo{} \qquad\qquad \NDdruleSXXimprI{} \\
+      \NDdruleSXXimprE{} \qquad\qquad \NDdruleSXXimplI{} \\
+      \NDdruleSXXimplE{} \qquad\qquad \NDdruleSXXGE{} \qquad\qquad \NDdruleSXXFI{} \\
+      \NDdruleSXXFE{}
+    \end{mathpar}
+  \end{mdframed}
+\caption{Non-Commutative Part}
+\label{fig:elle-nd-lambek}
+\end{figure}
+
+We could derive exchange comonadically as follows:
+
+\begin{center}
+  \tiny
+  \begin{math}
+  $$\mprset{flushleft}
+  \inferrule* [right={\tiny imprI}] {
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny tenE2}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny id}] {
+        \,
+      }{\NDmv{z}  \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}    \vdash_\mathcal{L}  \NDmv{z}  \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}  }
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny id}] {
+            \,
+          }{\NDmv{x_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{A}    \vdash_\mathcal{L}  \NDmv{x_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny FE}] {
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny id}] {
+                \,
+              }{\NDmv{y_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{B}    \vdash_\mathcal{L}  \NDmv{y_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{B}  }
+              \inferrule* [right={\tiny beta}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny FE}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny FI}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny id}] {
+                      \,
+                    }{\NDmv{y_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{B}   \vdash_\mathcal{C}  \NDmv{y_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{B} }
+                  }{\NDmv{y_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{B}   \vdash_\mathcal{L}   \mathsf{F} \NDmv{y_{{\mathrm{0}}}}   \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{B}  }
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny FI}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny id}] {
+                      \,
+                    }{\NDmv{x_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{A}   \vdash_\mathcal{C}  \NDmv{x_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{A} }
+                  }{\NDmv{x_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{A}   \vdash_\mathcal{L}   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+                }{\NDmv{y_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{B}   \NDsym{,}  \NDmv{x_{{\mathrm{0}}}}  \NDsym{:}   \mathsf{G} \NDnt{A}   \vdash_\mathcal{L}    \mathsf{F} \NDmv{y_{{\mathrm{0}}}}    \triangleright   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{B}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+              }{\NDmv{x_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{G} \NDnt{A}   \NDsym{,}  \NDmv{y_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{G} \NDnt{B}   \vdash_\mathcal{L}   \mathsf{ex}\, \NDmv{y_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \NDmv{y_{{\mathrm{0}}}} , \NDmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \NDsym{(}    \mathsf{F} \NDmv{y_{{\mathrm{0}}}}    \triangleright   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{)}   \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{B}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+            }{\NDmv{x_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{G} \NDnt{A}   \NDsym{,}  \NDmv{y_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{B}    \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{y_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{B}   \,\mathsf{be}\, \NDmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{ex}\, \NDmv{y_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \NDmv{y_{{\mathrm{0}}}} , \NDmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \NDsym{(}    \mathsf{F} \NDmv{y_{{\mathrm{0}}}}    \triangleright   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{)}   \NDsym{)}   \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{B}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+          }{\NDmv{x_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{A}    \NDsym{,}  \NDmv{y_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{F}  \mathsf{G} \NDnt{B}    \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{A}   \,\mathsf{be}\, \NDmv{x_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{y_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{B}   \,\mathsf{be}\, \NDmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{ex}\, \NDmv{y_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \NDmv{y_{{\mathrm{0}}}} , \NDmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \NDsym{(}    \mathsf{F} \NDmv{y_{{\mathrm{0}}}}    \triangleright   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{)}   \NDsym{)}   \NDsym{)}   \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{B}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+        }{\NDmv{z}  \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}    \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}   \,\mathsf{be}\, \NDmv{x_{{\mathrm{2}}}}  \triangleright  \NDmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{x_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{A}   \,\mathsf{be}\, \NDmv{x_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{y_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{B}   \,\mathsf{be}\, \NDmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{ex}\, \NDmv{y_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \NDmv{y_{{\mathrm{0}}}} , \NDmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \NDsym{(}    \mathsf{F} \NDmv{y_{{\mathrm{0}}}}    \triangleright   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{)}   \NDsym{)}   \NDsym{)}   \NDsym{)}   \NDsym{:}    \mathsf{F}  \mathsf{G} \NDnt{B}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{A}  }
+      }{ \cdot   \vdash_\mathcal{L}   \lambda_r  \NDmv{z}  :    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}   .  \mathsf{let}\, \NDmv{z}  :    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}   \,\mathsf{be}\, \NDmv{x_{{\mathrm{2}}}}  \triangleright  \NDmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{x_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{A}   \,\mathsf{be}\, \NDmv{x_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{y_{{\mathrm{1}}}}   :   \mathsf{F}  \mathsf{G} \NDnt{B}   \,\mathsf{be}\, \NDmv{y_{{\mathrm{2}}}} \,\mathsf{in}\, \NDsym{(}   \mathsf{ex}\, \NDmv{y_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{1}}}} \,\mathsf{with}\, \NDmv{y_{{\mathrm{0}}}} , \NDmv{x_{{\mathrm{0}}}} \,\mathsf{in}\, \NDsym{(}    \mathsf{F} \NDmv{y_{{\mathrm{0}}}}    \triangleright   \mathsf{F} \NDmv{x_{{\mathrm{0}}}}   \NDsym{)}   \NDsym{)}   \NDsym{)}   \NDsym{)}    \NDsym{:}  \NDsym{(}    \mathsf{F}  \mathsf{G} \NDnt{A}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{B}    \NDsym{)}  \rightharpoonup  \NDsym{(}    \mathsf{F}  \mathsf{G} \NDnt{B}     \triangleright   \mathsf{F}  \mathsf{G} \NDnt{A}    \NDsym{)}}
+  \end{math}
+\end{center}
+
+We also have the three cut rules derivable in the natural deduction:
+
+\begin{figure}[!h]
+  \scriptsize
+  \begin{mathpar}
+    \NDdruleTXXcut{} \qquad\qquad \NDdruleSXXcutOne{} \qquad\qquad \NDdruleSXXcutTwo{}
+  \end{mathpar}
+\end{figure}
+
+\begin{center}
+  \tiny
+  \begin{math}
+  $$\mprset{flushleft}
+  \inferrule* [right={\tiny FI}] {
+    {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
+  }{\Phi  \vdash_\mathcal{L}   \mathsf{F} \NDnt{t}   \NDsym{:}   \mathsf{F} \NDnt{X} }
+  \end{math}
+\end{center}

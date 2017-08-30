@@ -4,52 +4,90 @@ term assignment for sequent calculus of both sides and prove the cut elimination
 Section~\ref{subsec:elle-nd}, we present the term assignment for natural deduction of both sides
 and prove the logic is strongly normalizing.
 
-A sequent in the commutative side is of the form $[[P,I |- t : X]]$. The types must be $X$, $Y$,
-$Z$, etc., which are objects in the SMCC $\cat{C}$. Tye typing contexts are multisets. Suppose
-$[[P]]$ is the set $x_1:X_1,
+A sequent in the commutative side is of the form $[[P,I |-c t : X]]$. The types must be $X$,
+$Y$, $Z$, etc., which are objects in the SMCC $\cat{C}$. Tye typing contexts are multisets.
+Suppose $[[P]]$ is the set $x_1:X_1, x_2:X_2, ..., x_m:X_m$ and $[[I]]$ is the set
+$y_1:Y_1, y_2:Y_2,...,y_n:Y_n$, then the categorical interpretation of the sequent is the
+morphism $(X_1\otimes X_2\otimes...\otimes X_m)\otimes(Y_1\otimes Y_2\otimes...\otimes Y_n)\rightarrow X$.
 
+A sequent in the non-commutative side is of the form $[[G,D |-l s : A]]$. The types must be $A$,
+$B$, $C$, etc., which are objects in the Lambek category $\cat{L}$. Tye typing contexts are
+lists instead of multisets. The typing contexts are mixed in the sense that they could include
+contexts from the commutative side. When a commutative context $[[P]]=\{x_1:X_1,...,x_m:X_m\}$
+is included, it is interpreted as the object $F(X_1\otimes...\otimes X_m)$. Therefore, the
+interpretation of the sequent $[[P,G |-l s : A]]$, where $[[P]]$ is defined as above and $[[G]]$
+is the list $y_1:A_1,...,y_n:A_n$, is the morphism
+$F(X_1\otimes...\otimes X_m)\tri(A_1\tri...\tri A_n)\rightarrow A$.
+
+For the commutative side, since the contexts are multisets, the following exchange rule
+is implicit in both sequent calculus and natural deduction:
+
+\begin{figure}[!h]
+  \scriptsize
+  \begin{mathpar}
+    \ElledruleTXXbeta{}
+  \end{mathpar}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Sequent Calculus}
 \label{subsec:elle}
 
 The term assignment for sequent calculus of the commutative part of the model, i.e. the SMCC of
 the adjunction, is defined in Figure~\ref{fig:elle-smcc}. And the term assignme for the
 non-commutative part, i.e. the Lambek category of the adjunction, is defined in
-Figure~\ref{fig:elle-lambek}. $[[P]]$ and $[[I]]$ are contexts for the non-commutative part
-and they are lists. $[[G]]$ and $[[D]]$ are contexts for the commutative part and they are
-multisets, therefore the following exchange rules are implicit.
+Figure~\ref{fig:elle-lambek}. We do not have the structural rules except for exchange because
+the calculus is for linear logic. 
 
-\begin{mathpar}
-\scriptsize
-\end{mathpar}
 
 \begin{figure}[!h]
  \scriptsize
   \begin{mdframed}
     \begin{mathpar}
+      \ElledruleTXXvar{} \qquad\qquad \ElledruleTXXunitL{} \qquad\qquad \ElledruleTXXunitR{} \\
+      \ElledruleTXXtenL{} \qquad\qquad \ElledruleTXXtenR{} \\
+      \ElledruleTXXimpL{} \qquad\qquad \ElledruleTXXimpR{} \\
+      \ElledruleTXXGr{} \qquad\qquad \ElledruleTXXcut{}
     \end{mathpar}
   \end{mdframed}
-\caption{Commutative Part}
-\label{fig:elle-nd-smcc}
+\caption{Sequent Calculus: Commutative Part}
+\label{fig:elle-smcc}
 \end{figure}
 
+\begin{figure}[!h]
+ \scriptsize
+  \begin{mdframed}
+    \begin{mathpar}
+      \ElledruleSXXax{} \qquad\qquad \ElledruleSXXunitR{} \qquad\qquad \ElledruleSXXunitLOne{} \\
+      \ElledruleSXXunitLTwo{} \qquad\qquad \ElledruleSXXbeta{} \\
+      \ElledruleSXXtenLOne{} \qquad\qquad \ElledruleSXXtenLTwo{} \\
+      \ElledruleSXXtenR{} \qquad\qquad \ElledruleSXXimpL{} \\
+      \ElledruleSXXimprL{} \qquad\qquad \ElledruleSXXimplL{} \\
+      \ElledruleSXXimprR{} \qquad\qquad \ElledruleSXXimplR{} \qquad\qquad \ElledruleSXXFr{} \\
+      \ElledruleSXXFl{} \qquad\qquad \ElledruleSXXGl{} \\
+      \ElledruleSXXcutOne{} \qquad\qquad \ElledruleSXXcutTwo{} \\
+    \end{mathpar}
+  \end{mdframed}
+\caption{Sequent Calculus: Non-Commutative Part}
+\label{fig:elle-lambek}
+\end{figure}
+
+We prove cut elimination for the sequent calculus using a similar method as Benton's \cite{}.
+First, we replace the cut rules $\ElledruleSXXGlName{}$ by the following
+n-ary forms respectively:
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Natural Deduction}
 \label{subsec:elle-nd}
 
 The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC of
 the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
 non-commutative part, i.e. the Lambek category of the adjunction, is defined in
-Figure~\ref{fig:elle-nd-lambek}. $[[P]]$ and $[[I]]$ are contexts for the commutative part
-and they are multisets. $[[G]]$ and $[[D]]$ are contexts for the mix of the commutative part and
-the non-commutative part, and they are lists. Therefore the following exchange rule is implicit.
-
-\begin{figure}[!h]
-  \scriptsize
-  \begin{mathpar}
-    \NDdruleTXXbeta{}
-  \end{mathpar}
-\end{figure}
+Figure~\ref{fig:elle-nd-lambek}.
 
 \begin{figure}[!h]
   \scriptsize
@@ -61,7 +99,7 @@ the non-commutative part, and they are lists. Therefore the following exchange r
       \NDdruleSXXbeta{}
     \end{mathpar}
   \end{mdframed}
-\caption{Commutative Part}
+\caption{Natural Deduction: Commutative Part}
 \label{fig:elle-nd-smcc}
 \end{figure}
 
@@ -78,7 +116,7 @@ the non-commutative part, and they are lists. Therefore the following exchange r
       \NDdruleSXXFE{}
     \end{mathpar}
   \end{mdframed}
-\caption{Non-Commutative Part}
+\caption{Natural Deduction: Non-Commutative Part}
 \label{fig:elle-nd-lambek}
 \end{figure}
 
