@@ -22,12 +22,10 @@ $F(X_1\otimes...\otimes X_m)\tri(A_1\tri...\tri A_n)\rightarrow A$.
 For the commutative side, since the contexts are multisets, the following exchange rule
 is implicit in both sequent calculus and natural deduction:
 
-\begin{figure}[!h]
+\begin{center}
   \scriptsize
-  \begin{mathpar}
-    \ElledruleTXXbeta{}
-  \end{mathpar}
-\end{figure}
+  $\ElledruleTXXbeta{}$
+\end{center}
 
 
 
@@ -46,7 +44,7 @@ the calculus is for linear logic.
  \scriptsize
   \begin{mdframed}
     \begin{mathpar}
-      \ElledruleTXXvar{} \qquad\qquad \ElledruleTXXunitL{} \qquad\qquad \ElledruleTXXunitR{} \\
+      \ElledruleTXXax{} \qquad\qquad \ElledruleTXXunitL{} \qquad\qquad \ElledruleTXXunitR{} \\
       \ElledruleTXXtenL{} \qquad\qquad \ElledruleTXXtenR{} \\
       \ElledruleTXXimpL{} \qquad\qquad \ElledruleTXXimpR{} \\
       \ElledruleTXXGr{} \qquad\qquad \ElledruleTXXcut{}
@@ -74,9 +72,353 @@ the calculus is for linear logic.
 \label{fig:elle-lambek}
 \end{figure}
 
-We prove cut elimination for the sequent calculus using a similar method as Benton's \cite{}.
-First, we replace the cut rules $\ElledruleSXXGlName{}$ by the following
-n-ary forms respectively:
+We consider the following key cases in  proving cut elimination for the sequent calculus:
+
+\begin{itemize}
+
+\item $(\ElledruleTXXunitRName, \ElledruleTXXunitLName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitR}] {
+          \,
+        }{[[. |-c trivT : UnitT]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitL}] {
+          {[[I, P |-c t : X]]}
+        }{[[I, x : UnitT, P |-c let x : UnitT be trivT in t : X]]}
+      }{[[I, P |-c [trivT / x] (let x : UnitT be trivT in t) : X]]}
+    \end{math}
+  \end{center}
+  is transformed to 
+  \begin{center}
+    \tiny
+    $[[I, P |-c t : X]]$
+  \end{center}
+
+\item $(\ElledruleTXXunitRName, \ElledruleSXXunitLOneName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitR}] {
+          \,
+        }{[[. |-c trivT : UnitT]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitL}] {
+          {[[G, D |-l s : A]]}
+        }{[[G, x : UnitT, D |-l let x : UnitT be trivT in s : A]]}
+      }{[[G, D |-l [trivT / x] (let x : UnitT be trivT in s) : A]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    $[[G, D |-l s : A]]$
+  \end{center}
+
+\item $(\ElledruleTXXtenRName, \ElledruleTXXtenLName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenR}] {
+          {[[I1 |-c t1 : X]]} \\
+          {[[I2 |-c t2 : Y]]}
+        }{[[I1, I2 |-c t1 (x) t2 : X (x) Y]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenL}] {
+          {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+        }{[[P1, z : X (x) Y, P2 |-c let z : X (x) Y be x (x) y in t3 : Z]]}
+      }{[[P1, I1, I2, P2 |-c [t1 (x) t2 / z](let z : X (x) Y be x (x) y in t3) : Z]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {[[I1 |-c t1 : X]]} \\
+          {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+        }{[[P1, I1, y : Y, P2 |-c [t1 / x] t3 : Z]]} \\
+        {[[I2 |-c t2 : Y]]}
+      }{[[P1, I1, I2, P2 |-c [t2/y][t1/x]t3 : Z]]}
+    \end{math}
+  \end{center}
+
+\item $(\ElledruleTXXtenRName, \ElledruleSXXtenLOneName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenR}] {
+          {[[I1 |-c t1 : X]]} \\
+          {[[I2 |-c t2 : Y]]}
+        }{[[I1, I2 |-c t1 (x) t2 : X (x) Y]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenL1}] {
+          {[[G, x : X, y : Y, D |-l s : A]]}
+        }{[[G, z : X (x) Y, D |-l let z : X (x) Y be x (x) y in s : A]]}
+      }{[[G, I1, I2, D |-l [t1 (x) t2 / z](let z : X (x) Y be x (x) y in s) : A]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          {[[I1 |-c t1 : X]]} \\
+          {[[G, x : X, y : Y, D |-l s : A]]}
+        }{[[G, I1, y : Y, D |-l [t1 / x] s : A]]} \\
+        {[[I2 |-c t2 : Y]]}
+      }{[[G, I1, I2, D |-l [t2/y][t1/x]s : A]]}
+    \end{math}
+  \end{center}
+  
+\item $(\ElledruleTXXimpRName, \ElledruleTXXimpLName)$
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impR}] {
+          {[[I1, x : X, I2 |-c t1 : Y]]}
+        }{[[I1, I2 |-c \ x : X . t1 : X -o Y]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impL}] {
+          {[[I |-c t2 : X]]} \\
+          {[[P1, y : Y, P2 |-c t3 : Z]]}
+        }{[[P1, I, z : X -o Y, P2 |-c [app z t2 / y]t3 : Z]]}
+      }{[[P1, I, I1, I2, P2 |-c [(\ x : X . t1) / z][app z t2 / y]t3 : Z]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {[[I1, x : X, I2 |-c t1 : Y]]} \\
+          {[[I |-c t2 : X]]}
+        }{[[I1, I, I2 |-c [t2 / x]t1 : Y]]} \\
+        {[[P1, y : Y, P2 |-c t3 : Z]]}
+      }{[[P1, I1, I, I2, P2 |-c [([t2 / x]t1) / y]t3 : Z]]}
+    \end{math}
+  \end{center}
+
+\item $(\ElledruleSXXunitRName, \ElledruleSXXunitLTwoName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitR}] {
+          \,
+        }{[[. |-l trivS : UnitS]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitL2}] {
+          {[[G, D |-l s : A]]}
+        }{[[G, x : UnitS, D |-l let x : UnitS be trivS in s : A]]}
+      }{[[G, D |-l [trivS / x] (let x : UnitS be trivS in s) : A]]}
+    \end{math}
+  \end{center}
+  is transformed to 
+  \begin{center}
+    \tiny
+    $[[G, D |-l s : A]]$
+  \end{center}
+
+\item $(\ElledruleSXXtenRName, \ElledruleSXXtenLTwoName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenR}] {
+          {[[G1 |-l s1 : A]]} \\
+          {[[G2 |-l s2 : B]]}
+        }{[[G1, G2 |-l s1 (>) s2 : A (>) B]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenL1}] {
+          {[[D1, x : A, y : B, D2 |-l s3 : C]]}
+        }{[[D1, z : A (>) B, D2 |-l let z : A (>) B be x (>) y in s : C]]}
+      }{[[D1, G1, G2, D2 |-l [s1 (>) s2 / z](let z : A (>) B be x (>) y in s) : C]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G1 |-l s1 : A]]} \\
+          {[[D1, x : A, y : B, D2 |-l s3 : C]]}
+        }{[[D1, G1, y : B, D2 |-l [s1 / x]s3 : C]]} \\
+        {[[G2 |-l s2 : B]]}
+      }{[[D1, G1, G2, D2 |-l [s2 / y][s1 / x]s3 : C]]}
+    \end{math}
+  \end{center}
+
+\item $(\ElledruleSXXimprRName, \ElledruleSXXimprLName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprR}] {
+          {[[G, x : A |-l s1 : B]]}
+        }{[[G |-l \r x : A . s1 : A -> B]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprL}] {
+          {[[D1 |-l s2 : A]]} \\
+          {[[D2 , y : B |-l s3 : C]]}
+        }{[[D2, z : A -> B, D1 |-l [appr z s2 / y]s3 : C]]}
+      }{[[D2, G, D1 |-l [(\r x : A . s1) / z][appr z s2 / y]s3 : C]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G, x : A |-l s1 : B]]} \\
+          {[[D1 |-l s2 : A]]}
+        }{[[G, D1 |-l [s2 / x]s1 : B]]} \\
+        {[[D2, y : B |-l s3 : C]]}
+      }{[[D2, G, D1 |-l [([s2 / x]s1) / y]s3 : C]]}
+    \end{math}
+  \end{center}
+
+\item $(\ElledruleSXXimplRName, \ElledruleSXXimplLName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny implR}] {
+          {[[x : A, G |-l s1 : B]]}
+        }{[[G |-l \l x : A . s1 : B <- A]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny implL}] {
+          {[[D1 |-l s2 : A]]} \\
+          {[[y : B, D2 |-l s3 : C]]}
+        }{[[D1, z : B <- A, D2 |-l [appl z s2 / y]s3 : C]]}
+      }{[[D1, G, D2 |-l [(\l x : A . s1) / z][appl z s2 / y]s3 : C]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[x : A, G |-l s1 : B]]} \\
+          {[[D1 |-l s2 : A]]}
+        }{[[ D1, G |-l [s2 / x]s1 : B]]} \\
+        {[[y : B, D2 |-l s3 : C]]}
+      }{[[D1, G, D2 |-l [([s2 / x]s1) / y]s3 : C]]}
+    \end{math}
+  \end{center}
+
+\item $(\ElledruleSXXFrName, \ElledruleSXXFlName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FR}] {
+          {[[I |-c t : X]]}
+        }{[[I |-l F t : F X]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FL}] {
+          {[[G, x : X, D |-l s : A]]}
+        }{[[G, y : F X, D |-l let y : F X be F x in s : A]]}
+      }{[[G, I, D |-l [F t / y](let y : F X be F x in s) : A]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        {[[I |-c t : X]]} \\
+        {[[G, x : A, D |-l s : A]]}
+      }{[[G, I, D |-l [t / x]s : A]]}
+    \end{math}
+  \end{center}
+
+\item $(\ElledruleTXXGrName, \ElledruleSXXGlName)$:
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny GR}] {
+          {[[I |-l s1 : A]]}
+        }{[[I |-c Gf s1 : Gf A]]}
+        \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny GL}] {
+          {[[G, x : A, D |-l s2 : B]]}
+        }{[[G, y : Gf A, D |-l let y : Gf A be Gf x in s2 : B]]}
+      }{[[G, I, D |-l [Gf s1 / y](let y : Gf A be Gf x in s2) : B]]}
+    \end{math}
+  \end{center}
+  is transformed to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        {[[I |-l s1 : A]]} \\
+        {[[G, x : A, D |-l s2 : B]]}
+      }{[[G, I, D |-l [s1 / x]s2 : B]]}
+    \end{math}
+  \end{center}
+
+\end{itemize}
 
 
 
@@ -179,13 +521,3 @@ We also have the three cut rules derivable in the natural deduction:
     \NDdruleTXXcut{} \qquad\qquad \NDdruleSXXcutOne{} \qquad\qquad \NDdruleSXXcutTwo{}
   \end{mathpar}
 \end{figure}
-
-\begin{center}
-  \tiny
-  \begin{math}
-  $$\mprset{flushleft}
-  \inferrule* [right={\tiny FI}] {
-    {[[I |-c t : X]]}
-  }{[[I |-l F t : F X]]}
-  \end{math}
-\end{center}

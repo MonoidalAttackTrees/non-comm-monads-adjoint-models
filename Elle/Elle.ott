@@ -180,7 +180,7 @@ defn
   I |-c t : X :: :: tty :: 'T_'
 by 
 
-  --------------- :: var
+  --------------- :: ax
   x : X |-c x : X
 
   I, P |-c t : X
@@ -290,11 +290,11 @@ by
 
   G |-l s1 : A && D, x : B |-l s2 : C
   ---------------------------------------- :: imprL
-  D, G, y : A -> B |-l [appr y s1/x]s2 : C
+  D, y : A -> B, G |-l [appr y s1/x]s2 : C
 
   G |-l s1 : A && x : B, D |-l s2 : C
   ---------------------------------------- :: implL
-  y : B <- A, G, D |-l [appl y s1/x]s2 : C
+  G, y : B <- A, D |-l [appl y s1/x]s2 : C
 
   G, x : A |-l s : B
   ----------------------- :: imprR
@@ -315,24 +315,4 @@ by
   G, x : A, D |-l s : B
   ------------------------------------------------ :: Gl
   G, y : Gf A, D |-l let y : Gf A be Gf x in s : B
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

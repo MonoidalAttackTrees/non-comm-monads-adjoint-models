@@ -1,0 +1,239 @@
+% Input variables.
+metavar vars ,  n , a, x , y, z , w , m , o ::=  
+indexvar ivar, i , k , j , l ::=
+metavar const, b ::= 
+
+grammar
+
+
+% Lambek category:
+A, B, C :: 'lform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | UnitS    ::   :: UnitS
+  {{tex \mathsf{UnitS} }}
+  | A (>) B ::   :: Tensor        
+  | A -> B  ::   :: RFun          
+  | A <- B  ::   :: LFun          
+  | ( A )   :: M :: Parens 
+  | h( A )  :: M :: HiddenParens 
+  {{ tex [[A]] }}
+  | F X     ::   :: LeftAdj
+  {{tex \mathsf{F}[[X]] }}
+
+% Symmetric monoidal closed category:
+X, Y, Z :: 'sform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | UnitT    ::   :: UnitT
+  {{tex \mathsf{UnitT} }}
+  | X (x) Y ::   :: Tensor        
+  | X -o Y  ::   :: Fun          
+  | ( X )   :: M :: Parens 
+  | h( X )  :: M :: HiddenParens 
+  {{ tex [[X]] }}
+  | Gf A     ::   :: RightAdj
+  {{tex \mathsf{G}[[A]] }}
+
+T :: 'type_' ::=
+  | A :: :: LType
+  | X :: :: SType
+
+I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | I1 , I2 ::   :: Ext
+  | X   ::   :: ElC
+  | ( I )   :: S :: Paren
+
+G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | A   ::   :: El
+  | I       ::   :: CCtx
+  | G1 , G2 ::   :: Ext
+  | ( G )   :: S :: Paren
+
+formula :: 'formula_' ::=
+  | judgement            ::   :: judgement
+  | formula1 && formula2 :: M :: quad
+  {{tex [[formula1]] \quad [[formula2]] }}
+  | formula1 ... formulai :: M :: vec
+  | ( formula )          :: S :: parens
+  {{tex [[formula]] }}
+
+terminals :: 'terminals_' ::=
+  | UnitT :: :: UnitT
+  {{tex \mathsf{UnitT} }}
+  | UnitS :: :: UnitS
+  {{tex \mathsf{UnitS} }}
+  | (x)  :: :: Tensor
+  {{tex \otimes }}
+  | (>)  :: :: Lambek
+  {{tex \triangleright }}
+  | (e)  :: :: ETensor
+  {{tex \circop{e} }}  
+  | (w)  :: :: WTensor
+  {{tex \circop{w} }}  
+  | (c)  :: :: CTensor
+  {{tex \circop{c} }}
+  | ->   :: :: LFun
+  {{tex \rightharpoonup }}
+  | <-   :: :: RFun
+  {{tex \leftharpoonup }}
+  | -o   :: :: Limp
+  {{tex \multimap }}
+  | |-c   :: :: VdashC
+  {{tex \vdash_\mathcal{C} }}
+  | |-l   :: :: VdashL
+  {{tex \vdash_\mathcal{L} }}
+  | ~>   :: :: To
+  {{tex \leadsto }}
+ 
+defns
+  Jtype :: '' ::=
+
+defn
+  I |-c X :: :: tty :: 'T_'
+by 
+
+  ------- :: ax
+  X |-c X
+
+  I, P |-c X
+  ----------------- :: unitL
+  I, UnitT, P |-c X
+
+  ----------- :: unitR
+  . |-c UnitT
+
+  I, X, Y, P |-c Z
+  ---------------- :: beta
+  I, Y, X, P |-c Z
+
+  I1, X, I2, X, I3 |-c Y
+  ---------------------- :: contrR
+  I1, I2, X, I3 |-c Y
+
+  I1, X, I2, X, I3 |-c Y
+  ---------------------- :: contrL
+  I1, X, I2, I3 |-c Y
+
+  I, P |-c Y
+  ------------- :: weak
+  I, X, P |-c Y
+
+  I |-c X
+  --------------- :: cut
+  P1, I, P2 |-c Y
+
+  I |-c X
+  --------------- :: cutn
+  P1, I, P2 |-c Y
+
+  I, X, Y, P |-c Z
+  ------------------- :: tenL
+  I, X (x) Y, P |-c Z
+
+  I |-c X && P |-c Y
+  ------------------ :: tenR
+  I, P |-c X (x) Y  
+
+  I |-c X
+  ----------------------- :: impL
+  P1, I, X -o Y, P2 |-c Z
+
+  I, X, P |-c Y
+  --------------- :: impR
+  I, P |-c X -o Y
+
+  I |-l A
+  ---------- :: Gr
+  I |-c Gf A
+
+defn
+  G |-l A :: :: sty :: 'S_'
+by
+
+  ------- :: ax
+  A |-l A
+
+  G, D |-l A
+  ----------------- :: unitL1
+  G, UnitT, D |-l A
+
+  G, D |-l A
+  ----------------- :: unitL2
+  G, UnitS, D |-l A
+
+  ----------- :: unitR
+  . |-l UnitS
+
+  G, X, Y, D |-l A
+  ---------------- :: beta
+  G, Y, X, D |-l A
+
+  G1, X, G2, X, G3 |-l A
+  ---------------------- :: contrR
+  G1, G2, X, G3 |-l A
+
+  G1, X, G2, X, G3 |-l A
+  ---------------------- :: contrL
+  G1, X, G2, G3 |-l A
+
+  G, D |-l A
+  ------------- :: weak
+  G, X, D |-l B
+
+  I |-c X && G1, X, G2 |-l A
+  -------------------------- :: cut1
+  G1, I, G1 |-l A
+
+  G |-l A && D1, A, D2 |-l B
+  ---------------------------------------- :: cut2
+  D1, G, D2 |-l B
+
+  G, X, Y, D |-l A
+  ------------------- :: tenL1
+  G, X (x) Y, D |-l A
+
+  G, A, B, D |-l C
+  ------------------- :: tenL2
+  G, A (>) B, D |-l C
+
+  G |-l A && D |-l B
+  ------------------ :: tenR
+  G, D |-l A (>) B
+
+  I |-c X && G, Y, D |-l A
+  ------------------------ :: impL
+  G, I, X -o Y, D |-l A
+
+  G |-l A && D, B |-l C
+  --------------------- :: imprL
+  D, A -> B, G |-l C
+
+  G |-l A && B, D |-l C
+  --------------------- :: implL
+  G, B <- A, D |-l C
+
+  G, A |-l B
+  ------------ :: imprR
+  G |-l A -> B
+
+  A, G |-l B
+  ------------ :: implR
+  G |-l B <- A
+
+  I |-c X
+  --------- :: Fr
+  I |-l F X
+
+  G, X, D |-l A
+  --------------- :: Fl
+  G, F X, D |-l A
+
+  G, A, D |-l B
+  ---------------- :: Gl
+  G, Gf A, D |-l B
+
