@@ -216,25 +216,25 @@ by
   ------------------- :: unitI
   . |-l trivS : UnitS
 
-  G |-l s1 : UnitS && D |-l s2 : A
-  ------------------------------------------ :: unitE1
-  G, D |-l let s1 : UnitS be trivS in s2 : A
-
   I |-c t : UnitT && G |-l s : A
-  ---------------------------------------- :: unitE2
+  ---------------------------------------- :: unitE1
   I, G |-l let t : UnitT be trivT in s : A
+
+  G |-l s1 : UnitS && D |-l s2 : A
+  ------------------------------------------ :: unitE2
+  G, D |-l let s1 : UnitS be trivS in s2 : A
 
   G |-l s1 : A && D |-l s2 : B
   ---------------------------- :: tenI
   G, D |-l s1 (>) s2 : A (>) B
 
-  G |-l s1 : A (>) B && D1, x : A, y : B,D2 |-l s2 : C
-  ---------------------------------------------------- :: tenE1
-  D1, G, D2  |-l let s1 : A (>) B be x (>) y in s2 : C
-
   I |-c t : X (x) Y && G1, x : X, y : Y,G2 |-l s : A
-  ------------------------------------------------ :: tenE2
+  ------------------------------------------------ :: tenE1
   G1, I, G2 |-l let t : X (x) Y be x (x) y in s : A
+
+  G |-l s1 : A (>) B && D1, x : A, y : B,D2 |-l s2 : C
+  ---------------------------------------------------- :: tenE2
+  D1, G, D2  |-l let s1 : A (>) B be x (>) y in s2 : C
 
   G, x : A |-l s : B
   ----------------------- :: imprI
@@ -250,7 +250,7 @@ by
 
   G |-l s1 : B <- A && D |-l s2 : A
   --------------------------------- :: implE
-  G, D |-l appl s1 s2 : B
+  D, G |-l appl s1 s2 : B
 
   I |-c t : X
   --------------- :: FI
@@ -313,13 +313,13 @@ by
   let trivT : UnitT be trivT in s ~> s
 
   ---------------------------------------------------------- :: letT1
-  let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3
+  let t1 (x) t2 : X (x) Y be x (>) y in s3 ~> [t1/x][t2/y]s3
 
   ---------------------------------------------------------- :: letT2
-  let t1 (x) t2 : X (x) Y be x (>) y in s3 ~> [F t1/x][F t2/y]s3
+  let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3
 
   ----------------------------------- :: letF
-  let F t : F X be F x in s ~> [t/x]s
+  let F x : F X be F y in s ~> [y/x]s
 
   ------------------------------- :: lamL
   appl (\l x:A.s1) s2 ~> [s2/x]s1

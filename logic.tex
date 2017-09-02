@@ -39,7 +39,6 @@ non-commutative part, i.e. the Lambek category of the adjunction, is defined in
 Figure~\ref{fig:elle-lambek}. We do not have the structural rules except for exchange because
 the calculus is for linear logic. 
 
-
 \begin{figure}[!h]
  \scriptsize
   \begin{mdframed}
@@ -72,7 +71,17 @@ the calculus is for linear logic.
 \label{fig:elle-lambek}
 \end{figure}
 
-We consider the following key cases in  proving cut elimination for the sequent calculus:
+Next, we prove cut elimination for the sequent calculus. We define the \textbf{degree $|X|$
+(or $|A|$) of a commutative (or non-commutative) formula} to be the number of logical
+connectives $|X|$ plus $1$. For instance, $|[[X (x) Y]]| = |[[X]]| + |[[Y]]| + 1$. And the
+\textbf{degree of a cut rule} is the degree of the cut formula. The following key cases
+demonstrate how we can replace a cut with at most two cuts with lower degree. The
+\textbf{degree $|\Pi|$ of a proof} $\Pi$ is the maximum of the degrees of all cut fules in the
+proof and $|\Pi|=0$ if $\Pi$ is cut-free. Finally, the \textbf{height $h(\Pi)$ of a proof
+$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
+
+We consider the following $11$ key cases in proving cut elimination, each of which is a
+$(R, L)$ pair for the same connective.
 
 \begin{itemize}
 
@@ -420,6 +429,18 @@ We consider the following key cases in  proving cut elimination for the sequent 
 
 \end{itemize}
 
+Based on the key cases, given a formula (either commutative or non-commutative) $L$ and proofs
+$\Pi$, $\Pi'$, of sequents $M\vdash N$ and $M'\vdash N'$ respectively with degrees less than
+$|L|$, there is a proof of $M,N\vdash M',N'$ with degree less than $|L|$, s.t. all currences of
+formula $L$ is removed. This can be proved by induction on $h(\Pi)+h(\Pi')$. Therefore, we have
+the result that given a proof of a sequent with degree $d>0$, there is a proof of the same
+sequent. As a result, we have the cut elimination theorem.
+
+\begin{theorem}[Cut Elimination]
+  Let $\Pi$ be a proof of a sequent $[[I |-c t:X]]$ or a sequent $[[G |-l s:A]]$ s.t. $|\Pi|>0$.
+  Then there is a cut-free proof of the same sequent.
+\end{theorem}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -514,6 +535,7 @@ We could derive exchange comonadically as follows:
 \end{center}
 
 We also have the three cut rules derivable in the natural deduction:
+(NOTE: Don't know how to prove the third one S\_cut2.)
 
 \begin{figure}[!h]
   \scriptsize
@@ -521,3 +543,323 @@ We also have the three cut rules derivable in the natural deduction:
     \NDdruleTXXcut{} \qquad\qquad \NDdruleSXXcutOne{} \qquad\qquad \NDdruleSXXcutTwo{}
   \end{mathpar}
 \end{figure}
+
+We define the normalization procedure by considering the following pairs of introduction and
+elimination rules:
+
+\begin{itemize}
+
+\item (\NDdruleTXXunitIName, \NDdruleTXXunitEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny unitE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitI}] {
+          \,
+        }{[[. |-c trivT : UnitT]]} \\
+         {[[I |-c t : X]]}
+      }{[[I |-c let trivT : UnitT be trivT in t : X]]}
+    \end{math}
+  \end{center}
+  normalizes to 
+  \begin{center}
+    \tiny
+    $[[I |-c t : X]]$
+  \end{center}
+
+\item (\NDdruleTXXunitIName, \NDdruleSXXunitEOneName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny unitI}] {
+         \,
+        }{[[. |-c trivT : UnitT]]} \\
+         {[[D |-l s : A]]}
+      }{[[D |-l let trivT : UnitT be trivT in s : A]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    $[[D |-l s : A]]$
+  \end{center}
+
+\item (\NDdruleTXXtenIName, \NDdruleTXXtenEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {[[I1 |-c t1 : X]]} \\
+          {[[I2 |-c t2 : Y]]}
+        }{[[I1, I2 |-c t1 (x) t2 : X (x) Y]]} \\
+         {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+      }{[[P1, I1, I2, P2 |-c let t1 (x) t2 : X (x) Y be x (x) y in t3 : Z]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        {[[I1 |-c t1 : X]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {[[I2 |-c t2 : Y]]} \\
+          {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+        }{[[P1, x : X, I2, P2 |-c [t2 / y]t3 : Z]]}
+      }{[[P1, I1, I2, P2 |-c [t1 / x][t2 / y]t3 : Z]]}
+    \end{math}
+  \end{center}
+  
+\item (\NDdruleTXXtenIName, \NDdruleSXXtenEOneName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE1}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {[[I |-c t1 : X]]} \\
+          {[[P |-c t2 : Y]]}
+        }{[[I, P |-c t1 (x) t2 : X (x) Y]]} \\
+         {[[G, x : X, y : Y, D |-l s : A]]}
+      }{[[G, I, P, D |-l let t1 (x) t2 : X (x) Y be x (x) y in s : A]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {[[I |-c t1 : X]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[P |-c t2 : Y]]} \\
+          {[[G, x : X, y : Y, D |-l s : A]]}
+        }{[[G, x : X, P, D |-l [t2 / y]s : A]]}
+      }{[[G, I, P, D |-l [t1 / x][t2 / y]s : A]]}
+    \end{math}
+  \end{center}
+  
+\item (\NDdruleTXXimpIName, \NDdruleTXXimpEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impI}] {
+          {[[I, x : X |-c t1 : Y]]}
+        }{[[I |-c \ x : X . t1 : X -o Y]]} \\
+         {[[P |-c t2 : X]]}
+      }{[[I, P |-c app (\ x : X . t1) t2 : Y]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        {[[I, x : X |-c t1 : Y]]} \\
+        {[[P |-c t2 : X]]}
+      }{[[I, P |-c [t2 / x]t1 : Y]]}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleSXXunitIName, \NDdruleSXXunitETwoName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny unitI}] {
+         \,
+        }{[[. |-l trivS : UnitS]]} \\
+         {[[D |-l s : A]]}
+      }{[[D |-l let trivS : UnitS be trivS in s : A]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    $[[D |-l s : A]]$
+  \end{center}
+
+\item (\NDdruleSXXtenIName, \NDdruleSXXtenETwoName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny tenE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny tenI}] {
+         {[[G1 |-l s1 : A]]} \\
+         {[[G2 |-l s2 : B]]}
+        }{[[G1, G2 |-l s1 (>) s2 : A (>) B]]} \\
+         {[[D1, x : A, y : B, D2 |-l s3 : C]]}
+      }{[[D1, G1, G2, D2 |-l let s1 (>) s2 : A (>) B be x (>) y in s3 : C]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {[[G1 |-l s1 : A]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G2 |-l s2 : B]]} \\
+          {[[D1, x : X, y : Y, D2 |-l s3 : C]]}
+        }{[[D1, x : X, G2, D2 |-l [s2 / y]s3 : C]]}
+      }{[[D1, G1, G2, D2 |-l [s1 / x][s2 / y]s3 : C]]}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXimprIName, \NDdruleSXXimprEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny imprI}] {
+         {[[G, x : A |-l s1 : B]]}
+        }{[[G |-l \r x : A . s1 : A -> B]]} \\
+         {[[D |-l s2 : A]]}
+      }{[[G, D |-l appr (\r x : A . s1) s2 : B]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {[[G, x : A |-l s1 : B]]} \\
+        {[[D |-l s2 : A]]}
+      }{[[G, D |-l [s2 / x]s1 : B]]}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXimplIName, \NDdruleSXXimplEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny implI}] {
+         {[[x : A, G |-l s1 : B]]}
+        }{[[G |-l \l x : A . s1 : B <- A]]} \\
+         {[[D |-l s2 : A]]}
+      }{[[D, G |-l appl (\l x : A . s1) s2 : B]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {[[x : A, G |-l s1 : B]]} \\
+        {[[D |-l s2 : A]]}
+      }{[[D, G |-l [s2 / x]s1 : B]]}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXFIName, \NDdruleSXXFEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny FE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FI}] {
+          {[[I |-c y : X]]}
+        }{[[I |-l F y : F X]]} \\
+         {[[D1, x : X, D2 |-l s : A]]}
+      }{[[D1, I, D2 |-l let F x : F X be F y in s : A]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        {[[I |-c y : X]]} \\
+        {[[D1, x : X, D2 |-l s : A]]}
+      }{[[D1, I, D2 |-l [y / x]s : A]]}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleTXXGIName, \NDdruleSXXGEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny GE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny GI}] {
+          {[[I |-l s : A]]}
+        }{[[I |-c Gf s : Gf A]]}
+      }{[[I |-l derelict Gf s : A]]}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    $[[I |-l s : A]]$
+  \end{center}
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
