@@ -211,15 +211,15 @@ $(R, L)$ pair for the same connective.
       \inferrule* [right={\tiny cut}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny impR}] {
-          {[[I1, x : X, I2 |-c t1 : Y]]}
-        }{[[I1, I2 |-c \ x : X . t1 : X -o Y]]}
+          {[[I1, x : X |-c t1 : Y]]}
+        }{[[I1 |-c \ x : X . t1 : X -o Y]]}
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny impL}] {
-          {[[I |-c t2 : X]]} \\
+          {[[I2 |-c t2 : X]]} \\
           {[[P1, y : Y, P2 |-c t3 : Z]]}
-        }{[[P1, I, z : X -o Y, P2 |-c [app z t2 / y]t3 : Z]]}
-      }{[[P1, I, I1, I2, P2 |-c [(\ x : X . t1) / z][app z t2 / y]t3 : Z]]}
+        }{[[P1, z : X -o Y, I2, P2 |-c [app z t2 / y]t3 : Z]]}
+      }{[[P1, I1, I2,  P2 |-c [(\ x : X . t1) / z][app z t2 / y]t3 : Z]]}
     \end{math}
   \end{center}
   is transformed to
@@ -230,11 +230,11 @@ $(R, L)$ pair for the same connective.
       \inferrule* [right={\tiny cut}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny cut}] {
-          {[[I1, x : X, I2 |-c t1 : Y]]} \\
-          {[[I |-c t2 : X]]}
-        }{[[I1, I, I2 |-c [t2 / x]t1 : Y]]} \\
+          {[[I1, x : X |-c t1 : Y]]} \\
+          {[[I2 |-c t2 : X]]}
+        }{[[I1, I2 |-c [t2 / x]t1 : Y]]} \\
         {[[P1, y : Y, P2 |-c t3 : Z]]}
-      }{[[P1, I1, I, I2, P2 |-c [([t2 / x]t1) / y]t3 : Z]]}
+      }{[[P1, I1, I2, P2 |-c [([t2 / x]t1) / y]t3 : Z]]}
     \end{math}
   \end{center}
 
@@ -547,7 +547,7 @@ We also have the three cut rules derivable in the natural deduction:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{One step $\beta$-Reduction}
+\subsubsection{One Step $\beta$-Reduction}
 
 We define the normalization procedure by considering the following pairs of introduction and
 elimination rules:
@@ -1463,6 +1463,176 @@ elimination rules:
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mappings Between Sequent Calculus and Natural Deduction}
+
+Function $S:ND\rightarrow SE$ maps a proof in the natural deduction to a proof of the same
+sequent in the sequent calculus. The function is defined as follows:
+
+\begin{itemize}
+\item The axioms map to axioms.
+\item Introduction rules map to right rules.
+\item Elimination rules map to combinations of left rules with cuts:
+  \begin{itemize}
+  \item \NDdruleTXXunitEName:
+    \begin{center}
+      \tiny
+      $\NDdruleTXXunitE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {[[I |-c t1 : UnitT]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {[[P |-c t2 : Y]]}
+          }{[[x : UnitT, P |-c let x : UnitT be trivT in t2 : Y]]}
+        }{[[I, P |-c [t1 / x](let x : UnitT be trivT in t2) : Y]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleTXXtenEName:
+    \begin{center}
+      \tiny
+      $\NDdruleTXXtenE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {[[I |-c t1 : X (x) Y]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {[[P1, x : X, y : Y, P2 |-c t2 : Z]]}
+          }{[[P1, z : X (x) Y, P2 |-c let z : X (x) Y be x (x) y in t2 : Z]]}
+        }{[[P1, I, P2 |-c [t1 / z](let z : X (x) Y be x (x) y in t2) : Z]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleTXXimpEName:
+    \begin{center}
+      \tiny
+      $\NDdruleTXXimpE{}$
+    \end{center}
+    maps to ?
+  \item \NDdruleSXXunitEOneName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXunitEOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          {[[I |-c t : UnitT]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            {[[G |-l s : A]]}
+          }{[[x : UnitT, G |-l let x : UnitT be trivT in s : A]]}
+        }{[[I, P |-l [t / x](let x : UnitT be trivT in s) : A]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXunitETwoName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXunitETwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G |-l s1 : UnitS]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL2}] {
+            {[[D |-l s2 : A]]}
+          }{[[x : UnitS, D |-l let x : UnitS be trivS in s2 : A]]}
+        }{[[G, P |-l [s1 / x](let x : UnitS be trivS in s2) : A]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXtenEOneName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXtenEOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          {[[I |-c t : X (x) Y]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE1}] {
+            {[[G1, x : X, y : Y, G2 |-l s : A]]}
+          }{[[G1, z : X (x) Y, G2 |-l let z : X (x) Y be x (x) y in s : A]]}
+        }{[[G1, I, G2 |-l [t / z](let z : X (x) Y be x (x) y in s) : A]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXtenETwoName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXtenETwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G |-l s1 : A (>) B]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE1}] {
+            {[[D1, x : A, y : B, D2 |-l s2 : C]]}
+          }{[[D1, z : A (>) B, D2 |-l let z : A (>) B be x (>) y in s2 : C]]}
+        }{[[D1, G, D2 |-l [s1 / z](let z : A (>) B be x (>) y in s2) : C]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXimprEName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXimprE{}$
+    \end{center}
+    maps to ?
+  \item \NDdruleSXXimplEName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXimplE{}$
+    \end{center}
+    maps to ?
+  \item \NDdruleSXXFEName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXFE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G |-l y : F X]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE1}] {
+            {[[D1, x : X, D2 |-l s : A]]}
+          }{[[D1, z : F X, D2 |-l let z : F X be F x in s : A]]}
+        }{[[D1, G, D2 |-l [y / z](let y : F X be F x in s) : A]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXGEName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXGE{}$
+    \end{center}
+    maps to ?
+  \end{itemize}
+\end{itemize}
 
 
 
