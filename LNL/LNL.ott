@@ -1,0 +1,213 @@
+% Input variables.
+metavar vars ,  n , a, x , y, z , w , m , o ::=  
+indexvar ivar, i , k , j , l ::=
+metavar const, b ::= 
+
+grammar
+
+
+% Lambek category:
+A, B, C :: 'lform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | I       ::   :: Unit
+  {{tex \mathrm{I} }}
+  | A (x) B ::   :: Tensor        
+  | A -o B  ::   :: Fun          
+  | ( A )   :: M :: Parens 
+  | h( A )  :: M :: HiddenParens 
+  {{ tex [[A]] }}
+  | F X     ::   :: LeftAdj
+  {{tex \mathsf{F}[[X]] }}
+
+% Symmetric monoidal closed category:
+X, Y, Z :: 'sform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | 1       ::   :: Unit
+  {{tex \mathsf{1} }}
+  | X x Y   ::   :: Tensor        
+  | X -> Y  ::   :: Fun          
+  | ( X )   :: M :: Parens 
+  | h( X )  :: M :: HiddenParens 
+  {{ tex [[X]] }}
+  | Gf A     ::   :: RightAdj
+  {{tex \mathsf{G}[[A]] }}
+
+T :: 'type_' ::=
+  | A :: :: LType
+  | X :: :: SType
+
+Theta {{tex \Theta}}, P {{tex \Phi}} :: 'CCtx_' ::=
+  | .               ::   :: Empty
+  {{tex \cdot }}
+  | Theta1 , Theta2 ::   :: Ext
+  | X               ::   :: ElC
+  | ( Theta )       :: S :: Paren
+
+G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
+  | .           ::   :: Empty
+  {{tex \cdot }}
+  | G1 , G2     ::   :: Ext
+  | Theta       ::   :: Cctx1
+  | Theta ; G   ::   :: Cctx2
+  | A           ::   :: El
+  | ( G )       :: S :: Paren
+
+formula :: 'formula_' ::=
+  | judgement            ::   :: judgement
+  | formula1 && formula2 :: M :: quad
+  {{tex [[formula1]] \quad [[formula2]] }}
+  | formula1 ... formulai :: M :: vec
+  | ( formula )          :: S :: parens
+  {{tex [[formula]] }}
+
+terminals :: 'terminals_' ::=
+  | I    :: :: I
+  {{tex \mathsf{I} }}
+  | 1    :: :: 1
+  {{tex \mathsf{1} }}
+  | (x)  :: :: Tensor
+  {{tex \otimes }}
+  | x    :: :: Mul
+  {{tex \times }}
+  | (e)  :: :: ETensor
+  {{tex \circop{e} }}  
+  | (w)  :: :: WTensor
+  {{tex \circop{w} }}  
+  | (c)  :: :: CTensor
+  {{tex \circop{c} }}
+  | ->   :: :: Fun
+  {{tex \rightarrow }}
+  | -o   :: :: Limp
+  {{tex \multimap }}
+  | |-c   :: :: VdashC
+  {{tex \vdash_\mathcal{C} }}
+  | |-l   :: :: VdashL
+  {{tex \vdash_\mathcal{L} }}
+  | ~>   :: :: To
+  {{tex \leadsto }}
+ 
+defns
+  Jtype :: '' ::=
+
+defn
+  Theta |-c X :: :: tty :: 'C_'
+by 
+
+  ------- :: axiom
+  X |-c X
+
+  Theta , X , X |-c Y
+  ------------------- :: contraction
+  Theta , X |-c Y
+
+  Theta |-c Y
+  --------------- :: weakening
+  Theta , X |-c Y
+
+  Theta |-c X && X , P |-c Y
+  ---------------------------- :: cut
+  Theta , P |-c Y
+
+  Theta, X |-c Z
+  ------------------ :: prodL1
+  Theta, X x Y |-c Z
+
+  Theta, Y |-c Z
+  ------------------ :: prodL2
+  Theta, X x Y |-c Z
+
+  Theta |-c X && P |-c Y
+  ------------------------ :: prodR
+  Theta, P |-c X x Y
+
+  ----- :: 1R
+  . |-c 1
+
+  Theta |-c X && Y, P |-c Z
+  --------------------------- :: impL
+  Theta, X -> Y, P |-c Z
+
+  Theta, X |-c Y
+  ---------------- :: impR
+  Theta |-c X -> Y
+
+  Theta |-l A
+  -------------- :: GR
+  Theta |-c Gf A
+
+defn
+  G |-l A :: :: sty :: 'L_'
+by
+
+  ------- :: axiom
+  A |-l A
+
+  Theta , X, X ; G |-l A
+  ---------------------- :: contraction
+  Theta , X ; G |-l A
+
+  Theta ; G |-l A
+  ------------------- :: weakening
+  Theta , X ; G |-l A
+
+  Theta |-c X && X , P ; G |-l A
+  -------------------------------- :: cut1
+  Theta , P ; G |-l A
+
+  Theta ; G |-l A &&  P ; A , D |-l B
+  ------------------------------------- :: cut2
+  Theta , P ; G , D |-l B
+
+  Theta, X; G |-l A
+  --------------------- :: prodL1
+  Theta, X x Y; G |-l A
+
+  Theta, Y; G |-l A
+  --------------------- :: prodL2
+  Theta, X x Y; G |-l A
+  
+  Theta; G, A, B |-l C
+  ----------------------- :: tenL
+  Theta; G, A (x) B |-l C
+
+  Theta; G |-l A && P; D |-l B
+  ------------------------------ :: tenR
+  Theta, P; G, D |-l A (x) B
+
+  Theta; G |-l A
+  ----------------- :: IL
+  Theta; G, I |-l A
+
+  ------- :: IR
+  . |-l I
+
+  Theta |-c X && Y, P; G |-l A
+  ------------------------------ :: impL1
+  Theta, X -> Y, P; G |-l A
+
+  Theta; G, A |-l B
+  ------------------- :: impR
+  Theta; G |-l A -o B
+
+  Theta; G |-l A && P; D, B |-l C
+  --------------------------------- :: impL2
+  Theta, P; G, A -o B, D |-l C
+
+  Theta |-c X
+  ------------- :: FR
+  Theta |-c F X
+
+  Theta, X; G |-l A
+  ------------------- :: FL
+  Theta; F X, G |-l A
+
+  Theta; B, G |-l A
+  -------------------- :: GL
+  Theta, Gf B; G |-l A
+
+
+
+
+
