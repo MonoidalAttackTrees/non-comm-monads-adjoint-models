@@ -286,7 +286,7 @@ by
 
   I |-c t : X && G, x : Y, D |-l s : A
   ---------------------------------------- :: impL
-  G, I, y : X -o Y, D |-l [app y t/x]s : A
+  G, y : X -o Y, I, D |-l [app y t/x]s : A
 
   G |-l s1 : A && D, x : B |-l s2 : C
   ---------------------------------------- :: imprL

@@ -437,8 +437,8 @@ the result that given a proof of a sequent with degree $d>0$, there is a proof o
 sequent. As a result, we have the cut elimination theorem.
 
 \begin{theorem}[Cut Elimination]
-  Let $\Pi$ be a proof of a sequent $[[I |-c t:X]]$ or a sequent $[[G |-l s:A]]$ s.t. $|\Pi|>0$.
-  Then there is a cut-free proof of the same sequent.
+  Let $\Pi$ be a proof of a sequent $[[I |-c t:X]]$ or a sequent $[[G |-l s:A]]$ s.t.
+  $|\Pi|>0$. Then there is a cut-free proof of the same sequent.
 \end{theorem}
 
 
@@ -447,8 +447,8 @@ sequent. As a result, we have the cut elimination theorem.
 \subsection{Natural Deduction}
 \label{subsec:elle-nd}
 
-The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC of
-the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
+The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC
+of the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
 non-commutative part, i.e. the Lambek category of the adjunction, is defined in
 Figure~\ref{fig:elle-nd-lambek}.
 
@@ -1517,7 +1517,21 @@ sequent in the sequent calculus. The function is defined as follows:
       \tiny
       $\NDdruleTXXimpE{}$
     \end{center}
-    maps to ?
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {[[I |-c t1 : X -o Y]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {[[P |-c t2 : X]]} \\
+            {[[x : Y |-c x : Y]]}
+          }{[[y : X -o Y, P |-c [app y t2 / x]x : Y]]}
+        }{[[I, P |-c [t1 / y][app y t2 / x]x : Y]]}
+      \end{math}
+    \end{center}
   \item \NDdruleSXXunitEOneName:
     \begin{center}
       \tiny
@@ -1569,7 +1583,7 @@ sequent in the sequent calculus. The function is defined as follows:
         \inferrule* [right={\tiny cut1}] {
           {[[I |-c t : X (x) Y]]} \\
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny tenE1}] {
+          \inferrule* [right={\tiny tenL1}] {
             {[[G1, x : X, y : Y, G2 |-l s : A]]}
           }{[[G1, z : X (x) Y, G2 |-l let z : X (x) Y be x (x) y in s : A]]}
         }{[[G1, I, G2 |-l [t / z](let z : X (x) Y be x (x) y in s) : A]]}
@@ -1588,24 +1602,52 @@ sequent in the sequent calculus. The function is defined as follows:
         \inferrule* [right={\tiny cut2}] {
           {[[G |-l s1 : A (>) B]]} \\
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny tenE1}] {
+          \inferrule* [right={\tiny tenL2}] {
             {[[D1, x : A, y : B, D2 |-l s2 : C]]}
           }{[[D1, z : A (>) B, D2 |-l let z : A (>) B be x (>) y in s2 : C]]}
         }{[[D1, G, D2 |-l [s1 / z](let z : A (>) B be x (>) y in s2) : C]]}
       \end{math}
     \end{center}
-  \item \NDdruleSXXimprEName:
+  \item \NDdruleSXXimprEName: (NOT SURE)
     \begin{center}
       \tiny
       $\NDdruleSXXimprE{}$
     \end{center}
-    maps to ?
-  \item \NDdruleSXXimplEName:
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G |-l s1 : A -> B]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprL}] {
+            {[[D |-l s2 : A]]} \\
+            {[[x : B |-l x : B]]}
+          }{[[y : A -> B, D |-l [appr y s2 / x]x : B]]}
+        }{[[G, D |-l [s1 / y][appr y s2 / x]x : B]]}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXimplEName: (NOT SURE)
     \begin{center}
       \tiny
       $\NDdruleSXXimplE{}$
     \end{center}
-    maps to ?
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {[[G |-l s1 : B <- A]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implL}] {
+            {[[D |-l s2 : A]]} \\
+            {[[x : B |-l x : B]]}
+          }{[[D, y : B <- A |-l [appl y s2 / x]x : B]]}
+        }{[[D, G |-l [s1 / y][appl y s2 / x]x : B]]}
+      \end{math}
+    \end{center}
   \item \NDdruleSXXFEName:
     \begin{center}
       \tiny
@@ -1619,7 +1661,7 @@ sequent in the sequent calculus. The function is defined as follows:
         \inferrule* [right={\tiny cut2}] {
           {[[G |-l y : F X]]} \\
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny tenE1}] {
+          \inferrule* [right={\tiny FL}] {
             {[[D1, x : X, D2 |-l s : A]]}
           }{[[D1, z : F X, D2 |-l let z : F X be F x in s : A]]}
         }{[[D1, G, D2 |-l [y / z](let y : F X be F x in s) : A]]}
@@ -1630,10 +1672,246 @@ sequent in the sequent calculus. The function is defined as follows:
       \tiny
       $\NDdruleSXXGE{}$
     \end{center}
-    maps to ?
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {[[x : A |-l x : A]]}
+          }{[[y : Gf A |-l let y : Gf A be Gf x in x : A]]} \\
+           {[[I |-c t : Gf A]]}
+        }{[[I |-l [t / y](let y : Gf A be Gf x in x) : A]]}
+      \end{math}
+    \end{center}
   \end{itemize}
 \end{itemize}
 
+Function $N:SE\rightarrow ND$ maps a proof in the sequent calculus to a proof of the same
+sequent in the natural deduction. The function is defined as follows:
+
+\begin{itemize}
+\item Axioms map to axioms.
+\item Instances of cut rules map to the admissible substitution rules.
+\item Right rules map to introductions.
+\item Left rules map to eliminations modulo some structural fiddling.
+  \begin{itemize}
+  \item \ElledruleTXXunitLName: Need multiple exchanges
+    \begin{center}
+      \tiny
+      $\ElledruleTXXunitL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          {[[x : UnitT |-c x : UnitT]]} \\
+          {[[I, P |-c t : X]]}
+        }{[[x : UnitT, I, P |-c let x : UnitT be trivT in t : X]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleTXXtenLName:
+    \begin{center}
+      \tiny
+      $\ElledruleTXXtenL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          {[[z : X (x) Y |-c z : X (x) Y]]} \\
+          {[[I, x : X, y : Y, P |-c t : Z]]}
+        }{[[I, z : X (x) Y, P |-c let z : X (x) Y be x (x) y in t : Z]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleTXXimpLName:
+    \begin{center}
+      \tiny
+      $\ElledruleTXXimpL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impE}] {
+            {[[z : X -o Y |-c z : X -o Y]]} \\
+            {[[I |-c t1 : X]]}
+          }{[[z : X -o Y, I |-c app z t1 : Y]]} \\
+           {[[P1, x : Y, P2 |-c t2 : Z]]}
+        }{[[P1, z : X -o Y, I, P2 |-c [app z t2 / x]t2 : Z]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXunitLOneName: Does NOT work
+    \begin{center}
+      \tiny
+      $\ElledruleSXXunitLOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE1}] {
+          {[[x : UnitT |-c x : UnitT]]} \\
+          {[[G, D |-l s : A]]}
+        }{[[x : UnitT, G, D |-l let x : UnitT be trivT in s : A]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXunitLTwoName: Does NOT work
+    \begin{center}
+      \tiny
+      $\ElledruleSXXunitLTwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE2}] {
+          {[[x : UnitS |-l x : UnitS]]} \\
+          {[[G, D |-l s : A]]}
+        }{[[x : UnitS, G, D |-l let x : UnitS be trivS in s : A]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXtenLOneName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXtenLOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE1}] {
+          {[[z : X (x) Y |-c z : X (x) Y]]} \\
+          {[[G, x : X, y : Y, D |-l s : A]]}
+        }{[[G, z : X (x) Y, D |-l let z : X (x) Y be x (x) y in s : A]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXtenLTwoName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXtenLTwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          {[[z : A (>) B |-l z : A (>) B]]} \\
+          {[[G, x : A, y : B, D |-l s : C]]}
+        }{[[G, z : A (>) B, D |-l let z : A (>) B be x (>) y in s : C]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXimpLName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXimpL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impE}] {
+            {[[z : X -o Y |-c z : X -o Y]]} \\
+            {[[I |-c t : X]]}
+          }{[[z : X -o Y, I |-c app z t : Y]]} \\
+           {[[G, x : Y, D |-l s : A]]}
+        }{[[G, z : X -o Y, I, D |-l [app z t / x]s : A]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXimprLName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXimprL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {[[z : A -> B |-l z : A -> B]]} \\
+            {[[G |-l s1 : A]]}
+          }{[[z : A -> B, G |-l appr z s1 : B]]} \\
+           {[[D, x : B |-l s2 : C]]}
+        }{[[D, z : A -> B, G |-l [appr z s1 / x]s2 : C]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXimplLName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXimplL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implE}] {
+            {[[z : B <- A |-l z : B <- A]]} \\
+            {[[G |-l s1 : A]]}
+          }{[[G, z : B <- A |-l appl z s1 : B]]} \\
+           {[[x : B, D |-l s2 : C]]}
+        }{[[G, z : B <- A, D |-l [appl z s1 / x]s2 : C]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXFlName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXFl{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          {[[z : F X |-l z : F X]]} \\
+          {[[G, x : X, D |-l s : A]]}
+        }{[[G, z : F X, D |-l let F x : F X be z in s : A]]}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXGlName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXGl{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GE}] {
+            {[[y : Gf A |-c y : Gf A]]}
+          }{[[y : Gf A |-l derelict y : A]]} \\
+           {[[G, x : A, D |-l s : B]]}
+        }{[[G, y : Gf A, D |-l [derelict y / x]s : B]]}
+      \end{math}
+    \end{center}
+    
+  \end{itemize}
+\end{itemize}
 
 
 
