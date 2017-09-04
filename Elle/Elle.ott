@@ -183,9 +183,9 @@ by
   --------------- :: ax
   x : X |-c x : X
 
-  I, P |-c t : X
-  --------------------------------------------------- :: unitL
-  I, x : UnitT, P |-c let x : UnitT be trivT in t : X
+  P |-c t : X
+  ------------------------------------------------ :: unitL
+  x : UnitT, P |-c let x : UnitT be trivT in t : X
 
   ------------------- :: unitR
   . |-c trivT : UnitT
@@ -237,13 +237,13 @@ by
   --------------- :: ax
   x : A |-l x : A
 
-  G, D |-l s : A
+  D |-l s : A
   --------------------------------------------------- :: unitL1
-  G, x : UnitT, D |-l let x : UnitT be trivT in s : A
+  x : UnitT, D |-l let x : UnitT be trivT in s : A
 
-  G, D |-l s : A
+  D |-l s : A
   --------------------------------------------------- :: unitL2
-  G, x : UnitS, D |-l let x : UnitS be trivS in s : A
+  x : UnitS, D |-l let x : UnitS be trivS in s : A
 
   ------------------- :: unitR
   . |-l trivS : UnitS
