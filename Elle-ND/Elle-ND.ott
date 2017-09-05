@@ -11,7 +11,7 @@ A, B, C :: 'lform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
   | UnitS   ::   :: UnitS
-  {{tex \mathsf{UnitS} }}
+  {{tex \mathsf{Unit} }}
   | A (>) B ::   :: Lambek
   | A -> B  ::   :: RFun          
   | A <- B  ::   :: LFun          
@@ -26,7 +26,7 @@ X, Y, Z :: 'sform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
   | UnitT   ::   :: UnitT
-  {{tex \mathsf{UnitT} }}
+  {{tex \mathsf{Unit} }}
   | X (x) Y ::   :: Tensor        
   | X -o Y  ::   :: Fun          
   | ( X )   :: M :: Parens 
@@ -44,9 +44,9 @@ p :: 'pattern_' ::=
   {{tex \star }}
   | x :: :: var
   | trivT :: :: trivT
-  {{tex \mathsf{trivT} }}
+  {{tex \mathsf{triv} }}
   | trivS :: :: trivS
-  {{tex \mathsf{trivS} }}
+  {{tex \mathsf{triv} }}
   | p (x) p' :: :: ten
   | p (>) p' :: :: lambek
   | F p :: :: LeftAdj
@@ -88,7 +88,7 @@ t :: 'sterm_' ::=
   | x :: :: Var
   | b :: :: Const
   | trivT :: :: UnitT
-  {{tex \mathsf{trivT} }}
+  {{tex \mathsf{triv} }}
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
   | t1 (x) t2 :: :: Tensor
@@ -300,7 +300,18 @@ by
   ----------------------- :: app2
   app t1 t2 ~> app t1 t2'
 
+  ------------------------------------------------------------------------------------------------- :: letUnit
+  let (let t2 : UnitT be trivT in t1) ~> let t2 : UnitT be trivT in (let t1 : UnitT be trivT in t3)
 
+
+  -------------------------------------------------------------------------------------------------------------------------------- :: letTen  
+  let (let t2 : UnitT be trivT in t1) : X (x) Y be x (x) y in t3 ~> let t2 : UnitT be trivT in (let t1 : X (x) Y be x (x) y in t3)
+
+  -------------------------------------------------------------- :: letApp
+  app (let t : X be p in t1) t2 ~> let t : X be p in (app t1 t2)
+
+  ---------------------------------------------------------------------------------------------- :: letLet
+  let (let t2 : X be p1 in t1) : Y be p2 in t3 ~> let t2 : X be p1 in let y = t1 : Y be p2 in t3
 
 defn
   s1 ~> s2 :: :: sred :: 'Sred_'
@@ -319,7 +330,7 @@ by
   let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3
 
   ----------------------------------- :: letF
-  let F x : F X be F y in s ~> [y/x]s
+  let F t : F X be F y in s ~> [t/y]s
 
   ------------------------------- :: lamL
   appl (\l x:A.s1) s2 ~> [s2/x]s1
@@ -345,19 +356,3 @@ by
 
   ------------------ :: derelict
   derelict Gf s ~> s
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
