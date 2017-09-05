@@ -32,3 +32,5 @@ Elle-ND/.Elle-ND.ott.swp
 /logic-ott2.tex.backup
 *.out
 *.vtc
+*-ott*
+*.pdf
