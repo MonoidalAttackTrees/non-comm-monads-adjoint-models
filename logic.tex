@@ -821,7 +821,7 @@ elimination rules:
         \inferrule* [right={\tiny GI}] {
           {[[I |-l s : A]]}
         }{[[I |-c Gf s : Gf A]]}
-      }{[[I |-l derelict Gf s : A]]}
+      }{[[I |-l derelict (Gf s) : A]]}
     \end{math}
   \end{center}
   normalizes to
@@ -843,7 +843,7 @@ elimination rules:
 
   \begin{center}
     \tiny
-    $[[X |-c X]]$
+    $[[Theta |-c X]]$
   \end{center}
 
 

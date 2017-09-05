@@ -10,10 +10,10 @@ grammar
 A, B, C :: 'lform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
-  | I       ::   :: Unit
+  | I       ::   :: I
   {{tex \mathrm{I} }}
-  | A (x) B ::   :: Tensor        
-  | A -o B  ::   :: Fun          
+  | A (x) B ::   :: Lambek
+  | A -o B  ::   :: RFun          
   | ( A )   :: M :: Parens 
   | h( A )  :: M :: HiddenParens 
   {{ tex [[A]] }}
@@ -24,9 +24,9 @@ A, B, C :: 'lform_' ::=
 X, Y, Z :: 'sform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
-  | 1       ::   :: Unit
+  | 1       ::   :: 1
   {{tex \mathsf{1} }}
-  | X x Y   ::   :: Tensor        
+  | X (t) Y   ::   :: Tensor        
   | X -> Y  ::   :: Fun          
   | ( X )   :: M :: Parens 
   | h( X )  :: M :: HiddenParens 
@@ -38,21 +38,83 @@ T :: 'type_' ::=
   | A :: :: LType
   | X :: :: SType
 
-Theta {{tex \Theta}}, P {{tex \Phi}} :: 'CCtx_' ::=
-  | .               ::   :: Empty
+p :: 'pattern_' ::=
+  | - :: :: hole
+  {{tex \star }}
+  | x :: :: var
+  | () :: :: trivT
+  {{tex \mathsf{trivT} }}
+  | * :: :: trivS
+  {{tex \ast }}
+  | p (x) p' :: :: ten
+  | p (t) p'   :: :: sum
+  | F p :: :: LeftAdj
+  {{tex \mathsf{F}\,[[p]] }}
+  | Gf p     ::   :: RightAdj
+  {{tex \mathsf{G}\,[[p]] }}
+
+s :: 'term_' ::=
+  | x :: :: Var
+  | b :: :: Const
+  | * :: :: UnitS
+  {{tex \ast }}
+  | let s1 : T be p in s2 :: :: let1
+  {{tex \mathsf{let}\,[[s1]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
+  | let t : T be p in s :: :: let2
+  {{tex \mathsf{let}\,[[t]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s]] }}
+  | s1 (x) s2 :: :: Tensor
+  | \ x : A . s :: :: LFun
+  {{tex \lambda [[x]] : [[A]].[[s]] }}
+  | app s1 s2   :: :: App
+  {{tex \mathsf{app}\,[[s1]]\,[[s2]] }}
+  | derelict t :: :: Derelict
+  {{tex \mathsf{derelict}\,[[t]] }}
+  | [ s1 / x ] s2 :: M :: Subst
+  | [ t / x ] s   :: M :: Subst2
+  | ( s )         :: S :: parens
+  | h( s )        :: M :: hparen
+  {{tex [[s]] }}
+  | F t           ::   :: LeftAdj
+  {{tex \mathsf{F}[[t]] }}
+
+t :: 'sterm_' ::=
+  | x  :: :: Var
+  | b  :: :: Const
+  | () :: :: UnitT
+  | let t1 : X be p in t2 :: :: let
+  {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
+  | t1 x t2 :: :: Tensor
+  | \ x : X . t :: :: Fun
+  {{tex \lambda [[x]] : [[X]].[[t]] }}  
+  | app t1 t2   :: :: App
+  {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
+  | ( t1 , t2 )   :: :: Prod
+  {{tex \mathsf{(}[[t1]] , [[t2]]\mathsf{)} }}
+  | fst ( t )     :: :: Fst
+  {{tex \mathsf{fst(}[[t]]\mathsf{)} }}
+  | snd ( t )     :: :: Snd
+  {{tex \mathsf{snd(}[[t]]\mathsf{)} }}
+  | [ t1 / x ] t2 :: M :: Subst
+  | ( t )         :: S :: parens
+  | h( t )        :: M :: hparen
+  | Gf s           ::   :: RightAdj
+  {{tex \mathsf{G}[[s]] }}
+
+I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
+  | .       ::   :: Empty
   {{tex \cdot }}
-  | Theta1 , Theta2 ::   :: Ext
-  | X               ::   :: ElC
-  | ( Theta )       :: S :: Paren
+  | I1 , I2 ::   :: Ext
+  | x : X   ::   :: ElC
+  | ( I )   :: S :: Paren
 
 G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
-  | .           ::   :: Empty
+  | .       ::   :: Empty
   {{tex \cdot }}
-  | G1 , G2     ::   :: Ext
-  | Theta       ::   :: Cctx1
-  | Theta ; G   ::   :: Cctx2
-  | A           ::   :: El
-  | ( G )       :: S :: Paren
+  | x : A   ::   :: El
+  | Pi      ::   :: CCtx1
+  | Pi ; G   ::   :: CCtx2
+  | G1 , G2 ::   :: Ext
+  | ( G )   :: S :: Paren
 
 formula :: 'formula_' ::=
   | judgement            ::   :: judgement
@@ -63,13 +125,13 @@ formula :: 'formula_' ::=
   {{tex [[formula]] }}
 
 terminals :: 'terminals_' ::=
-  | I    :: :: I
-  {{tex \mathsf{I} }}
-  | 1    :: :: 1
+  | 1    :: :: UnitT
   {{tex \mathsf{1} }}
+  | I    :: :: UnitS
+  {{tex \mathrm{I} }}
   | (x)  :: :: Tensor
   {{tex \otimes }}
-  | x    :: :: Mul
+  | (t)  :: :: Sum
   {{tex \times }}
   | (e)  :: :: ETensor
   {{tex \circop{e} }}  
@@ -77,7 +139,7 @@ terminals :: 'terminals_' ::=
   {{tex \circop{w} }}  
   | (c)  :: :: CTensor
   {{tex \circop{c} }}
-  | ->   :: :: Fun
+  | ->   :: :: LFun
   {{tex \rightarrow }}
   | -o   :: :: Limp
   {{tex \multimap }}
@@ -92,122 +154,80 @@ defns
   Jtype :: '' ::=
 
 defn
-  Theta |-c X :: :: tty :: 'C_'
+  I |-c t : X :: :: tty :: 'T_'
 by 
 
-  ------- :: axiom
-  X |-c X
+  ------------------ :: id
+  I, x : X |-c x : X
 
-  Theta , X , X |-c Y
-  ------------------- :: contraction
-  Theta , X |-c Y
+  ------------ :: 1I
+  I |-c () : 1
 
-  Theta |-c Y
-  --------------- :: weakening
-  Theta , X |-c Y
+  I |-c t1 : X && I |-c t2 : Y
+  ---------------------------- :: prodI
+  I |-c (t1 , t2) : X (t) Y
 
-  Theta |-c X && X , P |-c Y
-  ---------------------------- :: cut
-  Theta , P |-c Y
+  I |-c t : X (t) Y
+  ----------------- :: prodE1
+  I |-c fst(t) : X
 
-  Theta, X |-c Z
-  ------------------ :: prodL1
-  Theta, X x Y |-c Z
+  I |-c t : X (t) Y
+  ----------------- :: prodE2
+  I |-c snd(t) : X
 
-  Theta, Y |-c Z
-  ------------------ :: prodL2
-  Theta, X x Y |-c Z
+  I, x : X |-c t : Y
+  -------------------------- :: impI
+  I |-c \ x : X . t : X -> Y
 
-  Theta |-c X && P |-c Y
-  ------------------------ :: prodR
-  Theta, P |-c X x Y
+  I |-c t1 : X -> Y && I |-c t2 : X
+  --------------------------------- :: impE
+  I |-c app t1 t2 : Y
 
-  ----- :: 1R
-  . |-c 1
-
-  Theta |-c X && Y, P |-c Z
-  --------------------------- :: impL
-  Theta, X -> Y, P |-c Z
-
-  Theta, X |-c Y
-  ---------------- :: impR
-  Theta |-c X -> Y
-
-  Theta |-l A
-  -------------- :: GR
-  Theta |-c Gf A
+  I |-l s : A
+  ----------------- :: GI
+  I |-c Gf s : Gf A
 
 defn
-  G |-l A :: :: sty :: 'L_'
+  G |-l s : A :: :: sty :: 'S_'
 by
 
-  ------- :: axiom
-  A |-l A
+  ------------------- :: id
+  I; x : A |-l x : A
 
-  Theta , X, X ; G |-l A
-  ---------------------- :: contraction
-  Theta , X ; G |-l A
+  I; G |-l s1 : A && I; D |-l s2 : B
+  ---------------------------------- :: tenI
+  I; G, D |-l s1 (x) s2 : A (x) B
 
-  Theta ; G |-l A
-  ------------------- :: weakening
-  Theta , X ; G |-l A
+  I; G |-l s1 : A (x) B && I; D, x : A, y : B |-l s2 : C
+  ------------------------------------------------------ :: tenE
+  I; G, D |-l let s1 : A (x) B be x (x) y in s2 : C
 
-  Theta |-c X && X , P ; G |-l A
-  -------------------------------- :: cut1
-  Theta , P ; G |-l A
+  ----------- :: II
+  I |-l * : I
 
-  Theta ; G |-l A &&  P ; A , D |-l B
-  ------------------------------------- :: cut2
-  Theta , P ; G , D |-l B
+  I; G |-l s1 : I && I; D |-l s2 : A
+  ------------------------------------- :: IE
+  I; G, D |-l let s1 : I be * in s2 : A
 
-  Theta, X; G |-l A
-  --------------------- :: prodL1
-  Theta, X x Y; G |-l A
+  I; G, x : A |-l s : B
+  ------------------------------ :: impI
+  I; G |-l \ x : A . s : A -o B
 
-  Theta, Y; G |-l A
-  --------------------- :: prodL2
-  Theta, X x Y; G |-l A
-  
-  Theta; G, A, B |-l C
-  ----------------------- :: tenL
-  Theta; G, A (x) B |-l C
+  I; G |-l s1 : A -o B && I; D |-l s2 : A
+  --------------------------------------- :: impE
+  I; G, D |-l app s1 s2 : B
 
-  Theta; G |-l A && P; D |-l B
-  ------------------------------ :: tenR
-  Theta, P; G, D |-l A (x) B
+  I |-c t : X
+  --------------- :: FI
+  I |-l F t : F X
 
-  Theta; G |-l A
-  ----------------- :: IL
-  Theta; G, I |-l A
+  I; G |-l s1 : F X && I, x : X; D |-l s2 : A
+  ------------------------------------------- :: FE
+  I; G, D |-l let s1 : F X be F x in s2 : A
 
-  ------- :: IR
-  . |-l I
-
-  Theta |-c X && Y, P; G |-l A
-  ------------------------------ :: impL1
-  Theta, X -> Y, P; G |-l A
-
-  Theta; G, A |-l B
-  ------------------- :: impR
-  Theta; G |-l A -o B
-
-  Theta; G |-l A && P; D, B |-l C
-  --------------------------------- :: impL2
-  Theta, P; G, A -o B, D |-l C
-
-  Theta |-c X
-  ------------- :: FR
-  Theta |-c F X
-
-  Theta, X; G |-l A
-  ------------------- :: FL
-  Theta; F X, G |-l A
-
-  Theta; B, G |-l A
-  -------------------- :: GL
-  Theta, Gf B; G |-l A
-
-
+  I |-c t : Gf A
+  -------------------- :: GE
+  I |-l derelict t : A
 
 
 

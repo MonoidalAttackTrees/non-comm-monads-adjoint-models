@@ -34,22 +34,24 @@ quick : quick-pdf
 
 pdf : $(PDF)
 
-logic-ott.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott LNL/LNL.ott
+logic-ott.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott
 	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
 		-tex_filter logic.tex logic-ott1.tex
 	scripts/prepr_double_ott.sh logic-ott1.tex
 	@$(OTT) $(OTT_FLAGS) -i Elle/Elle.ott -o Elle-inc.tex -tex_name_prefix Elle \
-		-tex_filter logic-ott1.tex logic-ott2.tex
-	scripts/prepr_double_ott.sh logic-ott2.tex
-	@$(OTT) $(OTT_FLAGS) -i LNL/LNL.ott -o LNL-inc.tex -tex_name_prefix LNL \
-		-tex_filter logic-ott2.tex logic-ott.tex
+		-tex_filter logic-ott1.tex logic-ott.tex
 
-ott : main.text logic-ott.tex Makefile
+logic-ott2.tex : logic-ott.tex LNL/LNL.ott
+	@$(OTT) $(OTT_FLAGS) -i LNL/LNL.ott -o LNL-inc.tex -tex_name_prefix LNL \
+		-tex_filter logic-ott.tex logic-ott2.tex
+
+
+ott : main.text logic-ott2.tex Makefile
 
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile adjoint-model.tex ref.bib logic-ott.tex introduction.tex category-theory-basics.tex Makefile
+$(PDF) : main.tex Makefile adjoint-model.tex ref.bib logic-ott2.tex introduction.tex category-theory-basics.tex Makefile
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
