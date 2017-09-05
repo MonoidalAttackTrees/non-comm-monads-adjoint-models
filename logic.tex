@@ -98,15 +98,15 @@ $(R, L)$ pair for the same connective.
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitL}] {
-          {[[I, P |-c t : X]]}
-        }{[[I, x : UnitT, P |-c let x : UnitT be trivT in t : X]]}
-      }{[[I, P |-c [trivT / x] (let x : UnitT be trivT in t) : X]]}
+          {[[P |-c t : X]]}
+        }{[[x : UnitT, P |-c let x : UnitT be trivT in t : X]]}
+      }{[[P |-c [trivT / x] (let x : UnitT be trivT in t) : X]]}
     \end{math}
   \end{center}
   is transformed to 
   \begin{center}
     \tiny
-    $[[I, P |-c t : X]]$
+    $[[P |-c t : X]]$
   \end{center}
 
 \item $(\ElledruleTXXunitRName, \ElledruleSXXunitLOneName)$:
@@ -122,15 +122,15 @@ $(R, L)$ pair for the same connective.
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitL}] {
-          {[[G, D |-l s : A]]}
-        }{[[G, x : UnitT, D |-l let x : UnitT be trivT in s : A]]}
-      }{[[G, D |-l [trivT / x] (let x : UnitT be trivT in s) : A]]}
+          {[[D |-l s : A]]}
+        }{[[x : UnitT, D |-l let x : UnitT be trivT in s : A]]}
+      }{[[D |-l [trivT / x] (let x : UnitT be trivT in s) : A]]}
     \end{math}
   \end{center}
   is transformed to
   \begin{center}
     \tiny
-    $[[G, D |-l s : A]]$
+    $[[D |-l s : A]]$
   \end{center}
 
 \item $(\ElledruleTXXtenRName, \ElledruleTXXtenLName)$:
@@ -251,15 +251,15 @@ $(R, L)$ pair for the same connective.
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitL2}] {
-          {[[G, D |-l s : A]]}
-        }{[[G, x : UnitS, D |-l let x : UnitS be trivS in s : A]]}
-      }{[[G, D |-l [trivS / x] (let x : UnitS be trivS in s) : A]]}
+          {[[D |-l s : A]]}
+        }{[[x : UnitS, D |-l let x : UnitS be trivS in s : A]]}
+      }{[[D |-l [trivS / x] (let x : UnitS be trivS in s) : A]]}
     \end{math}
   \end{center}
   is transformed to 
   \begin{center}
     \tiny
-    $[[G, D |-l s : A]]$
+    $[[D |-l s : A]]$
   \end{center}
 
 \item $(\ElledruleSXXtenRName, \ElledruleSXXtenLTwoName)$:
@@ -625,14 +625,14 @@ We also have the three cut rules derivable in the natural deduction:
       \tiny
       \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitE}] {
+        \inferrule* [right={\tiny tenE}] {
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny tenE}] {
+          \inferrule* [right={\tiny unitE}] {
             {[[I1 |-c t1 : X (x) Y]]} \\
             {[[I2 |-c t2 : UnitT]]}
           }{[[I2, I1 |-c let t2 : UnitT be trivT in t1 : X (x) Y]]} \\
            {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
-        }{[[P1, I2, I2, P2 |-c let (let t2 : UnitT be trivT in t1) : X (x) Y be x (x) y in t3 : Z]]}
+        }{[[P1, I2, I1, P2 |-c let (let t2 : UnitT be trivT in t1) : X (x) Y be x (x) y in t3 : Z]]}
       \end{math}
     \end{center}
     commutes to
@@ -640,9 +640,9 @@ We also have the three cut rules derivable in the natural deduction:
       \tiny
       \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenE}] {
+        \inferrule* [right={\tiny unitE}] {
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny unitE}] {
+          \inferrule* [right={\tiny tenE}] {
             {[[I1 |-c t1 : X (x) Y]]} \\
             {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
           }{[[P1, I1, P2 |-c let t1 : X (x) Y be x (x) y in t3 : Z]]} \\
@@ -1307,7 +1307,7 @@ sequent in the sequent calculus. The function is defined as follows:
           \inferrule* [right={\tiny unitL2}] {
             {[[D |-l s2 : A]]}
           }{[[x : UnitS, D |-l let x : UnitS be trivS in s2 : A]]}
-        }{[[G, P |-l [s1 / x](let x : UnitS be trivS in s2) : A]]}
+        }{[[G, D |-l [s1 / x](let x : UnitS be trivS in s2) : A]]}
       \end{math}
     \end{center}
   \item \NDdruleSXXtenEOneName:
@@ -1438,7 +1438,7 @@ sequent in the natural deduction. The function is defined as follows:
 \item Right rules map to introductions.
 \item Left rules map to eliminations modulo some structural fiddling.
   \begin{itemize}
-  \item \ElledruleTXXunitLName: Need multiple exchanges
+  \item \ElledruleTXXunitLName:
     \begin{center}
       \tiny
       $\ElledruleTXXunitL{}$
@@ -1450,8 +1450,8 @@ sequent in the natural deduction. The function is defined as follows:
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitE}] {
           {[[x : UnitT |-c x : UnitT]]} \\
-          {[[I, P |-c t : X]]}
-        }{[[x : UnitT, I, P |-c let x : UnitT be trivT in t : X]]}
+          {[[P |-c t : X]]}
+        }{[[x : UnitT, P |-c let x : UnitT be trivT in t : X]]}
       \end{math}
     \end{center}
   \item \ElledruleTXXtenLName:
@@ -1490,7 +1490,7 @@ sequent in the natural deduction. The function is defined as follows:
         }{[[P1, z : X -o Y, I, P2 |-c [app z t2 / x]t2 : Z]]}
       \end{math}
     \end{center}
-  \item \ElledruleSXXunitLOneName: Does NOT work
+  \item \ElledruleSXXunitLOneName:
     \begin{center}
       \tiny
       $\ElledruleSXXunitLOne{}$
@@ -1502,11 +1502,11 @@ sequent in the natural deduction. The function is defined as follows:
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitE1}] {
           {[[x : UnitT |-c x : UnitT]]} \\
-          {[[G, D |-l s : A]]}
-        }{[[x : UnitT, G, D |-l let x : UnitT be trivT in s : A]]}
+          {[[D |-l s : A]]}
+        }{[[x : UnitT, D |-l let x : UnitT be trivT in s : A]]}
       \end{math}
     \end{center}
-  \item \ElledruleSXXunitLTwoName: Does NOT work
+  \item \ElledruleSXXunitLTwoName:
     \begin{center}
       \tiny
       $\ElledruleSXXunitLTwo{}$
@@ -1518,8 +1518,8 @@ sequent in the natural deduction. The function is defined as follows:
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitE2}] {
           {[[x : UnitS |-l x : UnitS]]} \\
-          {[[G, D |-l s : A]]}
-        }{[[x : UnitS, G, D |-l let x : UnitS be trivS in s : A]]}
+          {[[D |-l s : A]]}
+        }{[[x : UnitS, D |-l let x : UnitS be trivS in s : A]]}
       \end{math}
     \end{center}
   \item \ElledruleSXXtenLOneName:
