@@ -39,7 +39,6 @@ non-commutative part, i.e. the Lambek category of the adjunction, is defined in
 Figure~\ref{fig:elle-lambek}. We do not have the structural rules except for exchange because
 the calculus is for linear logic. 
 
-
 \begin{figure}[!h]
  \scriptsize
   \begin{mdframed}
@@ -72,7 +71,17 @@ the calculus is for linear logic.
 \label{fig:elle-lambek}
 \end{figure}
 
-We consider the following key cases in  proving cut elimination for the sequent calculus:
+Next, we prove cut elimination for the sequent calculus. We define the \textbf{degree $|X|$
+(or $|A|$) of a commutative (or non-commutative) formula} to be the number of logical
+connectives $|X|$ plus $1$. For instance, $|\NDnt{X}  \otimes  \NDnt{Y}| = |\NDnt{X}| + |\NDnt{Y}| + 1$. And the
+\textbf{degree of a cut rule} is the degree of the cut formula. The following key cases
+demonstrate how we can replace a cut with at most two cuts with lower degree. The
+\textbf{degree $|\Pi|$ of a proof} $\Pi$ is the maximum of the degrees of all cut fules in the
+proof and $|\Pi|=0$ if $\Pi$ is cut-free. Finally, the \textbf{height $h(\Pi)$ of a proof
+$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
+
+We consider the following $11$ key cases in proving cut elimination, each of which is a
+$(R, L)$ pair for the same connective.
 
 \begin{itemize}
 
@@ -89,15 +98,15 @@ We consider the following key cases in  proving cut elimination for the sequent 
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitL}] {
-          {\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
-        }{\Phi  \NDsym{,}  \NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{:}  \NDnt{X}}
-      }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{trivT}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{)}  \NDsym{:}  \NDnt{X}}
+          {\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
+        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{:}  \NDnt{X}}
+      }{\Psi  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{trivT}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{)}  \NDsym{:}  \NDnt{X}}
     \end{math}
   \end{center}
   is transformed to 
   \begin{center}
     \tiny
-    $\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$
+    $\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$
   \end{center}
 
 \item $(\ElledruleTXXunitRName, \ElledruleSXXunitLOneName)$:
@@ -113,15 +122,15 @@ We consider the following key cases in  proving cut elimination for the sequent 
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitL}] {
-          {\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
-      }{\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{trivT}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+          {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+      }{\Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{trivT}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
     \end{math}
   \end{center}
   is transformed to
   \begin{center}
     \tiny
-    $\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
+    $\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
   \end{center}
 
 \item $(\ElledruleTXXtenRName, \ElledruleTXXtenLName)$:
@@ -202,15 +211,15 @@ We consider the following key cases in  proving cut elimination for the sequent 
       \inferrule* [right={\tiny cut}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny impR}] {
-          {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}}
-        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}}
+          {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}}
+        }{\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}}
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny impL}] {
-          {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}} \\
+          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}} \\
           {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDsym{(}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDsym{(}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
     \end{math}
   \end{center}
   is transformed to
@@ -221,11 +230,11 @@ We consider the following key cases in  proving cut elimination for the sequent 
       \inferrule* [right={\tiny cut}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny cut}] {
-          {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
-          {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}}
-        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
+          {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
+          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}}
+        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
         {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDsym{(}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{)}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDsym{(}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{)}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
     \end{math}
   \end{center}
 
@@ -242,15 +251,15 @@ We consider the following key cases in  proving cut elimination for the sequent 
         \\
         $$\mprset{flushleft}
         \inferrule* [right={\tiny unitL2}] {
-          {\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}   \mathsf{UnitS}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
-      }{\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{trivS}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+          {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitS}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+      }{\Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{trivS}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
     \end{math}
   \end{center}
   is transformed to 
   \begin{center}
     \tiny
-    $\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
+    $\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
   \end{center}
 
 \item $(\ElledruleSXXtenRName, \ElledruleSXXtenLTwoName)$:
@@ -420,15 +429,26 @@ We consider the following key cases in  proving cut elimination for the sequent 
 
 \end{itemize}
 
-\newpage
+Based on the key cases, given a formula (either commutative or non-commutative) $L$ and proofs
+$\Pi$, $\Pi'$, of sequents $M\vdash N$ and $M'\vdash N'$ respectively with degrees less than
+$|L|$, there is a proof of $M,N\vdash M',N'$ with degree less than $|L|$, s.t. all currences of
+formula $L$ is removed. This can be proved by induction on $h(\Pi)+h(\Pi')$. Therefore, we have
+the result that given a proof of a sequent with degree $d>0$, there is a proof of the same
+sequent. As a result, we have the cut elimination theorem.
+
+\begin{theorem}[Cut Elimination]
+  Let $\Pi$ be a proof of a sequent $\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$ or a sequent $\Gamma  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$ s.t.
+  $|\Pi|>0$. Then there is a cut-free proof of the same sequent.
+\end{theorem}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Natural Deduction}
 \label{subsec:elle-nd}
 
-The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC of
-the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
+The term assignment for natural deduction of the commutative part of the model, i.e. the SMCC
+of the adjunction, is defined in Figure~\ref{fig:elle-nd-smcc}. And the term assignme for the
 non-commutative part, i.e. the Lambek category of the adjunction, is defined in
 Figure~\ref{fig:elle-nd-lambek}.
 
@@ -515,6 +535,7 @@ We could derive exchange comonadically as follows:
 \end{center}
 
 We also have the three cut rules derivable in the natural deduction:
+(NOTE: Don't know how to prove the third one S\_cut2.)
 
 \begin{figure}[!h]
   \scriptsize
@@ -522,3 +543,1384 @@ We also have the three cut rules derivable in the natural deduction:
     \NDdruleTXXcut{} \qquad\qquad \NDdruleSXXcutOne{} \qquad\qquad \NDdruleSXXcutTwo{}
   \end{mathpar}
 \end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{One Step $\beta$-Reduction}
+
+We define the normalization procedure by considering the following pairs of introduction and
+elimination rules:
+
+\begin{itemize}
+
+\item (\NDdruleTXXunitIName, \NDdruleTXXunitEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny unitE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitI}] {
+          \,
+        }{ \cdot   \vdash_\mathcal{C}   \mathsf{trivT}   \NDsym{:}   \mathsf{UnitT} } \\
+         {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
+      }{\Phi  \vdash_\mathcal{C}   \mathsf{let}\,  \mathsf{trivT}   :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{:}  \NDnt{X}}
+    \end{math}
+  \end{center}
+  normalizes to 
+  \begin{center}
+    \tiny
+    $\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$
+  \end{center}
+
+\item (\NDdruleTXXunitIName, \NDdruleSXXunitEOneName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny unitI}] {
+         \,
+        }{ \cdot   \vdash_\mathcal{C}   \mathsf{trivT}   \NDsym{:}   \mathsf{UnitT} } \\
+         {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      }{\Delta  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{trivT}   :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    $\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
+  \end{center}
+
+\item (\NDdruleTXXtenIName, \NDdruleTXXtenEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
+          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
+        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+         {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}} \\
+          {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+    \end{math}
+  \end{center}
+  
+\item (\NDdruleTXXtenIName, \NDdruleSXXtenEOneName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE1}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
+          {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
+        }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+         {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      }{\Gamma  \NDsym{,}  \Phi  \NDsym{,}  \Psi  \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}} \\
+          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Psi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      }{\Gamma  \NDsym{,}  \Phi  \NDsym{,}  \Psi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+  
+\item (\NDdruleTXXimpIName, \NDdruleTXXimpEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impI}] {
+          {\Phi  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}}
+        }{\Phi  \vdash_\mathcal{C}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+         {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}}
+      }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{app}\, \NDsym{(}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{Y}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        {\Phi  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
+        {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}}
+      }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleSXXunitIName, \NDdruleSXXunitETwoName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny unitI}] {
+         \,
+        }{ \cdot   \vdash_\mathcal{L}   \mathsf{trivS}   \NDsym{:}   \mathsf{UnitS} } \\
+         {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      }{\Delta  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{trivS}   :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    $\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
+  \end{center}
+
+\item (\NDdruleSXXtenIName, \NDdruleSXXtenETwoName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny tenE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny tenI}] {
+         {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}} \\
+         {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+         {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}} \\
+          {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXimprIName, \NDdruleSXXimprEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny imprI}] {
+         {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}}
+        }{\Gamma  \vdash_\mathcal{L}   \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+         {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+      }{\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDsym{(}   \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}} \\
+        {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+      }{\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXimplIName, \NDdruleSXXimplEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny implI}] {
+         {\NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}}
+        }{\Gamma  \vdash_\mathcal{L}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}} \\
+         {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+      }{\Delta  \NDsym{,}  \Gamma  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDsym{(}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut2}] {
+        {\NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}} \\
+        {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+      }{\Delta  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXFIName, \NDdruleSXXFEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny FE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FI}] {
+          {\Phi  \vdash_\mathcal{C}  \NDmv{y}  \NDsym{:}  \NDnt{X}}
+        }{\Phi  \vdash_\mathcal{L}   \mathsf{F} \NDmv{y}   \NDsym{:}   \mathsf{F} \NDnt{X} } \\
+         {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\,  \mathsf{F}\, \NDmv{y}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        {\Phi  \vdash_\mathcal{C}  \NDmv{y}  \NDsym{:}  \NDnt{X}} \\
+        {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDmv{y}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleTXXGIName, \NDdruleSXXGEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny GE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny GI}] {
+          {\Phi  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\Phi  \vdash_\mathcal{C}   \mathsf{G} \NDnt{s}   \NDsym{:}   \mathsf{G} \NDnt{A} }
+      }{\Phi  \vdash_\mathcal{L}   \mathsf{derelict}\, \NDsym{(}   \mathsf{G} \NDnt{s}   \NDsym{)}   \NDsym{:}  \NDnt{A}}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    $\Phi  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
+  \end{center}
+
+\end{itemize}
+
+\begin{theorem}[Normalization]
+  For a cut-free deduction $\Pi$, there is a deduction which is in normal form.
+\end{theorem}
+\begin{proof}
+  By induction on the structure of $\Pi$.
+\end{proof}
+
+
+
+  \begin{center}
+    \tiny
+    $\texttt{\textcolor{red}{\texttt{\textcolor{red}{<<no parses (char 2): no*** parses (char 2): Th***eta \mbox{$\backslash{}$}mbox\{\$\mbox{$\backslash{}$}mid\$\}-c X  >>}}}}$
+  \end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Commuting Conversions}
+
+\begin{itemize}
+
+\item Commutation of $\mathrm{UnitT}_E$:
+  \begin{itemize}
+
+  \item (\NDdruleTXXunitEName, \NDdruleTXXunitEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+            {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT} }
+          }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{UnitT} } \\
+          {\Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{X}}
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{X}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+            {\Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{X}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{X}} \\
+           {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT} }
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{X}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleTXXunitEName, \NDdruleTXXtenEName) need multiple exchanges at the end:
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+            {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT} }
+          }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+           {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+            {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+          }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}} \\
+           {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT} }
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleTXXunitEName, \NDdruleTXXimpEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+            {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT} }
+          }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+           {\Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{X}}
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{app}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Y}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+            {\Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{X}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{app}\, \NDnt{t_{{\mathrm{1}}}} \, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Y}} \\
+           {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT} }
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDsym{(}   \mathsf{app}\, \NDnt{t_{{\mathrm{1}}}} \, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{Y}}
+      \end{math}
+    \end{center}
+  \end{itemize}
+
+
+\item Commutation of $\otimes_E$:
+
+  \begin{itemize}
+  \item (\NDdruleTXXtenEName, \NDdruleTXXunitEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+            {\Psi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{UnitT} } \\
+           {\Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+            {\Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}} \\
+           {\Psi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}}
+        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleTXXtenEName, \NDdruleTXXtenEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y_{{\mathrm{2}}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \otimes  \NDnt{Y_{{\mathrm{1}}}}} \\
+            {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \otimes  \NDnt{Y_{{\mathrm{1}}}}} \\
+           {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{w}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{Y_{{\mathrm{1}}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  :  \NDnt{X_{{\mathrm{1}}}}  \otimes  \NDnt{Y_{{\mathrm{1}}}} \,\mathsf{be}\, \NDmv{w}  \otimes  \NDmv{z} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y_{{\mathrm{2}}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \otimes  \NDnt{Y_{{\mathrm{1}}}}} \\
+            {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{w}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{Y_{{\mathrm{1}}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
+          }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y_{{\mathrm{2}}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X_{{\mathrm{1}}}}  \otimes  \NDnt{Y_{{\mathrm{1}}}} \,\mathsf{be}\, \NDmv{w}  \otimes  \NDmv{z} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}} \\
+           {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X_{{\mathrm{1}}}}  \otimes  \NDnt{Y_{{\mathrm{1}}}} \,\mathsf{be}\, \NDmv{w}  \otimes  \NDmv{z} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleTXXtenEName, \NDdruleTXXimpEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impE}] {
+            {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y_{{\mathrm{2}}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \multimap  \NDnt{Y_{{\mathrm{1}}}}} \\
+            {\Psi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \multimap  \NDnt{Y_{{\mathrm{1}}}}} \\
+           {\Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}}
+        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{app}\, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Y_{{\mathrm{1}}}}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y_{{\mathrm{2}}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}  \multimap  \NDnt{Y_{{\mathrm{1}}}}} \\
+            {\Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{1}}}}}
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y_{{\mathrm{2}}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{app}\, \NDnt{t_{{\mathrm{1}}}} \, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Y_{{\mathrm{1}}}}} \\
+           {\Psi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}}}
+        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{2}}}}  :  \NDnt{X_{{\mathrm{2}}}}  \otimes  \NDnt{Y_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{app}\, \NDnt{t_{{\mathrm{1}}}} \, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{Y_{{\mathrm{1}}}}}
+      \end{math}
+    \end{center}
+
+  \end{itemize}
+
+\item Commutation of $\multimap_E$:
+
+  \begin{itemize}
+
+  \item (\NDdruleTXXimpEName, \NDdruleTXXunitEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+            {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT}   \multimap   \mathsf{UnitT} }
+          }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}   \mathsf{app}\, \NDnt{t_{{\mathrm{2}}}} \, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{UnitT} } \\
+           {\Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}   \mathsf{UnitT} }
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDsym{(}   \mathsf{app}\, \NDnt{t_{{\mathrm{2}}}} \, \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}   \mathsf{UnitT} }
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+            {\Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}   \mathsf{UnitT} }
+          }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}   \mathsf{UnitT} }
+           {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitT}   \multimap   \mathsf{UnitT} }
+        }{\Phi_{{\mathrm{2}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{3}}}  \vdash_\mathcal{C}   \mathsf{app}\, \NDnt{t_{{\mathrm{2}}}} \, \NDsym{(}   \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}   \mathsf{UnitT} }
+      \end{math}
+    \end{center}
+  \item (\NDdruleTXXimpEName, \NDdruleTXXtenEName): ?
+  \item (\NDdruleTXXimpEName, \NDdruleTXXimpEName): ?
+  \end{itemize}
+
+\item Commutation of $\tri_E$:
+
+  \begin{itemize}
+
+  \item (\NDdruleSXXunitETwoName, \NDdruleSXXunitETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+            {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+          }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{UnitS} } \\
+           {\Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+            {\Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{A}} \\
+           {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+        }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXunitETwoName, \NDdruleSXXtenETwoName): Does NOT commute
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+            {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+          }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+           {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+            {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+          }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}} \\
+           {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+        }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXunitETwoName, \NDdruleSXXimprEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+            {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+          }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+           {\Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+            {\Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B}} \\
+           {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+        }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDsym{(}   \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXunitETwoName, \NDdruleSXXimplEName): Does NOT commute.
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}} \\
+            {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+          }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}} \\
+           {\Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma_{{\mathrm{3}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}} \\
+            {\Gamma_{{\mathrm{3}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma_{{\mathrm{3}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B}} \\
+           {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}   \mathsf{UnitS} }
+        }{\Gamma_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{3}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDsym{(}   \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXtenETwoName, \NDdruleSXXunitETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{UnitS} } \\
+           {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+            {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}} \\
+           {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXtenETwoName, \NDdruleSXXtenETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \triangleright  \NDnt{B_{{\mathrm{1}}}}} \\
+            {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \triangleright  \NDnt{B_{{\mathrm{1}}}}} \\
+           {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{w}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  :  \NDnt{A_{{\mathrm{1}}}}  \triangleright  \NDnt{B_{{\mathrm{1}}}} \,\mathsf{be}\, \NDmv{w}  \triangleright  \NDmv{z} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \triangleright  \NDnt{B_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{w}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
+          }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A_{{\mathrm{1}}}}  \triangleright  \NDnt{B_{{\mathrm{1}}}} \,\mathsf{be}\, \NDmv{w}  \triangleright  \NDmv{z} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{C}}
+            {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A_{{\mathrm{1}}}}  \triangleright  \NDnt{B_{{\mathrm{1}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{z} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXtenETwoName, \NDdruleSXXimprEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \rightharpoonup  \NDnt{B_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \rightharpoonup  \NDnt{B_{{\mathrm{1}}}}} \\
+           {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}  \rightharpoonup  \NDnt{B_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleSXXtenETwoName, \NDdruleSXXimplEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}  \leftharpoonup  \NDnt{A_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}  \leftharpoonup  \NDnt{A_{{\mathrm{1}}}}} \\
+           {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}}
+        }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}  \leftharpoonup  \NDnt{A_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{1}}}}}
+          }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B_{{\mathrm{2}}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}} \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}}}
+        }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A_{{\mathrm{2}}}}  \triangleright  \NDnt{B_{{\mathrm{2}}}} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{3}}}}   \NDsym{)}   \NDsym{:}  \NDnt{B_{{\mathrm{1}}}}}
+      \end{math}
+    \end{center}
+  
+  \end{itemize}
+
+\item Commutation of $F_E$:
+  \begin{itemize}
+  \item (\NDdruleSXXFEName, \NDdruleSXXunitETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{UnitS} } \\
+           {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+            {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{A}} \\
+           {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item (\NDdruleSXXFEName, \NDdruleSXXtenETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+            {\Delta  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+           {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE2}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+            {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+          }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{C}} \\
+           {\Delta  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+  \item (\NDdruleSXXFEName, \NDdruleSXXimprEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny imprE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+           {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+            {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}} \\
+           {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+  \item (\NDdruleSXXFEName, \NDdruleSXXimplEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny implE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \leftharpoonup  \NDnt{B}} \\
+            {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \leftharpoonup  \NDnt{B}} \\
+           {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+        }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDsym{(}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \leftharpoonup  \NDnt{B}} \\
+            {\Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}} \\
+           {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} }
+        }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{y} \,\mathsf{in}\, \NDsym{(}   \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}   \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+
+  \end{itemize}
+
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mappings Between Sequent Calculus and Natural Deduction}
+
+Function $S:ND\rightarrow SE$ maps a proof in the natural deduction to a proof of the same
+sequent in the sequent calculus. The function is defined as follows:
+
+\begin{itemize}
+\item The axioms map to axioms.
+\item Introduction rules map to right rules.
+\item Elimination rules map to combinations of left rules with cuts:
+  \begin{itemize}
+  \item \NDdruleTXXunitEName:
+    \begin{center}
+      \tiny
+      $\NDdruleTXXunitE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitT} } \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
+          }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{Y}}
+        }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}   \NDsym{)}  \NDsym{:}  \NDnt{Y}}
+      \end{math}
+    \end{center}
+  \item \NDdruleTXXtenEName:
+    \begin{center}
+      \tiny
+      $\NDdruleTXXtenE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Z}}
+          }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}   \NDsym{)}  \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+  \item \NDdruleTXXimpEName:
+    \begin{center}
+      \tiny
+      $\NDdruleTXXimpE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut}] {
+          {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {\Psi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}} \\
+            {\NDmv{x}  \NDsym{:}  \NDnt{Y}  \vdash_\mathcal{C}  \NDmv{x}  \NDsym{:}  \NDnt{Y}}
+          }{\NDmv{y}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{app}\, \NDmv{y} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDmv{x}  \NDsym{:}  \NDnt{Y}}
+        }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{[}   \mathsf{app}\, \NDmv{y} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDmv{x}  \NDsym{:}  \NDnt{Y}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXunitEOneName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXunitEOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}   \mathsf{UnitT} } \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            {\Gamma  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+          }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Gamma  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+        }{\Phi  \NDsym{,}  \Psi  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXunitETwoName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXunitETwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}   \mathsf{UnitS} } \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL2}] {
+            {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
+          }{\NDmv{x}  \NDsym{:}   \mathsf{UnitS}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{A}}
+        }{\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXtenEOneName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXtenEOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL1}] {
+            {\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXtenETwoName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXtenETwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL2}] {
+            {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+          }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{C}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}  \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXimprEName: (NOT SURE)
+    \begin{center}
+      \tiny
+      $\NDdruleSXXimprE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprL}] {
+            {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}} \\
+            {\NDmv{x}  \NDsym{:}  \NDnt{B}  \vdash_\mathcal{L}  \NDmv{x}  \NDsym{:}  \NDnt{B}}
+          }{\NDmv{y}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}_r\, \NDmv{y} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDmv{x}  \NDsym{:}  \NDnt{B}}
+        }{\Gamma  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{[}   \mathsf{app}_r\, \NDmv{y} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDmv{x}  \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXimplEName: (NOT SURE)
+    \begin{center}
+      \tiny
+      $\NDdruleSXXimplE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implL}] {
+            {\Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}} \\
+            {\NDmv{x}  \NDsym{:}  \NDnt{B}  \vdash_\mathcal{L}  \NDmv{x}  \NDsym{:}  \NDnt{B}}
+          }{\Delta  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}_l\, \NDmv{y} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDmv{x}  \NDsym{:}  \NDnt{B}}
+        }{\Delta  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{[}   \mathsf{app}_l\, \NDmv{y} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDmv{x}  \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXFEName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXFE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          {\Gamma  \vdash_\mathcal{L}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X} } \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FL}] {
+            {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+          }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}   \mathsf{F} \NDnt{X}   \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\,  \mathsf{F}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDmv{y}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{y}  :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\,  \mathsf{F}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \NDdruleSXXGEName:
+    \begin{center}
+      \tiny
+      $\NDdruleSXXGE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {\NDmv{x}  \NDsym{:}  \NDnt{A}  \vdash_\mathcal{L}  \NDmv{x}  \NDsym{:}  \NDnt{A}}
+          }{\NDmv{y}  \NDsym{:}   \mathsf{G} \NDnt{A}   \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{y}  :   \mathsf{G} \NDnt{A}  \,\mathsf{be}\,  \mathsf{G}\, \NDmv{x}  \,\mathsf{in}\, \NDmv{x}   \NDsym{:}  \NDnt{A}} \\
+           {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}   \mathsf{G} \NDnt{A} }
+        }{\Phi  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{y}  :   \mathsf{G} \NDnt{A}  \,\mathsf{be}\,  \mathsf{G}\, \NDmv{x}  \,\mathsf{in}\, \NDmv{x}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \end{itemize}
+\end{itemize}
+
+Function $N:SE\rightarrow ND$ maps a proof in the sequent calculus to a proof of the same
+sequent in the natural deduction. The function is defined as follows:
+
+\begin{itemize}
+\item Axioms map to axioms.
+\item Instances of cut rules map to the admissible substitution rules.
+\item Right rules map to introductions.
+\item Left rules map to eliminations modulo some structural fiddling.
+  \begin{itemize}
+  \item \ElledruleTXXunitLName:
+    \begin{center}
+      \tiny
+      $\ElledruleTXXunitL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE}] {
+          {\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \vdash_\mathcal{C}  \NDmv{x}  \NDsym{:}   \mathsf{UnitT} } \\
+          {\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
+        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{:}  \NDnt{X}}
+      \end{math}
+    \end{center}
+  \item \ElledruleTXXtenLName:
+    \begin{center}
+      \tiny
+      $\ElledruleTXXtenL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          {\NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \vdash_\mathcal{C}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+          {\Phi  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{Z}}
+        }{\Phi  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t}   \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+  \item \ElledruleTXXimpLName:
+    \begin{center}
+      \tiny
+      $\ElledruleTXXimpL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impE}] {
+            {\NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \vdash_\mathcal{C}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+            {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}}
+          }{\NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Phi  \vdash_\mathcal{C}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{Y}} \\
+           {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Phi  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Z}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXunitLOneName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXunitLOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE1}] {
+          {\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \vdash_\mathcal{C}  \NDmv{x}  \NDsym{:}   \mathsf{UnitT} } \\
+          {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXunitLTwoName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXunitLTwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitE2}] {
+          {\NDmv{x}  \NDsym{:}   \mathsf{UnitS}   \vdash_\mathcal{L}  \NDmv{x}  \NDsym{:}   \mathsf{UnitS} } \\
+          {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitS}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXtenLOneName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXtenLOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE1}] {
+          {\NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \vdash_\mathcal{C}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXtenLTwoName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXtenLTwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE2}] {
+          {\NDmv{z}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}  \vdash_\mathcal{L}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}} \\
+          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{C}}
+        }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}  \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXimpLName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXimpL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut1}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impE}] {
+            {\NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \vdash_\mathcal{C}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}} \\
+            {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
+          }{\NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Phi  \vdash_\mathcal{C}   \mathsf{app}\, \NDmv{z} \, \NDnt{t}   \NDsym{:}  \NDnt{Y}} \\
+           {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Phi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXimprLName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXimprL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprE}] {
+            {\NDmv{z}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}  \vdash_\mathcal{L}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}} \\
+            {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}}
+          }{\NDmv{z}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}   \mathsf{app}_r\, \NDmv{z} \, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{B}} \\
+           {\Delta  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{B}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Delta  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}_r\, \NDmv{z} \, \NDnt{s_{{\mathrm{1}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXimplLName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXimplL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implE}] {
+            {\NDmv{z}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}  \vdash_\mathcal{L}  \NDmv{z}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}} \\
+            {\Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}}
+          }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}  \vdash_\mathcal{L}   \mathsf{app}_l\, \NDmv{z} \, \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{B}} \\
+           {\NDmv{x}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+        }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}_l\, \NDmv{z} \, \NDnt{s_{{\mathrm{1}}}}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{C}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXFlName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXFl{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FE}] {
+          {\NDmv{z}  \NDsym{:}   \mathsf{F} \NDnt{X}   \vdash_\mathcal{L}  \NDmv{z}  \NDsym{:}   \mathsf{F} \NDnt{X} } \\
+          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
+        }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}   \mathsf{F} \NDnt{X}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\,  \mathsf{F} \NDmv{x}   :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\, \NDmv{z} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
+      \end{math}
+    \end{center}
+  \item \ElledruleSXXGlName:
+    \begin{center}
+      \tiny
+      $\ElledruleSXXGl{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny cut2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GE}] {
+            {\NDmv{y}  \NDsym{:}   \mathsf{G} \NDnt{A}   \vdash_\mathcal{C}  \NDmv{y}  \NDsym{:}   \mathsf{G} \NDnt{A} }
+          }{\NDmv{y}  \NDsym{:}   \mathsf{G} \NDnt{A}   \vdash_\mathcal{L}   \mathsf{derelict}\, \NDmv{y}   \NDsym{:}  \NDnt{A}} \\
+           {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{B}}
+        }{\Gamma  \NDsym{,}  \NDmv{y}  \NDsym{:}   \mathsf{G} \NDnt{A}   \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{derelict}\, \NDmv{y}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{B}}
+      \end{math}
+    \end{center}
+    
+  \end{itemize}
+\end{itemize}
+
+\subsection{Strong Normalization of LAM Logic}
+\label{subsec:strong_normalization_of_lam_logic}
+\input{Elle-to-LNL-ott}
+% subsection strong_normalization_of_lam_logic (end)
