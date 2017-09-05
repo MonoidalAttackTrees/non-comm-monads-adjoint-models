@@ -24,3 +24,11 @@ Elle-ND/Elle-ND-ott.tex
 Elle-ND/.Elle-ND.ott.swp
 
 *.swp
+*-inc.tex
+-ott*.tex
+/logic-ott1.tex
+/logic-ott1.tex.backup
+/logic-ott2.tex
+/logic-ott2.tex.backup
+*.out
+*.vtc
