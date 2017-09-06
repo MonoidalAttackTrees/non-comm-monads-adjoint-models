@@ -258,7 +258,7 @@ by
 
   G |-l s1 : F X && D1, x : X, D2 |-l s2 : A
   ------------------------------------------- :: FE
-  D1, G, D2 |-l let s1 : F X be F x in s1 : A
+  D1, G, D2 |-l let s1 : F X be F x in s2 : A
 
   I |-c t : Gf A
   -------------------- :: GE
