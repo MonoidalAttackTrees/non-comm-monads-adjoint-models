@@ -325,15 +325,15 @@ And we map each rule in LAM to a proof in LNL as:
                       {<<Ph |-c t : X (t) Y>>}
                     }{<<Ph |-c fst(t) : X>>} \\
                      {<<x : X, y : Y, P; G1', G2' |-l s : A>>}
-                  }{<<Ph, y : Y, P; G1', G2' |-l s : A>>}
-                }{<<y : Y, Ph, P; G1', G2' |-l s : A>>}
+                  }{<<Ph, y : Y, P; G1', G2' |-l [fst(t) / x]s : A>>}
+                }{<<y : Y, Ph, P; G1', G2' |-l [fst(t) / x]s : A>>}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\tiny prodE2}] {
                   {<<Ph |-c t : X (t) Y>>}
                 }{<<Ph |-c snd(t) : Y>>} \\
-              }{<<Ph, Ph, P; G1', G2' |-l s : A>>}
-            }{<<Ph, P; G1', G2' |-l s : A>>}
+              }{<<Ph, Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A>>}
+            }{<<Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A>>}
           \end{math}
         \end{center}
   \item \NDdruleSXXtenETwoName:
@@ -504,6 +504,307 @@ And we map each rule in LAM to a proof in LNL as:
         \end{center}
 \end{itemize}
 
+The $\beta$-reductions are usually derived by normalizing pairs of the introduction and
+elimination rules of the same connective. We derive the $\beta$-reductions for LAM by
+normalizing the proofs in LNL from which pairs of introduction and elimination rules in LAM are
+mapped. We simplify the mapped rules by only keeping the premises and conclusions and excluding
+the middle steps, such as weakening, multiset, and subsitutions.
+
+\begin{itemize}
+
+\item (\NDdruleTXXunitIName, \NDdruleTXXunitEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny unitE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitI}] {
+          \,
+        }{<<Ph |-c u : 1>>} \\
+         {<<P |-c t : X>>}
+      }{<<Ph, P |-c [u / x]t : X>>}
+    \end{math}
+  \end{center}
+  normalizes to 
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* {
+        {<<P |-c t : X>>}
+      }{<<Ph, P |-c t : X>>}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleTXXunitIName, \NDdruleSXXunitEOneName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny unitE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny unitI}] {
+          \,
+        }{<<Ph |-c u : 1>>} \\
+         {<<P; G |-l s : A>>}
+      }{<<Ph, P; G |-l [u / x]s : A>>}
+    \end{math}
+  \end{center}
+  normalizes to 
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* {
+        {<<P; G |-l s : A>>}
+      }{<<Ph, P; G |-l s : A>>}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleTXXtenIName, \NDdruleTXXtenEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {<<Ph1 |-c t1 : X>>} \\
+          {<<Ph2 |-c t2 : Y>>}
+        }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
+         {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
+      }{<<P1, Ph1, Ph2, P2 |-c [snd((t1, t2)) / y][fst((t1, t2)) / x]t3 : Z>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub}] {
+        {<<Ph1 |-c t1 : X>>} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny sub}] {
+          {<<Ph2 |-c t2 : Y>>} \\
+          {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
+        }{<<P1, x : X, Ph2, P2 |-c [t2 / y]t3 : Z>>}
+      }{<<P1, Ph1, Ph2, P2 |-c [t1 / x][t2 / y]t3 : Z>>}
+    \end{math}
+  \end{center}
+  
+\item (\NDdruleTXXtenIName, \NDdruleSXXtenEOneName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {<<Ph1 |-c t1 : X>>} \\
+          {<<Ph2 |-c t2 : Y>>}
+        }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
+         {<<x : X, y : Y, P; G |-l s : A>>}
+      }{<<Ph1, Ph2, P; G |-l [snd((t1,t2)) / y][fst((t1,t2)) / x]s : A>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub1}] {
+        {<<Ph1 |-c t1 : X>>} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny sub1}] {
+          {<<Ph2 |-c t2 : Y>>} \\
+          {<<x : X, y : Y, P; G |-l s : A>>}
+        }{<<x : X, Ph2, P; G |-l [t2 / y]s : A>>}
+      }{<<Ph1, Ph2, P; G |-l [t1 / x][t2 / y]s : A>>}
+    \end{math}
+  \end{center}
+  
+\item (\NDdruleTXXimpIName, \NDdruleTXXimpEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny impE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impI}] {
+          {<<Ph, x : X |-c t1 : Y>>}
+        }{<<Ph |-c \ x : X . t1 : X -> Y>>} \\
+         {<<P |-c t2 : X>>}
+      }{<<Ph, P |-c app (\ x : X . t1) t2 : Y>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub}] {
+        {<<Ph, x : X |-c t1 : Y>>}
+        {<<P |-c t2 : X>>}
+      }{<<Ph, P |-c [t2 / x]t1 : Y>>}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleSXXunitIName, \NDdruleSXXunitETwoName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny unitE2}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny unitI}] {
+         \,
+        }{<<Ph |-l * : I>>} \\
+         {<<P; D |-l s : A>>}
+      }{<<Ph, P; D |-l let * : I be * in s : A>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* {
+      {<<P; D |-l s : A>>}
+    }{<<Ph, P; D |-l s : A>>}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleSXXtenIName, \NDdruleSXXtenETwoName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny tenE2}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenI}] {
+          {<<Ph1; G1 |-l s1 : A>>}
+          {<<Ph2; G2 |-l s2 : B>>}
+        }{<<Ph1, Ph2, G1, G2 |-l s1 (x) s2 : A (x) B>>} \\
+         {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
+      }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l let s1 (x) s2 : A (x) B be x (x) y in s3 : C>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub2}] {
+        {<<Ph1; G1 |-l s1 : A>>}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny sub2}] {
+          {<<Ph2; G2 |-l s2 : B>>} \\
+          {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
+        }{<<Ph2, P; D1, x : A, G2, D2 |-l [s2 / y]s3 : C>>}
+      }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l [s1 / x][s2 / y]s3 : C>>}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXimprIName, \NDdruleSXXimprEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny imprE}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny imprI}] {
+         {<<Ph; G, x : A |-l s1 : B>>}
+        }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
+         {<< P; D |-l s2 : A>>}
+      }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub2}] {
+        {<<Ph; G, x : A |-l s1 : B>>} \\
+        {<<P; D |-l s2 : A>>}
+      }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXimplIName, \NDdruleSXXimplEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+     $$\mprset{flushleft}
+     \inferrule* [right={\tiny imprE}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny imprI}] {
+         {<<Ph; x : A, G |-l s1 : B>>}
+        }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
+         {<< P; D |-l s2 : A>>}
+      }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub2}] {
+        {<<Ph; x : A, G |-l s1 : B>>} \\
+        {<<P; D |-l s2 : A>>}
+      }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
+    \end{math}
+  \end{center}
+        
+\item (\NDdruleSXXFIName, \NDdruleSXXFEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny FE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny FI}] {
+          {<<Ph |-c t : X>>}
+        }{<<Ph |-l F t : F X>>}
+         {<<P, x : X; D1, D2 |-l s : A>>}
+      }{<<Ph, P; D1, D2 |-l let F t : F X be F x in s : A>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny sub1}] {
+        {<<Ph |-c t : X>>} \\
+        {<<P, x : X; D1, D2 |-l s : A>>}
+      }{<<Ph, P; D1, D2 |-l [t / x]s : A>>}
+    \end{math}
+  \end{center}
+
+\item (\NDdruleTXXGIName, \NDdruleSXXGEName):
+  \begin{center}
+    \tiny
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny GE}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny GI}] {
+          {<<Ph |-l s : A>>}
+        }{<<Ph |-c Gf s : Gf A>>}
+      }{<<Ph |-l derelict (Gf s) : A>>}
+    \end{math}
+  \end{center}
+  normalizes to
+  \begin{center}
+    \tiny
+    ${<<Ph |-l s : A>>}$
+  \end{center}
+
+
+\end{itemize}
 
 
 
