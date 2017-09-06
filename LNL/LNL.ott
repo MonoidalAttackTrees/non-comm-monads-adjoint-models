@@ -42,8 +42,8 @@ p :: 'pattern_' ::=
   | - :: :: hole
   {{tex \star }}
   | x :: :: var
-  | () :: :: trivT
-  {{tex \mathsf{trivT} }}
+  | u :: :: trivT
+  {{tex \mathsf{u} }}
   | * :: :: trivS
   {{tex \ast }}
   | p (x) p' :: :: ten
@@ -80,10 +80,11 @@ s :: 'term_' ::=
 t :: 'sterm_' ::=
   | x  :: :: Var
   | b  :: :: Const
-  | () :: :: UnitT
+  | u :: :: UnitT
+  {{tex \mathsf{u} }}
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
-  | t1 x t2 :: :: Tensor
+  | t1 (t) t2 :: :: Tensor
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
   | app t1 t2   :: :: App
@@ -100,19 +101,19 @@ t :: 'sterm_' ::=
   | Gf s           ::   :: RightAdj
   {{tex \mathsf{G}[[s]] }}
 
-I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
+Ph {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
   | .       ::   :: Empty
   {{tex \cdot }}
-  | I1 , I2 ::   :: Ext
+  | Ph1 , Ph2 ::   :: Ext
   | x : X   ::   :: ElC
-  | ( I )   :: S :: Paren
+  | ( Ph )   :: S :: Paren
 
 G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
   | .       ::   :: Empty
   {{tex \cdot }}
   | x : A   ::   :: El
-  | Pi      ::   :: CCtx1
-  | Pi ; G   ::   :: CCtx2
+  | Ph      ::   :: CCtx1
+  | Ph ; G   ::   :: CCtx2
   | G1 , G2 ::   :: Ext
   | ( G )   :: S :: Paren
 
@@ -154,80 +155,89 @@ defns
   Jtype :: '' ::=
 
 defn
-  I |-c t : X :: :: tty :: 'T_'
+  Ph |-c t : X :: :: tty :: 'T_'
 by 
 
   ------------------ :: id
-  I, x : X |-c x : X
+  Ph, x : X |-c x : X
 
   ------------ :: 1I
-  I |-c () : 1
+  Ph |-c u : 1
 
-  I |-c t1 : X && I |-c t2 : Y
+  Ph |-c t1 : X && Ph |-c t2 : Y
   ---------------------------- :: prodI
-  I |-c (t1 , t2) : X (t) Y
+  Ph |-c (t1 , t2) : X (t) Y
 
-  I |-c t : X (t) Y
+  Ph |-c t : X (t) Y
   ----------------- :: prodE1
-  I |-c fst(t) : X
+  Ph |-c fst(t) : X
 
-  I |-c t : X (t) Y
+  Ph |-c t : X (t) Y
   ----------------- :: prodE2
-  I |-c snd(t) : X
+  Ph |-c snd(t) : Y
 
-  I, x : X |-c t : Y
+  Ph, x : X |-c t : Y
   -------------------------- :: impI
-  I |-c \ x : X . t : X -> Y
+  Ph |-c \ x : X . t : X -> Y
 
-  I |-c t1 : X -> Y && I |-c t2 : X
+  Ph |-c t1 : X -> Y && Ph |-c t2 : X
   --------------------------------- :: impE
-  I |-c app t1 t2 : Y
+  Ph |-c app t1 t2 : Y
 
-  I |-l s : A
+  Ph |-l s : A
   ----------------- :: GI
-  I |-c Gf s : Gf A
+  Ph |-c Gf s : Gf A
+
+  Ph |-c t1 : X && x : X, Ph |-c t2 : Y
+  ------------------------------------- :: sub
+  Ph |-c [t1 / x]t2 : Y
 
 defn
   G |-l s : A :: :: sty :: 'S_'
 by
 
   ------------------- :: id
-  I; x : A |-l x : A
+  Ph; x : A |-l x : A
 
-  I; G |-l s1 : A && I; D |-l s2 : B
+  Ph; G |-l s1 : A && Ph; D |-l s2 : B
   ---------------------------------- :: tenI
-  I; G, D |-l s1 (x) s2 : A (x) B
+  Ph; G, D |-l s1 (x) s2 : A (x) B
 
-  I; G |-l s1 : A (x) B && I; D, x : A, y : B |-l s2 : C
+  Ph; G |-l s1 : A (x) B && Ph; D, x : A, y : B |-l s2 : C
   ------------------------------------------------------ :: tenE
-  I; G, D |-l let s1 : A (x) B be x (x) y in s2 : C
+  Ph; G, D |-l let s1 : A (x) B be x (x) y in s2 : C
 
   ----------- :: II
-  I |-l * : I
+  Ph |-l * : I
 
-  I; G |-l s1 : I && I; D |-l s2 : A
+  Ph; G |-l s1 : I && Ph; D |-l s2 : A
   ------------------------------------- :: IE
-  I; G, D |-l let s1 : I be * in s2 : A
+  Ph; G, D |-l let s1 : I be * in s2 : A
 
-  I; G, x : A |-l s : B
+  Ph; G, x : A |-l s : B
   ------------------------------ :: impI
-  I; G |-l \ x : A . s : A -o B
+  Ph; G |-l \ x : A . s : A -o B
 
-  I; G |-l s1 : A -o B && I; D |-l s2 : A
+  Ph; G |-l s1 : A -o B && Ph; D |-l s2 : A
   --------------------------------------- :: impE
-  I; G, D |-l app s1 s2 : B
+  Ph; G, D |-l app s1 s2 : B
 
-  I |-c t : X
+  Ph |-c t : X
   --------------- :: FI
-  I |-l F t : F X
+  Ph |-l F t : F X
 
-  I; G |-l s1 : F X && I, x : X; D |-l s2 : A
+  Ph; G |-l s1 : F X && Ph, x : X; D |-l s2 : A
   ------------------------------------------- :: FE
-  I; G, D |-l let s1 : F X be F x in s2 : A
+  Ph; G, D |-l let s1 : F X be F x in s2 : A
 
-  I |-c t : Gf A
+  Ph |-c t : Gf A
   -------------------- :: GE
-  I |-l derelict t : A
+  Ph |-l derelict t : A
 
+  Ph |-c t : X && x : X, Ph; G |-l s : A
+  -------------------------------------- :: sub1
+  Ph; G |-l [t / x]s : A
 
-
+  Ph; G |-l s1 : A && Ph; x : A, D |-l s2 : B
+  ------------------------------------------- :: sub2
+  Ph; G, D |-l [s1 / x]s2 : B
