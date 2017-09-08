@@ -71,363 +71,491 @@ the calculus is for linear logic.
 \label{fig:elle-lambek}
 \end{figure}
 
-Next, we prove cut elimination for the sequent calculus. We define the \textbf{degree $|X|$
-(or $|A|$) of a commutative (or non-commutative) formula} to be the number of logical
-connectives $|X|$ plus $1$. For instance, $|\NDnt{X}  \otimes  \NDnt{Y}| = |\NDnt{X}| + |\NDnt{Y}| + 1$. And the
-\textbf{degree of a cut rule} is the degree of the cut formula. The following key cases
-demonstrate how we can replace a cut with at most two cuts with lower degree. The
-\textbf{degree $|\Pi|$ of a proof} $\Pi$ is the maximum of the degrees of all cut fules in the
-proof and $|\Pi|=0$ if $\Pi$ is cut-free. Finally, the \textbf{height $h(\Pi)$ of a proof
-$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
+Next, we prove cut elimination for the sequent calculus. We define the \textit{degree $|X|$
+(or $|A|$) of a commutative (or non-commutative) proposition} to be the number of logical
+connectives in the proposition. For instance, $|\NDnt{X}  \otimes  \NDnt{Y}| = |\NDnt{X}| + |\NDnt{Y}| + 1$. The
+\textit{cut rank} $c(\Pi)$ of a proof $\Pi$ is one more than the maximum of the ranks of all
+the cut formulae in $\Pi$, and $0$ if $\Pi$ is cut-free. Then \textit{depth} $d(\Pi)$ of a
+proof $\Pi$ is the length of the longest path in the proof tree (so the depth of an axiom is
+$0$). The key to the proof of cut elimination is the following lemma, which shows how to
+transform a single cut, either by removing it or by replacing it with one or more simpler cuts.
 
-We consider the following $11$ key cases in proving cut elimination, each of which is a
-$(R, L)$ pair for the same connective.
+%\textbf{degree of a cut rule} is the degree of the cut formula. The following key cases
+%demonstrate how we can replace a cut with at most two cuts with lower degree. The
+%\textbf{degree $|\Pi|$ of a proof} $\Pi$ is the maximum of the degrees of all cut fules in the
+%proof and $|\Pi|=0$ if $\Pi$ is cut-free. Finally, the \textbf{height $h(\Pi)$ of a proof
+%$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
 
-\begin{itemize}
+\begin{lemma}[Cut Reduction]
+  \begin{enumerate}
+  \item If $\Pi_1$ is a proof of $\Phi  \vdash_\mathcal{C}  \Ellent{X}$ and $\Pi_2$ is a proof of $\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Y}$
+        with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there exists a proof $\Pi$ of
+        $\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Phi  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Y}$ with $c(\Pi)\leq |X|$.
+  \item If $\Pi_1$ is a proof of $\Phi  \vdash_\mathcal{C}  \Ellent{X}$ and $\Pi_2$ is a proof of $\Gamma_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{A}$
+        with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there exists a proof $\Pi$ of
+        $\Gamma_{{\mathrm{1}}}  \Ellesym{,}  \Phi  \Ellesym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{A}$ with $c(\Pi)\leq |X|$.
+  \item If $\Pi_1$ is a proof of $\Gamma  \vdash_\mathcal{L}  \Ellent{A}$ and $\Pi_2$ is a proof of $\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{A}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{B}$
+        with $c(\Pi_1)$, $c(\Pi_2)\leq |A|$, then there exists a proof $\Pi$ of
+        $\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Gamma  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{B}$ with $c(\Pi)\leq |A|$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  We consider cases according to the classes of the last rules used in $\Pi_1$ and $\Pi_2$.
+  \begin{enumerate}
+  \item Both proofs end in logical rules which introduce the cut formula, i.e. $\Pi_1$ ends
+        in a right rule and $\Pi_2$ in a corresponding left rule.
+    \begin{itemize}
+    \item $ \mathsf{UnitT} $:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{ \cdot   \vdash_\mathcal{C}   \mathsf{UnitT} }
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {\Phi  \vdash_\mathcal{C}  \Ellent{X}}
+              \end{array}
+            }
+          }{ \mathsf{UnitT}   \Ellesym{,}  \Phi  \vdash_\mathcal{C}  \Ellent{X}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq | \mathsf{UnitT} |$. The proof $\Pi$ is the subproof $\pi$
+      in $\Pi_2$ for sequent $\Phi  \vdash_\mathcal{C}  \Ellent{X}$. So $\Pi=\Pi_2\leq | \mathsf{UnitT} |$.
 
-\item $(\ElledruleTXXunitRName, \ElledruleTXXunitLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitR}] {
-          \,
-        }{ \cdot   \vdash_\mathcal{C}   \mathsf{trivT}   \NDsym{:}   \mathsf{UnitT} }
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitL}] {
-          {\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
-        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Psi  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{:}  \NDnt{X}}
-      }{\Psi  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{trivT}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{t}   \NDsym{)}  \NDsym{:}  \NDnt{X}}
-    \end{math}
-  \end{center}
-  is transformed to 
-  \begin{center}
-    \tiny
-    $\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$
-  \end{center}
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{ \cdot   \vdash_\mathcal{C}   \mathsf{UnitT} }
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {\Gamma  \vdash_\mathcal{L}  \Ellent{A}}
+              \end{array}
+            }
+          }{ \mathsf{UnitT}   \Ellesym{,}  \Gamma  \vdash_\mathcal{L}  \Ellent{A}}
+        \end{math}
+      \end{center}
+      Similar as above, $\Pi$ is $\pi$.
 
-\item $(\ElledruleTXXunitRName, \ElledruleSXXunitLOneName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitR}] {
-          \,
-        }{ \cdot   \vdash_\mathcal{C}   \mathsf{trivT}   \NDsym{:}   \mathsf{UnitT} }
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitL}] {
-          {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitT}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
-      }{\Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{trivT}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitT}  \,\mathsf{be}\,  \mathsf{trivT}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    $\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
-  \end{center}
+    \item $\otimes$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \Ellent{X}} & {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Y}}
+              \end{array}
+            }
+          }{\Phi_{{\mathrm{1}}}  \Ellesym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{X}  \otimes  \Ellent{Y}}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{c}
+                \pi_3 \\
+                {\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Ellent{Y}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+              \end{array}
+            }
+          }{\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \otimes  \Ellent{Y}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |\Ellent{X}  \otimes  \Ellent{Y}| = |X|+|Y|+1$. The proof $\Pi$ can be
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|X|+1,|Y|+1\}\leq |X|+|Y|+1 = |\Ellent{X}  \otimes  \Ellent{Y}|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \Ellent{X}}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Y}} & {\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Ellent{Y}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+              \end{array}
+            }
+            }{\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Phi_{{\mathrm{2}}}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+          }{\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Phi_{{\mathrm{1}}}  \Ellesym{,}  \Phi_{{\mathrm{2}}}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+        \end{math}
+      \end{center}
+    \item $\multimap$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Phi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \vdash_\mathcal{C}  \Ellent{Y}}
+              \end{array}
+            }
+          }{\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \Ellent{X}  \multimap  \Ellent{Y}}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{X}} & {\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{Y}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+              \end{array}
+            }
+          }{\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \multimap  \Ellent{Y}  \Ellesym{,}  \Phi  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |\Ellent{X}  \multimap  \Ellent{Y}| = |X|+|Y|+1$. The proof $\Pi$ is
+      constructed as follows
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny tenR}] {
+              {
+                \begin{array}{cc}
+                  \pi_1 & \pi_2 \\
+                  {\Phi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{X}  \vdash_\mathcal{C}  \Ellent{Y}} & {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{X}}
+                \end{array}
+              }
+            }{\Phi_{{\mathrm{1}}}  \Ellesym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Y}} \\
+             {
+               \begin{array}{c}
+                 \pi_3 \\
+                 {\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{Y}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+               \end{array}
+             }
+          }{\Psi_{{\mathrm{1}}}  \Ellesym{,}  \Phi_{{\mathrm{1}}}  \Ellesym{,}  \Phi_{{\mathrm{2}}}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \Ellent{Z}}
+        \end{math}
+      \end{center}
+    \item $ \mathsf{UnitS} $:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{ \cdot   \vdash_\mathcal{L}   \mathsf{UnitS} }
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL2}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {\Delta  \vdash_\mathcal{L}  \Ellent{A}}
+              \end{array}
+            }
+          }{ \mathsf{UnitS}   \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{A}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq | \mathsf{UnitS} |$. The proof $\Pi$ is the subproof $\pi$
+      in $\Pi_2$ for sequent $\Delta  \vdash_\mathcal{L}  \Ellent{A}$. So $\Pi=\Pi_2\leq | \mathsf{UnitS} |$.
 
-\item $(\ElledruleTXXtenRName, \ElledruleTXXtenLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenR}] {
-          {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
-          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
-        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenL}] {
-          {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{:}  \NDnt{Z}}
-      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}   \NDsym{)}  \NDsym{:}  \NDnt{Z}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut}] {
-          {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
-          {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}} \\
-        {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
-      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-    \end{math}
-  \end{center}
+    \item $\tri$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{A}} & {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{B}}
+              \end{array}
+            }
+          }{\Gamma_{{\mathrm{1}}}  \Ellesym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{A}  \triangleright  \Ellent{B}}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL1}] {
+            {
+              \begin{array}{c}
+                \pi_3 \\
+                {\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{A}  \Ellesym{,}  \Ellent{B}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+              \end{array}
+            }
+          }{\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{A}  \triangleright  \Ellent{B}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |\Ellent{A}  \triangleright  \Ellent{B}| = |X|+|Y|+1$. The proof $\Pi$ can be
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |\Ellent{A}  \triangleright  \Ellent{B}|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut2}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{A}}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{B}} & {\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{A}  \Ellesym{,}  \Ellent{B}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+              \end{array}
+            }
+            }{\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{A}  \Ellesym{,}  \Gamma_{{\mathrm{2}}}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+          }{\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Gamma_{{\mathrm{1}}}  \Ellesym{,}  \Gamma_{{\mathrm{2}}}  \Ellesym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+        \end{math}
+      \end{center}
+    \item $\lto$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Gamma  \Ellesym{,}  \Ellent{A}  \vdash_\mathcal{L}  \Ellent{B}}
+              \end{array}
+            }
+          }{\Gamma  \vdash_\mathcal{L}  \Ellent{A}  \rightharpoonup  \Ellent{B}}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprL}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{A}} & {\Delta_{{\mathrm{2}}}  \Ellesym{,}  \Ellent{B}  \vdash_\mathcal{L}  \Ellent{C}}
+              \end{array}
+            }
+          }{\Delta_{{\mathrm{2}}}  \Ellesym{,}  \Ellent{A}  \rightharpoonup  \Ellent{B}  \Ellesym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{C}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |\Ellent{A}  \rightharpoonup  \Ellent{B}| = |A|+|B|+1$. The proof $\Pi$ is
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |\Ellent{A}  \rightharpoonup  \Ellent{B}|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut2}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi_1 & \pi_2 \\
+                  {\Gamma  \Ellesym{,}  \Ellent{A}  \vdash_\mathcal{L}  \Ellent{B}} & {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{A}}
+                \end{array}
+              }
+            }{\Gamma  \Ellesym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{B}}
+             {
+               \begin{array}{c}
+                 \pi_3 \\
+                 {\Delta_{{\mathrm{2}}}  \Ellesym{,}  \Ellent{B}  \vdash_\mathcal{L}  \Ellent{C}}
+               \end{array}
+             }
+          }{\Delta_{{\mathrm{2}}}  \Ellesym{,}  \Gamma  \Ellesym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{C}}
+        \end{math}
+      \end{center}
 
-\item $(\ElledruleTXXtenRName, \ElledruleSXXtenLOneName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenR}] {
-          {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
-          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
-        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenL1}] {
-          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\Gamma  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
-      }{\Gamma  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut1}] {
-          {\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}} \\
-          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\Gamma  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}} \\
-        {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Y}}
-      }{\Gamma  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-    \end{math}
-  \end{center}
-  
-\item $(\ElledruleTXXimpRName, \ElledruleTXXimpLName)$
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny impR}] {
-          {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}}
-        }{\Phi_{{\mathrm{1}}}  \vdash_\mathcal{C}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny impL}] {
-          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}} \\
-          {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \multimap  \NDnt{Y}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDsym{(}   \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t_{{\mathrm{1}}}}   \NDsym{)}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{[}   \mathsf{app}\, \NDmv{z} \, \NDnt{t_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut}] {
-          {\Phi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
-          {\Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{X}}
-        }{\Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{Y}} \\
-        {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{1}}}  \NDsym{,}  \Phi_{{\mathrm{2}}}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDsym{(}  \NDsym{[}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{)}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{t_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{Z}}
-    \end{math}
-  \end{center}
+    \item $\rto$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Ellent{A}  \Ellesym{,}  \Gamma  \vdash_\mathcal{L}  \Ellent{B}}
+              \end{array}
+            }
+          }{\Gamma  \vdash_\mathcal{L}  \Ellent{B}  \leftharpoonup  \Ellent{A}}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implL}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{A}} & {\Ellent{B}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+              \end{array}
+            }
+          }{\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Ellent{B}  \leftharpoonup  \Ellent{A}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |\Ellent{B}  \leftharpoonup  \Ellent{A}| = |A|+|B|+1$. The proof $\Pi$ is
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |\Ellent{B}  \leftharpoonup  \Ellent{A}|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut1}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi_1 & \pi_2 \\
+                  {\Ellent{A}  \Ellesym{,}  \Gamma  \vdash_\mathcal{L}  \Ellent{B}} & {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \Ellent{A}}
+                \end{array}
+              }
+            }{\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Gamma  \vdash_\mathcal{L}  \Ellent{B}}
+             {
+               \begin{array}{c}
+                 \pi_3 \\
+                 {\Ellent{B}  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+               \end{array}
+             }
+          }{\Delta_{{\mathrm{1}}}  \Ellesym{,}  \Gamma  \Ellesym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \Ellent{C}}
+        \end{math}
+      \end{center}
 
-\item $(\ElledruleSXXunitRName, \ElledruleSXXunitLTwoName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitR}] {
-          \,
-        }{ \cdot   \vdash_\mathcal{L}   \mathsf{trivS}   \NDsym{:}   \mathsf{UnitS} }
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitL2}] {
-          {\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\NDmv{x}  \NDsym{:}   \mathsf{UnitS}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
-      }{\Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{trivS}   \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{x}  :   \mathsf{UnitS}  \,\mathsf{be}\,  \mathsf{trivS}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
-    \end{math}
-  \end{center}
-  is transformed to 
-  \begin{center}
-    \tiny
-    $\Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$
-  \end{center}
+    \item $F$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Phi  \vdash_\mathcal{C}  \Ellent{X}}
+              \end{array}
+            }
+          }{\Phi  \vdash_\mathcal{L}   \mathsf{F} \Ellent{X} }
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FL}] {
+            {
+              \begin{array}{c}
+                \pi_2 \\
+                {\Gamma  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{A}}
+              \end{array}
+            }
+          }{\Gamma  \Ellesym{,}   \mathsf{F} \Ellent{X}   \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{A}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq | \mathsf{F} \Ellent{X} | = |X|+1$. The proof $\Pi$ is
+      constructed as follows, and $c(\Pi)\leq max\{\pi_1,\pi_2,|X|+1\}\leq | \mathsf{F} \Ellent{X} |$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut2}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {\Phi  \vdash_\mathcal{C}  \Ellent{X}} & {\Gamma  \Ellesym{,}  \Ellent{X}  \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{A}}
+              \end{array}
+            }
+          }{\Gamma  \Ellesym{,}  \Phi  \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{A}}
+        \end{math}
+      \end{center}
 
-\item $(\ElledruleSXXtenRName, \ElledruleSXXtenLTwoName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenR}] {
-          {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}} \\
-          {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}}
-        }{\Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenL1}] {
-          {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{z}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{C}}
-      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{C}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut2}] {
-          {\Gamma_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}} \\
-          {\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}} \\
-        {\Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}}
-      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{1}}}  \NDsym{,}  \Gamma_{{\mathrm{2}}}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-    \end{math}
-  \end{center}
+    \item $G$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {\Phi  \vdash_\mathcal{L}  \Ellent{A}}
+              \end{array}
+            }
+          }{\Phi  \vdash_\mathcal{C}   \mathsf{G} \Ellent{A} }
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {
+              \begin{array}{c}
+                \pi_2 \\
+                {\Gamma  \Ellesym{,}  \Ellent{A}  \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{B}}
+              \end{array}
+            }
+          }{\Gamma  \Ellesym{,}   \mathsf{G} \Ellent{A}   \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{B}}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq | \mathsf{G} \Ellent{A} | = |A|+1$. The proof $\Pi$ is
+      constructed as follows, and $c(\Pi)\leq max\{\pi_1,\pi_2,|A|+1\}\leq | \mathsf{G} \Ellent{A} |$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {\Phi  \vdash_\mathcal{L}  \Ellent{A}} & {\Gamma  \Ellesym{,}  \Ellent{A}  \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{B}}
+              \end{array}
+            }
+          }{\Gamma  \Ellesym{,}  \Phi  \Ellesym{,}  \Delta  \vdash_\mathcal{L}  \Ellent{B}}
+        \end{math}
+      \end{center}
+    \end{itemize}
 
-\item $(\ElledruleSXXimprRName, \ElledruleSXXimprLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny imprR}] {
-          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}}
-        }{\Gamma  \vdash_\mathcal{L}   \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny imprL}] {
-          {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}} \\
-          {\Delta_{{\mathrm{2}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-        }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{A}  \rightharpoonup  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}_r\, \NDmv{z} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-      }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDsym{(}   \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{[}   \mathsf{app}_r\, \NDmv{z} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut2}] {
-          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}} \\
-          {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
-        }{\Gamma  \NDsym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}} \\
-        {\Delta_{{\mathrm{2}}}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{B}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-      }{\Delta_{{\mathrm{2}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDsym{(}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{)}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-    \end{math}
-  \end{center}
-
-\item $(\ElledruleSXXimplRName, \ElledruleSXXimplLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny implR}] {
-          {\NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}}
-        }{\Gamma  \vdash_\mathcal{L}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny implL}] {
-          {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}} \\
-          {\NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{B}  \leftharpoonup  \NDnt{A}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{app}_l\, \NDmv{z} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDsym{(}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{[}   \mathsf{app}_l\, \NDmv{z} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut2}] {
-          {\NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}} \\
-          {\Delta_{{\mathrm{1}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{A}}
-        }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{B}} \\
-        {\NDmv{y}  \NDsym{:}  \NDnt{B}  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-      }{\Delta_{{\mathrm{1}}}  \NDsym{,}  \Gamma  \NDsym{,}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \NDsym{[}  \NDsym{(}  \NDsym{[}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{)}  \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDnt{s_{{\mathrm{3}}}}  \NDsym{:}  \NDnt{C}}
-    \end{math}
-  \end{center}
-
-\item $(\ElledruleSXXFrName, \ElledruleSXXFlName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny FR}] {
-          {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}}
-        }{\Phi  \vdash_\mathcal{L}   \mathsf{F} \NDnt{t}   \NDsym{:}   \mathsf{F} \NDnt{X} }
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny FL}] {
-          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-        }{\Gamma  \NDsym{,}  \NDmv{y}  \NDsym{:}   \mathsf{F} \NDnt{X}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{y}  :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\,  \mathsf{F}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s}   \NDsym{:}  \NDnt{A}}
-      }{\Gamma  \NDsym{,}  \Phi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{F} \NDnt{t}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{y}  :   \mathsf{F} \NDnt{X}  \,\mathsf{be}\,  \mathsf{F}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s}   \NDsym{)}  \NDsym{:}  \NDnt{A}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        {\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}} \\
-        {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-      }{\Gamma  \NDsym{,}  \Phi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}  \NDsym{:}  \NDnt{A}}
-    \end{math}
-  \end{center}
-
-\item $(\ElledruleTXXGrName, \ElledruleSXXGlName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny GR}] {
-          {\Phi  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}}
-        }{\Phi  \vdash_\mathcal{C}   \mathsf{G} \NDnt{s_{{\mathrm{1}}}}   \NDsym{:}   \mathsf{G} \NDnt{A} }
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny GL}] {
-          {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}}
-        }{\Gamma  \NDsym{,}  \NDmv{y}  \NDsym{:}   \mathsf{G} \NDnt{A}   \NDsym{,}  \Delta  \vdash_\mathcal{L}   \mathsf{let}\, \NDmv{y}  :   \mathsf{G} \NDnt{A}  \,\mathsf{be}\,  \mathsf{G}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{B}}
-      }{\Gamma  \NDsym{,}  \Phi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}   \mathsf{G} \NDnt{s_{{\mathrm{1}}}}   \NDsym{/}  \NDmv{y}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{y}  :   \mathsf{G} \NDnt{A}  \,\mathsf{be}\,  \mathsf{G}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)}  \NDsym{:}  \NDnt{B}}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        {\Phi  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{A}} \\
-        {\Gamma  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{A}  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}}
-      }{\Gamma  \NDsym{,}  \Phi  \NDsym{,}  \Delta  \vdash_\mathcal{L}  \NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{B}}
-    \end{math}
-  \end{center}
-
-\end{itemize}
+  \item The last rule used in $\Pi_1$ is not a right logical rule.
+  \end{enumerate}
+\end{proof}
 
 Based on the key cases, given a formula (either commutative or non-commutative) $L$ and proofs
 $\Pi$, $\Pi'$, of sequents $M\vdash N$ and $M'\vdash N'$ respectively with degrees less than

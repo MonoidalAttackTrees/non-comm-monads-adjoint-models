@@ -71,374 +71,493 @@ the calculus is for linear logic.
 \label{fig:elle-lambek}
 \end{figure}
 
-Next, we prove cut elimination for the sequent calculus. We define the \textbf{degree $|X|$
-(or $|A|$) of a commutative (or non-commutative) formula} to be the number of logical
-connectives $|X|$ plus $1$. For instance, $|[[X (x) Y]]| = |[[X]]| + |[[Y]]| + 1$. And the
-\textbf{degree of a cut rule} is the degree of the cut formula. The following key cases
-demonstrate how we can replace a cut with at most two cuts with lower degree. The
-\textbf{degree $|\Pi|$ of a proof} $\Pi$ is the maximum of the degrees of all cut fules in the
-proof and $|\Pi|=0$ if $\Pi$ is cut-free. Finally, the \textbf{height $h(\Pi)$ of a proof
-$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
+Next, we prove cut elimination for the sequent calculus. We define the \textit{degree $|X|$
+(or $|A|$) of a commutative (or non-commutative) proposition} to be the number of logical
+connectives in the proposition. For instance, $|[[X (x) Y]]| = |[[X]]| + |[[Y]]| + 1$. The
+\textit{cut rank} $c(\Pi)$ of a proof $\Pi$ is one more than the maximum of the ranks of all
+the cut formulae in $\Pi$, and $0$ if $\Pi$ is cut-free. Then \textit{depth} $d(\Pi)$ of a
+proof $\Pi$ is the length of the longest path in the proof tree (so the depth of an axiom is
+$0$). The key to the proof of cut elimination is the following lemma, which shows how to
+transform a single cut, either by removing it or by replacing it with one or more simpler cuts.
 
-We consider the following $11$ key cases in proving cut elimination, each of which is a
-$(R, L)$ pair for the same connective.
+%\textbf{degree of a cut rule} is the degree of the cut formula. The following key cases
+%demonstrate how we can replace a cut with at most two cuts with lower degree. The
+%\textbf{degree $|\Pi|$ of a proof} $\Pi$ is the maximum of the degrees of all cut fules in the
+%proof and $|\Pi|=0$ if $\Pi$ is cut-free. Finally, the \textbf{height $h(\Pi)$ of a proof
+%$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
 
-\begin{itemize}
+\begin{lemma}[Cut Reduction]
+  \begin{enumerate}
+  \item If $\Pi_1$ is a proof of $<<I |-c X>>$ and $\Pi_2$ is a proof of $<<P1,X,P2 |-c Y>>$
+        with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there exists a proof $\Pi$ of
+        $<<P1, I, P2 |-c Y>>$ with $c(\Pi)\leq |X|$.
+  \item If $\Pi_1$ is a proof of $<<I |-c X>>$ and $\Pi_2$ is a proof of $<<G1,X,G2 |-l A>>$
+        with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there exists a proof $\Pi$ of
+        $<<G1, I, G2 |-l A>>$ with $c(\Pi)\leq |X|$.
+  \item If $\Pi_1$ is a proof of $<<G |-l A>>$ and $\Pi_2$ is a proof of $<<D1,A,D2 |-l B>>$
+        with $c(\Pi_1)$, $c(\Pi_2)\leq |A|$, then there exists a proof $\Pi$ of
+        $<<D1, G, D2 |-l B>>$ with $c(\Pi)\leq |A|$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  We consider cases according to the classes of the last rules used in $\Pi_1$ and $\Pi_2$.
+  \begin{enumerate}
+  \item Both proofs end in logical rules which introduce the cut formula, i.e. $\Pi_1$ ends
+        in a right rule and $\Pi_2$ in a corresponding left rule.
+    \begin{itemize}
+    \item $<<UnitT>>$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{<<. |-c UnitT>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I |-c X>>}
+              \end{array}
+            }
+          }{<<UnitT, I |-c X>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<UnitT>>|$. The proof $\Pi$ is the subproof $\pi$
+      in $\Pi_2$ for sequent $<<I |-c X>>$. So $\Pi=\Pi_2\leq |<<UnitT>>|$.
 
-\item $(\ElledruleTXXunitRName, \ElledruleTXXunitLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitR}] {
-          \,
-        }{[[. |-c trivT : UnitT]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitL}] {
-          {[[P |-c t : X]]}
-        }{[[x : UnitT, P |-c let x : UnitT be trivT in t : X]]}
-      }{[[P |-c [trivT / x] (let x : UnitT be trivT in t) : X]]}
-    \end{math}
-  \end{center}
-  is transformed to 
-  \begin{center}
-    \tiny
-    $[[P |-c t : X]]$
-  \end{center}
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{<<. |-c UnitT>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<G |-l A>>}
+              \end{array}
+            }
+          }{<<UnitT, G |-l A>>}
+        \end{math}
+      \end{center}
+      Similar as above, $\Pi$ is $\pi$.
 
-\item $(\ElledruleTXXunitRName, \ElledruleSXXunitLOneName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitR}] {
-          \,
-        }{[[. |-c trivT : UnitT]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitL}] {
-          {[[D |-l s : A]]}
-        }{[[x : UnitT, D |-l let x : UnitT be trivT in s : A]]}
-      }{[[D |-l [trivT / x] (let x : UnitT be trivT in s) : A]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    $[[D |-l s : A]]$
-  \end{center}
+    \item $\otimes$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I1 |-c X>>} & {<<I2 |-c Y>>}
+              \end{array}
+            }
+          }{<<I1, I2 |-c X (x) Y>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{c}
+                \pi_3 \\
+                {<<P1, X, Y, P2 |-c Z>>}
+              \end{array}
+            }
+          }{<<P1, X (x) Y, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<X (x) Y>>| = |X|+|Y|+1$. The proof $\Pi$ can be
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|X|+1,|Y|+1\}\leq |X|+|Y|+1 = |<<X (x) Y>>|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I1 |-c X>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {<<I2 |-c Y>>} & {<<P1, X, Y, P2 |-c Z>>}
+              \end{array}
+            }
+            }{<<P1, X, I2, P2 |-c Z>>}
+          }{<<P1, I1, I2, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+    \item $\multimap$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I1, X |-c Y>>}
+              \end{array}
+            }
+          }{<<I1 |-c X -o Y>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {<<I2 |-c X>>} & {<<P1, Y, P2 |-c Z>>}
+              \end{array}
+            }
+          }{<<P1, X -o Y, I, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<X -o Y>>| = |X|+|Y|+1$. The proof $\Pi$ is
+      constructed as follows
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny tenR}] {
+              {
+                \begin{array}{cc}
+                  \pi_1 & \pi_2 \\
+                  {<<I1, X |-c Y>>} & {<<I2 |-c X>>}
+                \end{array}
+              }
+            }{<<I1, I2 |-c Y>>} \\
+             {
+               \begin{array}{c}
+                 \pi_3 \\
+                 {<<P1, Y, P2 |-c Z>>}
+               \end{array}
+             }
+          }{<<P1, I1, I2, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+    \item $<<UnitS>>$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitR}] {
+            \,
+          }{<<. |-l UnitS>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL2}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<D |-l A>>}
+              \end{array}
+            }
+          }{<<UnitS, D |-l A>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<UnitS>>|$. The proof $\Pi$ is the subproof $\pi$
+      in $\Pi_2$ for sequent $<<D |-l A>>$. So $\Pi=\Pi_2\leq |<<UnitS>>|$.
 
-\item $(\ElledruleTXXtenRName, \ElledruleTXXtenLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenR}] {
-          {[[I1 |-c t1 : X]]} \\
-          {[[I2 |-c t2 : Y]]}
-        }{[[I1, I2 |-c t1 (x) t2 : X (x) Y]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenL}] {
-          {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
-        }{[[P1, z : X (x) Y, P2 |-c let z : X (x) Y be x (x) y in t3 : Z]]}
-      }{[[P1, I1, I2, P2 |-c [t1 (x) t2 / z](let z : X (x) Y be x (x) y in t3) : Z]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut}] {
-          {[[I1 |-c t1 : X]]} \\
-          {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
-        }{[[P1, I1, y : Y, P2 |-c [t1 / x] t3 : Z]]} \\
-        {[[I2 |-c t2 : Y]]}
-      }{[[P1, I1, I2, P2 |-c [t2/y][t1/x]t3 : Z]]}
-    \end{math}
-  \end{center}
+    \item $\tri$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenR}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<G1 |-l A>>} & {<<G2 |-l B>>}
+              \end{array}
+            }
+          }{<<G1, G2 |-l A (>) B>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL1}] {
+            {
+              \begin{array}{c}
+                \pi_3 \\
+                {<<D1, A, B, D2 |-l C>>}
+              \end{array}
+            }
+          }{<<D1, A (>) B, D2 |-l C>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<A (>) B>>| = |X|+|Y|+1$. The proof $\Pi$ can be
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<A (>) B>>|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut2}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<G1 |-l A>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {<<G2 |-l B>>} & {<<D1, A, B, D2 |-l C>>}
+              \end{array}
+            }
+            }{<<D1, A, G2, D2 |-l C>>}
+          }{<<D1, G1, G2, P2 |-l C>>}
+        \end{math}
+      \end{center}
+    \item $\lto$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<G, A |-l B>>}
+              \end{array}
+            }
+          }{<<G |-l A -> B>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny imprL}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {<<D1 |-l A>>} & {<<D2, B |-l C>>}
+              \end{array}
+            }
+          }{<<D2, A -> B, D1 |-l C>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<A -> B>>| = |A|+|B|+1$. The proof $\Pi$ is
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<A -> B>>|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut2}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi_1 & \pi_2 \\
+                  {<<G, A |-l B>>} & {<<D1 |-l A>>}
+                \end{array}
+              }
+            }{<<G, D1 |-l B>>}
+             {
+               \begin{array}{c}
+                 \pi_3 \\
+                 {<<D2, B |-l C>>}
+               \end{array}
+             }
+          }{<<D2, G, D1 |-l C>>}
+        \end{math}
+      \end{center}
 
-\item $(\ElledruleTXXtenRName, \ElledruleSXXtenLOneName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenR}] {
-          {[[I1 |-c t1 : X]]} \\
-          {[[I2 |-c t2 : Y]]}
-        }{[[I1, I2 |-c t1 (x) t2 : X (x) Y]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenL1}] {
-          {[[G, x : X, y : Y, D |-l s : A]]}
-        }{[[G, z : X (x) Y, D |-l let z : X (x) Y be x (x) y in s : A]]}
-      }{[[G, I1, I2, D |-l [t1 (x) t2 / z](let z : X (x) Y be x (x) y in s) : A]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut1}] {
-          {[[I1 |-c t1 : X]]} \\
-          {[[G, x : X, y : Y, D |-l s : A]]}
-        }{[[G, I1, y : Y, D |-l [t1 / x] s : A]]} \\
-        {[[I2 |-c t2 : Y]]}
-      }{[[G, I1, I2, D |-l [t2/y][t1/x]s : A]]}
-    \end{math}
-  \end{center}
-  
-\item $(\ElledruleTXXimpRName, \ElledruleTXXimpLName)$
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny impR}] {
-          {[[I1, x : X |-c t1 : Y]]}
-        }{[[I1 |-c \ x : X . t1 : X -o Y]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny impL}] {
-          {[[I2 |-c t2 : X]]} \\
-          {[[P1, y : Y, P2 |-c t3 : Z]]}
-        }{[[P1, z : X -o Y, I2, P2 |-c [app z t2 / y]t3 : Z]]}
-      }{[[P1, I1, I2,  P2 |-c [(\ x : X . t1) / z][app z t2 / y]t3 : Z]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut}] {
-          {[[I1, x : X |-c t1 : Y]]} \\
-          {[[I2 |-c t2 : X]]}
-        }{[[I1, I2 |-c [t2 / x]t1 : Y]]} \\
-        {[[P1, y : Y, P2 |-c t3 : Z]]}
-      }{[[P1, I1, I2, P2 |-c [([t2 / x]t1) / y]t3 : Z]]}
-    \end{math}
-  \end{center}
+    \item $\rto$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<A, G |-l B>>}
+              \end{array}
+            }
+          }{<<G |-l B <- A>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny implL}] {
+            {
+              \begin{array}{cc}
+                \pi_2 & \pi_3 \\
+                {<<D1 |-l A>>} & {<<B, D2 |-l C>>}
+              \end{array}
+            }
+          }{<<D1, B <- A, D2 |-l C>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<B <- A>>| = |A|+|B|+1$. The proof $\Pi$ is
+      constructed as follows, and
+      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<B <- A>>|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut1}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi_1 & \pi_2 \\
+                  {<<A, G |-l B>>} & {<<D1 |-l A>>}
+                \end{array}
+              }
+            }{<<D1, G |-l B>>}
+             {
+               \begin{array}{c}
+                 \pi_3 \\
+                 {<<B, D2 |-l C>>}
+               \end{array}
+             }
+          }{<<D1, G, D2 |-l C>>}
+        \end{math}
+      \end{center}
 
-\item $(\ElledruleSXXunitRName, \ElledruleSXXunitLTwoName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitR}] {
-          \,
-        }{[[. |-l trivS : UnitS]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitL2}] {
-          {[[D |-l s : A]]}
-        }{[[x : UnitS, D |-l let x : UnitS be trivS in s : A]]}
-      }{[[D |-l [trivS / x] (let x : UnitS be trivS in s) : A]]}
-    \end{math}
-  \end{center}
-  is transformed to 
-  \begin{center}
-    \tiny
-    $[[D |-l s : A]]$
-  \end{center}
+    \item $F$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I |-c X>>}
+              \end{array}
+            }
+          }{<<I |-l F X>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FL}] {
+            {
+              \begin{array}{c}
+                \pi_2 \\
+                {<<G, X, D |-l A>>}
+              \end{array}
+            }
+          }{<<G, F X, D |-l A>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<F X>>| = |X|+1$. The proof $\Pi$ is
+      constructed as follows, and $c(\Pi)\leq max\{\pi_1,\pi_2,|X|+1\}\leq |<<F X>>|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut2}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I |-c X>>} & {<<G, X, D |-l A>>}
+              \end{array}
+            }
+          }{<<G, I, D |-l A>>}
+        \end{math}
+      \end{center}
 
-\item $(\ElledruleSXXtenRName, \ElledruleSXXtenLTwoName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenR}] {
-          {[[G1 |-l s1 : A]]} \\
-          {[[G2 |-l s2 : B]]}
-        }{[[G1, G2 |-l s1 (>) s2 : A (>) B]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenL1}] {
-          {[[D1, x : A, y : B, D2 |-l s3 : C]]}
-        }{[[D1, z : A (>) B, D2 |-l let z : A (>) B be x (>) y in s : C]]}
-      }{[[D1, G1, G2, D2 |-l [s1 (>) s2 / z](let z : A (>) B be x (>) y in s) : C]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut2}] {
-          {[[G1 |-l s1 : A]]} \\
-          {[[D1, x : A, y : B, D2 |-l s3 : C]]}
-        }{[[D1, G1, y : B, D2 |-l [s1 / x]s3 : C]]} \\
-        {[[G2 |-l s2 : B]]}
-      }{[[D1, G1, G2, D2 |-l [s2 / y][s1 / x]s3 : C]]}
-    \end{math}
-  \end{center}
+    \item $G$:
+      \begin{center}
+        \scriptsize
+        $\Pi_1:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GR}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I |-l A>>}
+              \end{array}
+            }
+          }{<<I |-c Gf A>>}
+        \end{math}
+        \qquad\qquad
+        $\Pi_2:$
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {
+              \begin{array}{c}
+                \pi_2 \\
+                {<<G, A, D |-l B>>}
+              \end{array}
+            }
+          }{<<G, Gf A, D |-l B>>}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<Gf A>>| = |A|+1$. The proof $\Pi$ is
+      constructed as follows, and $c(\Pi)\leq max\{\pi_1,\pi_2,|A|+1\}\leq |<<Gf A>>|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I |-l A>>} & {<<G, A, D |-l B>>}
+              \end{array}
+            }
+          }{<<G, I, D |-l B>>}
+        \end{math}
+      \end{center}
+    \end{itemize}
 
-\item $(\ElledruleSXXimprRName, \ElledruleSXXimprLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny imprR}] {
-          {[[G, x : A |-l s1 : B]]}
-        }{[[G |-l \r x : A . s1 : A -> B]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny imprL}] {
-          {[[D1 |-l s2 : A]]} \\
-          {[[D2 , y : B |-l s3 : C]]}
-        }{[[D2, z : A -> B, D1 |-l [appr z s2 / y]s3 : C]]}
-      }{[[D2, G, D1 |-l [(\r x : A . s1) / z][appr z s2 / y]s3 : C]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut2}] {
-          {[[G, x : A |-l s1 : B]]} \\
-          {[[D1 |-l s2 : A]]}
-        }{[[G, D1 |-l [s2 / x]s1 : B]]} \\
-        {[[D2, y : B |-l s3 : C]]}
-      }{[[D2, G, D1 |-l [([s2 / x]s1) / y]s3 : C]]}
-    \end{math}
-  \end{center}
-
-\item $(\ElledruleSXXimplRName, \ElledruleSXXimplLName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny implR}] {
-          {[[x : A, G |-l s1 : B]]}
-        }{[[G |-l \l x : A . s1 : B <- A]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny implL}] {
-          {[[D1 |-l s2 : A]]} \\
-          {[[y : B, D2 |-l s3 : C]]}
-        }{[[D1, z : B <- A, D2 |-l [appl z s2 / y]s3 : C]]}
-      }{[[D1, G, D2 |-l [(\l x : A . s1) / z][appl z s2 / y]s3 : C]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny cut2}] {
-          {[[x : A, G |-l s1 : B]]} \\
-          {[[D1 |-l s2 : A]]}
-        }{[[ D1, G |-l [s2 / x]s1 : B]]} \\
-        {[[y : B, D2 |-l s3 : C]]}
-      }{[[D1, G, D2 |-l [([s2 / x]s1) / y]s3 : C]]}
-    \end{math}
-  \end{center}
-
-\item $(\ElledruleSXXFrName, \ElledruleSXXFlName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut2}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny FR}] {
-          {[[I |-c t : X]]}
-        }{[[I |-l F t : F X]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny FL}] {
-          {[[G, x : X, D |-l s : A]]}
-        }{[[G, y : F X, D |-l let y : F X be F x in s : A]]}
-      }{[[G, I, D |-l [F t / y](let y : F X be F x in s) : A]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        {[[I |-c t : X]]} \\
-        {[[G, x : A, D |-l s : A]]}
-      }{[[G, I, D |-l [t / x]s : A]]}
-    \end{math}
-  \end{center}
-
-\item $(\ElledruleTXXGrName, \ElledruleSXXGlName)$:
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut1}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny GR}] {
-          {[[I |-l s1 : A]]}
-        }{[[I |-c Gf s1 : Gf A]]}
-        \\
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny GL}] {
-          {[[G, x : A, D |-l s2 : B]]}
-        }{[[G, y : Gf A, D |-l let y : Gf A be Gf x in s2 : B]]}
-      }{[[G, I, D |-l [Gf s1 / y](let y : Gf A be Gf x in s2) : B]]}
-    \end{math}
-  \end{center}
-  is transformed to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny cut}] {
-        {[[I |-l s1 : A]]} \\
-        {[[G, x : A, D |-l s2 : B]]}
-      }{[[G, I, D |-l [s1 / x]s2 : B]]}
-    \end{math}
-  \end{center}
-
-\end{itemize}
-
-Based on the key cases, given a formula (either commutative or non-commutative) $L$ and proofs
-$\Pi$, $\Pi'$, of sequents $M\vdash N$ and $M'\vdash N'$ respectively with degrees less than
-$|L|$, there is a proof of $M,N\vdash M',N'$ with degree less than $|L|$, s.t. all currences of
-formula $L$ is removed. This can be proved by induction on $h(\Pi)+h(\Pi')$. Therefore, we have
-the result that given a proof of a sequent with degree $d>0$, there is a proof of the same
-sequent. As a result, we have the cut elimination theorem.
+  \item The last rule used in $\Pi_1$ is not a right logical rule.
+  \end{enumerate}
+\end{proof}
 
 \begin{theorem}[Cut Elimination]
-  Let $\Pi$ be a proof of a sequent $[[I |-c t:X]]$ or a sequent $[[G |-l s:A]]$ s.t.
-  $|\Pi|>0$. Then there is a cut-free proof of the same sequent.
 \end{theorem}
 
 
