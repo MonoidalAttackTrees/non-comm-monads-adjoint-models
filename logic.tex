@@ -87,6 +87,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
 %$\Pi$} is the length of the longest path in the proof tree and the height of an axiom is $0$.
 
 \begin{lemma}[Cut Reduction]
+  \label{lem:cut-reduction}
   \begin{enumerate}
   \item If $\Pi_1$ is a proof of $<<I |-c X>>$ and $\Pi_2$ is a proof of $<<P1,X,P2 |-c Y>>$
         with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there exists a proof $\Pi$ of
@@ -130,7 +131,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<UnitT>>|$. The proof $\Pi$ is the subproof $\pi$
-      in $\Pi_2$ for sequent $<<I |-c X>>$. So $\Pi=\Pi_2\leq |<<UnitT>>|$.
+      in $\Pi_2$ for sequent $<<I |-c X>>$. So $c(\Pi)=c(\Pi_2)\leq |<<UnitT>>|$.
 
       \begin{center}
         \scriptsize
@@ -188,7 +189,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<X (x) Y>>| = |X|+|Y|+1$. The proof $\Pi$ can be
       constructed as follows, and
-      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|X|+1,|Y|+1\}\leq |X|+|Y|+1 = |<<X (x) Y>>|$.
+      $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|X|+1,|Y|+1\}\leq |X|+|Y|+1 = |<<X (x) Y>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -243,6 +244,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<X -o Y>>| = |X|+|Y|+1$. The proof $\Pi$ is
       constructed as follows
+      $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|X|+1,|Y|+1\}\leq |X|+|Y|+1 = |<<X -o Y>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -291,7 +293,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<UnitS>>|$. The proof $\Pi$ is the subproof $\pi$
-      in $\Pi_2$ for sequent $<<D |-l A>>$. So $\Pi=\Pi_2\leq |<<UnitS>>|$.
+      in $\Pi_2$ for sequent $<<D |-l A>>$. So $c(\Pi)=c(\Pi_2)\leq |<<UnitS>>|$.
 
     \item $\tri$:
       \begin{center}
@@ -324,7 +326,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<A (>) B>>| = |X|+|Y|+1$. The proof $\Pi$ can be
       constructed as follows, and
-      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<A (>) B>>|$.
+      $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<A (>) B>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -379,7 +381,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<A -> B>>| = |A|+|B|+1$. The proof $\Pi$ is
       constructed as follows, and
-      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<A -> B>>|$.
+      $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<A -> B>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -435,7 +437,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<B <- A>>| = |A|+|B|+1$. The proof $\Pi$ is
       constructed as follows, and
-      $c(\Pi)\leq max\{\pi_1,\pi_2,\pi_3,|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<B <- A>>|$.
+      $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |<<B <- A>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -490,7 +492,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<F X>>| = |X|+1$. The proof $\Pi$ is
-      constructed as follows, and $c(\Pi)\leq max\{\pi_1,\pi_2,|X|+1\}\leq |<<F X>>|$.
+      constructed as follows, and $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),|X|+1\}\leq |<<F X>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -536,7 +538,7 @@ transform a single cut, either by removing it or by replacing it with one or mor
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |<<Gf A>>| = |A|+1$. The proof $\Pi$ is
-      constructed as follows, and $c(\Pi)\leq max\{\pi_1,\pi_2,|A|+1\}\leq |<<Gf A>>|$.
+      constructed as follows, and $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),|A|+1\}\leq |<<Gf A>>|$.
       \begin{center}
         \scriptsize
         \begin{math}
@@ -554,11 +556,1067 @@ transform a single cut, either by removing it or by replacing it with one or mor
     \end{itemize}
 
   \item The last rule used in $\Pi_1$ is not a right logical rule.
+    \begin{itemize}
+    \item \ElledruleTXXcutName / $\cat{C}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I1 |-c X>>} & {<<I2, X, I3 |-c Y>>}
+              \end{array}
+            }
+          }{<<I2, I1, I3 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<P1, Y, P2 |-c Z>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. Since the cut rank of the last cut in
+      $\Pi_1$ is $|X|+1$, then $|X|+1\leq |Y|$. By induction on the length of $\Pi_1$ and
+      $\Pi_2$, the induction hypothesis states that there is a proof $\Pi'$ constructed from
+      $\pi_2$ and $\Pi_2$ for sequent $<<P1, I2, X, I3, P2 |-c Z>>$ s.t. $c(\Pi')\leq|Y|$.
+      Therefore, the proof $\Pi$ can be constructed as follows, and
+      $c(\Pi)\leq max\{c(\pi_1),c(\Pi'),|X|+1\}\leq |Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I1 |-c X>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<I2, X, I3 |-c Y>>} & {<<P1, Y, P2 |-c Z>>}
+                \end{array}
+              }
+            }{<<P1, I2, X, I3, P2 |-c Z>>}
+          }{<<P1, I2, I1, I3, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXcutName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I |-c X>>} & {<<P1, X, P2 |-c Y>>}
+              \end{array}
+            }
+          }{<<P1, I, P2 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, Y, G2 |-l A>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. Similar as above, $|X|+1\leq |Y|$ and there
+      is a proof $\Pi'$ constructed from $\pi_2$ and $\Pi_2$ for sequent
+      $<<G1, P1, X, P2, G2 |-l A>>$ s.t. $c(\Pi')\leq|Y|$. Therefore, the proof $\Pi$ can be
+      constructed as follows, and $c(\Pi)\leq max\{c(\pi_1),c(\Pi'),|X|+1\}\leq |Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I |-c X>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<P1, X, P2 |-c Y>>} & {<<G1, Y, G2 |-l A>>}
+                \end{array}
+              }
+            }{<<G1, P1, X, P2, G2 |-l A>>}
+          }{<<G1, P1, I, P2, G2 |-l A>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXcutOneName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I |-c X>>} & {<<G1, X, G2 |-l A>>}
+              \end{array}
+            }
+          }{<<G1, I, G2 |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, A, D2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. Similar as above, $|X|+1\leq |A|$ and there
+      is a proof $\Pi'$ constructed from $\pi_2$ and $\Pi_2$ for sequent
+      $<<D1, G1, X, G2, D2 |-l B>>$ s.t. $c(\Pi')\leq|A|$. Therefore, the proof $\Pi$ can be
+      constructed as follows, and $c(\Pi)\leq max\{c(\pi_1),c(\Pi'),|X|+1\}\leq |A|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I |-c X>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<G1, X, G2 |-l A>>} & {<<D1, A, D2 |-l B>>}
+                \end{array}
+              }
+            }{<<D1, G1, X, G2, D2 |-l B>>}
+          }{<<D1, G1, I, G2, D2 |-l B>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXcutTwoName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<G1 |-l A>>} & {<<G2, A, G3 |-l B>>}
+              \end{array}
+            }
+          }{<<G2, G1, G3 |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, B, D2 |-l C>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |B|$. Similar as above, $|A|+1\leq |B|$ and there
+      is a proof $\Pi'$ constructed from $\pi_2$ and $\Pi_2$ for sequent
+      $<<D1, G2, A, G3, D2 |-l C>>$ s.t. $c(\Pi')\leq|A|$. Therefore, the proof $\Pi$ can be
+      constructed as follows, and $c(\Pi)\leq max\{c(\pi_1),c(\Pi'),|A|+1\}\leq |B|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny cut}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<G1 |-l A>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<G2, A, G3 |-l B>>} & {<<D1, B, D2 |-l C>>}
+                \end{array}
+              }
+            }{<<D1, G2, A, G3, D2 |-l C>>}
+          }{<<D1, G2, G1, G3, D2 |-l C>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXbetaName / $\cat{C}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I1, X1, X2, I2 |-c Y>>}
+              \end{array}
+            }
+          }{<<I1, X2, X1, I2 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<P1, Y, P2 |-c Z>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. By induction on the length of $\Pi_1$ and
+      $\Pi_2$, the induction hypothesis states that there is a proof $\Pi'$ constructed from
+      $\pi$ and $\Pi_2$ for sequent \\
+      $<<P1, I1, X1, X2, I2, P2 |-c Z>>$ s.t. $c(\Pi')\leq|Y|$.
+      Therefore, the proof $\Pi$ can be constructed as follows, and $c(\Pi)=c(\Pi')\leq|Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<I1, X1, X2, I2 |-c Y>>} & {<<P1, Y, P2 |-c Z>>}
+                \end{array}
+              }
+            }{<<P1, I1, X1, X2, I2, P2 |-c Z>>}
+          }{<<P1, I1, X2, X1, I2, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXbetaName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I1, X, Y, I2 |-c Z>>}
+              \end{array}
+            }
+          }{<<I1, Y, X, I2 |-c Z>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, Z, G2 |-l A>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Z|$. Similar as above, there is a proof $\Pi'$
+      constructed from $\pi$ and $\Pi_2$ for sequent $<<G1, I1, X, Y, I2, G2 |-l A>>$ s.t.
+      $c(\Pi')\leq|Z|$. Therefore, the proof $\Pi$ can be constructed as follows, and
+      $c(\Pi)=c(\Pi')\leq|Z|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut1}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<I1, X, Y, I2 |-c Z>>} & {<<G1, Z, G2 |-l A>>}
+                \end{array}
+              }
+            }{<<G1, I1, X, Y, I2, G2 |-l A>>}
+          }{<<G1, I1, Y, X, I2, G2 |-l A>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXbetaName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<G1, X, Y, G2 |-l A>>}
+              \end{array}
+            }
+          }{<<G1, Y, X, G2 |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, A, D2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. Similar as above, there is a proof $\Pi'$
+      constructed from $\pi$ and $\Pi_2$ for sequent $<<D1, G1, X, Y, G2, D2 |-l B>>$ s.t.
+      $c(\Pi')\leq|A|$. Therefore, the proof $\Pi$ can be constructed as follows, and
+      $c(\Pi)=c(\Pi')\leq|A|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny beta}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<G1, X, Y, G2 |-l A>>} & {<<D1, A, D2 |-l B>>}
+                \end{array}
+              }
+            }{<<D1, G1, X, Y, G2, D2 |-l B>>}
+          }{<<D1, G1, Y, X, G2, D2 |-l B>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXaxName / $\cat{C}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny ax}] {
+            \,
+          }{<<X |-c X>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<I1, X, I2 |-c Y>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. The proof $\Pi$ is the same as $\Pi_2$.
+
+    \item \ElledruleTXXaxName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny ax}] {
+            \,
+          }{<<X |-c X>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, X, G2 |-l A>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. The proof $\Pi$ is the same as $\Pi_2$.
+
+    \item \ElledruleSXXaxName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny ax}] {
+            \,
+          }{<<A |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, A, G2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. The proof $\Pi$ is the same as $\Pi_2$.
+
+    \item \ElledruleTXXunitLName / $\cat{C}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I |-c X>>}
+              \end{array}
+            }
+          }{<<UnitT, X |-c X>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<P1, X, P2 |-c Y>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for sequent $<<P1, I, P2 |-c Y>>$ s.t. $c(\Pi')\leq |X|$. Therefore,
+      the proof $\Pi$ can be constructed as follows, and $c(\Pi)=c(\Pi')\leq |X|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<I |-c X>>} & {<<P1, X, P2 |-c Y>>}
+                \end{array}
+              }
+            }{<<P1, I, P2 |-c Y>>}
+          }{<<UnitT, P1, I, P2 |-c Y>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXunitLName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I |-c X>>}
+              \end{array}
+            }
+          }{<<UnitT, X |-c X>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, X, G2 |-l A>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. Similar as above, the proof $\Pi$ can be
+      constructed as follows with $c(\Pi)\leq |X|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut1}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<I |-c X>>} & {<<G1, X, G2 |-l A>>}
+                \end{array}
+              }
+            }{<<G1, I, G2 |-l A>>}
+          }{<<UnitT, G1, I, G2 |-l A>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXunitLOneName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<D |-l A>>}
+              \end{array}
+            }
+          }{<<UnitT, D |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, A, G2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for sequent $<<G1, D, G2 |-l B>>$ s.t. $c(\Pi')\leq |A|$. Therefore,
+      the proof $\Pi$ can be constructed as follows, and $c(\Pi)=c(\Pi')\leq |A|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL1}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<D |-l A>>} & {<<G1, A, G2 |-l B>>}
+                \end{array}
+              }
+            }{<<G1, D, G2 |-l B>>}
+          }{<<UnitT, G1, D, G2 |-l B>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXunitLTwoName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL2}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<D |-l A>>}
+              \end{array}
+            }
+          }{<<UnitS, D |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, A, G2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for sequent $<<G1, D, G2 |-l B>>$ s.t. $c(\Pi')\leq |A|$. Therefore,
+      the proof $\Pi$ can be constructed as follows, and $c(\Pi)=c(\Pi')\leq |A|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL2}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<D |-l A>>} & {<<G1, A, G2 |-l B>>}
+                \end{array}
+              }
+            }{<<G1, D, G2 |-l B>>}
+          }{<<UnitS, G1, D, G2 |-l B>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXtenLName / $\cat{C}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I1, X1, X2, I2 |-c Y>>}
+              \end{array}
+            }
+          }{<<I1, X1 (x) X2, I2 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<P1, Y, P2 |-c Z>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for $<<P1, I1, X1, X2, I2, P2 |-c Z>>$ s.t. $c(\Pi')\leq |Y|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<I1, X1, X2, I2 |-c Y>>} & {<<P1, Y, P2 |-c Z>>}
+                \end{array}
+              }
+            }{<<P1, I1, X1, X2, I2, P2 |-c Z>>}
+          }{<<P1, I1, X1 (x) X2, I2, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXtenLName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<I1, X1, X2, I2 |-c Y>>}
+              \end{array}
+            }
+          }{<<I1, X1 (x) X2, I2 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, Y, G2 |-l A>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for $<<G1, I1, X1, X2, I2, G2 |-l A>>$ s.t. $c(\Pi')\leq |Y|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL1}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut1}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<I1, X1, X2, I2 |-c Y>>} & {<<G1, Y, G2 |-l A>>}
+                \end{array}
+              }
+            }{<<G1, I1, X1, X2, I2, G2 |-l A>>}
+          }{<<G1, I1, X1 (x) X2, I2, G2 |-l A>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXtenLOneName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<G1, X, Y, G2 |-l A>>}
+              \end{array}
+            }
+          }{<<G1, X (x) Y, G2 |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, A, D2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for $<<D1, X, Y, G2, D2 |-l B>>$ s.t. $c(\Pi')\leq |A|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |A|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL1}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<G1, X, Y, G2 |-l A>>} & {<<D1, A, D2 |-l B>>}
+                \end{array}
+              }
+            }{<<D1, G1, X, Y, G2, D2 |-l B>>}
+          }{<<D1, G1, X (x) Y, G2, D2 |-l B>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXtenLTwoName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL2}] {
+            {
+              \begin{array}{c}
+                \pi \\
+                {<<G1, A1, A2, G2 |-l B>>}
+              \end{array}
+            }
+          }{<<G1, A1 (>) A2, G2 |-l B>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, B, D2 |-l C>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |B|$. By induction, there is a proof $\Pi'$ from
+      $\pi$ and $\Pi_2$ for $<<D1, G1, A1, A2, G2, D2 |-l C>>$ s.t. $c(\Pi')\leq |B|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenL2}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi & \Pi_2 \\
+                  {<<G1, A1, A2, G2 |-l B>>} & {<<D1, B, D2 |-l C>>}
+                \end{array}
+              }
+            }{<<D1, G1, A1, A2, G2, D2 |-l C>>}
+          }{<<D1, G1, A1 (>) A2, G2, D2 |-l C>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXimpLName / $\cat{C}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impL}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I1 |-c X1>>} & {<<I2, X2, I3 |-c Y>>}
+              \end{array}
+            }
+          }{<<I2, X1 -o X2, I1, I3 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<P1, Y, P2 |-c Z>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. By induction, there is a proof $\Pi'$ from
+      $\pi_2$ and $\Pi_2$ for $<<P1, I2, X2, I3, P2 |-c Z>>$ s.t. $c(\Pi')\leq |Y|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impL}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I1 |-c X1>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<I2, X2, I3 |-c Y>>} & {<<P1, Y, P2 |-c Z>>}
+                \end{array}
+              }
+            }{<<P1, I2, X2, I3, P2 |-c Z>>}
+          }{<<P1, I2, X1 -o X2, I1, I3, P2 |-c Z>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleTXXimpLName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impL}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<I1 |-c X1>>} & {<<I2, X2, I3 |-c Y>>}
+              \end{array}
+            }
+          }{<<I2, X1 -o X2, I1, I3 |-c Y>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<G1, Y, G2 |-l A>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. By induction, there is a proof $\Pi'$ from
+      $\pi_2$ and $\Pi_2$ for $<<G1, I2, X2, I3, G2 |-l A>>$ s.t. $c(\Pi')\leq |Y|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |Y|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impL}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<I1 |-c X1>>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<I2, X2, I3 |-c Y>>} & {<<G1, Y, G2 |-l A>>}
+                \end{array}
+              }
+            }{<<G1, I2, X2, I3, G2 |-l A>>}
+          }{<<G1, I2, X1 -o X2, I1, I3, G2 |-l A>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXimprLName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impL}] {
+            {
+              \begin{array}{cc}
+                \pi_1 & \pi_2 \\
+                {<<G1 |-l A1>>} & {<<G2, A2 |-l B>>}
+              \end{array}
+            }
+          }{<<G2, A1 -> B2, G1 |-l B>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, B, D2 |-l C>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |B|$. By induction, there is a proof $\Pi'$ from
+      $\pi_2$ and $\Pi_2$ for $<<D1, G2, A2, D2 |-l C>>$ s.t. $c(\Pi')\leq |B|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impL}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<G1 |-l A1 >>}
+              \end{array}
+            }
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<G2, A2 |-l B>>} & {<<D1, B, D2 |-l C>>}
+                \end{array}
+              }
+            }{<<D1, G2, A2, D2 |-l C>>}
+          }{?}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXFlName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FL}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<G1, X, G2 |-l A>>}
+              \end{array}
+            }
+          }{<<G1, F X, G2 |-l A>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, A, D2 |-l B>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |A|$. By induction, there is a proof $\Pi'$ from
+      $\pi_2$ and $\Pi_2$ for $<<D1, G1, X, G2, D2 |-l B>>$ s.t. $c(\Pi')\leq |A|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |A|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FL}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<G1, X, G2 |-l A>>} & {<<D1, A, D2 |-l B>>}
+                \end{array}
+              }
+            }{<<D1, G1, X, G2, D2 |-l B>>}
+          }{<<D1, G1, F X, G2, D2 |-l B>>}
+        \end{math}
+      \end{center}
+
+    \item \ElledruleSXXGlName / $\cat{L}$-sequent:
+      \begin{center}
+        \scriptsize
+        $\Pi_1$:
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            {
+              \begin{array}{c}
+                \pi_1 \\
+                {<<G1, A, G2 |-l B>>}
+              \end{array}
+            }
+          }{<<G1, Gf A, G2 |-l B>>}
+        \end{math}
+        \qquad\qquad
+        \begin{math}
+          \begin{array}{c}
+            \Pi_2 \\
+            {<<D1, B, D2 |-l C>>}
+          \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |B|$. By induction, there is a proof $\Pi'$ from
+      $\pi_2$ and $\Pi_2$ for $<<D1, G1, A, G2, D2 |-l C>>$ s.t. $c(\Pi')\leq |B|$.
+      Therefore, the proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GL}] {
+            $$\mprset{flushleft}
+            \inferrule* [right={\tiny cut2}] {
+              {
+                \begin{array}{cc}
+                  \pi_2 & \Pi_2 \\
+                  {<<G1, A, G2 |-l B>>} & {<<D1, B, D2 |-l C>>}
+                \end{array}
+              }
+            }{<<D1, G1, A, G2, D2 |-l C>>}
+          }{<<D1, G1, Gf A, G2, D2 |-l C>>}
+        \end{math}
+      \end{center}
+
+    \end{itemize}
+
+  \item The cut formula is a minor formula of the last rule in $\Pi_2$. 
+
+  \item $\Pi_2$ is an axiom on the cut formula. The case is trivial. The proof $\Pi$ is the
+        same as $\Pi_1$.
+
   \end{enumerate}
 \end{proof}
 
+\begin{lemma}
+  \label{lem:less-cut-rank}
+  Let $\Pi$ be a proof of a sequent $<<I |-c X>>$ or $<<G |-l A>>$ s.t. $c(\Pi)>0$. Then there
+  is a proof $\Pi'$ of the same sequent with $c(\Pi')<c(\Pi)$.
+\end{lemma}
+\begin{proof}
+  We prove the lemma by induction on $d(\Pi)$. We denote the proof $\Pi$ by $\pi+r$, where $r$
+  is the last inference of $\Pi$ and $\pi$ denotes the rest of the proof. If $r$ is not a cut,
+  then by induction hypothesis on $\pi$, there is a proof $\pi'$ s.t. $c(\pi')>c(\pi)$ and
+  $\Pi'=\pi'+r$. Otherwise, we assume $r$ is a cut on a formula $X$. If $c(\Pi)>|X|+1$, then
+  there is a cut on $|Y|$ in $\pi$ with $|Y|>|X|$. So we can apply the induction hypothesis
+  on $\pi$ to get $\Pi'$ with $c(\Pi')<c(\Pi)$. The last case to consider is when
+  $c(\Pi)=|X|+1$ (note that $c(\Pi)$ cannot be less than $|X|+1$). In this case, $\Pi$ is in
+  the form of
+  \begin{center}
+    \scriptsize
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut}] {
+        {
+          \begin{array}{cc}
+            \Pi_1 & \Pi_2 \\
+            {<<I |-c X>>} & {<<P1, X, P2 |-c Y>>}
+          \end{array}
+        }
+      }{<<P1, I, P2 |-c Y>>}
+    \end{math}
+    \qquad\qquad
+    or,
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny cut1}] {
+        {
+          \begin{array}{cc}
+            \Pi_1 & \Pi_2 \\
+            {<<I |-c X>>} & {<<G1, X, G2 |-l A>>}
+          \end{array}
+        }
+      }{<<G1, I, G2 |-l A>>}
+    \end{math}
+  \end{center}
+  By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|+1$. By induction, we can construct $c(\Pi_1')$
+  proving $<<I |-c X>>$ and $c(\Pi_2')$ proving $<<P1, X, P2 |-c Y>>$ (or
+  $<<G1, X, G2 |-l A>>$) with $c(\Pi_1'),c(\Pi_2')\leq |X|$. Then by
+  Lemma~\ref{lem:cut-reduction}, we can construct $\Pi'$ proving $<<P1, I, P2 |-c Y>>$ (or
+  $<<G1, I, G2 |-l A>>$) with $c(\Pi')\leq |X|$. 
+
+  The case where the last inference is a cut on a formula $A$ is similar as when it is a cut
+  on $X$.
+
+\end{proof}
+
 \begin{theorem}[Cut Elimination]
+  Let $\Pi$ be a proof of a sequent $<<I |-c X>>$ or $<<G |-l A>>$ s.t. $c(\Pi)>0$. Then there
+  is an algorithm which yields a cut-free proof $\Pi'$ of the same sequent.
 \end{theorem}
+\begin{proof}
+  This follows immediately by induction on $c(\Pi)$ and Lemma~\ref{lem:less-cut-rank}.
+\end{proof}
 
 
 

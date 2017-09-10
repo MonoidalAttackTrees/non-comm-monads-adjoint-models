@@ -46,395 +46,378 @@ Therefore, the mappings of terms are defined as:
    [[B <- A]] \mapsto <<A -o B>>$
 \end{center}
 
-For sequent $[[x : X |-c x : X]]$, we map it to $<<Ph, x : X |-c x : X>>$ for any $<<Ph>>$ that
-does not include $<<x>>$. Similarly, sequent $[[x : A |-l x : A]]$ is mapped to
-$<<Ph; x : A |-l x : A>>$. And sequent $[[G, x : X, D |-l s : A]]$ is mapped to
-$<<Ph, x : X; G', D' |-l s : A>>$ where $<<Ph>>$ is the set of typing contexts for the
-non-commutative part $[[X]]$, $[[Y]]$, etc. in $[[G]]$ and $[[D]]$.
+The following definition defines how to map terms, formumlas, and sequents in LAM to LNL. For
+example, the sequent $[[x : X, y : A (>) B, z : Y -o Z |-l s : C1 -> C2]]$ is mapped to
+$<<x : X, z : Y -> Z; y : A (x) B |-l s : C1 -o C2>>$, where $[[X]]$, $[[A]]$, $[[B]]$, $[[Y]]$,
+$[[Z]]$, $[[C1]]$ and $[[C2]]$ are all atomic types, and $s$ is an atomic term.
 
-And we map each rule in LAM to a proof in LNL as:
+\begin{definition}
+  The function $\LNL$ that maps LAM to LNL is defined recursively as follows:
+  \begin{itemize}
+  \item Variables map to themselves: $\LNL([[x]]) = <<x>>$
+  \item Atomic types map to themselves: $\LNL([[X]]) = <<X>>$
+  \item Atomic terms map to themselves
+  \item $\LNL([[trivT]]) = <<u>> \qquad \LNL([[trivS]]) = <<*>> \qquad \LNL([[UnitT]]) = <<1>> \qquad \LNL([[UnitS]]) = <<I>>$
+  \item $\LNL([[t1 (x) t2]]) = (\LNL(t_1),\LNL(t_2)) \qquad \LNL([[X (x) Y]])=\LNL(X)\times\LNL(Y) $
+  \item $\LNL([[s_1 (>) s_2]]) = \LNL(s_1)\otimes\LNL(s_2) \qquad \LNL([[A (>) B]])=\LNL(A)\otimes\LNL(B)>>$
+  \item $\LNL([[app t1 t2]]) = \mathsf{app}\,\,\,\LNL(t_1)\,\,\,\LNL(t_2) \qquad \LNL([[X -o Y]]) = <<X -> Y>>$
+  \item $\LNL([[appr s1 s2]]) = \mathsf{app}\,\,\,\LNL(s_1)\,\,\,\LNL(s_2) \qquad \LNL([[A -> B]]) = <<A -o B>>$
+  \item $\LNL([[appl s1 s2]]) = \mathsf{app}\,\,\,\LNL(s_1)\,\,\,\LNL(s_2) \qquad \LNL([[B <- A]]) = <<A -o B>>$
+  \item Suppose $[[I]]$ is a commutative context, i.e. $[[I]]=\{x_1:X_1,...,x_n:X_n\}$. Then
+        $\LNL([[I]])=\{\LNL(x_1):\LNL(X_1),...,\LNL(x_n):\LNL(X_n)$.
+  \item Suppose $[[G]]$ is a mixed non-commutative context. Then
+        $\LNL([[G]])=\LNL(P);\LNL(G')$, where $<<P>>$ is the multiset of commutative contexts
+        in $[[G]]$, and $G'$ is the multiset of non-commutative contexts in $[[G]]$.
+  \end{itemize}
+\end{definition}
 
-\begin{itemize}
-  \item \NDdruleTXXidName:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXid{}$
-        \end{center}
-        maps to
-        \begin{center}
-          \tiny
-          $\LNLdruleTXXid{}$
-        \end{center}
-  \item \NDdruleTXXunitIName:
-        \begin{center}
-         \tiny
-         $\NDdruleTXXunitI{}$
-        \end{center}
-        maps to
-        \begin{center}
-          \tiny
-          $\LNLdruleTXXOneI{}$
-        \end{center}
-  \item \NDdruleTXXunitEName:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXunitE{}$
-        \end{center}
-        maps to ? (NOT SURE. LNL does not have an elimination rule for $<<I>>$)
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny sub}] {
-              {<<Ph |-c t1 : 1>>} \\
+\begin{lemma}
+  If $[[I |-c t : X]]$ is a sequent in LAM, then $\LNL(\Phi)\vdash_\mathcal{C}\LNL(t):\LNL(X)$
+  is a sequent in LNL. If $[[G |-l s : A]]$ is a sequent in LAM, then
+  $\LNL(\Gamma)\vdash_\mathcal{L}\LNL(s):\LNL(A)$ is a sequent in LNL. \\
+  (OR?)
+  If $[[I |-c t : X]]$ is a sequent in LAM, then there is an LNL term $\LNL(t)$ s.t.
+  $\LNL(\Phi)\vdash_\mathcal{C}\LNL(t):\LNL(X)$. If $[[G |-l s : A]]$ is a sequent in LAM, then
+  there is an LNL term $\LNL(s)$ s.t.  $\LNL(\Gamma)\vdash_\mathcal{L}\LNL(s):\LNL(A)$ is a
+  sequent in LNL.
+\end{lemma}
+\begin{proof}
+  We prove the lemma by mapping each rule in LAM to a proof in LNL.
+  \begin{itemize}
+    \item \NDdruleTXXidName:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXid{}$
+          \end{center}
+          maps to
+          \begin{center}
+            \tiny
+            $\LNLdruleTXXid{}$
+          \end{center}
+    \item \NDdruleTXXunitIName:
+          \begin{center}
+           \tiny
+           $\NDdruleTXXunitI{}$
+          \end{center}
+          maps to
+          \begin{center}
+            \tiny
+            $\LNLdruleTXXOneI{}$
+          \end{center}
+    \item \NDdruleTXXunitEName:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXunitE{}$
+          \end{center}
+          maps to
+          \begin{center}
+            \tiny
+            \begin{math}
               $$\mprset{flushleft}
-              \inferrule* [right={\tiny multiset}] {
+              \inferrule* [right={\tiny sub}] {
+                {<<Ph |-c t1 : 1>>} \\
                 $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<P |-c t2 : Y>>}
-                }{<<P, x : 1 |-c t2 : Y>>}
-              }{<<x : 1, P |-c t2 : Y>>}
-            }{<<Ph, P |-c [t1 / x]t2 : Y>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleTXXtenIName:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXtenI{}$
-        \end{center}
-        maps to (NOT SURE)
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny prodI}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny weakenin}] {
-                {<<Ph |-c t1 : X>>}
-              }{<<Ph, P |-c t1 : X>>}
-              \\
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny multiset}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<P |-c t2 : Y>>}
-                }{<<P, Ph |-c t2 : Y>>}
-              }{<<Ph, P |-c t2 : Y>>}
-            }{<<Ph, P |-c (t1 , t2) : X (t) Y>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleTXXtenEName:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXtenE{}$
-        \end{center}
-        maps to ?
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny multiset}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny contraction}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny sub}] {
+                \inferrule* [right={\tiny multiset}] {
                   $$\mprset{flushleft}
-                  \inferrule* [right={\tiny multiset}] {
-                    $$\mprset{flushleft}
-                    \inferrule* [right={\tiny sub}] {
-                      $$\mprset{flushleft}
-                      \inferrule* [right={\tiny prodE1}] {
-                        {<<Ph |-c t1 : X (t) Y>>}
-                      }{<<Ph |-c fst(t1) : X>>}
-                      \\
-                      $$\mprset{flushleft}
-                      \inferrule* [right={\tiny multiset}] {
-                        {<<P1, x : X, y : Y, P2 |-c t2 : Z>>}
-                      }{<<x : X, y : Y, P1, P2 |-c t2 : Z>>}
-                    }{<<Ph, y : Y, P1, P2 |-c [fst(t1) / x]t2 : Z>>}
-                  }{<<y : Y, Ph, P1, P2 |-c [fst(t1) / x]t2 : Z>>}
-                  \\
-                  $$\mprset{flushleft}
-                  \inferrule* [right={\tiny prodE2}] {
-                    {<<Ph |-c t1 : X (t) Y>>}
-                  }{<<Ph |-c snd(t1) : Y>>}
-                }{<<Ph, Ph, P1, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z>>}
-              }{<<Ph, P1, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z>>}
-            }{<<P1, Ph, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleTXXimpIName:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXimpI{}$
-        \end{center}
-        maps to
-        \begin{center}
-          \tiny
-          $\LNLdruleTXXimpI{}$
-        \end{center}
-  \item \NDdruleTXXimpEName{}:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXimpE{}$
-        \end{center}
-        maps to ?
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny impE}] {
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<P |-c t2 : Y>>}
+                  }{<<P, x : 1 |-c t2 : Y>>}
+                }{<<x : 1, P |-c t2 : Y>>}
+              }{<<Ph, P |-c [t1 / x]t2 : Y>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleTXXtenIName:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXtenI{}$
+          \end{center}
+          maps to (NOT SURE)
+          \begin{center}
+            \tiny
+            \begin{math}
               $$\mprset{flushleft}
-              \inferrule* [right={\tiny weakening}] {
-                {<<Ph |-c t1 : X -> Y>>}
-              }{<<Ph, P |-c t1 : X -> Y>>}
-              \\
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny multiset}] {
+              \inferrule* [right={\tiny prodI}] {
                 $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<P |-c t2 : X>>}
-                }{<<P, Ph |-c t2 : X>>}
-              }{<<Ph, P |-c t2 : X>>}
-            }{<<Ph, P |-c app t1 t2 : Y>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleTXXGIName:
-        \begin{center}
-          \tiny
-          $\NDdruleTXXGI{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          $\LNLdruleTXXGI{}$
-        \end{center}
-  \item \NDdruleSXXidName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXid{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          $\LNLdruleSXXid{}$
-        \end{center}
-  \item \NDdruleSXXunitIName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXunitI{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          $\LNLdruleSXXII{}$
-        \end{center}
-  \item \NDdruleSXXunitEOneName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXunitEOne{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny sub1}] {
-              {<<Ph |-c t : 1>>} \\
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny multiset}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<P; G' |-l s : A>>}
-                }{<<P, x : 1; G' |-l s : A>>}
-              }{<<x : 1, P; G' |-l s : A>>}
-            }{<<Ph, P; G' |-l [t / x]s : A>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXunitETwoName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXunitETwo{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny IE}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny weakening}] {
-                {<<Ph; G' |-l s1 : I>>}
-              }{<<Ph, P; G' |-l s1 : I>>}
-              \\
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny multiset}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<P; D' |-l s2 : A>>}
-                }{<<P, Ph; D' |-l s2 : A>>}
-              }{<<Ph, P; D' |-l s2 : A>>}
-            }{<<Ph, P; G', D' |-l let s1 : I be * in s2 : A>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXtenIName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXtenI{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny tenI}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny weakening}] {
-                {<<Ph; G' |-l s1 : A>>}
-              }{<<Ph, P; G' |-l s1 : A>>}
-              \\
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny multiset}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<P; D' |-l s2 : B>>}
-                }{<<P, Ph; D' |-l s2 : B>>}
-              }{<<Ph, P; D' |-l s2 : B>>}
-            }{<<Ph, P; G', D' |-l s1 (x) s2 : A (x) B>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXtenEOneName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXtenEOne{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny contraction}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny sub2}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny sub2}] {
-                  $$\mprset{flushleft}
-                  \inferrule* [right={\tiny sub2}] {
-                    $$\mprset{flushleft}
-                    \inferrule* [right={\tiny prodE1}] {
-                      {<<Ph |-c t : X (t) Y>>}
-                    }{<<Ph |-c fst(t) : X>>} \\
-                     {<<x : X, y : Y, P; G1', G2' |-l s : A>>}
-                  }{<<Ph, y : Y, P; G1', G2' |-l [fst(t) / x]s : A>>}
-                }{<<y : Y, Ph, P; G1', G2' |-l [fst(t) / x]s : A>>}
-                \\
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny prodE2}] {
-                  {<<Ph |-c t : X (t) Y>>}
-                }{<<Ph |-c snd(t) : Y>>} \\
-              }{<<Ph, Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A>>}
-            }{<<Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXtenETwoName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXtenETwo{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny multiset}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny tenE}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<Ph; G' |-l s1 : A (x) B>>}
-                }{<<Ph, P; G' |-l s1 : A (x) B>>}
+                \inferrule* [right={\tiny weakenin}] {
+                  {<<Ph |-c t1 : X>>}
+                }{<<Ph, P |-c t1 : X>>}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\tiny multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny weakening}] {
-                    {<<P; D1', x : A, y : B, D2' |-l s2 : C>>}
-                  }{<<P, Ph; D1', x : A, y : B, D2' |-l s2 : C>>}
-                }{<<Ph, P; D1', D2', x : A, y : B |-l s2 : C>>}
-              }{<<Ph, P; G', D1', D2' |-l let s1 : A (x) B be x (x) y in s2 : C>>}
-            }{<<Ph, P; D1', G', D2' |-l let s1 : A (x) B be x (x) y in s2 : C>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXimprIName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXimprI{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny impI}] {
-              {<<Ph; G', x : A |-l s : B>>}
-            }{<<Ph; G' |-l \ x : A . s : A -o B>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXimprEName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXimprE{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny impE}] {
-              $$\mprset{flushleft}
-              \inferrule* [right={\tiny weakening}] {
-                {<<Ph; G' |-l s1 : A -o B>>}
-              }{<<Ph, P; G' |-l s1 : A -o B>>}
-              \\
+                    {<<P |-c t2 : Y>>}
+                  }{<<P, Ph |-c t2 : Y>>}
+                }{<<Ph, P |-c t2 : Y>>}
+              }{<<Ph, P |-c (t1 , t2) : X (t) Y>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleTXXtenEName:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXtenE{}$
+          \end{center}
+          maps to ?
+          \begin{center}
+            \tiny
+            \begin{math}
               $$\mprset{flushleft}
               \inferrule* [right={\tiny multiset}] {
                 $$\mprset{flushleft}
+                \inferrule* [right={\tiny contraction}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny sub}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny multiset}] {
+                      $$\mprset{flushleft}
+                      \inferrule* [right={\tiny sub}] {
+                        $$\mprset{flushleft}
+                        \inferrule* [right={\tiny prodE1}] {
+                          {<<Ph |-c t1 : X (t) Y>>}
+                        }{<<Ph |-c fst(t1) : X>>}
+                        \\
+                        $$\mprset{flushleft}
+                        \inferrule* [right={\tiny multiset}] {
+                          {<<P1, x : X, y : Y, P2 |-c t2 : Z>>}
+                        }{<<x : X, y : Y, P1, P2 |-c t2 : Z>>}
+                      }{<<Ph, y : Y, P1, P2 |-c [fst(t1) / x]t2 : Z>>}
+                    }{<<y : Y, Ph, P1, P2 |-c [fst(t1) / x]t2 : Z>>}
+                    \\
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny prodE2}] {
+                      {<<Ph |-c t1 : X (t) Y>>}
+                    }{<<Ph |-c snd(t1) : Y>>}
+                  }{<<Ph, Ph, P1, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z>>}
+                }{<<Ph, P1, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z>>}
+              }{<<P1, Ph, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleTXXimpIName:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXimpI{}$
+          \end{center}
+          maps to
+          \begin{center}
+            \tiny
+            $\LNLdruleTXXimpI{}$
+          \end{center}
+    \item \NDdruleTXXimpEName{}:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXimpE{}$
+          \end{center}
+          maps to ?
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny impE}] {
+                $$\mprset{flushleft}
                 \inferrule* [right={\tiny weakening}] {
-                  {<<P; D' |-l s2 : A>>}
-                }{<<P, Ph; D' |-l s2 : A>>}
-              }{<<Ph, P; D' |-l s2 : A>>}
-            }{<<Ph, P; G', D' |-l app s1 s2 : B>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXimplIName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXimplI{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny impI}] {
+                  {<<Ph |-c t1 : X -> Y>>}
+                }{<<Ph, P |-c t1 : X -> Y>>}
+                \\
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny multiset}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<P |-c t2 : X>>}
+                  }{<<P, Ph |-c t2 : X>>}
+                }{<<Ph, P |-c t2 : X>>}
+              }{<<Ph, P |-c app t1 t2 : Y>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleTXXGIName:
+          \begin{center}
+            \tiny
+            $\NDdruleTXXGI{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            $\LNLdruleTXXGI{}$
+          \end{center}
+    \item \NDdruleSXXidName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXid{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            $\LNLdruleSXXid{}$
+          \end{center}
+    \item \NDdruleSXXunitIName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXunitI{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            $\LNLdruleSXXII{}$
+          \end{center}
+    \item \NDdruleSXXunitEOneName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXunitEOne{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny sub1}] {
+                {<<Ph |-c t : 1>>} \\
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny multiset}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<P; G' |-l s : A>>}
+                  }{<<P, x : 1; G' |-l s : A>>}
+                }{<<x : 1, P; G' |-l s : A>>}
+              }{<<Ph, P; G' |-l [t / x]s : A>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXunitETwoName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXunitETwo{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny IE}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny weakening}] {
+                  {<<Ph; G' |-l s1 : I>>}
+                }{<<Ph, P; G' |-l s1 : I>>}
+                \\
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny multiset}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<P; D' |-l s2 : A>>}
+                  }{<<P, Ph; D' |-l s2 : A>>}
+                }{<<Ph, P; D' |-l s2 : A>>}
+              }{<<Ph, P; G', D' |-l let s1 : I be * in s2 : A>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXtenIName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXtenI{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny tenI}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny weakening}] {
+                  {<<Ph; G' |-l s1 : A>>}
+                }{<<Ph, P; G' |-l s1 : A>>}
+                \\
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny multiset}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<P; D' |-l s2 : B>>}
+                  }{<<P, Ph; D' |-l s2 : B>>}
+                }{<<Ph, P; D' |-l s2 : B>>}
+              }{<<Ph, P; G', D' |-l s1 (x) s2 : A (x) B>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXtenEOneName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXtenEOne{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny contraction}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny sub2}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny sub2}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny sub2}] {
+                      $$\mprset{flushleft}
+                      \inferrule* [right={\tiny prodE1}] {
+                        {<<Ph |-c t : X (t) Y>>}
+                      }{<<Ph |-c fst(t) : X>>} \\
+                       {<<x : X, y : Y, P; G1', G2' |-l s : A>>}
+                    }{<<Ph, y : Y, P; G1', G2' |-l [fst(t) / x]s : A>>}
+                  }{<<y : Y, Ph, P; G1', G2' |-l [fst(t) / x]s : A>>}
+                  \\
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny prodE2}] {
+                    {<<Ph |-c t : X (t) Y>>}
+                  }{<<Ph |-c snd(t) : Y>>} \\
+                }{<<Ph, Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A>>}
+              }{<<Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXtenETwoName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXtenETwo{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
               $$\mprset{flushleft}
               \inferrule* [right={\tiny multiset}] {
-                {<<Ph; x : A, G' |-l s : B>>}
-              }{<<Ph; G', x : A |-l s : B>>}
-            }{<<Ph; G' |-l \ x : A . s : A -o B>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXimplEName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXimplE{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny multiset}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny tenE}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<Ph; G' |-l s1 : A (x) B>>}
+                  }{<<Ph, P; G' |-l s1 : A (x) B>>}
+                  \\
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny multiset}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny weakening}] {
+                      {<<P; D1', x : A, y : B, D2' |-l s2 : C>>}
+                    }{<<P, Ph; D1', x : A, y : B, D2' |-l s2 : C>>}
+                  }{<<Ph, P; D1', D2', x : A, y : B |-l s2 : C>>}
+                }{<<Ph, P; G', D1', D2' |-l let s1 : A (x) B be x (x) y in s2 : C>>}
+              }{<<Ph, P; D1', G', D2' |-l let s1 : A (x) B be x (x) y in s2 : C>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXimprIName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXimprI{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny impI}] {
+                {<<Ph; G', x : A |-l s : B>>}
+              }{<<Ph; G' |-l \ x : A . s : A -o B>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXimprEName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXimprE{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
               $$\mprset{flushleft}
               \inferrule* [right={\tiny impE}] {
                 $$\mprset{flushleft}
@@ -450,362 +433,413 @@ And we map each rule in LAM to a proof in LNL as:
                   }{<<P, Ph; D' |-l s2 : A>>}
                 }{<<Ph, P; D' |-l s2 : A>>}
               }{<<Ph, P; G', D' |-l app s1 s2 : B>>}
-            }{<<P, Ph; D', G' |-l app s1 s2 : B>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXFIName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXFI{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          $\LNLdruleSXXFI{}$
-        \end{center}
-  \item \NDdruleSXXFEName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXFE{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          \begin{math}
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny multiset}] {
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXimplIName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXimplI{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
               $$\mprset{flushleft}
-              \inferrule* [right={\tiny FE}] {
-                $$\mprset{flushleft}
-                \inferrule* [right={\tiny weakening}] {
-                  {<<Ph; G' |-l s1 : F X>>}
-                }{<<Ph, P; G' |-l s1 : F X>>}
-                \\
+              \inferrule* [right={\tiny impI}] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\tiny multiset}] {
+                  {<<Ph; x : A, G' |-l s : B>>}
+                }{<<Ph; G', x : A |-l s : B>>}
+              }{<<Ph; G' |-l \ x : A . s : A -o B>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXimplEName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXimplE{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny multiset}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny impE}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny weakening}] {
-                    {<<P, x : X; D1', D2' |-l s2 : A>>}
-                  }{<<P, x : X, Ph; D1', D2' |-l s2 : A>>}
-                }{<<Ph, P, x : X; D1', D2' |-l s2 : A>>}
-              }{<<Ph, P; G', D1', D2' |-l let s1 : F X be x in s2 : A>>}
-            }{<<Ph, P; D1', G', D2' |-l let s1 : F X be x in s2 : A>>}
-          \end{math}
-        \end{center}
-  \item \NDdruleSXXGEName:
-        \begin{center}
-          \tiny
-          $\NDdruleSXXGE{}$
-        \end{center}
-        maps to 
-        \begin{center}
-          \tiny
-          $\LNLdruleSXXGE{}$
-        \end{center}
-\end{itemize}
+                    {<<Ph; G' |-l s1 : A -o B>>}
+                  }{<<Ph, P; G' |-l s1 : A -o B>>}
+                  \\
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny multiset}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny weakening}] {
+                      {<<P; D' |-l s2 : A>>}
+                    }{<<P, Ph; D' |-l s2 : A>>}
+                  }{<<Ph, P; D' |-l s2 : A>>}
+                }{<<Ph, P; G', D' |-l app s1 s2 : B>>}
+              }{<<P, Ph; D', G' |-l app s1 s2 : B>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXFIName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXFI{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            $\LNLdruleSXXFI{}$
+          \end{center}
+    \item \NDdruleSXXFEName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXFE{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\tiny multiset}] {
+                $$\mprset{flushleft}
+                \inferrule* [right={\tiny FE}] {
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny weakening}] {
+                    {<<Ph; G' |-l s1 : F X>>}
+                  }{<<Ph, P; G' |-l s1 : F X>>}
+                  \\
+                  $$\mprset{flushleft}
+                  \inferrule* [right={\tiny multiset}] {
+                    $$\mprset{flushleft}
+                    \inferrule* [right={\tiny weakening}] {
+                      {<<P, x : X; D1', D2' |-l s2 : A>>}
+                    }{<<P, x : X, Ph; D1', D2' |-l s2 : A>>}
+                  }{<<Ph, P, x : X; D1', D2' |-l s2 : A>>}
+                }{<<Ph, P; G', D1', D2' |-l let s1 : F X be x in s2 : A>>}
+              }{<<Ph, P; D1', G', D2' |-l let s1 : F X be x in s2 : A>>}
+            \end{math}
+          \end{center}
+    \item \NDdruleSXXGEName:
+          \begin{center}
+            \tiny
+            $\NDdruleSXXGE{}$
+          \end{center}
+          maps to 
+          \begin{center}
+            \tiny
+            $\LNLdruleSXXGE{}$
+          \end{center}
+  \end{itemize}
+\end{proof}
 
-The $\beta$-reductions are usually derived by normalizing pairs of the introduction and
-elimination rules of the same connective. We derive the $\beta$-reductions for LAM by
-normalizing the proofs in LNL from which pairs of introduction and elimination rules in LAM are
-mapped. We simplify the mapped rules by only keeping the premises and conclusions and excluding
-the middle steps, such as weakening, multiset, and subsitutions.
+\begin{lemma}
+  Suppose $[[t1 ~> t2]]$ is a $\beta$-reduction rule in LAM. Then $\LNL(t_1)\leadsto\LNL(t_2)$
+  is a $\beta$-reduction rule in LNL.
+\end{lemma}
+\begin{proof}
+  The $\beta$-reductions are usually derived by normalizing pairs of the introduction and
+  elimination rules of the same connective. We derive the $\beta$-reductions for LAM by
+  normalizing the proofs in LNL from which pairs of introduction and elimination rules in LAM are
+  mapped. We simplify the mapped rules by only keeping the premises and conclusions and excluding
+  the middle steps, such as weakening, multiset, and subsitutions.
 
-\begin{itemize}
+  \begin{itemize}
 
-\item (\NDdruleTXXunitIName, \NDdruleTXXunitEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny unitE}] {
+  \item (\NDdruleTXXunitIName, \NDdruleTXXunitEName):
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitI}] {
-          \,
-        }{<<Ph |-c u : 1>>} \\
-         {<<P |-c t : X>>}
-      }{<<Ph, P |-c [u / x]t : X>>}
-    \end{math}
-  \end{center}
-  normalizes to 
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* {
-        {<<P |-c t : X>>}
-      }{<<Ph, P |-c t : X>>}
-    \end{math}
-  \end{center}
-
-\item (\NDdruleTXXunitIName, \NDdruleSXXunitEOneName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny unitE}] {
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitI}] {
+            \,
+          }{<<Ph |-c u : 1>>} \\
+           {<<P |-c t : X>>}
+        }{<<Ph, P |-c [u / x]t : X>>}
+      \end{math}
+    \end{center}
+    normalizes to 
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny unitI}] {
-          \,
-        }{<<Ph |-c u : 1>>} \\
-         {<<P; G |-l s : A>>}
-      }{<<Ph, P; G |-l [u / x]s : A>>}
-    \end{math}
-  \end{center}
-  normalizes to 
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* {
-        {<<P; G |-l s : A>>}
-      }{<<Ph, P; G |-l s : A>>}
-    \end{math}
-  \end{center}
+        \inferrule* {
+          {<<P |-c t : X>>}
+        }{<<Ph, P |-c t : X>>}
+      \end{math}
+    \end{center}
 
-\item (\NDdruleTXXtenIName, \NDdruleTXXtenEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny tenE}] {
+  \item (\NDdruleTXXunitIName, \NDdruleSXXunitEOneName):
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenI}] {
-          {<<Ph1 |-c t1 : X>>} \\
-          {<<Ph2 |-c t2 : Y>>}
-        }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
-         {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
-      }{<<P1, Ph1, Ph2, P2 |-c [snd((t1, t2)) / y][fst((t1, t2)) / x]t3 : Z>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub}] {
-        {<<Ph1 |-c t1 : X>>} \\
+        \inferrule* [right={\tiny unitE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitI}] {
+            \,
+          }{<<Ph |-c u : 1>>} \\
+           {<<P; G |-l s : A>>}
+        }{<<Ph, P; G |-l [u / x]s : A>>}
+      \end{math}
+    \end{center}
+    normalizes to 
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* {
+          {<<P; G |-l s : A>>}
+        }{<<Ph, P; G |-l s : A>>}
+      \end{math}
+    \end{center}
+
+  \item (\NDdruleTXXtenIName, \NDdruleTXXtenEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenI}] {
+            {<<Ph1 |-c t1 : X>>} \\
+            {<<Ph2 |-c t2 : Y>>}
+          }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
+           {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
+        }{<<P1, Ph1, Ph2, P2 |-c [snd((t1, t2)) / y][fst((t1, t2)) / x]t3 : Z>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
         \inferrule* [right={\tiny sub}] {
-          {<<Ph2 |-c t2 : Y>>} \\
-          {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
-        }{<<P1, x : X, Ph2, P2 |-c [t2 / y]t3 : Z>>}
-      }{<<P1, Ph1, Ph2, P2 |-c [t1 / x][t2 / y]t3 : Z>>}
-    \end{math}
-  \end{center}
-  
-\item (\NDdruleTXXtenIName, \NDdruleSXXtenEOneName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny tenE}] {
-        $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenI}] {
           {<<Ph1 |-c t1 : X>>} \\
-          {<<Ph2 |-c t2 : Y>>}
-        }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
-         {<<x : X, y : Y, P; G |-l s : A>>}
-      }{<<Ph1, Ph2, P; G |-l [snd((t1,t2)) / y][fst((t1,t2)) / x]s : A>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub1}] {
-        {<<Ph1 |-c t1 : X>>} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny sub}] {
+            {<<Ph2 |-c t2 : Y>>} \\
+            {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
+          }{<<P1, x : X, Ph2, P2 |-c [t2 / y]t3 : Z>>}
+        }{<<P1, Ph1, Ph2, P2 |-c [t1 / x][t2 / y]t3 : Z>>}
+      \end{math}
+    \end{center}
+    
+  \item (\NDdruleTXXtenIName, \NDdruleSXXtenEOneName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny tenE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenI}] {
+            {<<Ph1 |-c t1 : X>>} \\
+            {<<Ph2 |-c t2 : Y>>}
+          }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
+           {<<x : X, y : Y, P; G |-l s : A>>}
+        }{<<Ph1, Ph2, P; G |-l [snd((t1,t2)) / y][fst((t1,t2)) / x]s : A>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
         \inferrule* [right={\tiny sub1}] {
-          {<<Ph2 |-c t2 : Y>>} \\
-          {<<x : X, y : Y, P; G |-l s : A>>}
-        }{<<x : X, Ph2, P; G |-l [t2 / y]s : A>>}
-      }{<<Ph1, Ph2, P; G |-l [t1 / x][t2 / y]s : A>>}
-    \end{math}
-  \end{center}
-  
-\item (\NDdruleTXXimpIName, \NDdruleTXXimpEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny impE}] {
+          {<<Ph1 |-c t1 : X>>} \\
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny sub1}] {
+            {<<Ph2 |-c t2 : Y>>} \\
+            {<<x : X, y : Y, P; G |-l s : A>>}
+          }{<<x : X, Ph2, P; G |-l [t2 / y]s : A>>}
+        }{<<Ph1, Ph2, P; G |-l [t1 / x][t2 / y]s : A>>}
+      \end{math}
+    \end{center}
+    
+  \item (\NDdruleTXXimpIName, \NDdruleTXXimpEName):
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny impI}] {
+        \inferrule* [right={\tiny impE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny impI}] {
+            {<<Ph, x : X |-c t1 : Y>>}
+          }{<<Ph |-c \ x : X . t1 : X -> Y>>} \\
+           {<<P |-c t2 : X>>}
+        }{<<Ph, P |-c app (\ x : X . t1) t2 : Y>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny sub}] {
           {<<Ph, x : X |-c t1 : Y>>}
-        }{<<Ph |-c \ x : X . t1 : X -> Y>>} \\
-         {<<P |-c t2 : X>>}
-      }{<<Ph, P |-c app (\ x : X . t1) t2 : Y>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub}] {
-        {<<Ph, x : X |-c t1 : Y>>}
-        {<<P |-c t2 : X>>}
-      }{<<Ph, P |-c [t2 / x]t1 : Y>>}
-    \end{math}
-  \end{center}
+          {<<P |-c t2 : X>>}
+        }{<<Ph, P |-c [t2 / x]t1 : Y>>}
+      \end{math}
+    \end{center}
 
-\item (\NDdruleSXXunitIName, \NDdruleSXXunitETwoName):
-  \begin{center}
-    \tiny
-    \begin{math}
-     $$\mprset{flushleft}
-     \inferrule* [right={\tiny unitE2}] {
+  \item (\NDdruleSXXunitIName, \NDdruleSXXunitETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
        $$\mprset{flushleft}
-       \inferrule* [right={\tiny unitI}] {
-         \,
-        }{<<Ph |-l * : I>>} \\
-         {<<P; D |-l s : A>>}
-      }{<<Ph, P; D |-l let * : I be * in s : A>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-     $$\mprset{flushleft}
-     \inferrule* {
-      {<<P; D |-l s : A>>}
-    }{<<Ph, P; D |-l s : A>>}
-    \end{math}
-  \end{center}
+       \inferrule* [right={\tiny unitE2}] {
+         $$\mprset{flushleft}
+         \inferrule* [right={\tiny unitI}] {
+           \,
+          }{<<Ph |-l * : I>>} \\
+           {<<P; D |-l s : A>>}
+        }{<<Ph, P; D |-l let * : I be * in s : A>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
+       $$\mprset{flushleft}
+       \inferrule* {
+        {<<P; D |-l s : A>>}
+      }{<<Ph, P; D |-l s : A>>}
+      \end{math}
+    \end{center}
 
-\item (\NDdruleSXXtenIName, \NDdruleSXXtenETwoName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny tenE2}] {
+  \item (\NDdruleSXXtenIName, \NDdruleSXXtenETwoName):
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenI}] {
-          {<<Ph1; G1 |-l s1 : A>>}
-          {<<Ph2; G2 |-l s2 : B>>}
-        }{<<Ph1, Ph2, G1, G2 |-l s1 (x) s2 : A (x) B>>} \\
-         {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
-      }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l let s1 (x) s2 : A (x) B be x (x) y in s3 : C>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub2}] {
-        {<<Ph1; G1 |-l s1 : A>>}
+        \inferrule* [right={\tiny tenE2}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenI}] {
+            {<<Ph1; G1 |-l s1 : A>>}
+            {<<Ph2; G2 |-l s2 : B>>}
+          }{<<Ph1, Ph2, G1, G2 |-l s1 (x) s2 : A (x) B>>} \\
+           {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
+        }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l let s1 (x) s2 : A (x) B be x (x) y in s3 : C>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
         \inferrule* [right={\tiny sub2}] {
-          {<<Ph2; G2 |-l s2 : B>>} \\
-          {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
-        }{<<Ph2, P; D1, x : A, G2, D2 |-l [s2 / y]s3 : C>>}
-      }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l [s1 / x][s2 / y]s3 : C>>}
-    \end{math}
-  \end{center}
-        
-\item (\NDdruleSXXimprIName, \NDdruleSXXimprEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-     $$\mprset{flushleft}
-     \inferrule* [right={\tiny imprE}] {
+          {<<Ph1; G1 |-l s1 : A>>}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny sub2}] {
+            {<<Ph2; G2 |-l s2 : B>>} \\
+            {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
+          }{<<Ph2, P; D1, x : A, G2, D2 |-l [s2 / y]s3 : C>>}
+        }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l [s1 / x][s2 / y]s3 : C>>}
+      \end{math}
+    \end{center}
+          
+  \item (\NDdruleSXXimprIName, \NDdruleSXXimprEName):
+    \begin{center}
+      \tiny
+      \begin{math}
        $$\mprset{flushleft}
-       \inferrule* [right={\tiny imprI}] {
-         {<<Ph; G, x : A |-l s1 : B>>}
-        }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
-         {<< P; D |-l s2 : A>>}
-      }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub2}] {
-        {<<Ph; G, x : A |-l s1 : B>>} \\
-        {<<P; D |-l s2 : A>>}
-      }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
-    \end{math}
-  \end{center}
-        
-\item (\NDdruleSXXimplIName, \NDdruleSXXimplEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-     $$\mprset{flushleft}
-     \inferrule* [right={\tiny imprE}] {
+       \inferrule* [right={\tiny imprE}] {
+         $$\mprset{flushleft}
+         \inferrule* [right={\tiny imprI}] {
+           {<<Ph; G, x : A |-l s1 : B>>}
+          }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
+           {<< P; D |-l s2 : A>>}
+        }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny sub2}] {
+          {<<Ph; G, x : A |-l s1 : B>>} \\
+          {<<P; D |-l s2 : A>>}
+        }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
+      \end{math}
+    \end{center}
+          
+  \item (\NDdruleSXXimplIName, \NDdruleSXXimplEName):
+    \begin{center}
+      \tiny
+      \begin{math}
        $$\mprset{flushleft}
-       \inferrule* [right={\tiny imprI}] {
-         {<<Ph; x : A, G |-l s1 : B>>}
-        }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
-         {<< P; D |-l s2 : A>>}
-      }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub2}] {
-        {<<Ph; x : A, G |-l s1 : B>>} \\
-        {<<P; D |-l s2 : A>>}
-      }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
-    \end{math}
-  \end{center}
-        
-\item (\NDdruleSXXFIName, \NDdruleSXXFEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny FE}] {
+       \inferrule* [right={\tiny imprE}] {
+         $$\mprset{flushleft}
+         \inferrule* [right={\tiny imprI}] {
+           {<<Ph; x : A, G |-l s1 : B>>}
+          }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
+           {<< P; D |-l s2 : A>>}
+        }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny FI}] {
-          {<<Ph |-c t : X>>}
-        }{<<Ph |-l F t : F X>>}
-         {<<P, x : X; D1, D2 |-l s : A>>}
-      }{<<Ph, P; D1, D2 |-l let F t : F X be F x in s : A>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny sub1}] {
-        {<<Ph |-c t : X>>} \\
-        {<<P, x : X; D1, D2 |-l s : A>>}
-      }{<<Ph, P; D1, D2 |-l [t / x]s : A>>}
-    \end{math}
-  \end{center}
-
-\item (\NDdruleTXXGIName, \NDdruleSXXGEName):
-  \begin{center}
-    \tiny
-    \begin{math}
-      $$\mprset{flushleft}
-      \inferrule* [right={\tiny GE}] {
+        \inferrule* [right={\tiny sub2}] {
+          {<<Ph; x : A, G |-l s1 : B>>} \\
+          {<<P; D |-l s2 : A>>}
+        }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
+      \end{math}
+    \end{center}
+          
+  \item (\NDdruleSXXFIName, \NDdruleSXXFEName):
+    \begin{center}
+      \tiny
+      \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny GI}] {
-          {<<Ph |-l s : A>>}
-        }{<<Ph |-c Gf s : Gf A>>}
-      }{<<Ph |-l derelict (Gf s) : A>>}
-    \end{math}
-  \end{center}
-  normalizes to
-  \begin{center}
-    \tiny
-    ${<<Ph |-l s : A>>}$
-  \end{center}
+        \inferrule* [right={\tiny FE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny FI}] {
+            {<<Ph |-c t : X>>}
+          }{<<Ph |-l F t : F X>>}
+           {<<P, x : X; D1, D2 |-l s : A>>}
+        }{<<Ph, P; D1, D2 |-l let F t : F X be F x in s : A>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny sub1}] {
+          {<<Ph |-c t : X>>} \\
+          {<<P, x : X; D1, D2 |-l s : A>>}
+        }{<<Ph, P; D1, D2 |-l [t / x]s : A>>}
+      \end{math}
+    \end{center}
 
+  \item (\NDdruleTXXGIName, \NDdruleSXXGEName):
+    \begin{center}
+      \tiny
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny GE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny GI}] {
+            {<<Ph |-l s : A>>}
+          }{<<Ph |-c Gf s : Gf A>>}
+        }{<<Ph |-l derelict (Gf s) : A>>}
+      \end{math}
+    \end{center}
+    normalizes to
+    \begin{center}
+      \tiny
+      ${<<Ph |-l s : A>>}$
+    \end{center}
 
-\end{itemize}
-
+  \end{itemize}
+\end{proof}
 
 
 
