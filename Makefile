@@ -34,15 +34,19 @@ quick : quick-pdf
 
 pdf : $(PDF)
 
-logic-ott.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott ElleType/ElleType.ott
+logic-ott.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott Elle-to-LNL-ott.tex
 	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
 		-tex_filter logic.tex logic-ott1.tex
 	scripts/prepr_double_ott.sh logic-ott1.tex
 	@$(OTT) $(OTT_FLAGS) -i Elle/Elle.ott -o Elle-inc.tex -tex_name_prefix Elle \
-		-tex_filter logic-ott1.tex logic-ott2.tex
-	scripts/prepr_double_ott.sh logic-ott2.tex
-	@$(OTT) $(OTT_FLAGS) -i ElleType/ElleType.ott -o ElleType-inc.tex -tex_name_prefix ElleType \
-		-tex_filter logic-ott2.tex logic-ott.tex
+		-tex_filter logic-ott1.tex logic-ott.tex
+
+Elle-to-LNL-ott.tex : Elle-ND/Elle-ND.ott LNL/LNL.ott Elle-to-LNL.tex
+	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
+		-tex_filter Elle-to-LNL.tex Elle-to-LNL-ott1.tex
+	scripts/prepr_double_ott.sh Elle-to-LNL-ott1.tex
+	@$(OTT) $(OTT_FLAGS) -i LNL/LNL.ott -o LNL-inc.tex -tex_name_prefix LNL \
+		-tex_filter Elle-to-LNL-ott1.tex Elle-to-LNL-ott.tex
 
 ott : main.text logic-ott.tex Makefile
 
