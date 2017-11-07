@@ -64,3 +64,10 @@ Elle-ND/Elle-ND-ott.tex
 *-inc
 *-inc.*
 *.pdf
+*-output.tex
+/exchange-draft/Elle-ND/Elle-ND.tex
+/exchange-draft/Elle/Elle.tex
+/exchange-draft/ElleType/ElleType.tex
+/exchange-draft/LNL/LNL.tex
+/exchange-draft/ND/ND.tex
+/exchange-draft/logic-old.tex
