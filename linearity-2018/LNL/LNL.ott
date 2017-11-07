@@ -1,0 +1,280 @@
+% Input variables.
+metavar vars ,  n , a, x , y, z , w , m , o ::=  
+indexvar ivar, i , k , j , l ::=
+metavar const, b ::= 
+
+grammar
+
+
+% Lambek category:
+A, B, C :: 'lform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | I       ::   :: I
+  {{tex \mathrm{I} }}
+  | A (x) B ::   :: Lambek
+  | A -o B  ::   :: RFun          
+  | ( A )   :: M :: Parens 
+  | h( A )  :: M :: HiddenParens 
+  {{ tex [[A]] }}
+  | F X     ::   :: LeftAdj
+  {{tex \mathsf{F}[[X]] }}
+
+% Symmetric monoidal closed category:
+X, Y, Z :: 'sform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | 1       ::   :: 1
+  {{tex \mathsf{1} }}
+  | X (t) Y   ::   :: Tensor        
+  | X -> Y  ::   :: Fun          
+  | ( X )   :: M :: Parens 
+  | h( X )  :: M :: HiddenParens 
+  {{ tex [[X]] }}
+  | Gf A     ::   :: RightAdj
+  {{tex \mathsf{G}[[A]] }}
+
+T :: 'type_' ::=
+  | A :: :: LType
+  | X :: :: SType
+
+p :: 'pattern_' ::=
+  | - :: :: hole
+  {{tex \star }}
+  | x :: :: var
+  | u :: :: trivT
+  {{tex \mathsf{u} }}
+  | * :: :: trivS
+  {{tex \ast }}
+  | p (x) p' :: :: ten
+  | p (t) p'   :: :: sum
+  | F p :: :: LeftAdj
+  {{tex \mathsf{F}\,[[p]] }}
+  | Gf p     ::   :: RightAdj
+  {{tex \mathsf{G}\,[[p]] }}
+
+s :: 'term_' ::=
+  | x :: :: Var
+  | b :: :: Const
+  | * :: :: UnitS
+  {{tex \ast }}
+  | let s1 : T be p in s2 :: :: let1
+  {{tex \mathsf{let}\,[[s1]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
+  | let t : T be p in s :: :: let2
+  {{tex \mathsf{let}\,[[t]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s]] }}
+  | s1 (x) s2 :: :: Tensor
+  | \ x : A . s :: :: LFun
+  {{tex \lambda [[x]] : [[A]].[[s]] }}
+  | app s1 s2   :: :: App
+  {{tex \mathsf{app}\,[[s1]]\,[[s2]] }}
+  | derelict t :: :: Derelict
+  {{tex \mathsf{derelict}\,[[t]] }}
+  | [ s1 / x ] s2 :: M :: Subst
+  | [ t / x ] s   :: M :: Subst2
+  | ( s )         :: S :: parens
+  | h( s )        :: M :: hparen
+  {{tex [[s]] }}
+  | F t           ::   :: LeftAdj
+  {{tex \mathsf{F}[[t]] }}
+
+t :: 'sterm_' ::=
+  | x  :: :: Var
+  | b  :: :: Const
+  | u :: :: UnitT
+  {{tex \mathsf{u} }}
+  | let t1 : X be p in t2 :: :: let
+  {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
+  | t1 (t) t2 :: :: Tensor
+  | \ x : X . t :: :: Fun
+  {{tex \lambda [[x]] : [[X]].[[t]] }}  
+  | app t1 t2   :: :: App
+  {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
+  | ( t1 , t2 )   :: :: Prod
+  {{tex \mathsf{(}[[t1]] , [[t2]]\mathsf{)} }}
+  | fst ( t )     :: :: Fst
+  {{tex \mathsf{fst(}[[t]]\mathsf{)} }}
+  | snd ( t )     :: :: Snd
+  {{tex \mathsf{snd(}[[t]]\mathsf{)} }}
+  | [ t1 / x ] t2 :: M :: Subst
+  | ( t )         :: S :: parens
+  | h( t )        :: M :: hparen
+  | Gf s           ::   :: RightAdj
+  {{tex \mathsf{G}[[s]] }}
+
+Ph {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | Ph1 , Ph2 ::   :: Ext
+  | x : X   ::   :: ElC
+  | ( Ph )   :: S :: Paren
+
+G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | x : A   ::   :: El
+  | Ph      ::   :: CCtx1
+  | Ph ; G   ::   :: CCtx2
+  | G1 , G2 ::   :: Ext
+  | ( G )   :: S :: Paren
+
+formula :: 'formula_' ::=
+  | judgement            ::   :: judgement
+  | formula1 && formula2 :: M :: quad
+  {{tex [[formula1]] \quad [[formula2]] }}
+  | formula1 ... formulai :: M :: vec
+  | ( formula )          :: S :: parens
+  {{tex [[formula]] }}
+
+terminals :: 'terminals_' ::=
+  | 1    :: :: UnitT
+  {{tex \mathsf{1} }}
+  | I    :: :: UnitS
+  {{tex \mathrm{I} }}
+  | (x)  :: :: Tensor
+  {{tex \otimes }}
+  | (t)  :: :: Sum
+  {{tex \times }}
+  | (e)  :: :: ETensor
+  {{tex \circop{e} }}  
+  | (w)  :: :: WTensor
+  {{tex \circop{w} }}  
+  | (c)  :: :: CTensor
+  {{tex \circop{c} }}
+  | ->   :: :: LFun
+  {{tex \rightarrow }}
+  | -o   :: :: Limp
+  {{tex \multimap }}
+  | |-c   :: :: VdashC
+  {{tex \vdash_\mathcal{C} }}
+  | |-l   :: :: VdashL
+  {{tex \vdash_\mathcal{L} }}
+  | ~>   :: :: To
+  {{tex \leadsto }}
+ 
+defns
+  Jtype :: '' ::=
+
+defn
+  Ph |-c t : X :: :: tty :: 'T_'
+by 
+
+  ------------------ :: id
+  Ph, x : X |-c x : X
+
+  ------------ :: 1I
+  Ph |-c u : 1
+
+  Ph |-c t1 : X && Ph |-c t2 : Y
+  ---------------------------- :: prodI
+  Ph |-c (t1 , t2) : X (t) Y
+
+  Ph |-c t : X (t) Y
+  ----------------- :: prodE1
+  Ph |-c fst(t) : X
+
+  Ph |-c t : X (t) Y
+  ----------------- :: prodE2
+  Ph |-c snd(t) : Y
+
+  Ph, x : X |-c t : Y
+  -------------------------- :: impI
+  Ph |-c \ x : X . t : X -> Y
+
+  Ph |-c t1 : X -> Y && Ph |-c t2 : X
+  --------------------------------- :: impE
+  Ph |-c app t1 t2 : Y
+
+  Ph |-l s : A
+  ----------------- :: GI
+  Ph |-c Gf s : Gf A
+
+  Ph |-c t1 : X && x : X, Ph |-c t2 : Y
+  ------------------------------------- :: sub
+  Ph |-c [t1 / x]t2 : Y
+
+defn
+  G |-l s : A :: :: sty :: 'S_'
+by
+
+  ------------------- :: id
+  Ph; x : A |-l x : A
+
+  Ph; G |-l s1 : A && Ph; D |-l s2 : B
+  ---------------------------------- :: tenI
+  Ph; G, D |-l s1 (x) s2 : A (x) B
+
+  Ph; G |-l s1 : A (x) B && Ph; D, x : A, y : B |-l s2 : C
+  ------------------------------------------------------ :: tenE
+  Ph; G, D |-l let s1 : A (x) B be x (x) y in s2 : C
+
+  ----------- :: II
+  Ph |-l * : I
+
+  Ph; G |-l s1 : I && Ph; D |-l s2 : A
+  ------------------------------------- :: IE
+  Ph; G, D |-l let s1 : I be * in s2 : A
+
+  Ph; G, x : A |-l s : B
+  ------------------------------ :: impI
+  Ph; G |-l \ x : A . s : A -o B
+
+  Ph; G |-l s1 : A -o B && Ph; D |-l s2 : A
+  --------------------------------------- :: impE
+  Ph; G, D |-l app s1 s2 : B
+
+  Ph |-c t : X
+  --------------- :: FI
+  Ph |-l F t : F X
+
+  Ph; G |-l s1 : F X && Ph, x : X; D |-l s2 : A
+  ------------------------------------------- :: FE
+  Ph; G, D |-l let s1 : F X be F x in s2 : A
+
+  Ph |-c t : Gf A
+  -------------------- :: GE
+  Ph |-l derelict t : A
+
+  Ph |-c t : X && x : X, Ph; G |-l s : A
+  -------------------------------------- :: sub1
+  Ph; G |-l [t / x]s : A
+
+  Ph; G |-l s1 : A && Ph; x : A, D |-l s2 : B
+  ------------------------------------------- :: sub2
+  Ph; G, D |-l [s1 / x]s2 : B
+
+
+
+defns
+  Reduction :: '' ::=
+
+defn
+  t1 ~> t2 :: :: tred :: 'Tred_'
+by 
+
+  ------------------- :: Fst
+  fst((t1, t2)) ~> t1
+
+  ------------------- :: Snd
+  snd((t1, t2)) ~> t2
+
+  ----------------------------------- :: Imp1
+  app (\ x : X . t1) t2 ~> [t2 / x]t1
+
+defn
+  s1 ~> s2 :: :: sred :: 'Sred_'
+by 
+
+  -------------------------------------------------------------- :: Ten
+  let s1 (x) s2 : A (x) B be x (x) y in s3 ~> [s2 / y][s1 / x]s3
+
+  ------------------------ :: Unit
+  let * : I be * in s ~> s
+
+  ----------------------------------- :: Imp2
+  app (\ x : A . s1) s2 ~> [s2 / x]s1
+
+  -------------------- :: G
+  derelict (Gf s) ~> s
+
+  ------------------------------------- :: F
+  let F t : F X be F x in s ~> [t / x]s
