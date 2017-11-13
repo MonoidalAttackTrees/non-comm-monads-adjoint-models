@@ -53,12 +53,13 @@ ott : main.text logic-ott.tex Makefile
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile ref.bib Makefile
+$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
+	bibtex $(TexFileName)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 
-quick-pdf : $(OTTOutputFile) Makefile
+quick-pdf : $(OTTOutputFile) Makefile introduction.tex
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 
 clean :

@@ -76,3 +76,5 @@ Elle-ND/Elle-ND-ott.tex
 /linearity-2018/ElleType/ElleType.tex
 /linearity-2018/LNL/LNL.tex
 *.pag
+*.bbl
+*.blg
