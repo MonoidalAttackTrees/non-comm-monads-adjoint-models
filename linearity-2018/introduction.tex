@@ -29,10 +29,11 @@ are two categories with a bifunctor $\odot_i : \cat{M}_i \times
 : A \odot I_i \mto A$ and $\rho_A : I_i \odot A \mto A$.  We call
 these categories \emph{magmoidal categories with a unit}.  Examples of
 magmoidal categories with a unit are monoidal categories, symmetric
-monoidal categories, and cartesian closed categories.  Benton's LNL
-models can be generalized to magmodial categories.  Simply, take an
-adjunction $\cat{M}_1 : F \dashv G : \cat{M}_2$ called an
-\emph{adjoint model} where the functors $F$ and $G$ preserve the
+monoidal categories, and cartesian closed categories.
+
+Benton's LNL models can be generalized to magmodial categories.
+Simply, take an adjunction $\cat{M}_1 : F \dashv G : \cat{M}_2$ called
+an \emph{adjoint model} where the functors $F$ and $G$ preserve the
 magmoidal structure similarly to monoidal functors, but without the
 coherence diagram for the associator.  Now if we add to $\cat{M}_1$
 and $\cat{M}_2$ some structural rules, for example, by making
@@ -52,7 +53,24 @@ $eA = F(G\,A)$ with the property $eA \otimes eB \multimap eB \otimes
 eA$.  Thus providing a second solution to the problem, but we go
 further, and show such a modality can be given for associativity. It
 arises as the induced comonad of the adjoint model where $\cat{M}_1$
-is a monoidal category, and $\cat{M}_2$ is a magmoidal category with a
-unit.
+is a monoidal category, and $\cat{M}_2$ is a vanilla magmoidal
+category with a unit.  Then we will obtain the property $(aA \otimes
+aB) \otimes aC) \multimap aA \otimes (aB \otimes aC)$.
+
+Linguists as well as computer scientists have found many applications
+of substructural logics that contain more than one tensor product
+satisfying different structural rules.  For example, a commutative
+tensor product and a non-commutative tensor product within the same
+logic.  An example of such a logic is the logic of bunched
+implications, but there sequents $\Gamma \vdash A$ depend on contexts
+$\Gamma$ that are trees with multiple different branching nodes
+instead of lists.  The branching nodes are necessary to accommodate
+multiple different tensor products with different structural
+properties.  We show how adjoint models can be used to build similar
+logics, but without the need for multiple different branching nodes.
+Furthermore, adjoints compose, and this property can be exploited to
+compose modalities.
+
+
 
 %% Security, concurrency, and PL motivation
