@@ -4,8 +4,8 @@ semantic side, LNL models are very compact and intuitive, but on the
 syntactic side, they correspond to a logic and type theory, called LNL
 logic, that allows one to reason with or without weakening and
 contraction without the need to annotate every formula of the logic
-with the of-course!  modality.  This is possible, because formulas
-like $A \to B$ are primitives of the logic, and not encoded using the
+with the of-course!  modality.  This is possible because formulas like
+$A \to B$ are primitives of the logic, and not encoded using the
 of-course! modality.  Therefore, we ask the question, ``can a similar
 elegant, intuitive, and flexible model and corresponding logic be
 defined for the Lambek Calculus?''
@@ -54,8 +54,8 @@ eA$.  Thus providing a second solution to the problem, but we go
 further, and show such a modality can be given for associativity. It
 arises as the induced comonad of the adjoint model where $\cat{M}_1$
 is a monoidal category, and $\cat{M}_2$ is a vanilla magmoidal
-category with a unit.  Then we will obtain the property $(aA \otimes
-aB) \otimes aC) \multimap aA \otimes (aB \otimes aC)$.
+category with a unit.  Then we will obtain the isomorphism $(aA
+\otimes aB) \otimes aC) \multimap aA \otimes (aB \otimes aC)$.
 
 Linguists as well as computer scientists have found many applications
 of substructural logics that contain more than one tensor product
@@ -66,11 +66,34 @@ implications, but there sequents $\Gamma \vdash A$ depend on contexts
 $\Gamma$ that are trees with multiple different branching nodes
 instead of lists.  The branching nodes are necessary to accommodate
 multiple different tensor products with different structural
-properties.  We show how adjoint models can be used to build similar
-logics, but without the need for multiple different branching nodes.
-Furthermore, adjoints compose, and this property can be exploited to
-compose modalities.
+properties.  We introduce, but leave the details to future work, the
+idea of using adjoint models to build similar logics, but without the
+need for multiple different branching nodes.  Furthermore, adjoints
+compose, and this property can be exploited to compose modalities.
 
+We introduce the idea above of having a modality for exchange and one
+for associativity, but what about weakening and contraction?  Indeed
+it is possible to give modalities for just weakening, $wA$, and just
+contraction, $cA$, using adjoint models.  Now that we have each
+structural rule isolated into their own modality is it possible to put
+them together to form new modalities that combine structural rules?
+The answer to this question has already been show to be positive, at
+least for weakening and contraction, but we extend this line of work
+to include exchange and associativity as well.
+Jacobs~\cite{JACOBS199473} used monads and distributive laws to relate
+modalities, but Melli{\'e}s~\cite{Mellies:2004} shows how to use
+adjunctions to accomplish the same, but in a more intuitive and
+natural way.  Thus, this part of our work is a natural extension of
+Melli{\'e}s'.  At this point we are starting to see that this is a
+very general framework.
 
-
-%% Security, concurrency, and PL motivation
+This work can be used to define a general core logic that is capable
+of encoding several different substructural logics.  Some examples are
+intuitionistic linear logic, affine logic, contraction logic, and the
+(non-associative) Lambek Calculus.  This does have some similarities
+to Licata et al.~\cite{licata2017fibrational}, but there they embrace
+the tree based structures with multiple different branching node for
+contexts from the logic of bunched implications.  However, our work is
+trying to understand if this is truly necessary, and if adjunctions
+provide a means of, at the very least, hiding these multiple branching
+nodes.  Thus, adjunctions may lead to a simplification.

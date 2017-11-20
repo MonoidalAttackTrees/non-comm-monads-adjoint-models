@@ -3,8 +3,7 @@
 \providecommand{\event}{LINEARITY 2018} % Name of the event you are submitting to
 \usepackage{underscore}           % Only needed if you use pdflatex.
 
-\usepackage{amssymb,amsmath}
-\usepackage{amsthm}
+\usepackage{amssymb,amsmath,amsthm}
 \usepackage{cmll}
 \usepackage{txfonts}
 \usepackage{graphicx}
@@ -130,6 +129,13 @@
   \end{center}
 }
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+
 \title{Adjoint Models for the (Non-Associative) Lambek Calculus}
 
 \author{Jiaming Jiang
@@ -155,13 +161,17 @@ Harley Eades III
 \input{introduction}
 % section introduction (end)
 
+\section{Adjoint Models for the (non-associative) Lambek Calculus}
+\label{sec:adjoint-models}
+\input{adjoint-models}
+% section adjoint_models (end)
+
 \section{Conclusion}
 \label{sec:conclusion}
 
 % section conclusion (end)
 
 \bibliographystyle{plainurl}
-\nocite{*}
 \bibliography{ref}
 
 \end{document}
