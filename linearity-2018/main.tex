@@ -22,7 +22,7 @@
 
 %% \input{Elle-ND-inc}
 %% \input{Elle-inc}
-%% \input{LNL-inc}
+\input{LAM-inc}
 
 %% This renames Barr's \to to \mto.  This allows us to use \to for imp
 %% and \mto for a inline morphism.
@@ -136,7 +136,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{example}[theorem]{Example}
 
-\title{Adjoint Models for the (Non-Associative) Lambek Calculus}
+\title{Adjoint Models for the Lambek Calculus}
 
 \author{Jiaming Jiang
 \institute{Computer Science \\ North Carolina State University \\ Raleigh, North Carolina, USA}
@@ -146,7 +146,7 @@ Harley Eades III
 \institute{Computer Science \\ Augusta University \\ Augusta, Georgia, USA}
 \email{harley.eades@gmail.com}
 }
-\def\titlerunning{Adjoint Models for the (Non-Associative) Lambek Calculus}
+\def\titlerunning{Adjoint Models for the Lambek Calculus}
 \def\authorrunning{J. Jiang \& H. Eades III}
 
 \begin{document}
@@ -160,6 +160,11 @@ Harley Eades III
 \label{sec:introduction}
 \input{introduction}
 % section introduction (end)
+
+\section{The Lambek Calculus}
+\label{sec:the-lambek-calculus}
+\input{LAM-ott}
+% section the (end)
 
 \section{Adjoint Models for the (non-associative) Lambek Calculus}
 \label{sec:adjoint-models}

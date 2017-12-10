@@ -1,0 +1,196 @@
+% Input variables.
+metavar vars ,  n , a, x , y, z , w , m , o ::=  
+indexvar ivar, i , k , j , l ::=
+metavar const, b ::= 
+
+grammar
+
+
+% Lambek category:
+A, B, C, DT {{tex D}} :: 'lform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | Unit    ::   :: UnitS
+  {{tex \mathsf{Unit} }}
+  | A (>) B ::   :: Lambek
+  | A (x) B :: M :: Tensor
+  | A -> B  ::   :: RFun          
+  | A <- B  ::   :: LFun          
+  | ( A )   :: M :: Parens 
+  | h( A )  :: M :: HiddenParens 
+  {{ tex [[A]] }}
+
+p :: 'pattern_' ::=
+  | - :: :: hole
+  {{tex \star }}
+  | x :: :: var
+  | triv :: :: triv
+  {{tex \mathsf{triv} }}
+  | p (>) p' :: :: lambek
+
+t :: 'term_' ::=
+  | x :: :: Var
+  | b :: :: Const
+  | triv :: :: Unit
+  {{tex \mathsf{triv} }}
+  | let t1 : A be p in t2 :: :: let
+  {{tex \mathsf{let}\,[[t1]] : [[A]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
+  | t1 (>) t2 :: :: Tensor
+  | \l x : A . t :: :: LFun
+  {{tex \lambda_l [[x]] : [[A]].[[t]] }}
+  | \r x : A . t :: :: RFun
+  {{tex \lambda_r [[x]] : [[A]].[[t]] }}
+  | appl t1 t2   :: :: Appl
+  {{tex \mathsf{app}_l\,[[t1]]\,[[t2]] }}
+  | appr t1 t2   :: :: Appr
+  {{tex \mathsf{app}_r\,[[t1]]\,[[t2]] }}  
+  | [ t1 / x ] t2 :: M :: Subst2
+  | ( t )         :: S :: parens
+  | h( t )        :: M :: hparen
+  {{tex [[t]] }}
+
+G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | x : A   ::   :: El
+  | G1 , G2 ::   :: Ext1
+  | G [ D ] :: M :: Peak
+  | ( G )   :: S :: Paren
+
+V :: 'V_' ::=
+  | x :: :: Var
+  | V1 , V2 :: :: Ext
+  | ( V )   :: S :: Paren
+  | | G |   :: M :: Ctx
+
+formula :: 'formula_' ::=
+  | judgement            ::   :: judgement
+  | formula1 && formula2 :: M :: quad
+  {{tex [[formula1]] \quad [[formula2]] }}
+  | formula1 ... formulai :: M :: vec
+  | ( formula )          :: S :: parens
+  {{tex [[formula]] }}
+  | x nin FV ( t ) :: :: FV
+  {{tex [[x]] \not\in \mathsf{FV}([[t]]) }}
+  | x nin | G , D |     :: :: NiNCtx2
+  {{tex [[x]] \not\in | [[G]], [[D]] | }}
+
+terminals :: 'terminals_' ::=
+  | UnitT :: :: UnitT
+  {{tex \mathsf{UnitT} }}
+  | UnitS :: :: UnitS
+  {{tex \mathsf{UnitS} }}
+  | (x)  :: :: Tensor
+  {{tex \otimes }}
+  | (>)  :: :: Lambek
+  {{tex \triangleright }}
+  | (e)  :: :: ETensor
+  {{tex \circop{e} }}  
+  | (w)  :: :: WTensor
+  {{tex \circop{w} }}  
+  | (c)  :: :: CTensor
+  {{tex \circop{c} }}
+  | ->   :: :: LFun
+  {{tex \rightharpoonup }}
+  | <-   :: :: RFun
+  {{tex \leftharpoonup }}
+  | -o   :: :: Limp
+  {{tex \multimap }}
+  | |-c   :: :: VdashC
+  {{tex \vdash_\mathcal{C} }}
+  | |-l   :: :: VdashL
+  {{tex \vdash_\mathcal{L} }}
+  | ~>   :: :: To
+  {{tex \leadsto }}
+ 
+defns
+  Jtype :: '' ::=
+
+defn
+  G |- t : A :: :: naty :: 'NA_'
+  {{tex [[G]] \vdash [[t]] : [[A]] }}
+by
+
+  -------------- :: id
+  x : A |- x : A
+
+  ---------------- :: unitI
+  . |- triv : Unit
+
+  G |- t1 : Unit && D[.] |- t2 : A
+  --------------------------------------- :: unitE
+  D[G] |- let t1 : Unit be triv in t2 : A
+
+  G |- t1 : A && D |- t2 : B
+  --------------------------- :: tenI
+  G, D |- t1 (>) t2 : A (>) B
+
+  G |- t1 : A (>) B && D[x : A, y : B] |- t2 : C
+  ---------------------------------------------- :: tenE2
+  D[G]  |- let t1 : A (>) B be x (>) y in t2 : C
+
+  G, x : A |- t : B
+  ----------------------- :: imprI
+  G |- \r x:A.t : A -> B
+
+  G |- t1 : A -> B && D |- t2 : A
+  ------------------------------- :: imprE
+  G, D |- appr t1 t2 : B
+
+  x : A, G |- t : B
+  ----------------------- :: implI
+  G |- \l x:A.t : B <- A
+
+  G |- t1 : B <- A && D |- t2 : A
+  --------------------------------- :: implE
+  D, G |- appl t1 t2 : B
+
+defns
+  Reduction :: '' ::=
+
+defn
+  t1 ~> t2 :: :: tred :: 'Tred_'
+by 
+
+  ------------------------------------ :: letU
+  let triv : Unit be triv in t ~> t
+
+  ---------------------------------------------------------- :: letT2
+  let t1 (>) t2 : A (>) B be x (>) y in t3 ~> [t1/x][t2/y]t3
+
+  ------------------------------- :: lamL
+  appl (\l x:A.t1) t2 ~> [t2/x]t1
+
+  ------------------------------- :: lamR
+  appr (\r x:A.t1) t2 ~> [t2/x]t1
+  
+  t1 ~> t1'
+  ------------------------- :: appl1
+  appl t1 t2 ~> appl t1' t2
+
+  t2 ~> t2'
+  ------------------------- :: appl2
+  appl t1 t2 ~> appl t1 t2'
+
+  t1 ~> t1'
+  ------------------------- :: appr1
+  appr t1 t2 ~> appr t1' t2
+
+  t2 ~> t2'
+  ------------------------- :: appr2
+  appr t1 t2 ~> appr t1 t2'
+
+  ---------------------------------------------------------------- :: applLet
+  appl (let t : A be p in t1) t2 ~> let t : A be p in (appl t1 t2)
+
+  ---------------------------------------------------------------- :: apprLet
+  appr (let t : A be p in t1) t2 ~> let t : A be p in (appr t1 t2)
+
+  ---------------------------------------------------------------------------------------------- :: letLet
+  let (let t2 : A be p1 in t1) : B be p2 in t3 ~> let t2 : A be p1 in let t1 : B be p2 in t3
+
+  -------------------------------------------------------------------------------------- :: letAppl
+  let t1 : A be p in (appl t1 t2) ~> appl (let t1 : A be p in t1) (let t1 : A be p in t2)
+
+  --------------------------------------------------------------------------------------- :: letAppr
+  let t1 : A be p in (appr t1 t2) ~> appr (let t1 : A be p in t1) (let t1 : A be p in t2)

@@ -1,0 +1,58 @@
+The Syntactic Calculus was first introduced by
+Joachim Lambek in 1958 \cite{Lambek1958}. Since then the rechristened
+Lambek Calculus has had as its main motivation providing an
+explanation of the mathematics of sentence structure, starting from
+the author's algebraic intuitions. The Lambek Calculus is the core of
+logical Categorial Grammar.  The first use of the term “categorial
+grammar” seems to be in the title of Bar-Hillel, Gaifman and Shamir
+(1960), but categorial grammar began with Ajdukiewicz (1935) quite a
+few years earlier. After a period of ostracism, around 1980 the Lambek
+Calculus was taken up by logicians interested in Computational
+Linguistics, especially the ones interested in Categorial
+Grammars.
+
+In Computational Linguistics, the Lambek Calculus has seen a
+significant number of works written about it, apart from a number of
+monographs that deal with logical and linguistic aspects of the
+generalized type-logical approach.  For a shorter introduction, see
+Moortgat's entry on the Stanford Encyclopedia of Philosophy on Type
+Logical Grammar \cite{MoortgatSEP}.  Type Logical Grammar situates the
+type-logical approach within the framework of Montague's Universal
+Grammar and presents detailed linguistic analyses for a substantive
+fragment of syntactic and semantic phenomena in the grammar of
+English.  Type Logical Semantics offers a general introduction to
+natural language semantics studied from a type-logical perspective.
+
+The Lambek Calculus also has the potential for many applications in
+other areas of computer science, such as, modeling processes.  Linear
+Logic has been at the forefront of the study of process calculi for
+many years \cite{HONDA20102223,Pratt:1997,ABRAMSKY19945}. We can think
+of the commutative tensor product of linear logic as a parallel
+operator.  For example, given a process $[[A]]$ and a process $[[B]]$,
+then we can form the process $[[A (x) B]]$ which runs both processes
+in parallel.  If we remove commutativity from the tensor product we
+obtain a sequential composition instead of parallel composition.  That
+is, the process $[[A (>) B]]$ first runs process $[[A]]$ and then
+process $[[B]]$ in that order.  Paraphrasing Vaughan Pratt, ``The
+sequential composition operation has no evident counterpart in type
+theory'' see page 11 of \cite{Pratt:1997}.  We believe that the Lambek
+Calculus will lead to filling this hole, and the results of this paper
+as a means of obtaining a theory with both a parallel operator and a
+sequential composition operator.  This work thus has a potential to
+impact research in programming languages and computer security where
+both linear logic and sequential composition play important roles.
+
+There are several interesting questions, considered for Linear Logic,
+that could also be asked of the Lambek Calculus or its extensions.
+One of them, posed by Morrill et al is whether we can extend the
+Lambek Calculus with a modality that does for the structural rule of
+\textit{(exchange)} what the modality \textit{of course} `!' does for
+the rules of \textit{(weakening)} and \textit{(contraction)}.  A
+preliminary proposal, which answers this question affirmatively, is
+set forward in this paper. The answer was provided in semantical terms
+in the first version of this work. Here we provide also the more
+syntactic description of these modalities. Building up from work of
+Ciabattoni, Galatos and Terui in \cite{Ciabattoni2012} and others that
+describe how to transform systems of axioms into cut-free sequent
+rules, we aim to refine the algebraization of proof theory.
+
