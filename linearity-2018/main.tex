@@ -23,6 +23,18 @@
 %% \input{Elle-ND-inc}
 %% \input{Elle-inc}
 \input{LAM-inc}
+\renewcommand{\LAMdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+%% OTT Renaming
+\renewcommand{\LAMdruleNAXXidName}{\text{id}}
+\renewcommand{\LAMdruleNAXXunitIName}{\mathsf{Unit}_i}
+\renewcommand{\LAMdruleNAXXunitEName}{\mathsf{Unit}_e}
+\renewcommand{\LAMdruleNAXXtenIName}{\rhd_i}
+\renewcommand{\LAMdruleNAXXtenETwoName}{\rhd_e}
+\renewcommand{\LAMdruleNAXXimprIName}{\rightharpoonup_i}
+\renewcommand{\LAMdruleNAXXimprEName}{\rightharpoonup_e}
+\renewcommand{\LAMdruleNAXXimplIName}{\leftharpoonup_i}
+\renewcommand{\LAMdruleNAXXimplEName}{\leftharpoonup_e}
+%% End Ott Renaming
 
 %% This renames Barr's \to to \mto.  This allows us to use \to for imp
 %% and \mto for a inline morphism.

@@ -9,7 +9,7 @@ grammar
 % Lambek category:
 A, B, C, DT {{tex D}} :: 'lform_' ::=
   | Base    ::   :: Base          
-  {{tex \mathsf{B} }}
+  {{tex \mathsf{X} }}
   | Unit    ::   :: UnitS
   {{tex \mathsf{Unit} }}
   | A (>) B ::   :: Lambek
@@ -53,7 +53,7 @@ G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
   | .       ::   :: Empty
   {{tex \cdot }}
   | x : A   ::   :: El
-  | G1 , G2 ::   :: Ext1
+  | G1 ; G2 ::   :: Ext1
   | G [ D ] :: M :: Peak
   | ( G )   :: S :: Paren
 
@@ -123,27 +123,27 @@ by
 
   G |- t1 : A && D |- t2 : B
   --------------------------- :: tenI
-  G, D |- t1 (>) t2 : A (>) B
+  G;D |- t1 (>) t2 : A (>) B
 
-  G |- t1 : A (>) B && D[x : A, y : B] |- t2 : C
+  G |- t1 : A (>) B && D[x : A;y : B] |- t2 : C
   ---------------------------------------------- :: tenE2
   D[G]  |- let t1 : A (>) B be x (>) y in t2 : C
 
-  G, x : A |- t : B
+  G;x : A |- t : B
   ----------------------- :: imprI
   G |- \r x:A.t : A -> B
 
   G |- t1 : A -> B && D |- t2 : A
   ------------------------------- :: imprE
-  G, D |- appr t1 t2 : B
+  G;D |- appr t1 t2 : B
 
-  x : A, G |- t : B
+  x : A; G |- t : B
   ----------------------- :: implI
   G |- \l x:A.t : B <- A
 
   G |- t1 : B <- A && D |- t2 : A
   --------------------------------- :: implE
-  D, G |- appl t1 t2 : B
+  D;G |- appl t1 t2 : B
 
 defns
   Reduction :: '' ::=

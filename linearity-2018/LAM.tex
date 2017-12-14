@@ -40,3 +40,66 @@ sequential composition operator.  This work thus has a potential to
 impact research in programming languages and computer security where
 both linear logic and sequential composition play important roles.
 
+We now introduce the Lambek Calculus in the form of a term assignment
+for intuitionistic linear logic without exchange.  Then in later
+sections we will extend this basic system. First, we give the syntax
+of the Lambek Calculus.
+\begin{definition}
+  \label{def:Lambek-syntax}
+  The following grammar describes the syntax of Lambek Calculus:
+  \begin{center}
+    \begin{math}
+      \begin{array}{lll}
+        \text{(Types)} & [[A]],[[B]],[[C]],[[DT]] ::= [[Base]] \mid [[Unit]] \mid [[A (>) B]] \mid [[A -> B]] \mid [[B <- A]]\\
+        \text{(Terms)} & [[t]] ::= [[x]] \mid [[triv]] \mid [[t1 (>) t2]] \mid [[let t1 : A be p in t2]] \mid [[\l x : A.t]] \mid [[\r x : A . t]] \mid [[appl t1 t2]] \mid [[appr t1 t2]]\\
+        \text{(Patterns)} & [[p]] ::= [[triv]] \mid [[x (>) y]]\\
+        \text{(Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[G;D]]\\
+        \text{(Typing Judgment)} & [[G |- t : A]]\\
+      \end{array}
+    \end{math}
+  \end{center}
+\end{definition}
+
+The syntax for types are of the typical form for the Lambek Calculus.
+We have an atomic type $[[Base]]$, the unit type $[[Unit]]$, a
+non-commutative tensor product $[[A (>) B]]$, right implication $[[A
+    -> B]]$, and left implication $[[B <- A]]$.  Terms correspond to
+introduction and elimination forms for each type.  For example, $[[t1
+    (>) t2]]$ introduces a tensor, and $[[let t1 : A (>) B be x (>) y
+    in t2]]$ eliminates a tensor.  Typing context, $[[G]]$, are
+ordered sequences of pairs of free variables with their types denoted
+by $[[x : A]]$.  Given two typing contexts $[[G]]$ and $[[D]]$ we
+denote their concatenation by, $[[G;D]]$, we use a semicolon here to
+emphasize the fact that the contexts are ordered.
+
+One of the most interesting aspects of the Lambek Calculus is that it
+contains two implications, $[[A -> B]]$ and $[[B <- A]]$, but why is
+that?  Typically, implication is introduced from knowing $[[G;x : A |-
+    t : B]]$ holds, but what about $[[x : A;G |- t : B]]$?  These
+happen to be different in the Lambek Calculus, because, as we say
+above, contexts are ordered.  However, we need to be able to discharge
+both of the assumptions, $[[x : A]]$, thus leading to requiring two
+implications.  This will be reflected in the typing rules given in
+Figure~\ref{fig:Lambek-typing}.
+\begin{figure}
+  \begin{mdframed}
+    \begin{mathpar}
+      \LAMdruleNAXXid{} \and
+      \LAMdruleNAXXunitI{} \and
+      \LAMdruleNAXXunitE{} \and
+      \LAMdruleNAXXtenI{} \and
+      \LAMdruleNAXXtenETwo{} \and
+      \LAMdruleNAXXimprI{} \and
+      \LAMdruleNAXXimprE{} \and
+      \LAMdruleNAXXimplI{} \and
+      \LAMdruleNAXXimplE{}
+    \end{mathpar}
+  \end{mdframed}
+  \caption{Typing Rules for the Lambek Calculus}
+  \label{fig:Lambek-typing}
+\end{figure}
+
+There is an introduction and elimination rule for each type.  Some of
+the typing rules need to examine a subsequence of the typing context.
+The notation for this examination is $[[G[D] ]]$ and is defined as
+follows:
