@@ -1,60 +1,23 @@
-Joachim Lambek first introduced the Syntactic Calculus, now known as
-the Lambek Calculus, in 1958 \cite{Lambek1958}.  Since then the Lambek
-Calculus has largely been motivated by providing an explanation of the
-mathematics of sentence structure, and can be found at the core of
-Categorial Grammar; a term first used in the title of Bar-Hillel,
-Gaifman and Shamir (1960), but categorical grammar began with
-Ajdukiewicz (1935) quite a few years earlier. For many years the
-Lambek Calculus went without use, but around 1980 it was taken up by
-logicians interested in Computational Linguistics, especially the ones
-interested in Categorial Grammars.
-
-In Computational Linguistics, the Lambek Calculus has seen a
-significant number of works written about it, apart from a number of
-monographs that deal with logical and linguistic aspects of the
-generalized type-logical approach.  For a shorter introduction, see
-Moortgat's entry on the Stanford Encyclopedia of Philosophy on Type
-Logical Grammar \cite{MoortgatSEP}.  Type Logical Grammar situates the
-type-logical approach within the framework of Montague's Universal
-Grammar and presents detailed linguistic analyses for a substantive
-fragment of syntactic and semantic phenomena in the grammar of
-English.  Type Logical Semantics offers a general introduction to
-natural language semantics studied from a type-logical perspective.
-
-The Lambek Calculus also has the potential for many applications in
-other areas of computer science, such as, modeling processes.  Linear
-Logic has been at the forefront of the study of process calculi for
-many years \cite{HONDA20102223,Pratt:1997,ABRAMSKY19945}. We can think
-of the commutative tensor product of linear logic as a parallel
-operator.  For example, given a process $[[A]]$ and a process $[[B]]$,
-then we can form the process $[[A (x) B]]$ which runs both processes
-in parallel.  If we remove commutativity from the tensor product we
-obtain a sequential composition instead of parallel composition.  That
-is, the process $[[A (>) B]]$ first runs process $[[A]]$ and then
-process $[[B]]$ in that order.  Paraphrasing Vaughan Pratt, ``The
-sequential composition operation has no evident counterpart in type
-theory'' see page 11 of \cite{Pratt:1997}.  We believe that the Lambek
-Calculus will lead to filling this hole, and the results of this paper
-as a means of obtaining a theory with both a parallel operator and a
-sequential composition operator.  This work thus has a potential to
-impact research in programming languages and computer security where
-both linear logic and sequential composition play important roles.
-
 We now introduce the Lambek Calculus in the form of a term assignment
-for intuitionistic linear logic without exchange.  Then in later
-sections we will extend this basic system. First, we give the syntax
-of the Lambek Calculus.
+for intuitionistic linear logic, but in LNL style.
 \begin{definition}
   \label{def:Lambek-syntax}
-  The following grammar describes the syntax of Lambek Calculus:
-  \begin{center}
+  The following grammar describes the syntax of the adjoint
+  formalization of the Lambek Calculus:
+  \begin{center}\vspace{-10px}
     \begin{math}
       \begin{array}{lll}
-        \text{(Types)} & [[A]],[[B]],[[C]],[[DT]] ::= [[Base]] \mid [[Unit]] \mid [[A (>) B]] \mid [[A -> B]] \mid [[B <- A]]\\
-        \text{(Terms)} & [[t]] ::= [[x]] \mid [[triv]] \mid [[t1 (>) t2]] \mid [[let t1 : A be p in t2]] \mid [[\l x : A.t]] \mid [[\r x : A . t]] \mid [[appl t1 t2]] \mid [[appr t1 t2]]\\
-        \text{(Patterns)} & [[p]] ::= [[triv]] \mid [[x (>) y]]\\
-        \text{(Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[G;D]]\\
-        \text{(Typing Judgment)} & [[G |- t : A]]\\
+        \text{(NC Types)} & [[A]],[[B]],[[C]],[[DT]] ::= [[UnitS]] \mid [[A (>) B]] \mid [[A -> B]] \mid [[B <- A]] \mid [[F X]]\\
+        \text{(CM Types)} & [[W]],[[X]],[[Y]],[[Z]] ::= [[UnitT]] \mid [[X (x) Y]] \mid [[X -o Y]] \mid [[Gf A]]\\
+        \text{(NC Terms)} & [[s]] ::= [[x]] \mid [[trivS]] \mid [[s1 (>) s2]] \mid [[let s1 : A be p in s2]] \mid [[\l x : A.s]] \mid [[\r x : A . s]] \mid [[appl s1 s2]] \mid [[appr s1 s2]] \\
+        & \,\,\,\,\,\,\,\,\,\mid [[F t]] \mid [[let t : X be q in s]]\\
+        \text{(CM Terms)} & [[t]] ::= [[x]] \mid [[trivT]] \mid [[t1 (X) t2]] \mid [[let t1 : X be q in t2]] \mid [[\x:X.t]] \mid [[t1 t2]] \mid [[ex t1 , t2 with x1 , x2 in t3]] \mid [[Gf s]]\\
+        \text{(NC Patterns)} & [[p]] ::= [[trivSp]] \mid [[x (>) y]] \mid [[F p]]\\
+        \text{(CM Patterns)} & [[q]] ::= [[trivTp]] \mid [[x (X) y]] \mid [[Gf q]]\\
+        \text{(NC Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[x : X]] \mid [[G;D]]\\
+        \text{(CM Contexts)} & [[I]],[[P]] ::= [[.]] \mid [[x : X]] \mid [[I,P]]\\
+        \text{(NC Typing Judgment)} & [[G |-l s : A]]\\
+        \text{(CM Typing Judgment)} & [[I |-c t : X]]\\
       \end{array}
     \end{math}
   \end{center}
@@ -79,27 +42,5 @@ that?  Typically, implication is introduced from knowing $[[G;x : A |-
 happen to be different in the Lambek Calculus, because, as we say
 above, contexts are ordered.  However, we need to be able to discharge
 both of the assumptions, $[[x : A]]$, thus leading to requiring two
-implications.  This will be reflected in the typing rules given in
-Figure~\ref{fig:Lambek-typing}.
-\begin{figure}
-  \begin{mdframed}
-    \begin{mathpar}
-      \LAMdruleNAXXid{} \and
-      \LAMdruleNAXXunitI{} \and
-      \LAMdruleNAXXunitE{} \and
-      \LAMdruleNAXXtenI{} \and
-      \LAMdruleNAXXtenETwo{} \and
-      \LAMdruleNAXXimprI{} \and
-      \LAMdruleNAXXimprE{} \and
-      \LAMdruleNAXXimplI{} \and
-      \LAMdruleNAXXimplE{}
-    \end{mathpar}
-  \end{mdframed}
-  \caption{Typing Rules for the Lambek Calculus}
-  \label{fig:Lambek-typing}
-\end{figure}
+implications.  
 
-There is an introduction and elimination rule for each type.  Some of
-the typing rules need to examine a subsequence of the typing context.
-The notation for this examination is $[[G[D] ]]$ and is defined as
-follows:

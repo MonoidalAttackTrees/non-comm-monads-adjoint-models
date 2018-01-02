@@ -5,7 +5,6 @@ metavar const, b ::=
 
 grammar
 
-
 % Lambek category:
 A, B, C, DT {{tex D}} :: 'lform_' ::=
   | Base    ::   :: Base          

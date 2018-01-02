@@ -34,23 +34,21 @@ quick : quick-pdf
 
 pdf : $(PDF)
 
-logic-ott.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott Elle-to-LNL-ott.tex
+logic-output.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott Elle-to-LNL-inc.tex
 	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
-		-tex_filter logic.tex logic-ott1.tex
-	scripts/prepr_double_ott.sh logic-ott1.tex
-	@$(OTT) $(OTT_FLAGS) -i Elle/Elle.ott -o Elle-inc.tex -tex_name_prefix Elle \
-		-tex_filter logic-ott1.tex logic-ott.tex
+		-tex_filter logic.tex logic-output1.tex
+	scripts/prepr_double_ott.sh logic-output1.tex
+	@$(OTT) $(OTT_FLAGS) -i Elle/Elle.ott -o Elle-output.tex -tex_name_prefix Elle \
+		-tex_filter logic-output1.tex logic-output.tex
 
-LAM-ott.tex : LAM/LAM.ott LAM.tex
-	@$(OTT) $(OTT_FLAGS) -i LAM/LAM.ott -o LAM-inc.tex -tex_name_prefix LAM \
-		-tex_filter LAM.tex LAM-ott.tex
-
-ott : main.text logic-ott.tex Makefile
+LAM-output.tex : LAM/LAM.ott LAM.tex
+	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
+		-tex_filter LAM.tex LAM-output.tex	
 
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex adjoint-models.tex LAM-ott.tex
+$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex adjoint-models.tex LAM-output.tex
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	bibtex $(TexFileName)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
@@ -60,4 +58,4 @@ quick-pdf : $(OTTOutputFile) Makefile introduction.tex
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 
 clean :
-	rm -f *.aux *.dvi *.ps *.log *-ott.tex *-output.tex *.bbl *.blg *.rel *~ *.vtc *.out *.spl *-inc.tex
+	rm -f *.aux *.dvi *.ps *.log *-output.tex *.bbl *.blg *.rel *~ *.vtc *.out *.spl *-inc.tex *.pag

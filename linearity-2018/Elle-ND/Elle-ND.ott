@@ -7,7 +7,7 @@ grammar
 
 
 % Lambek category:
-A, B, C :: 'lform_' ::=
+A, B, C, DT {{tex D }} :: 'lform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
   | UnitS   ::   :: UnitS
@@ -22,7 +22,7 @@ A, B, C :: 'lform_' ::=
   {{tex \mathsf{F}[[X]] }}
 
 % Symmetric monoidal closed category:
-X, Y, Z :: 'sform_' ::=
+W, X, Y, Z :: 'sform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
   | UnitT   ::   :: UnitT
@@ -39,13 +39,13 @@ T :: 'type_' ::=
   | A :: :: LType
   | X :: :: SType
 
-p :: 'pattern_' ::=
+p, q :: 'pattern_' ::=
   | - :: :: hole
   {{tex \star }}
   | x :: :: var
-  | trivT :: :: trivT
+  | trivTp :: :: trivT
   {{tex \mathsf{triv} }}
-  | trivS :: :: trivS
+  | trivSp :: :: trivS
   {{tex \mathsf{triv} }}
   | p (x) p' :: :: ten
   | p (>) p' :: :: lambek
@@ -58,7 +58,7 @@ s :: 'term_' ::=
   | x :: :: Var
   | b :: :: Const
   | trivS :: :: UnitS
-  {{tex \mathsf{trivS} }}
+  {{tex \mathsf{triv} }}
   | let s1 : A be p in s2 :: :: let1
   {{tex \mathsf{let}\,[[s1]] : [[A]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
   | let t : X be p in s :: :: let2
@@ -91,10 +91,10 @@ t :: 'sterm_' ::=
   {{tex \mathsf{triv} }}
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
-  | t1 (x) t2 :: :: Tensor
+  | t1 (X) t2 :: :: Tensor
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
-  | app t1 t2   :: :: App
+  | t1 t2   :: :: App
   {{tex [[t1]] [[t2]] }}  
   | ex t1 , t2 with x1 , x2 in t3 :: :: Ex
   {{tex \mathsf{ex}\,[[t1]],[[t2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[t3]] }}
@@ -116,7 +116,7 @@ G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
   {{tex \cdot }}
   | x : A   ::   :: El
   | I       ::   :: CCtx
-  | G1 , G2 ::   :: Ext
+  | G1 ; G2 ::   :: Ext
   | ( G )   :: S :: Paren
 
 formula :: 'formula_' ::=
@@ -134,11 +134,7 @@ formula :: 'formula_' ::=
   {{tex [[x]] \not\in | [[G]], [[D]] | }}
 
 terminals :: 'terminals_' ::=
-  | UnitT :: :: UnitT
-  {{tex \mathsf{UnitT} }}
-  | UnitS :: :: UnitS
-  {{tex \mathsf{UnitS} }}
-  | (x)  :: :: Tensor
+  | (X)  :: :: Tensor
   {{tex \otimes }}
   | (>)  :: :: Lambek
   {{tex \triangleright }}

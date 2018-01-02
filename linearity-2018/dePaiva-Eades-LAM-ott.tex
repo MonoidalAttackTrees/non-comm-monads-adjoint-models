@@ -1,0 +1,1001 @@
+%% This file is from the de Paiva and Eades LAM formalization.
+%%
+%% DO NOT DELETE
+\newcommand{\Ldrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\quad\Ldrulename{#4}}}
+\newcommand{\Lusedrule}[1]{\[#1\]}
+\newcommand{\Lpremise}[1]{ #1 \\}
+\newenvironment{Ldefnblock}[3][]{ \framebox{\mbox{#2}} \quad #3 \\[0pt]}{}
+\newenvironment{Lfundefnblock}[3][]{ \framebox{\mbox{#2}} \quad #3 \\[0pt]\begin{displaymath}\begin{array}{l}}{\end{array}\end{displaymath}}
+\newcommand{\Lfunclause}[2]{ #1 \equiv #2 \\}
+\newcommand{\Lnt}[1]{\mathit{#1}}
+\newcommand{\Lmv}[1]{\mathit{#1}}
+\newcommand{\Lkw}[1]{\mathbf{#1}}
+\newcommand{\Lsym}[1]{#1}
+\newcommand{\Lcom}[1]{\text{#1}}
+\newcommand{\Ldrulename}[1]{\textsc{#1}}
+\newcommand{\Lcomplu}[5]{\overline{#1}^{\,#2\in #3 #4 #5}}
+\newcommand{\Lcompu}[3]{\overline{#1}^{\,#2<#3}}
+\newcommand{\Lcomp}[2]{\overline{#1}^{\,#2}}
+\newcommand{\Lgrammartabular}[1]{\begin{supertabular}{llcllllll}#1\end{supertabular}}
+\newcommand{\Lmetavartabular}[1]{\begin{supertabular}{ll}#1\end{supertabular}}
+\newcommand{\Lrulehead}[3]{$#1$ & & $#2$ & & & \multicolumn{2}{l}{#3}}
+\newcommand{\Lprodline}[6]{& & $#1$ & $#2$ & $#3 #4$ & $#5$ & $#6$}
+\newcommand{\Lfirstprodline}[6]{\Lprodline{#1}{#2}{#3}{#4}{#5}{#6}}
+\newcommand{\Llongprodline}[2]{& & $#1$ & \multicolumn{4}{l}{$#2$}}
+\newcommand{\Lfirstlongprodline}[2]{\Llongprodline{#1}{#2}}
+\newcommand{\Lbindspecprodline}[6]{\Lprodline{#1}{#2}{#3}{#4}{#5}{#6}}
+\newcommand{\Lprodnewline}{\\}
+\newcommand{\Linterrule}{\\[5.0mm]}
+\newcommand{\Lafterlastrule}{\\}
+\newcommand{\Lmetavars}{
+\Lmetavartabular{
+ $ \Lmv{vars} ,\, \Lmv{x} ,\, \Lmv{y} ,\, \Lmv{z} ,\, \Lmv{w} $ &  \\
+ $ \Lmv{ivar} ,\, \Lmv{i} ,\, \Lmv{j} ,\, \Lmv{l} $ &  \\
+}}
+
+\newcommand{\LA}{
+\Lrulehead{\Lnt{A}  ,\ \Lnt{B}  ,\ \Lnt{C}  ,\ \Lnt{D}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{ I }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{A}  \otimes  \Lnt{B} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{A}  \rightharpoonup  \Lnt{B} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{A}  \leftharpoonup  \Lnt{B} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ !  \Lnt{A} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \kappa  \Lnt{A} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{A}  \multimap  \Lnt{B} } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{(}  \Lnt{A}  \Lsym{)}} {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{A} } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{A} ^{\mathsf{e} } } {\textsf{M}}{}{}{}}
+
+\newcommand{\Lp}{
+\Lrulehead{\Lnt{p}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{ \mathsf{unit} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ - }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lmv{x}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{p_{{\mathrm{1}}}}  \otimes  \Lnt{p_{{\mathrm{2}}}} }{}{}{}{}}
+
+\newcommand{\Lt}{
+\Lrulehead{\Lnt{t}  ,\ \Lnt{n}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{\Lmv{x}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{unit} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{app}_l\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{app}_r\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{t_{{\mathrm{1}}}}  \otimes  \Lnt{t_{{\mathrm{2}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \lambda_l  \Lmv{x} : \Lnt{A} . \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \lambda_r  \Lmv{x} : \Lnt{A} . \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\, \Lnt{p} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{copy}\, \Lnt{t'} \,\mathsf{as}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{in}\, \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{discard}\, \Lnt{t'} \,\mathsf{in}\, \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{promote}_!\, \Lnt{t'} \,\mathsf{for}\, \Lnt{t''} \,\mathsf{in}\, \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{derelict}_!\, \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{promote}_\kappa\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\, \Lnt{t_{{\mathrm{2}}}} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{derelict}_\kappa\, \Lnt{t} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \lambda  \Lmv{x} : \Lnt{A} . \Lnt{t} } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}} } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \overrightarrow{ \Lnt{t} } } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \overrightarrow{ \Lnt{t} } } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ (  \Lnt{t}  ) } {\textsf{S}}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lnt{t}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}} {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{t} } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{t} ^{\mathsf{e} } } {\textsf{M}}{}{}{}}
+
+\newcommand{\LG}{
+\Lrulehead{\Gamma}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{ \cdot }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{A}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lmv{x}  \Lsym{:}  \Lnt{A}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Gamma  \Lsym{,}  \Gamma'}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \overrightarrow{ \Lmv{x} } : ! \Gamma } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \overrightarrow{ \Lmv{x} } : \kappa  \Gamma } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{(}  \Gamma  \Lsym{)}} {\textsf{S}}{}{}{}\Lprodnewline
+\Lprodline{|}{ !  \Gamma } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \kappa  \Gamma } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Gamma } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Gamma ^{\mathsf{e} } } {\textsf{M}}{}{}{}}
+
+\newcommand{\Lterminals}{
+\Lrulehead{\Lnt{terminals}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{ \otimes }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{1}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{0}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Box }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \models }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \vdash }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathop{\star} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \gg }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Box }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \lambda }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \redto }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \redto^* }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \succeq }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \preceq }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \rightarrow }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \leftarrow }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Yleft }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \redto^* }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{=}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \equiv }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \cong }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathop{\perp} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \top }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \bullet }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathop{\sim} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \lambda }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mu }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \neq }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \mathsf{FV} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \in }{}{}{}{}}
+
+\newcommand{\Lformula}{
+\Lrulehead{\Lnt{formula}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{\Lnt{judgement}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{formula} ^{\mathsf{e} } } {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{formula}  \preceq  \Lnt{formula'}} {\textsf{M}}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{formula}  \qquad  \Lnt{formula'} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lsym{(}  \Lnt{formula}  \Lsym{)}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{formula} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lmv{x}  \not\in \mathsf{FV}( \Lnt{t} ) }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{t}  \Lsym{=}  \Lnt{t'}} {\textsf{M}}{}{}{}}
+
+\newcommand{\LJtyp}{
+\Lrulehead{\Lnt{Jtyp}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{ \Gamma  \vdash  \Lnt{A} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Gamma  \vdash  \Lnt{t}  :  \Lnt{A} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t_{{\mathrm{2}}}} }{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{t_{{\mathrm{1}}}}  \redto^*  \Lnt{t_{{\mathrm{2}}}}}{}{}{}{}}
+
+\newcommand{\Ljudgement}{
+\Lrulehead{\Lnt{judgement}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{\Lnt{Jtyp}}{}{}{}{}}
+
+\newcommand{\LuserXXsyntax}{
+\Lrulehead{\Lnt{user\_syntax}}{::=}{}\Lprodnewline
+\Lfirstprodline{|}{\Lmv{vars}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lmv{ivar}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{A}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{p}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{t}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Gamma}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{terminals}}{}{}{}{}\Lprodnewline
+\Lprodline{|}{\Lnt{formula}}{}{}{}{}}
+
+\newcommand{\Lgrammar}{\Lgrammartabular{
+\LA\Linterrule
+\Lp\Linterrule
+\Lt\Linterrule
+\LG\Linterrule
+\Lterminals\Linterrule
+\Lformula\Linterrule
+\LJtyp\Linterrule
+\Ljudgement\Linterrule
+\LuserXXsyntax\Lafterlastrule
+}}
+
+% defnss
+% defns Jtyp
+%% defn Log
+\newcommand{\LdruleaxName}[0]{\Ldrulename{ax}}
+\newcommand{\Ldruleax}[1]{\Ldrule[#1]{%
+}{
+ \Lnt{A}  \vdash  \Lnt{A} }{%
+{\LdruleaxName}{}%
+}}
+
+
+\newcommand{\LdruleUrName}[0]{\Ldrulename{Ur}}
+\newcommand{\LdruleUr}[1]{\Ldrule[#1]{%
+}{
+  \cdot   \vdash   I  }{%
+{\LdruleUrName}{}%
+}}
+
+
+\newcommand{\LdrulecutName}[0]{\Ldrulename{cut}}
+\newcommand{\Ldrulecut}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{B}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{B} }{%
+{\LdrulecutName}{}%
+}}
+
+
+\newcommand{\LdruleUlName}[0]{\Ldrulename{Ul}}
+\newcommand{\LdruleUl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{A} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}   I   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{A} }{%
+{\LdruleUlName}{}%
+}}
+
+
+\newcommand{\LdruleTlName}[0]{\Ldrulename{Tl}}
+\newcommand{\LdruleTl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma  \Lsym{,}  \Lnt{A}  \Lsym{,}  \Lnt{B}  \Lsym{,}  \Gamma'  \vdash  \Lnt{C} }%
+}{
+ \Gamma  \Lsym{,}   \Lnt{A}  \otimes  \Lnt{B}   \Lsym{,}  \Gamma'  \vdash  \Lnt{C} }{%
+{\LdruleTlName}{}%
+}}
+
+
+\newcommand{\LdruleTrName}[0]{\Ldrulename{Tr}}
+\newcommand{\LdruleTr}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{1}}}  \vdash  \Lnt{A}   \qquad   \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash   \Lnt{A}  \otimes  \Lnt{B}  }{%
+{\LdruleTrName}{}%
+}}
+
+
+\newcommand{\LdruleIRlName}[0]{\Ldrulename{IRl}}
+\newcommand{\LdruleIRl}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{C}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}   \Lnt{A}  \rightharpoonup  \Lnt{B}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{C} }{%
+{\LdruleIRlName}{}%
+}}
+
+
+\newcommand{\LdruleILlName}[0]{\Ldrulename{ILl}}
+\newcommand{\LdruleILl}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{C}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}   \Lnt{B}  \leftharpoonup  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{C} }{%
+{\LdruleILlName}{}%
+}}
+
+
+\newcommand{\LdruleIRrName}[0]{\Ldrulename{IRr}}
+\newcommand{\LdruleIRr}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma  \Lsym{,}  \Lnt{A}  \vdash  \Lnt{B} }%
+}{
+ \Gamma  \vdash   \Lnt{A}  \rightharpoonup  \Lnt{B}  }{%
+{\LdruleIRrName}{}%
+}}
+
+
+\newcommand{\LdruleILrName}[0]{\Ldrulename{ILr}}
+\newcommand{\LdruleILr}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{A}  \Lsym{,}  \Gamma  \vdash  \Lnt{B} }%
+}{
+ \Gamma  \vdash   \Lnt{B}  \leftharpoonup  \Lnt{A}  }{%
+{\LdruleILrName}{}%
+}}
+
+
+\newcommand{\LdruleCName}[0]{\Ldrulename{C}}
+\newcommand{\LdruleC}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{B} }{%
+{\LdruleCName}{}%
+}}
+
+
+\newcommand{\LdruleWName}[0]{\Ldrulename{W}}
+\newcommand{\LdruleW}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B} }{%
+{\LdruleWName}{}%
+}}
+
+
+\newcommand{\LdruleBrName}[0]{\Ldrulename{Br}}
+\newcommand{\LdruleBr}[1]{\Ldrule[#1]{%
+\Lpremise{  !  \Gamma   \vdash  \Lnt{B} }%
+}{
+  !  \Gamma   \vdash   !  \Lnt{B}  }{%
+{\LdruleBrName}{}%
+}}
+
+
+\newcommand{\LdruleBlName}[0]{\Ldrulename{Bl}}
+\newcommand{\LdruleBl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B} }%
+}{
+ \Gamma  \Lsym{,}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B} }{%
+{\LdruleBlName}{}%
+}}
+
+
+\newcommand{\LdruleErName}[0]{\Ldrulename{Er}}
+\newcommand{\LdruleEr}[1]{\Ldrule[#1]{%
+\Lpremise{  \kappa  \Gamma   \vdash  \Lnt{B} }%
+}{
+  \kappa  \Gamma   \vdash   \kappa  \Lnt{B}  }{%
+{\LdruleErName}{}%
+}}
+
+
+\newcommand{\LdruleElName}[0]{\Ldrulename{El}}
+\newcommand{\LdruleEl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}   \kappa  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{B} }{%
+{\LdruleElName}{}%
+}}
+
+
+\newcommand{\LdruleEOneName}[0]{\Ldrulename{E1}}
+\newcommand{\LdruleEOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}   \kappa  \Lnt{A}   \Lsym{,}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{C} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{B}  \Lsym{,}   \kappa  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{C} }{%
+{\LdruleEOneName}{}%
+}}
+
+
+\newcommand{\LdruleETwoName}[0]{\Ldrulename{E2}}
+\newcommand{\LdruleETwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lnt{A}  \Lsym{,}   \kappa  \Lnt{B}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{C} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}   \kappa  \Lnt{B}   \Lsym{,}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{C} }{%
+{\LdruleETwoName}{}%
+}}
+
+\newcommand{\LdefnLog}[1]{\begin{Ldefnblock}[#1]{$ \Gamma  \vdash  \Lnt{A} $}{}
+\Lusedrule{\Ldruleax{}}
+\Lusedrule{\LdruleUr{}}
+\Lusedrule{\Ldrulecut{}}
+\Lusedrule{\LdruleUl{}}
+\Lusedrule{\LdruleTl{}}
+\Lusedrule{\LdruleTr{}}
+\Lusedrule{\LdruleIRl{}}
+\Lusedrule{\LdruleILl{}}
+\Lusedrule{\LdruleIRr{}}
+\Lusedrule{\LdruleILr{}}
+\Lusedrule{\LdruleC{}}
+\Lusedrule{\LdruleW{}}
+\Lusedrule{\LdruleBr{}}
+\Lusedrule{\LdruleBl{}}
+\Lusedrule{\LdruleEr{}}
+\Lusedrule{\LdruleEl{}}
+\Lusedrule{\LdruleEOne{}}
+\Lusedrule{\LdruleETwo{}}
+\end{Ldefnblock}}
+
+%% defn JType
+\newcommand{\LdruleTXXvarName}[0]{\Ldrulename{T\_var}}
+\newcommand{\LdruleTXXvar}[1]{\Ldrule[#1]{%
+}{
+ \Lmv{x}  \Lsym{:}  \Lnt{A}  \vdash  \Lmv{x}  :  \Lnt{A} }{%
+{\LdruleTXXvarName}{}%
+}}
+
+
+\newcommand{\LdruleTXXUrName}[0]{\Ldrulename{T\_Ur}}
+\newcommand{\LdruleTXXUr}[1]{\Ldrule[#1]{%
+}{
+  \cdot   \vdash   \mathsf{unit}   :   I  }{%
+{\LdruleTXXUrName}{}%
+}}
+
+
+\newcommand{\LdruleTXXcutName}[0]{\Ldrulename{T\_cut}}
+\newcommand{\LdruleTXXcut}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t_{{\mathrm{1}}}}  :  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{B}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{B} }{%
+{\LdruleTXXcutName}{}%
+}}
+
+
+\newcommand{\LdruleTXXUlName}[0]{\Ldrulename{T\_Ul}}
+\newcommand{\LdruleTXXUl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t}  :  \Lnt{A} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}   I   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash   \mathsf{let}\, \Lmv{x} \,\mathsf{be}\,  \mathsf{unit}  \,\mathsf{in}\, \Lnt{t}   :  \Lnt{A} }{%
+{\LdruleTXXUlName}{}%
+}}
+
+
+\newcommand{\LdruleTXXTlName}[0]{\Ldrulename{T\_Tl}}
+\newcommand{\LdruleTXXTl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Lmv{y}  \Lsym{:}  \Lnt{B}  \Lsym{,}  \Gamma'  \vdash  \Lnt{t}  :  \Lnt{C} }%
+}{
+ \Gamma  \Lsym{,}  \Lmv{z}  \Lsym{:}   \Lnt{A}  \otimes  \Lnt{B}   \Lsym{,}  \Gamma'  \vdash   \mathsf{let}\, \Lmv{z} \,\mathsf{be}\,  \Lmv{x}  \otimes  \Lmv{y}  \,\mathsf{in}\, \Lnt{t}   :  \Lnt{C} }{%
+{\LdruleTXXTlName}{}%
+}}
+
+
+\newcommand{\LdruleTXXTrName}[0]{\Ldrulename{T\_Tr}}
+\newcommand{\LdruleTXXTr}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{1}}}  \vdash  \Lnt{t_{{\mathrm{1}}}}  :  \Lnt{A}   \qquad   \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{B}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash    \Lnt{t_{{\mathrm{1}}}}  \otimes  \Lnt{t_{{\mathrm{2}}}}    :    \Lnt{A}  \otimes  \Lnt{B}   }{%
+{\LdruleTXXTrName}{}%
+}}
+
+
+\newcommand{\LdruleTXXIRlName}[0]{\Ldrulename{T\_IRl}}
+\newcommand{\LdruleTXXIRl}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t_{{\mathrm{1}}}}  :  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{C}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{z}  \Lsym{:}   \Lnt{A}  \rightharpoonup  \Lnt{B}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lsym{[}   \mathsf{app}_r\, \Lmv{z} \, \Lnt{t_{{\mathrm{1}}}}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{C} }{%
+{\LdruleTXXIRlName}{}%
+}}
+
+
+\newcommand{\LdruleTXXILlName}[0]{\Ldrulename{T\_ILl}}
+\newcommand{\LdruleTXXILl}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t_{{\mathrm{1}}}}  :  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{C}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Lmv{z}  \Lsym{:}   \Lnt{B}  \leftharpoonup  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lsym{[}   \mathsf{app}_l\, \Lmv{z} \, \Lnt{t_{{\mathrm{1}}}}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{C} }{%
+{\LdruleTXXILlName}{}%
+}}
+
+
+\newcommand{\LdruleTXXIlName}[0]{\Ldrulename{T\_Il}}
+\newcommand{\LdruleTXXIl}[1]{\Ldrule[#1]{%
+\Lpremise{  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t_{{\mathrm{1}}}}  :  \Lnt{A}   \qquad   \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{C}  }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{z}  \Lsym{:}   \Lnt{A}  \multimap  \Lnt{B}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lsym{[}   \Lmv{z} \, \Lnt{t_{{\mathrm{1}}}}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  :  \Lnt{C} }{%
+{\LdruleTXXIlName}{}%
+}}
+
+
+\newcommand{\LdruleTXXIRrName}[0]{\Ldrulename{T\_IRr}}
+\newcommand{\LdruleTXXIRr}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{A}  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma  \vdash   \lambda_r  \Lmv{x} : \Lnt{A} . \Lnt{t}   :   \Lnt{A}  \rightharpoonup  \Lnt{B}  }{%
+{\LdruleTXXIRrName}{}%
+}}
+
+
+\newcommand{\LdruleTXXILrName}[0]{\Ldrulename{T\_ILr}}
+\newcommand{\LdruleTXXILr}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lmv{x}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Gamma  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma  \vdash   \lambda_l  \Lmv{x} : \Lnt{A} . \Lnt{t}   :   \Lnt{B}  \leftharpoonup  \Lnt{A}  }{%
+{\LdruleTXXILrName}{}%
+}}
+
+
+\newcommand{\LdruleTXXIrName}[0]{\Ldrulename{T\_Ir}}
+\newcommand{\LdruleTXXIr}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{A}  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma  \vdash   \lambda  \Lmv{x} : \Lnt{A} . \Lnt{t}   :   \Lnt{A}  \multimap  \Lnt{B}  }{%
+{\LdruleTXXIrName}{}%
+}}
+
+
+\newcommand{\LdruleTXXCName}[0]{\Ldrulename{T\_C}}
+\newcommand{\LdruleTXXC}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Lmv{y}  \Lsym{:}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{z}  \Lsym{:}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \Lsym{,}  \Gamma_{{\mathrm{3}}}  \vdash   \mathsf{copy}\, \Lmv{z} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t}   :  \Lnt{B} }{%
+{\LdruleTXXCName}{}%
+}}
+
+
+\newcommand{\LdruleTXXWName}[0]{\Ldrulename{T\_W}}
+\newcommand{\LdruleTXXW}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash   \mathsf{discard}\, \Lmv{x} \,\mathsf{in}\, \Lnt{t}   :  \Lnt{B} }{%
+{\LdruleTXXWName}{}%
+}}
+
+
+\newcommand{\LdruleTXXBrName}[0]{\Ldrulename{T\_Br}}
+\newcommand{\LdruleTXXBr}[1]{\Ldrule[#1]{%
+\Lpremise{  \overrightarrow{ \Lmv{x} } : ! \Gamma   \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+  \overrightarrow{ \Lmv{y} } : ! \Gamma   \vdash   \mathsf{promote}_!\,  \overrightarrow{ \Lmv{y} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t}   :   !  \Lnt{B}  }{%
+{\LdruleTXXBrName}{}%
+}}
+
+
+\newcommand{\LdruleTXXBlName}[0]{\Ldrulename{T\_Bl}}
+\newcommand{\LdruleTXXBl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{y}  \Lsym{:}   !  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lsym{[}   \mathsf{derelict}_!\, \Lmv{y}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t}  :  \Lnt{B} }{%
+{\LdruleTXXBlName}{}%
+}}
+
+
+\newcommand{\LdruleTXXErName}[0]{\Ldrulename{T\_Er}}
+\newcommand{\LdruleTXXEr}[1]{\Ldrule[#1]{%
+\Lpremise{  \overrightarrow{ \Lmv{x} } : \kappa  \Gamma   \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+  \overrightarrow{ \Lmv{y} } : \kappa  \Gamma   \vdash   \mathsf{promote}_\kappa\,  \overrightarrow{ \Lmv{y} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t}   :   \kappa  \Lnt{B}  }{%
+{\LdruleTXXErName}{}%
+}}
+
+
+\newcommand{\LdruleTXXElName}[0]{\Ldrulename{T\_El}}
+\newcommand{\LdruleTXXEl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t}  :  \Lnt{B} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{y}  \Lsym{:}   \kappa  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lsym{[}   \mathsf{derelict}_\kappa\, \Lmv{y}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t}  :  \Lnt{B} }{%
+{\LdruleTXXElName}{}%
+}}
+
+
+\newcommand{\LdruleTXXEOneName}[0]{\Ldrulename{T\_E1}}
+\newcommand{\LdruleTXXEOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x_{{\mathrm{1}}}}  \Lsym{:}   \kappa  \Lnt{A}   \Lsym{,}  \Lmv{y_{{\mathrm{1}}}}  \Lsym{:}  \Lnt{B}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t}  :  \Lnt{C} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{y_{{\mathrm{2}}}}  \Lsym{:}  \Lnt{B}  \Lsym{,}  \Lmv{x_{{\mathrm{2}}}}  \Lsym{:}   \kappa  \Lnt{A}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash   \mathsf{exchange_l}\, \Lmv{y_{{\mathrm{2}}}} , \Lmv{x_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x_{{\mathrm{1}}}} , \Lmv{y_{{\mathrm{1}}}} \,\mathsf{in}\, \Lnt{t}   :  \Lnt{C} }{%
+{\LdruleTXXEOneName}{}%
+}}
+
+
+\newcommand{\LdruleTXXETwoName}[0]{\Ldrulename{T\_E2}}
+\newcommand{\LdruleTXXETwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{x_{{\mathrm{1}}}}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Lmv{y_{{\mathrm{1}}}}  \Lsym{:}   \kappa  \Lnt{B}   \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash  \Lnt{t}  :  \Lnt{C} }%
+}{
+ \Gamma_{{\mathrm{1}}}  \Lsym{,}  \Lmv{y_{{\mathrm{2}}}}  \Lsym{:}   \kappa  \Lnt{B}   \Lsym{,}  \Lmv{x_{{\mathrm{2}}}}  \Lsym{:}  \Lnt{A}  \Lsym{,}  \Gamma_{{\mathrm{2}}}  \vdash   \mathsf{exchange_r}\, \Lmv{y_{{\mathrm{2}}}} , \Lmv{x_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x_{{\mathrm{1}}}} , \Lmv{y_{{\mathrm{1}}}} \,\mathsf{in}\, \Lnt{t}   :  \Lnt{C} }{%
+{\LdruleTXXETwoName}{}%
+}}
+
+\newcommand{\LdefnJType}[1]{\begin{Ldefnblock}[#1]{$ \Gamma  \vdash  \Lnt{t}  :  \Lnt{A} $}{}
+\Lusedrule{\LdruleTXXvar{}}
+\Lusedrule{\LdruleTXXUr{}}
+\Lusedrule{\LdruleTXXcut{}}
+\Lusedrule{\LdruleTXXUl{}}
+\Lusedrule{\LdruleTXXTl{}}
+\Lusedrule{\LdruleTXXTr{}}
+\Lusedrule{\LdruleTXXIRl{}}
+\Lusedrule{\LdruleTXXILl{}}
+\Lusedrule{\LdruleTXXIl{}}
+\Lusedrule{\LdruleTXXIRr{}}
+\Lusedrule{\LdruleTXXILr{}}
+\Lusedrule{\LdruleTXXIr{}}
+\Lusedrule{\LdruleTXXC{}}
+\Lusedrule{\LdruleTXXW{}}
+\Lusedrule{\LdruleTXXBr{}}
+\Lusedrule{\LdruleTXXBl{}}
+\Lusedrule{\LdruleTXXEr{}}
+\Lusedrule{\LdruleTXXEl{}}
+\Lusedrule{\LdruleTXXEOne{}}
+\Lusedrule{\LdruleTXXETwo{}}
+\end{Ldefnblock}}
+
+%% defn ReW
+\newcommand{\LdruleRXXAlphaName}[0]{\Ldrulename{R\_Alpha}}
+\newcommand{\LdruleRXXAlpha}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lmv{y}  \not\in \mathsf{FV}( \Lnt{t} ) }%
+}{
+ \Lnt{t}  \rightsquigarrow  \Lsym{[}  \Lmv{y}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t} }{%
+{\LdruleRXXAlphaName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetalName}[0]{\Ldrulename{R\_Betal}}
+\newcommand{\LdruleRXXBetal}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{app}_l\,  (   \lambda_l  \Lmv{x} : \Lnt{A} . \Lnt{t_{{\mathrm{2}}}}   )  \, \Lnt{t_{{\mathrm{1}}}}   \rightsquigarrow  \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}} }{%
+{\LdruleRXXBetalName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetarName}[0]{\Ldrulename{R\_Betar}}
+\newcommand{\LdruleRXXBetar}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{app}_r\,  (   \lambda_r  \Lmv{x} : \Lnt{A} . \Lnt{t_{{\mathrm{2}}}}   )  \, \Lnt{t_{{\mathrm{1}}}}   \rightsquigarrow  \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}} }{%
+{\LdruleRXXBetarName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaUName}[0]{\Ldrulename{R\_BetaU}}
+\newcommand{\LdruleRXXBetaU}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\,  \mathsf{unit}  \,\mathsf{in}\, \Lsym{[}   \mathsf{unit}   \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow  \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}} }{%
+{\LdruleRXXBetaUName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaTOneName}[0]{\Ldrulename{R\_BetaT1}}
+\newcommand{\LdruleRXXBetaTOne}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{let}\,  \Lnt{t_{{\mathrm{1}}}}  \otimes  \Lnt{t_{{\mathrm{2}}}}  \,\mathsf{be}\,  \Lmv{x}  \otimes  \Lmv{y}  \,\mathsf{in}\, \Lnt{t}   \rightsquigarrow  \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lsym{[}  \Lnt{t_{{\mathrm{2}}}}  \Lsym{/}  \Lmv{y}  \Lsym{]}  \Lnt{t} }{%
+{\LdruleRXXBetaTOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaTTwoName}[0]{\Ldrulename{R\_BetaT2}}
+\newcommand{\LdruleRXXBetaTTwo}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\,  \Lmv{x}  \otimes  \Lmv{y}  \,\mathsf{in}\, \Lsym{[}   \Lmv{x}  \otimes  \Lmv{y}   \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow  \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}} }{%
+{\LdruleRXXBetaTTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXNatUName}[0]{\Ldrulename{R\_NatU}}
+\newcommand{\LdruleRXXNatU}[1]{\Ldrule[#1]{%
+}{
+ \Lsym{[}   \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\,  \mathsf{unit}  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{3}}}}  \rightsquigarrow   \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\,  \mathsf{unit}  \,\mathsf{in}\, \Lsym{[}  \Lnt{t_{{\mathrm{2}}}}  \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{3}}}}  }{%
+{\LdruleRXXNatUName}{}%
+}}
+
+
+\newcommand{\LdruleRXXNatTName}[0]{\Ldrulename{R\_NatT}}
+\newcommand{\LdruleRXXNatT}[1]{\Ldrule[#1]{%
+}{
+ \Lsym{[}   \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\,  \Lmv{x}  \otimes  \Lmv{y}  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{3}}}}  \rightsquigarrow   \mathsf{let}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{be}\,  \Lmv{x}  \otimes  \Lmv{y}  \,\mathsf{in}\, \Lsym{[}  \Lnt{t_{{\mathrm{2}}}}  \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{3}}}}  }{%
+{\LdruleRXXNatTName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLetUName}[0]{\Ldrulename{R\_LetU}}
+\newcommand{\LdruleRXXLetU}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{let}\,  \mathsf{unit}  \,\mathsf{be}\,  \mathsf{unit}  \,\mathsf{in}\, \Lnt{t}   \rightsquigarrow  \Lnt{t} }{%
+{\LdruleRXXLetUName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaDRName}[0]{\Ldrulename{R\_BetaDR}}
+\newcommand{\LdruleRXXBetaDR}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{derelict}_!\,  (   \mathsf{promote}_!\,  \overrightarrow{ \Lnt{t} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   )    \rightsquigarrow  \Lsym{[}   \overrightarrow{ \Lnt{t} }   \Lsym{/}   \overrightarrow{ \Lmv{x} }   \Lsym{]}  \Lnt{t_{{\mathrm{1}}}} }{%
+{\LdruleRXXBetaDRName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaDIName}[0]{\Ldrulename{R\_BetaDI}}
+\newcommand{\LdruleRXXBetaDI}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{discard}\,  (   \mathsf{promote}_!\,  \overrightarrow{ \Lnt{t} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   )  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{discard}\,  \overrightarrow{ \Lnt{t} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXBetaDIName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaCName}[0]{\Ldrulename{R\_BetaC}}
+\newcommand{\LdruleRXXBetaC}[1]{\Ldrule[#1]{%
+\Lpremise{  \Lnt{t'_{{\mathrm{1}}}}  \Lsym{=}   \mathsf{promote}_!\,  \overrightarrow{ \Lmv{w} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}    \qquad   \Lnt{t''_{{\mathrm{1}}}}  \Lsym{=}   \mathsf{promote}_!\,  \overrightarrow{ \Lmv{z} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   }%
+}{
+  \mathsf{copy}\,  (   \mathsf{promote}_!\,  \overrightarrow{ \Lnt{t} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   )  \,\mathsf{as}\, \Lmv{w} , \Lmv{z} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{copy}\,  \overrightarrow{ \Lnt{t} }  \,\mathsf{as}\,  \overrightarrow{ \Lmv{w} }  ,  \overrightarrow{ \Lmv{z} }  \,\mathsf{in}\, \Lsym{[}  \Lnt{t'_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{w}  \Lsym{]}  \Lsym{[}  \Lnt{t''_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXBetaCName}{}%
+}}
+
+
+\newcommand{\LdruleRXXNatDName}[0]{\Ldrulename{R\_NatD}}
+\newcommand{\LdruleRXXNatD}[1]{\Ldrule[#1]{%
+}{
+ \Lsym{[}   \mathsf{discard}\, \Lnt{t} \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow   \mathsf{discard}\, \Lnt{t} \,\mathsf{in}\, \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXNatDName}{}%
+}}
+
+
+\newcommand{\LdruleRXXNatCName}[0]{\Ldrulename{R\_NatC}}
+\newcommand{\LdruleRXXNatC}[1]{\Ldrule[#1]{%
+}{
+ \Lsym{[}   \mathsf{copy}\, \Lnt{t} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow   \mathsf{copy}\, \Lnt{t} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lsym{[}  \Lnt{t_{{\mathrm{1}}}}  \Lsym{/}  \Lmv{x}  \Lsym{]}  \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXNatCName}{}%
+}}
+
+
+\newcommand{\LdruleRXXBetaEDRName}[0]{\Ldrulename{R\_BetaEDR}}
+\newcommand{\LdruleRXXBetaEDR}[1]{\Ldrule[#1]{%
+}{
+  \mathsf{derelict}_\kappa\,  (   \mathsf{promote}_\kappa\,  \overrightarrow{ \Lnt{t} }  \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   )    \rightsquigarrow  \Lsym{[}   \overrightarrow{ \Lnt{t} }   \Lsym{/}   \overrightarrow{ \Lmv{x} }   \Lsym{]}  \Lnt{t_{{\mathrm{1}}}} }{%
+{\LdruleRXXBetaEDRName}{}%
+}}
+
+
+\newcommand{\LdruleRXXNatElName}[0]{\Ldrulename{R\_NatEl}}
+\newcommand{\LdruleRXXNatEl}[1]{\Ldrule[#1]{%
+}{
+ \Lsym{[}   \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{4}}}}  \rightsquigarrow   \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lsym{[}  \Lnt{t_{{\mathrm{3}}}}  \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{4}}}}  }{%
+{\LdruleRXXNatElName}{}%
+}}
+
+
+\newcommand{\LdruleRXXNatErName}[0]{\Ldrulename{R\_NatEr}}
+\newcommand{\LdruleRXXNatEr}[1]{\Ldrule[#1]{%
+}{
+ \Lsym{[}   \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{4}}}}  \rightsquigarrow   \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lsym{[}  \Lnt{t_{{\mathrm{3}}}}  \Lsym{/}  \Lmv{z}  \Lsym{]}  \Lnt{t_{{\mathrm{4}}}}  }{%
+{\LdruleRXXNatErName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLetName}[0]{\Ldrulename{R\_Let}}
+\newcommand{\LdruleRXXLet}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t_{{\mathrm{2}}}} }%
+}{
+  \mathsf{let}\, \Lmv{x} \,\mathsf{be}\, \Lnt{p} \,\mathsf{in}\, \Lnt{t_{{\mathrm{1}}}}   \rightsquigarrow   \mathsf{let}\, \Lmv{x} \,\mathsf{be}\, \Lnt{p} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXLetName}{}%
+}}
+
+
+\newcommand{\LdruleRXXTOneName}[0]{\Ldrulename{R\_T1}}
+\newcommand{\LdruleRXXTOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \Lnt{t_{{\mathrm{1}}}}  \otimes  \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \Lnt{t'_{{\mathrm{1}}}}  \otimes  \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXTOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXTTwoName}[0]{\Ldrulename{R\_T2}}
+\newcommand{\LdruleRXXTTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \Lnt{t_{{\mathrm{1}}}}  \otimes  \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \Lnt{t_{{\mathrm{1}}}}  \otimes  \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXTTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXAlOneName}[0]{\Ldrulename{R\_Al1}}
+\newcommand{\LdruleRXXAlOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{app}_l\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{app}_l\, \Lnt{t'_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXAlOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXAlTwoName}[0]{\Ldrulename{R\_Al2}}
+\newcommand{\LdruleRXXAlTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{app}_l\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{app}_l\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXAlTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXArOneName}[0]{\Ldrulename{R\_Ar1}}
+\newcommand{\LdruleRXXArOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{app}_r\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{app}_r\, \Lnt{t'_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXArOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXArTwoName}[0]{\Ldrulename{R\_Ar2}}
+\newcommand{\LdruleRXXArTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{app}_r\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{app}_r\, \Lnt{t_{{\mathrm{1}}}} \, \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXArTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLlName}[0]{\Ldrulename{R\_Ll}}
+\newcommand{\LdruleRXXLl}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t}  \rightsquigarrow  \Lnt{t'} }%
+}{
+  \lambda_l  \Lmv{x} : \Lnt{A} . \Lnt{t}   \rightsquigarrow   \lambda_l  \Lmv{x} : \Lnt{A} . \Lnt{t'}  }{%
+{\LdruleRXXLlName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLrName}[0]{\Ldrulename{R\_Lr}}
+\newcommand{\LdruleRXXLr}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t}  \rightsquigarrow  \Lnt{t'} }%
+}{
+  \lambda_r  \Lmv{x} : \Lnt{A} . \Lnt{t}   \rightsquigarrow   \lambda_r  \Lmv{x} : \Lnt{A} . \Lnt{t'}  }{%
+{\LdruleRXXLrName}{}%
+}}
+
+
+\newcommand{\LdruleRXXCopyOneName}[0]{\Ldrulename{R\_Copy1}}
+\newcommand{\LdruleRXXCopyOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{copy}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{copy}\, \Lnt{t'_{{\mathrm{1}}}} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXCopyOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXCopyTwoName}[0]{\Ldrulename{R\_Copy2}}
+\newcommand{\LdruleRXXCopyTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{copy}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{copy}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{as}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXCopyTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXDiscardOneName}[0]{\Ldrulename{R\_Discard1}}
+\newcommand{\LdruleRXXDiscardOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{discard}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{discard}\, \Lnt{t'_{{\mathrm{1}}}} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXDiscardOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXDiscardTwoName}[0]{\Ldrulename{R\_Discard2}}
+\newcommand{\LdruleRXXDiscardTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{discard}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{discard}\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{in}\, \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXDiscardTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXPromoteOneName}[0]{\Ldrulename{R\_Promote1}}
+\newcommand{\LdruleRXXPromoteOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{promote}_!\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{promote}_!\, \Lnt{t'_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXPromoteOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXPromoteTwoName}[0]{\Ldrulename{R\_Promote2}}
+\newcommand{\LdruleRXXPromoteTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{promote}_!\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{promote}_!\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXPromoteTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXDerelictName}[0]{\Ldrulename{R\_Derelict}}
+\newcommand{\LdruleRXXDerelict}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t}  \rightsquigarrow  \Lnt{t'} }%
+}{
+  \mathsf{derelict}_!\, \Lnt{t}   \rightsquigarrow   \mathsf{derelict}_!\, \Lnt{t'}  }{%
+{\LdruleRXXDerelictName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLExOneName}[0]{\Ldrulename{R\_LEx1}}
+\newcommand{\LdruleRXXLExOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \rightsquigarrow   \mathsf{exchange_l}\, \Lnt{t'_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}  }{%
+{\LdruleRXXLExOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLExTwoName}[0]{\Ldrulename{R\_LEx2}}
+\newcommand{\LdruleRXXLExTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \rightsquigarrow   \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t'_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}  }{%
+{\LdruleRXXLExTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXLExThreeName}[0]{\Ldrulename{R\_LEx3}}
+\newcommand{\LdruleRXXLExThree}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{3}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{3}}}} }%
+}{
+  \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \rightsquigarrow   \mathsf{exchange_l}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t'_{{\mathrm{3}}}}  }{%
+{\LdruleRXXLExThreeName}{}%
+}}
+
+
+\newcommand{\LdruleRXXRExOneName}[0]{\Ldrulename{R\_REx1}}
+\newcommand{\LdruleRXXRExOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \rightsquigarrow   \mathsf{exchange_r}\, \Lnt{t'_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}  }{%
+{\LdruleRXXRExOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXRExTwoName}[0]{\Ldrulename{R\_REx2}}
+\newcommand{\LdruleRXXRExTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \rightsquigarrow   \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t'_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}  }{%
+{\LdruleRXXRExTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXRExThreeName}[0]{\Ldrulename{R\_REx3}}
+\newcommand{\LdruleRXXRExThree}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{3}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{3}}}} }%
+}{
+  \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t_{{\mathrm{3}}}}   \rightsquigarrow   \mathsf{exchange_r}\, \Lnt{t_{{\mathrm{1}}}} , \Lnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \Lmv{x} , \Lmv{y} \,\mathsf{in}\, \Lnt{t'_{{\mathrm{3}}}}  }{%
+{\LdruleRXXRExThreeName}{}%
+}}
+
+
+\newcommand{\LdruleRXXEPromoteOneName}[0]{\Ldrulename{R\_EPromote1}}
+\newcommand{\LdruleRXXEPromoteOne}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{1}}}} }%
+}{
+  \mathsf{promote}_\kappa\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{promote}_\kappa\, \Lnt{t'_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}  }{%
+{\LdruleRXXEPromoteOneName}{}%
+}}
+
+
+\newcommand{\LdruleRXXEPromoteTwoName}[0]{\Ldrulename{R\_EPromote2}}
+\newcommand{\LdruleRXXEPromoteTwo}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{2}}}}  \rightsquigarrow  \Lnt{t'_{{\mathrm{2}}}} }%
+}{
+  \mathsf{promote}_\kappa\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t_{{\mathrm{2}}}}   \rightsquigarrow   \mathsf{promote}_\kappa\, \Lnt{t_{{\mathrm{1}}}} \,\mathsf{for}\,  \overrightarrow{ \Lmv{x} }  \,\mathsf{in}\, \Lnt{t'_{{\mathrm{2}}}}  }{%
+{\LdruleRXXEPromoteTwoName}{}%
+}}
+
+
+\newcommand{\LdruleRXXEDerelictName}[0]{\Ldrulename{R\_EDerelict}}
+\newcommand{\LdruleRXXEDerelict}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t}  \rightsquigarrow  \Lnt{t'} }%
+}{
+  \mathsf{derelict}_\kappa\, \Lnt{t}   \rightsquigarrow   \mathsf{derelict}_\kappa\, \Lnt{t'}  }{%
+{\LdruleRXXEDerelictName}{}%
+}}
+
+\newcommand{\LdefnReW}[1]{\begin{Ldefnblock}[#1]{$ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t_{{\mathrm{2}}}} $}{}
+\Lusedrule{\LdruleRXXAlpha{}}
+\Lusedrule{\LdruleRXXBetal{}}
+\Lusedrule{\LdruleRXXBetar{}}
+\Lusedrule{\LdruleRXXBetaU{}}
+\Lusedrule{\LdruleRXXBetaTOne{}}
+\Lusedrule{\LdruleRXXBetaTTwo{}}
+\Lusedrule{\LdruleRXXNatU{}}
+\Lusedrule{\LdruleRXXNatT{}}
+\Lusedrule{\LdruleRXXLetU{}}
+\Lusedrule{\LdruleRXXBetaDR{}}
+\Lusedrule{\LdruleRXXBetaDI{}}
+\Lusedrule{\LdruleRXXBetaC{}}
+\Lusedrule{\LdruleRXXNatD{}}
+\Lusedrule{\LdruleRXXNatC{}}
+\Lusedrule{\LdruleRXXBetaEDR{}}
+\Lusedrule{\LdruleRXXNatEl{}}
+\Lusedrule{\LdruleRXXNatEr{}}
+\Lusedrule{\LdruleRXXLet{}}
+\Lusedrule{\LdruleRXXTOne{}}
+\Lusedrule{\LdruleRXXTTwo{}}
+\Lusedrule{\LdruleRXXAlOne{}}
+\Lusedrule{\LdruleRXXAlTwo{}}
+\Lusedrule{\LdruleRXXArOne{}}
+\Lusedrule{\LdruleRXXArTwo{}}
+\Lusedrule{\LdruleRXXLl{}}
+\Lusedrule{\LdruleRXXLr{}}
+\Lusedrule{\LdruleRXXCopyOne{}}
+\Lusedrule{\LdruleRXXCopyTwo{}}
+\Lusedrule{\LdruleRXXDiscardOne{}}
+\Lusedrule{\LdruleRXXDiscardTwo{}}
+\Lusedrule{\LdruleRXXPromoteOne{}}
+\Lusedrule{\LdruleRXXPromoteTwo{}}
+\Lusedrule{\LdruleRXXDerelict{}}
+\Lusedrule{\LdruleRXXLExOne{}}
+\Lusedrule{\LdruleRXXLExTwo{}}
+\Lusedrule{\LdruleRXXLExThree{}}
+\Lusedrule{\LdruleRXXRExOne{}}
+\Lusedrule{\LdruleRXXRExTwo{}}
+\Lusedrule{\LdruleRXXRExThree{}}
+\Lusedrule{\LdruleRXXEPromoteOne{}}
+\Lusedrule{\LdruleRXXEPromoteTwo{}}
+\Lusedrule{\LdruleRXXEDerelict{}}
+\end{Ldefnblock}}
+
+%% defn Mul
+\newcommand{\LdruleMRXXStepName}[0]{\Ldrulename{MR\_Step}}
+\newcommand{\LdruleMRXXStep}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \rightsquigarrow  \Lnt{t_{{\mathrm{2}}}} }%
+}{
+\Lnt{t_{{\mathrm{1}}}}  \redto^*  \Lnt{t_{{\mathrm{2}}}}}{%
+{\LdruleMRXXStepName}{}%
+}}
+
+
+\newcommand{\LdruleMRXXMulName}[0]{\Ldrulename{MR\_Mul}}
+\newcommand{\LdruleMRXXMul}[1]{\Ldrule[#1]{%
+\Lpremise{ \Lnt{t_{{\mathrm{1}}}}  \redto^*  \Lnt{t_{{\mathrm{2}}}}  \qquad  \Lnt{t_{{\mathrm{2}}}}  \redto^*  \Lnt{t_{{\mathrm{3}}}} }%
+}{
+\Lnt{t_{{\mathrm{1}}}}  \redto^*  \Lnt{t_{{\mathrm{3}}}}}{%
+{\LdruleMRXXMulName}{}%
+}}
+
+\newcommand{\LdefnMul}[1]{\begin{Ldefnblock}[#1]{$\Lnt{t_{{\mathrm{1}}}}  \redto^*  \Lnt{t_{{\mathrm{2}}}}$}{}
+\Lusedrule{\LdruleMRXXStep{}}
+\Lusedrule{\LdruleMRXXMul{}}
+\end{Ldefnblock}}
+
+
+\newcommand{\LdefnsJtyp}{
+\LdefnLog{}\LdefnJType{}\LdefnReW{}\LdefnMul{}}
+
+\newcommand{\Ldefnss}{
+\LdefnsJtyp
+}
+
+\newcommand{\Lall}{\Lmetavars\\[0pt]
+\Lgrammar\\[5.0mm]
+\Ldefnss}
+

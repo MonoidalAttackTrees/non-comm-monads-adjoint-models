@@ -20,20 +20,10 @@
 \usepackage{caption}
 \captionsetup[figure]{name=Figure}
 
-%% \input{Elle-ND-inc}
-%% \input{Elle-inc}
-\input{LAM-inc}
-\renewcommand{\LAMdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
-%% OTT Renaming
-\renewcommand{\LAMdruleNAXXidName}{\text{id}}
-\renewcommand{\LAMdruleNAXXunitIName}{\mathsf{Unit}_i}
-\renewcommand{\LAMdruleNAXXunitEName}{\mathsf{Unit}_e}
-\renewcommand{\LAMdruleNAXXtenIName}{\rhd_i}
-\renewcommand{\LAMdruleNAXXtenETwoName}{\rhd_e}
-\renewcommand{\LAMdruleNAXXimprIName}{\rightharpoonup_i}
-\renewcommand{\LAMdruleNAXXimprEName}{\rightharpoonup_e}
-\renewcommand{\LAMdruleNAXXimplIName}{\leftharpoonup_i}
-\renewcommand{\LAMdruleNAXXimplEName}{\leftharpoonup_e}
+\input{Elle-ND-inc}
+\renewcommand{\NDdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+\input{dePaiva-Eades-LAM-ott}
+\renewcommand{\Ldrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,\Ldrulename{#4}}}
 %% End Ott Renaming
 
 %% This renames Barr's \to to \mto.  This allows us to use \to for imp
@@ -148,7 +138,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{example}[theorem]{Example}
 
-\title{Adjoint Models for the Lambek Calculus}
+\title{On the Lambek Calculus with an Exchange Modality}
 
 \author{Jiaming Jiang
 \institute{Computer Science \\ North Carolina State University \\ Raleigh, North Carolina, USA}
@@ -157,9 +147,13 @@
 Harley Eades III
 \institute{Computer Science \\ Augusta University \\ Augusta, Georgia, USA}
 \email{harley.eades@gmail.com}
+\and
+Valeria de Paiva
+\institute{Nuance Communications \\ Sunnyvale, California, USA}
+\email{valeria.depaiva@gmail.com}
 }
 \def\titlerunning{Adjoint Models for the Lambek Calculus}
-\def\authorrunning{J. Jiang \& H. Eades III}
+\def\authorrunning{J. Jiang \& H. Eades III \& V. de Paiva}
 
 \begin{document}
 \maketitle 
@@ -173,15 +167,21 @@ Harley Eades III
 \input{introduction}
 % section introduction (end)
 
-\section{The Lambek Calculus}
+\section{An Adjoint Formalization of the Lambek Calculus}
 \label{sec:the-lambek-calculus}
-\input{LAM-ott}
+\input{LAM-output}
 % section the (end)
 
-\section{Adjoint Models for the (non-associative) Lambek Calculus}
+\section{Adjoint Models}
 \label{sec:adjoint-models}
 \input{adjoint-models}
 % section adjoint_models (end)
+
+\section{A Model in Dialectica Spaces}
+\label{sec:a-model-in-dialectica-spaces}
+
+% section a_model_in_dialectica_spaces (end)
+
 
 \section{Conclusion}
 \label{sec:conclusion}

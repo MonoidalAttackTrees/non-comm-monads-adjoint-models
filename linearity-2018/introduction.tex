@@ -1,95 +1,83 @@
-Perhaps the most elegant model of intuitionistic linear logic is
-Benton's linear/non-linear (LNL) models \cite{Benton:1994}. On the
-semantic side, LNL models are very compact and intuitive, but on the
-syntactic side, they correspond to a logic and type theory, called LNL
-logic, that allows one to reason with or without weakening and
-contraction without the need to annotate every formula of the logic
-with the of-course!  modality.  This is possible because formulas like
-$A \to B$ are primitives of the logic, and not encoded using the
-of-course! modality.  Therefore, we ask the question, ``can a similar
-elegant, intuitive, and flexible model and corresponding logic be
-defined for the Lambek Calculus?''
+Joachim Lambek first introduced the Syntactic Calculus, now known as
+the Lambek Calculus, in 1958 \cite{Lambek1958}.  Since then the Lambek
+Calculus has largely been motivated by providing an explanation of the
+mathematics of sentence structure, and can be found at the core of
+Categorial Grammar; a term first used in the title of Bar-Hillel,
+Gaifman and Shamir (1960), but categorical grammar began with
+Ajdukiewicz (1935) quite a few years earlier. For many years the
+Lambek Calculus went without use, but around 1980 it was taken up by
+logicians interested in Computational Linguistics, especially the ones
+interested in Categorial Grammars.
 
-LNL models are symmetric monoidal adjunctions, $\cat{C} : F \dashv G :
-\cat{I}$, where $\cat{C}$ is a symmetric monoidal closed category with
-weakening and contraction, hence is a cartesian closed category, and
-$\cat{I}$ is a symmetric monoidal closed category.  Thus, a LNL model
-consists of a model of intuitionistic logic on the left and a model of
-intuitionistic linear logic on the right related via a pair of adjoint
-functors.  Then Benton shows that the of-course! modality can be
-recovered by $!A = F(G\,A)$.  These models suggest a more general
-framework for working with structural rules.
+It was computational linguists, ???, who posed the question of whether
+it is possible to isolate exchange using a modality in the same way
+that the of-course modality of linear logic, $!A$, isolates weakening
+and contraction.  de Paiva and Eades III \cite{dePaiva2018} propose
+one solution to this problem by extending the Lambek calculus with the
+modality characterized by the following sequent calculus inference
+rules:
+\[
+\small
+\begin{array}{ccccccccccccccccccccc}  
+  \LdruleEr{} & & \LdruleEl{} & & \LdruleEOne{} & & \LdruleETwo{} 
+\end{array}
+\]
+The thing to note is that the modality $\kappa A$ appears on only one
+of the operands being exchanged.  That is, these rules along with
+those for the tensor product allow one to prove that $\kappa A \otimes
+B \multimap B \otimes \kappa A$ holds.  This is somewhat at odds with
+algebraic intuition, and it is unclear how this modality could be
+decomposed into adjoint functors in a linear/non-linear (LNL)
+formalization of the Lambek calculus.
 
-Our main contributions in this paper are to the Lambek Calculus, but
-we make use of a new more general framework that will put this work in
-line with planned future work.  Suppose $\cat{M}_1$ and $\cat{M}_2$
-are two categories with a bifunctor $\odot_i : \cat{M}_i \times
-\cat{M}_i \mto \cat{M}_i$, a distinguished object $I_i \in
-\mathsf{Obj}(\cat{M}_i)$, and the two natural isomorphisms $\lambda_A
-: A \odot I_i \mto A$ and $\rho_A : I_i \odot A \mto A$.  We call
-these categories \emph{magmoidal categories with a unit}.  Examples of
-magmoidal categories with a unit are monoidal categories, symmetric
-monoidal categories, and cartesian closed categories.
+In this paper we show how to add an exchange modality, $eA$, where the
+modality now occurs on both operands being exchanged. That is, one can
+show that $eA \otimes eB \multimap eB \otimes eA$ holds.  We give a
+LNL natural deduction formalization for the Lambek calculus with this
+new modality, and two categorical models: a LNL model and a concrete
+model in dialectica spaces.  Thus giving a second solution to the
+problem proposed above.
 
-Benton's LNL models can be generalized to magmodial categories.
-Simply, take an adjunction $\cat{M}_1 : F \dashv G : \cat{M}_2$ called
-an \emph{adjoint model} where the functors $F$ and $G$ preserve the
-magmoidal structure similarly to monoidal functors, but without the
-coherence diagram for the associator.  Now if we add to $\cat{M}_1$
-and $\cat{M}_2$ some structural rules, for example, by making
-$\cat{M}_1$ a symmetric monoidal category and $\cat{M}_2$ a monoidal
-category, then we obtain an adjoint model that corresponds to a logic
-where intuitionistic linear logic ($\cat{M}_1$) and the Lambek
-calculus ($\cat{M}_2$) are mixed similarly to LNL models.  However,
-this also leads to a new solution to an existing problem.
-
-Linguists \cite{?} have wondered if a modality for exchange can be
-added to the Lambek Calculus similarly to how the of-course! modality
-adds weakening and contraction to linear logic.  de Paiva and
-Eades~\cite{?} show that this is possible by adding a modality $\kappa
-A$ with the property that $(\kappa A \otimes B) \multimap (B \otimes
-\kappa A)$.  The adjoint model introduced above induces the modality
-$eA = F(G\,A)$ with the property $eA \otimes eB \multimap eB \otimes
-eA$.  Thus providing a second solution to the problem.
-
-Linguists as well as computer scientists have found many applications
-of substructural logics that contain more than one tensor product
-satisfying different structural rules.  For example, a commutative
-tensor product and a non-commutative tensor product within the same
-logic.  An example of such a logic is the logic of bunched
-implications, but there sequents $\Gamma \vdash A$ depend on contexts
-$\Gamma$ that are trees with multiple different branching nodes
-instead of lists.  The branching nodes are necessary to accommodate
-multiple different tensor products with different structural
-properties.  We introduce, but leave the details to future work, the
-idea of using adjoint models to build similar logics, but without the
-need for multiple different branching nodes.  Furthermore, adjoints
-compose, and this property can be exploited to compose modalities.
+The Lambek Calculus also has the potential for many applications in
+other areas of computer science, such as, modeling processes.  Linear
+Logic has been at the forefront of the study of process calculi for
+many years \cite{HONDA20102223,Pratt:1997,ABRAMSKY19945}. We can think
+of the commutative tensor product of linear logic as a parallel
+operator.  For example, given a process $A$ and a process $B$, then we
+can form the process $A \otimes B$ which runs both processes in
+parallel.  If we remove commutativity from the tensor product we
+obtain a sequential composition instead of parallel composition.  That
+is, the process $A \rhd B$ first runs process $A$ and then process $B$
+in that order.  Vaughan Pratt has stated that , ``sequential
+composition has no evident counterpart in type theory'' see page 11 of
+\cite{Pratt:1997}.  We believe that the Lambek Calculus will lead to
+filling this hole.  
 
 We introduce the idea above of having a modality for exchange, but
-what about associativity, weakening and contraction?  Indeed it is
-possible to give modalities for these structural rules as well using
-adjoint models.  Now that we have each structural rule isolated into
-their own modality is it possible to put them together to form new
-modalities that combine structural rules?  The answer to this question
-has already been show to be positive, at least for weakening and
-contraction, but we extend this line of work to include exchange, and
-in the future associativity as well.  Jacobs~\cite{JACOBS199473} used
-monads and distributive laws to relate modalities, but
-Melli{\'e}s~\cite{Mellies:2004} shows how to use adjunctions to
-accomplish the same, but in a more intuitive and natural way.  Thus,
-this part of our work is a natural extension of Melli{\'e}s'.
+what about a individual modalities for weakening and contraction?
+Indeed it is possible to give modalities for these structural rules as
+well using adjoint models.  Now that we have each structural rule
+isolated into their own modality is it possible to put them together
+to form new modalities that combine structural rules?  The answer to
+this question has already been show to be positive, at least for
+weakening and contraction, but we extend this line of work to include
+exchange, and in the future associativity as well.
+Jacobs~\cite{JACOBS199473} used monads and distributive laws to relate
+modalities, but Melli{\'e}s~\cite{Mellies:2004} shows how to use
+adjunctions to accomplish the same, but in a more intuitive and
+natural way.  Thus, this part of our work is a natural extension of
+Melli{\'e}s'.
 
 This work can be used to define a general core logic that is capable
 of encoding several different substructural logics.  Some examples are
 intuitionistic linear logic, affine logic, contraction logic, and the
-(non-associative) Lambek Calculus.  This does have some similarities
-to Licata et al.~\cite{licata2017fibrational}, but there they embrace
-the tree based structures with multiple different branching node for
-contexts from the logic of bunched implications.  However, our work is
-trying to understand if this is truly necessary, and if adjunctions
-provide a means of, at the very least, hiding these multiple branching
-nodes.  Thus, adjunctions may lead to a simplification.
+Lambek Calculus.  This does have some similarities to Licata et
+al.~\cite{licata2017fibrational}, but there they embrace the tree
+based structures with multiple different branching node for contexts
+from the logic of bunched implications.  However, our work is trying
+to understand if this is truly necessary, and if adjunctions provide a
+means of, at the very least, hiding these multiple branching nodes.
+Thus, adjunctions may lead to a simplification.
 
 %%% Local Variables: 
 %%% mode: latex
