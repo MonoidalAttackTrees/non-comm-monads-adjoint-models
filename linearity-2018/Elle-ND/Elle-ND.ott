@@ -27,7 +27,7 @@ W, X, Y, Z :: 'sform_' ::=
   {{tex \mathsf{B} }}
   | UnitT   ::   :: UnitT
   {{tex \mathsf{Unit} }}
-  | X (x) Y ::   :: Tensor        
+  | X (*) Y ::   :: Tensor        
   | X -o Y  ::   :: Fun          
   | ( X )   :: M :: Parens 
   | h( X )  :: M :: HiddenParens 
@@ -47,7 +47,7 @@ p, q :: 'pattern_' ::=
   {{tex \mathsf{triv} }}
   | trivSp :: :: trivS
   {{tex \mathsf{triv} }}
-  | p (x) p' :: :: ten
+  | p (*) p' :: :: ten
   | p (>) p' :: :: lambek
   | F p :: :: LeftAdj
   {{tex \mathsf{F}\,[[p]] }}
@@ -91,7 +91,7 @@ t :: 'sterm_' ::=
   {{tex \mathsf{triv} }}
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
-  | t1 (X) t2 :: :: Tensor
+  | t1 (*) t2 :: :: Tensor
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
   | t1 t2   :: :: App
@@ -134,7 +134,7 @@ formula :: 'formula_' ::=
   {{tex [[x]] \not\in | [[G]], [[D]] | }}
 
 terminals :: 'terminals_' ::=
-  | (X)  :: :: Tensor
+  | (*)  :: :: Tensor
   {{tex \otimes }}
   | (>)  :: :: Lambek
   {{tex \triangleright }}
@@ -176,11 +176,11 @@ by
 
   I |-c t1 : X && P |-c t2 : Y
   ---------------------------- :: tenI
-  I, P |-c t1 (x) t2 : X (x) Y  
+  I, P |-c t1 (*) t2 : X (*) Y  
 
-  I |-c t1 : X (x) Y && P1, x : X, y : Y, P2 |-c t2 : Z
+  I |-c t1 : X (*) Y && P1, x : X, y : Y, P2 |-c t2 : Z
   ----------------------------------------------------- :: tenE
-  P1, I, P2 |-c let t1 : X (x) Y be x (x) y in t2 : Z
+  P1, I, P2 |-c let t1 : X (*) Y be x (*) y in t2 : Z
 
   I, x : X |-c t : Y
   ---------------------- :: impI
@@ -224,9 +224,9 @@ by
   ---------------------------- :: tenI
   G, D |-l s1 (>) s2 : A (>) B
 
-  I |-c t : X (x) Y && G1, x : X, y : Y,G2 |-l s : A
+  I |-c t : X (*) Y && G1, x : X, y : Y,G2 |-l s : A
   ------------------------------------------------ :: tenE1
-  G1, I, G2 |-l let t : X (x) Y be x (x) y in s : A
+  G1, I, G2 |-l let t : X (*) Y be x (*) y in s : A
 
   G |-l s1 : A (>) B && D1, x : A, y : B,D2 |-l s2 : C
   ---------------------------------------------------- :: tenE2
@@ -283,7 +283,7 @@ by
   let trivT : UnitT be trivT in t ~> t
 
   ---------------------------------------------------------- :: letT
-  let t1 (x) t2 : X (x) Y be x (x) y in t3 ~> [t1/x][t2/y]t3
+  let t1 (*) t2 : X (*) Y be x (*) y in t3 ~> [t1/x][t2/y]t3
 
   ------------------------- :: lam
   app (\ x:X.t1) t2 ~> [t2/x]t1
@@ -316,7 +316,7 @@ by
   let trivT : UnitT be trivT in s ~> s
 
   ---------------------------------------------------------- :: letT1
-  let t1 (x) t2 : X (x) Y be x (>) y in s3 ~> [t1/x][t2/y]s3
+  let t1 (*) t2 : X (*) Y be x (>) y in s3 ~> [t1/x][t2/y]s3
 
   ---------------------------------------------------------- :: letT2
   let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3

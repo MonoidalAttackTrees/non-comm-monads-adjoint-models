@@ -1,23 +1,28 @@
-We now introduce the Lambek Calculus in the form of a term assignment
-for intuitionistic linear logic, but in LNL style.
+We now introduce the Commutative/Non-commutative (CNC) logic in the
+form of a term assignment.  One should view this logic as composed of
+two logics one sitting to the left of the other.  On the left there is
+intuitionistic linear logic, denoted by $\cat{C}$, and on the right is
+the Lambek calculus denoted by $\cat{L}$.  Then we connect these two
+systems by a pair of monoidal adjoint functors $\cat{C} : \func{F}
+\dashv \func{G} : \cat{L}$.  Keeping this intuition in mind we now
+define the syntax for CNC logic.
 \begin{definition}
   \label{def:Lambek-syntax}
-  The following grammar describes the syntax of the adjoint
-  formalization of the Lambek Calculus:
-  \begin{center}\vspace{-10px}
+  The following grammar describes the syntax of CNC logic:
+  \begin{center}\vspace{-5px}
     \begin{math}
       \begin{array}{lll}
-        \text{(NC Types)} & [[A]],[[B]],[[C]],[[DT]] ::= [[UnitS]] \mid [[A (>) B]] \mid [[A -> B]] \mid [[B <- A]] \mid [[F X]]\\
-        \text{(CM Types)} & [[W]],[[X]],[[Y]],[[Z]] ::= [[UnitT]] \mid [[X (x) Y]] \mid [[X -o Y]] \mid [[Gf A]]\\
-        \text{(NC Terms)} & [[s]] ::= [[x]] \mid [[trivS]] \mid [[s1 (>) s2]] \mid [[let s1 : A be p in s2]] \mid [[\l x : A.s]] \mid [[\r x : A . s]] \mid [[appl s1 s2]] \mid [[appr s1 s2]] \\
+        \text{($\cat{L}$-Types)} & [[A]],[[B]],[[C]],[[DT]] ::= [[UnitS]] \mid [[A (>) B]] \mid [[A -> B]] \mid [[B <- A]] \mid [[F X]]\\
+        \text{($\cat{C}$-Types)} & [[W]],[[X]],[[Y]],[[Z]] ::= [[UnitT]] \mid [[X (*) Y]] \mid [[X -o Y]] \mid [[Gf A]]\\
+        \text{($\cat{L}$-Terms)} & [[s]] ::= [[x]] \mid [[trivS]] \mid [[s1 (>) s2]] \mid [[let s1 : A be p in s2]] \mid [[\l x : A.s]] \mid [[\r x : A . s]] \mid [[appl s1 s2]] \mid [[appr s1 s2]] \\
         & \,\,\,\,\,\,\,\,\,\mid [[F t]] \mid [[let t : X be q in s]]\\
-        \text{(CM Terms)} & [[t]] ::= [[x]] \mid [[trivT]] \mid [[t1 (X) t2]] \mid [[let t1 : X be q in t2]] \mid [[\x:X.t]] \mid [[t1 t2]] \mid [[ex t1 , t2 with x1 , x2 in t3]] \mid [[Gf s]]\\
-        \text{(NC Patterns)} & [[p]] ::= [[trivSp]] \mid [[x (>) y]] \mid [[F p]]\\
-        \text{(CM Patterns)} & [[q]] ::= [[trivTp]] \mid [[x (X) y]] \mid [[Gf q]]\\
-        \text{(NC Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[x : X]] \mid [[G;D]]\\
-        \text{(CM Contexts)} & [[I]],[[P]] ::= [[.]] \mid [[x : X]] \mid [[I,P]]\\
-        \text{(NC Typing Judgment)} & [[G |-l s : A]]\\
-        \text{(CM Typing Judgment)} & [[I |-c t : X]]\\
+        \text{($\cat{C}$-Terms)} & [[t]] ::= [[x]] \mid [[trivT]] \mid [[t1 (*) t2]] \mid [[let t1 : X be q in t2]] \mid [[\x:X.t]] \mid [[t1 t2]] \mid [[ex t1 , t2 with x1 , x2 in t3]] \mid [[Gf s]]\\
+        \text{($\cat{L}$-Patterns)} & [[p]] ::= [[trivSp]] \mid [[x (>) y]] \mid [[F p]]\\
+        \text{($\cat{C}$-Patterns)} & [[q]] ::= [[trivTp]] \mid [[x (*) y]] \mid [[Gf q]]\\
+        \text{($\cat{L}$-Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[x : X]] \mid [[G;D]]\\
+        \text{($\cat{C}$-Contexts)} & [[I]],[[P]] ::= [[.]] \mid [[x : X]] \mid [[I,P]]\\
+        \text{($\cat{L}$-Typing Judgment)} & [[G |-l s : A]]\\
+        \text{($\cat{C}$-Typing Judgment)} & [[I |-c t : X]]\\
       \end{array}
     \end{math}
   \end{center}
