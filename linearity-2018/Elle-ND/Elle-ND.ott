@@ -39,7 +39,7 @@ T :: 'type_' ::=
   | A :: :: LType
   | X :: :: SType
 
-p, q :: 'pattern_' ::=
+p , q :: 'pattern_' ::=
   | - :: :: hole
   {{tex \star }}
   | x :: :: var
@@ -102,7 +102,7 @@ t :: 'sterm_' ::=
   | ( t )         :: S :: parens
   | h( t )        :: M :: hparen
   | Gf s           ::   :: RightAdj
-  {{tex \mathsf{G}[[s]] }}
+  {{tex \mathsf{G}\,[[s]] }}
 
 I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
   | .       ::   :: Empty
@@ -172,7 +172,7 @@ by
 
   I |-c t1 : UnitT && P |-c t2 : Y
   ------------------------------------------ :: unitE
-  I, P |-c let t1 : UnitT be trivT in t2 : Y
+  I, P |-c let t1 : UnitT be trivTp in t2 : Y
 
   I |-c t1 : X && P |-c t2 : Y
   ---------------------------- :: tenI
@@ -188,7 +188,7 @@ by
   
   I |-c t1 : X -o Y && P |-c t2 : X
   --------------------------------- :: impE
-  I, P |-c app t1 t2 : Y
+  I, P |-c t1 t2 : Y
 
   I |-l s : A
   ----------------- :: GI
@@ -214,63 +214,63 @@ by
 
   I |-c t : UnitT && G |-l s : A
   ---------------------------------------- :: unitE1
-  I, G |-l let t : UnitT be trivT in s : A
+  I;G |-l let t : UnitT be trivTp in s : A
 
   G |-l s1 : UnitS && D |-l s2 : A
   ------------------------------------------ :: unitE2
-  G, D |-l let s1 : UnitS be trivS in s2 : A
+  G;D |-l let s1 : UnitS be trivSp in s2 : A
 
   G |-l s1 : A && D |-l s2 : B
   ---------------------------- :: tenI
-  G, D |-l s1 (>) s2 : A (>) B
+  G;D |-l s1 (>) s2 : A (>) B
 
-  I |-c t : X (*) Y && G1, x : X, y : Y,G2 |-l s : A
+  I |-c t : X (*) Y && G1;x : X;y : Y;G2 |-l s : A
   ------------------------------------------------ :: tenE1
-  G1, I, G2 |-l let t : X (*) Y be x (*) y in s : A
+  G1;I;G2 |-l let t : X (*) Y be x (*) y in s : A
 
-  G |-l s1 : A (>) B && D1, x : A, y : B,D2 |-l s2 : C
+  G |-l s1 : A (>) B && D1;x : A;y : B;D2 |-l s2 : C
   ---------------------------------------------------- :: tenE2
-  D1, G, D2  |-l let s1 : A (>) B be x (>) y in s2 : C
+  D1;G;D2  |-l let s1 : A (>) B be x (>) y in s2 : C
 
-  G, x : A |-l s : B
+  G;x : A |-l s : B
   ----------------------- :: imprI
   G |-l \r x:A.s : A -> B
 
   G |-l s1 : A -> B && D |-l s2 : A
   --------------------------------- :: imprE
-  G, D |-l appr s1 s2 : B
+  G;D |-l appr s1 s2 : B
 
-  x : A, G |-l s : B
+  x : A;G |-l s : B
   ----------------------- :: implI
   G |-l \l x:A.s : B <- A
 
   G |-l s1 : B <- A && D |-l s2 : A
   --------------------------------- :: implE
-  D, G |-l appl s1 s2 : B
+  D;G |-l appl s1 s2 : B
 
   I |-c t : X
   --------------- :: FI
   I |-l F t : F X
 
-  G |-l s1 : F X && D1, x : X, D2 |-l s2 : A
+  G |-l s1 : F X && D1;x : X;D2 |-l s2 : A
   ------------------------------------------- :: FE
-  D1, G, D2 |-l let s1 : F X be F x in s2 : A
+  D1;G;D2 |-l let s1 : F X be F x in s2 : A
 
   I |-c t : Gf A
   -------------------- :: GE
   I |-l derelict t : A
 
-  G, x : X, y : Y, D |-l s : A
+  G;x : X;y : Y;D |-l s : A
   ----------------------------------------------- :: beta
-  G, z : Y, w : X, D |-l ex w,z with x,y in s : A
+  G;z : Y;w : X;D |-l ex w,z with x,y in s : A
 
-  I |-c t : X && G1, x : X, G2 |-l s : A
+  I |-c t : X && G1;x : X;G2 |-l s : A
   -------------------------------------- :: cut1
-  G1, I, G1 |-l [t/x]s : A
+  G1;I;G1 |-l [t/x]s : A
 
-  G |-l s1 : A && D1, x : A, D2 |-l s2 : B
+  G |-l s1 : A && D1;x : A;D2 |-l s2 : B
   ---------------------------------------- :: cut2
-  D1, G, D2 |-l [s1/x]s2 : B
+  D1;G;D2 |-l [s1/x]s2 : B
 
 defns
   Reduction :: '' ::=
@@ -280,40 +280,40 @@ defn
 by 
 
   ------------------------------------ :: letU
-  let trivT : UnitT be trivT in t ~> t
+  let trivT : UnitT be trivTp in t ~> t
 
   ---------------------------------------------------------- :: letT
   let t1 (*) t2 : X (*) Y be x (*) y in t3 ~> [t1/x][t2/y]t3
 
   ------------------------- :: lam
-  app (\ x:X.t1) t2 ~> [t2/x]t1
+  (\ x:X.t1) t2 ~> [t2/x]t1
 
   t1 ~> t1'
   ----------------------- :: app1
-  app t1 t2 ~> app t1' t2
+  t1 t2 ~> t1' t2
 
   t2 ~> t2'
   ----------------------- :: app2
-  app t1 t2 ~> app t1 t2'
+  t1 t2 ~> t1 t2'
 
   -------------------------------------------------------------- :: appLet
-  app (let t : X be p in t1) t2 ~> let t : X be p in (app t1 t2)
+  (let t : X be p in t1) t2 ~> let t : X be p in (t1 t2)
 
   ---------------------------------------------------------------------------------------------- :: letLet
   let (let t2 : X be p1 in t1) : Y be p2 in t3 ~> let t2 : X be p1 in let t1 : Y be p2 in t3
 
   ------------------------------------------------------------------------------------- :: letApp
-  let t1 : X be p in (app t1 t2) ~> app (let t1 : X be p in t1) (let t1 : X be p in t2)
+  let t1 : X be p in (t1 t2) ~> (let t1 : X be p in t1) (let t1 : X be p in t2)
 
 defn
   s1 ~> s2 :: :: sred :: 'Sred_'
 by 
 
   ------------------------------------ :: letU1
-  let trivS : UnitS be trivS in s ~> s
+  let trivS : UnitS be trivSp in s ~> s
 
   ------------------------------------ :: letU2
-  let trivT : UnitT be trivT in s ~> s
+  let trivT : UnitT be trivTp in s ~> s
 
   ---------------------------------------------------------- :: letT1
   let t1 (*) t2 : X (*) Y be x (>) y in s3 ~> [t1/x][t2/y]s3
