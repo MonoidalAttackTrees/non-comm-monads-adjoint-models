@@ -82,7 +82,8 @@ each of the previous types.  For example, $[[s1 (>) s2]]$ introduces a
 tensor, and $[[let s1 : A (>) B be x (>) y in s2]]$ eliminates a
 tensor.
 
-The typing rules for CNC logic can be found in Figure.
+The typing rules for CNC logic can be found in
+Figure~\ref{fig:CNC-typing-rules}.  
 \begin{figure}
   \footnotesize
   \begin{tabular}{|c|}
@@ -127,7 +128,21 @@ The typing rules for CNC logic can be found in Figure.
   \caption{Typing Rules for CNC Logic}
   \label{fig:CNC-typing-rules}
 \end{figure}
-
+We split the figure in two where the top of the figure are the rules
+of intuitionistic linear logic whose judgment is the
+$\mathcal{C}$-typing judgment denoted by $[[P |-c t : X]]$, and the
+bottom of the figure are the rules for the mixed
+commutative/non-commutative Lambek calculus whose judgment is the
+$\mathcal{L}$-judgment denoted by $[[G |-l s : A]]$, but the two
+halves are connected via the functor rules $\NDdruleTXXGIName{}$,
+$\NDdruleSXXGEName{}$, $\NDdruleSXXFIName{}$, and
+$\NDdruleSXXFEName{}$.  Just as in LNL logic the fact that the context
+$[[G]]$ on the $\mathcal{L}$ side of the logic is mixed results in
+this side having additional elimination rules where the type being
+eliminated is constructed on the $\mathcal{C}$ side of the logic, for
+example, the rules $\NDdruleSXXunitEOneName{}$,
+$\NDdruleSXXtenEOneName{}$, and $\NDdruleSXXcutOneName{}$ are
+additional mixed rules.
 
 
 
