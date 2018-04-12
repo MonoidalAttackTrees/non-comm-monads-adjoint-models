@@ -1,6 +1,6 @@
-We now introduce the Commutative/Non-commutative (CNC) logic in the
-form of a term assignment.  One should view this logic as composed of
-two logics one sitting to the left of the other.  On the left there is
+We now introduce Commutative/Non-commutative (CNC) logic in the form
+of a term assignment.  One should view this logic as composed of two
+logics; one sitting to the left of the other.  On the left, there is
 intuitionistic linear logic, denoted by $\cat{C}$, and on the right is
 the Lambek calculus denoted by $\cat{L}$.  Then we connect these two
 systems by a pair of monoidal adjoint functors $\cat{C} : \func{F}
@@ -31,28 +31,29 @@ define the syntax for CNC logic.
 The syntax for $\cat{C}$-types are the standard types for
 intuitionistic linear logic.  We have a unit $[[UnitT]]$, tensor
 product $[[X (*) Y]]$, and linear implication $[[X -o Y]]$, but just
-as in LNL logic we also have a type $[[Gf A]]$, where $[[A]]$ is an
-$\cat{L}$-type, that is, a type from the non-commutative side,
+as in LNL logic we also have a type $[[Gf A]]$ where $[[A]]$ is an
+$\cat{L}$-type; that is, a type from the non-commutative side
 corresponding to the right-adjoint functor between $\cat{L}$ and
-$\cat{C}$ which can be used to import types and terms from the
+$\cat{C}$. This functor can be used to import types and terms from the
 non-commutative side into the commutative side.  Now $\cat{C}$-typing
 judgments are denoted by $[[P |-c t : X]]$ where $[[P]]$ is a sequence
 of pairs of variables and their types, denoted by $[[x : X]]$, $[[t]]$
 is a $\cat{C}$-term, and $[[X]]$ is a $\cat{C}$-type.  The
-$\cat{C}$-terms are all standard, but $[[Gf s]]$ which corresponds to
-the morphism part of the right-adjoint of the adjunction between both
-logics, and $[[ex t1 , t2 with x1 , x2 in t3]]$ which is the
-introduction form for the structural rule exchange.
+$\cat{C}$-terms are all standard, but $[[Gf s]]$ corresponds to the
+morphism part of the right-adjoint of the adjunction between both
+logics, and $[[ex t1 , t2 with x1 , x2 in t3]]$ is the introduction
+form for the structural rule exchange.
 
 The non-commutative side is a bit more interesting than the
 commutative side just introduced.  The $\cat{L}$-typing judgment has
 the form $[[G |-l s : A]]$ where $[[G]]$ is now a $\cat{L}$-context,
-denoted by $[[G]]$ or $[[D]]$, which are ordered sequences of pairs of
-free variables with their types from \emph{both} sides denoted by $[[x
-    : B]]$ and $[[x : X]]$, $[[s]]$ is a $\cat{L}$-term, and $[[A]]$
-is a $\cat{L}$-type.  Given two typing contexts $[[G]]$ and $[[D]]$ we
-denote their concatenation by, $[[G;D]]$, we use a semicolon here to
-emphasize the fact that the contexts are ordered.
+denoted by $[[G]]$ or $[[D]]$. These contexts are ordered sequences of
+pairs of free variables with their types from \emph{both} sides
+denoted by $[[x : B]]$ and $[[x : X]]$ respectively. Finally, the term
+$[[s]]$ is a $\cat{L}$-term, and $[[A]]$ is a $\cat{L}$-type.  Given
+two typing contexts $[[G]]$ and $[[D]]$ we denote their concatenation
+by $[[G;D]]$; we use a semicolon here to emphasize the fact that the
+contexts are ordered.
 
 The context consisting of hypotheses from both sides goes back to
 Benton~\cite{Benton:1994} and is a property unique to adjoint logics
@@ -61,29 +62,28 @@ property because it allows one to make use of both sides within the
 Lambek calculus without the need to annotate every formula with a
 modality.
 
-The reader familiar with LNL logic will notice that our
-typing judgment, $[[G |-l s : A]]$, differs from Benton's which is of
-the form $\Gamma;\Delta \vdash t : A$ where $\Gamma$ contains
-non-linear formulas, and $\Delta$ contains linear formulas.  Just as
-Benton remarks, the splitting of his contexts was a presentational
-device, and one should view his contexts as merged, and hence, linear
-formulas were fully mixed with non-linear formulas.  Now why did we
-not use this presentational device?  Because, when contexts from LNL
-logic became out of order Benton could use the exchange rule to put
-them back in order again, but we no longer have general exchange, and
-hence, we are not able to keep the context organized in this way.
+The reader familiar with LNL logic will notice that our typing
+judgment, $[[G |-l s : A]]$, differs from Benton's. His is of the form
+$\Gamma;\Delta \vdash t : A$, where $\Gamma$ contains non-linear
+formulas, and $\Delta$ contains linear formulas.  Just as Benton
+remarks, the splitting of his contexts was a presentational device.
+One should view his contexts as merged, and hence, linear formulas
+were fully mixed with non-linear formulas.  Now why did we not use
+this presentational device?  Because, when contexts from LNL logic
+become out of order Benton could use the exchange rule to put them
+back in order again, but we no longer have general exchange. Thus, we
+are not able to keep the context organized in this way.
 
-The syntax for $\cat{L}$-types are of
-the typical form for the Lambek Calculus.  We have an unit type
-$[[UnitS]]$, a non-commutative tensor product $[[A (>) B]]$, right
-implication $[[A -> B]]$, and left implication $[[B <- A]]$.
-$\cat{L}$-terms correspond to introduction and elimination forms for
-each of the previous types.  For example, $[[s1 (>) s2]]$ introduces a
-tensor, and $[[let s1 : A (>) B be x (>) y in s2]]$ eliminates a
-tensor.
+The syntax for $\cat{L}$-types are of the typical form for the Lambek
+Calculus.  We have an unit type $[[UnitS]]$, a non-commutative tensor
+product $[[A (>) B]]$, right implication $[[A -> B]]$, and left
+implication $[[B <- A]]$.  $\cat{L}$-terms correspond to introduction
+and elimination forms for each of the previous types.  For example,
+$[[s1 (>) s2]]$ introduces a tensor, and $[[let s1 : A (>) B be x (>)
+    y in s2]]$ eliminates a tensor.
 
 The typing rules for CNC logic can be found in
-Figure~\ref{fig:CNC-typing-rules}.  
+Figure~\ref{fig:CNC-typing-rules}.
 \begin{figure}
   \footnotesize
   \begin{tabular}{|c|}
@@ -128,23 +128,20 @@ Figure~\ref{fig:CNC-typing-rules}.
   \caption{Typing Rules for CNC Logic}
   \label{fig:CNC-typing-rules}
 \end{figure}
-We split the figure in two where the top of the figure are the rules
-of intuitionistic linear logic whose judgment is the
-$\mathcal{C}$-typing judgment denoted by $[[P |-c t : X]]$, and the
-bottom of the figure are the rules for the mixed
-commutative/non-commutative Lambek calculus whose judgment is the
-$\mathcal{L}$-judgment denoted by $[[G |-l s : A]]$, but the two
-halves are connected via the functor rules $\NDdruleTXXGIName{}$,
-$\NDdruleSXXGEName{}$, $\NDdruleSXXFIName{}$, and
-$\NDdruleSXXFEName{}$.  Just as in LNL logic the fact that the context
-$[[G]]$ on the $\mathcal{L}$ side of the logic is mixed results in
-this side having additional elimination rules where the type being
-eliminated is constructed on the $\mathcal{C}$ side of the logic, for
-example, the rules $\NDdruleSXXunitEOneName{}$,
-$\NDdruleSXXtenEOneName{}$, and $\NDdruleSXXcutOneName{}$ are
-additional mixed rules.
-
-
+We split the figure in two: the top of the figure are the rules of
+intuitionistic linear logic whose judgment is the $\mathcal{C}$-typing
+judgment denoted by $[[P |-c t : X]]$, and the bottom of the figure
+are the rules for the mixed commutative/non-commutative Lambek
+calculus whose judgment is the $\mathcal{L}$-judgment denoted by $[[G
+    |-l s : A]]$, but the two halves are connected via the functor
+rules $\NDdruleTXXGIName{}$, $\NDdruleSXXGEName{}$,
+$\NDdruleSXXFIName{}$, and $\NDdruleSXXFEName{}$.  Just as in LNL
+logic, the fact that the context $[[G]]$ on the $\mathcal{L}$ side of
+the logic is mixed results in this side having additional elimination
+rules, because the type being eliminated is constructed on the
+$\mathcal{C}$ side of the logic; for example, the rules
+$\NDdruleSXXunitEOneName{}$, $\NDdruleSXXtenEOneName{}$, and
+$\NDdruleSXXcutOneName{}$ are additional mixed rules.
 
 %%% Local Variables: 
 %%% mode: latex

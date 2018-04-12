@@ -23,8 +23,8 @@ category and a Lambek category.
   \begin{itemize}
   \item a symmetric monoidal closed category $(\cat{C},\otimes,I,\alpha,\lambda,\rho)$;
   \item a Lambek category $(\cat{L},\tri,I',\alpha',\lambda',\rho')$;
-  \item a monoidal adjunction $F:\cat{C}\dashv\cat{L}:G$ with unit $\eta_X:X\rightarrow GFX$ and
-        counit $\varepsilon:FG\rightarrow id_\cat{L}$, where $(F:\cat{C}\rightarrow\cat{L}, m)$
+  \item a monoidal adjunction $F:\cat{C}\dashv\cat{L}:G$ with unit $\eta:\Id_{\cat{C}} \rightarrow GF$ and
+        counit $\varepsilon:FG\rightarrow \Id_\cat{L}$, where $(F:\cat{C}\rightarrow\cat{L}, m)$
         and $(G:\cat{L}\rightarrow\cat{C}, n)$ are monoidal functors.
   \end{itemize}
 \end{definition}
@@ -37,11 +37,10 @@ section proves essential properties of any LAM.
 be a LAM, where $(F,\m{})$ and $(G,\n{})$ are monoidal
 functors. Similarly as in Benton's LNL model, $\m{X,Y} : FX \tri FY
 \mto F(X \otimes Y)$ are components of a natural isomorphism, and
-$\m{I} : I' \mto FI$ is an isomorphism. This is essential for deriving certain
-rules of CNC logic, such as tensor elimination in natural deduction.
-
-We define the inverses of $\m{X,Y}:FX\tri FY\rightarrow F(X\otimes Y)$
-and $\m{I}:I'\rightarrow FI$ as:
+$\m{I} : I' \mto FI$ is an isomorphism. This is essential for modeling
+certain rules of CNC logic, such as tensor elimination in natural
+deduction.  We define the inverses of $\m{X,Y}:FX\tri FY\rightarrow
+F(X\otimes Y)$ and $\m{I}:I'\rightarrow FI$ as:
 
 \begin{mathpar}
 \bfig
@@ -55,6 +54,7 @@ and $\m{I}:I'\rightarrow FI$ as:
   \morphism(500,0)<400,0>[FGI'`I';\varepsilon_{I'}]
 \efig
 \end{mathpar}
+We can now see that this straightforwardly follows from Benton's proof.
 
 \begin{theorem}
   $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$.
@@ -66,14 +66,17 @@ and $\m{I}:I'\rightarrow FI$ as:
 
 \textbf{Strong non-commutative monad}. Next we show that the monad on
 $\cat{C}$ in LAM is strong but non-commutative. In Benton's LNL model,
-the monad on the cartesian closed category is commutative.
+the monad on the cartesian closed category is commutative, but later
+Benton and Wadler \cite{Benton:1996} wonder, is it possible to model
+non-commutative monads using adjoint models similar to LNL models? The
+following answers their question in the positive.
 \begin{lemma}
 \label{lem:monoidal-monad}
 The monad induced by any LAM, $GF : \cat{C} \mto \cat{C}$, is monoidal.
 \end{lemma}
 \noindent
-However, the monad is not symmetric becauase the following diagram does not commute, for the
-Lambek category $\cat{L}$ is not symmetric.
+However, the monad is not symmetric because the following diagram does
+not commute.
 \begin{mathpar}
 \bfig
   \ptriangle/->`->`/<900,400>[
@@ -84,45 +87,80 @@ Lambek category $\cat{L}$ is not symmetric.
   \morphism|b|<900,0>[G(FX\tri FY)`GF(X\otimes Y);G\m{X,Y}]
 \efig
 \end{mathpar}
-
+Commutativity fails, because the functors defining the monad are not
+symmetric monoidal, but only monoidal.  This means that the diagram
+\[
+\bfig
+\square<700,400>[
+  FA\otimes'FB`FB\otimes'FA`F(A\otimes B)`F(B\otimes A);
+  \e{FA,FB}`\m{A,B}`\m{B,A}`F\e{A,B}]
+\efig
+\]
+does not hold for $G$ nor $F$.  However, we can prove the monad is
+strong.
 \begin{lemma}
   \label{lem:strong-monad}
-  The monad on the symmetric monoidal closed category in LAM is strong.
+  The monad, $GF : \cat{C} \mto \cat{C}$, on the symmetric monoidal
+  closed category in LAM is strong.
 \end{lemma}
-
-The following lemma is adopted from \cite{}.
-\begin{lemma}
+\noindent
+Finally, we obtain the non-communativity of the monad induced by any
+LAM as follows.
+\begin{lemma}[Due to \cite{}]
 \label{lem:monad-com-iff-sym}
   Let $\cat{M}$ be a symmetric monoidal category and $T$ be a strong monad on $\cat{M}$. Then
   $T$ is commutative iff it is symmetric.
 \end{lemma}
 
 \begin{theorem}
-  The monad on the SMCC in LAM is strong but non-commutative.
+  The monad, $GF : \cat{C} \mto \cat{C}$, on the SMCC in LAM is strong
+  but non-commutative.
 \end{theorem}
 \begin{proof}
-  The proof is obvious. Based on Lemma~\ref{lem:strong-monad} and
-  Lemma~\ref{lem:monad-com-iff-sym}, the monad is non-commutative. 
+  This proof follows from Lemma~\ref{lem:strong-monad} and
+  Lemma~\ref{lem:monad-com-iff-sym}.
 \end{proof}
 
-\textbf{Comonad for exchange}.
+\textbf{Comonad for exchange}.  We conclude this section by showing
+that the comonad induced by any LAM is monoidal and extends $\cat{L}$
+with exchange.  The latter is shown by proving that its corresponding
+co-Eilenberg-Moore category is symmetric monoidal closed.
 
 \begin{lemma}
-  The comonad on the Lambek category in a LAM is monoidal.
+  The comonad, $FG : \cat{L} \mto \cat{L}$, on the Lambek category in any LAM is monoidal.
 \end{lemma}
-
-We then show that the co-Eilenberg-Moore category of the comonad $S$ is symmetric monoidal
-closed.
-
-
-\begin{lemma}
-  \label{lem:em-exchange}
-  Given a LAM $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ and the comonad $S$ on $\cat{L}$,
-  the co-Eilenberg-Moore category $\cat{L}^S$ has an exchange natural transformation
-  $\e{A,B}^S:A\tri B\rightarrow B\tri A$.
-\end{lemma}
+\begin{proof}
+  This proof follows by several diagram chases, but really does not
+  depart much from Benton's proof \cite{Benton:1994}.
+\end{proof}
 
 \begin{theorem}
-  The co-Eilenberg-Moore category $\cat{L}^S$ of $S$ is symmetric monoidal closed.
+  \label{thm:em-exchange}
+  Given a LAM $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ and the comonad
+  $FG : \cat{L} \mto \cat{L}$, the co-Eilenberg-Moore category
+  $\cat{L}^{FG}$ has an exchange natural transformation $\e{A,B}^{FG}:A\tri
+  B\rightarrow B\tri A$.
 \end{theorem}
+\begin{proof}
+  The natural transformation $\e{A,B}^{FG}:A\tri B\rightarrow B\tri A$ is defied
+  as follows:
+  $$\bfig
+    \morphism<600,0>[A\tri B`FGA\tri FGB;h_A\tri h_B]
+    \morphism(600,0)<800,0>[FGA\tri FGB`F(GA\otimes GB);\m{GA,GB}]
+    \morphism(1400,0)<800,0>[F(GA\otimes GB)`F(GB\otimes GA);F\e{GA,GB}]
+    \morphism(2200,0)<700,0>[F(GB\otimes GA)`FG(B\tri A);F\n{B,A}]
+    \morphism(2900,0)<500,0>[FG(B\tri A)`B\tri A;\varepsilon_{B\tri A}]
+  \efig$$
+  in which $\e{}$ is the exchange for $\cat{C}$.  The remainder of the
+  proof is fairly straightforward, and shows that the typical diagrams
+  for any symmetric monoidal category hold.
+\end{proof}
 
+\begin{corollary}
+  The co-Eilenberg-Moore category $\cat{L}^{FG}$ of $FG : \cat{L} \mto
+  \cat{L}$ is symmetric monoidal closed.
+\end{corollary}
+\begin{proof}
+  The proof that $\cat{L}^{FG}$ is monoidal closed follows similarly
+  to Benton~\cite{Benton:1994}.
+\end{proof}
