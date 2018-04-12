@@ -1,0 +1,170 @@
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\Dial}[2]{\mathsf{Dial}_{#1}(#2)}
+
+In this section we give a different categorical model in terms of
+dialectica categories; which are a sound and complete categorical
+model of the Lambek Calculus as was shown by de Paiva and Eades
+\cite{dePaiva2018}. This section is largely the same as the
+corresponding section de Paiva and Eades give, but with some
+modifications to their definition of biclosed posets with exchange
+(see Definition~\ref{def:biclosed-exchange}).  However, we try to make
+this section as self contained as possible.
+
+Dialectica categories were first introduced by de Paiva as a
+categorification of G\"odel's Dialectica interpretation
+\cite{depaiva1990}.  Dialectica categories were one of the first sound
+categorical models of intuitionistic linear logic with linear
+modalities.  We show in this section that they can be adapted to
+become a sound and complete model for CNC logic, with both the
+exchange and of-course modalities.  Due to the complexities of working
+with dialectica categories we have formally verified\footnote{The
+  complete formalization can be found online at \url{???}.}  this
+section in the proof assistant Agda~\cite{bove2009}.
+
+First, we define the notion of a biclosed poset.  These are used to
+control the definition of morphisms in the dialectica model.
+\begin{definition}
+  \label{def:biclosed-poset}
+  Suppose $(M, \leq, \circ, e)$ is an ordered non-commutative monoid.
+  If there exists a largest $x \in M$ such that $a \circ x \leq b$ for
+  any $a, b \in M$, then we denote $x$ by $a \lto b$ and called it
+  the \textbf{left-pseudocomplement} of $a$ w.r.t $b$.  Additionally,
+  if there exists a largest $x \in M$ such that $x \circ a \leq b$ for
+  any $a, b \in M$, then we denote $x$ by $b \rto a$ and called it
+  the \textbf{right-pseudocomplement} of $a$ w.r.t $b$.
+
+  A \textbf{biclosed poset}, $(M, \leq, \circ, e, \lto, \rto)$, is an
+  ordered non-commutative monoid, $(M, \leq, \circ, e)$, such that $a
+  \lto b$ and $b \rto a$ exist for any $a,b \in M$.
+\end{definition}
+Now using the previous definition we define dialectica Lambek spaces.
+\begin{definition}
+  \label{def:dialectica-lambek-spaces}
+  Suppose $(M, \leq, \circ, e, \lto, \rto)$ is a biclosed poset. Then
+  we define the category of \textbf{dialectica Lambek spaces},
+  $\mathsf{Dial}_M(\Set)$, as follows:
+  \begin{itemize}
+  \item[-] objects, or dialectica Lambek spaces, are triples $(U, X,
+    \alpha)$ where $U$ and $X$ are sets, and $\alpha : U \times X \mto
+    M$ is a generalized relation over $M$, and
+
+  \item[-] maps that are pairs $(f, F) : (U , X, \alpha) \mto (V , Y ,
+    \beta)$ where $f : U \mto V$, and $F : Y \mto X$ are functions
+    such that the weak adjointness condition
+    $\forall u \in U.\forall y \in Y. \alpha(u , F(y)) \leq \beta(f(u), y)$
+    holds.
+  \end{itemize}
+\end{definition}
+Notice that the biclosed poset is used here as the target of the
+relations in objects, but also as providing the order  relation in the weak adjoint condition on morphisms.  This will allow the structure of the biclosed
+poset to lift up into $\Dial{M}{\Set}$.
+
+We will show that $\Dial{M}{\Set}$ is a model of the Lambek Calculus
+with modalities.  First, we must show that $\Dial{M}{\Set}$ is
+monoidal biclosed.
+\begin{definition}
+  \label{def:dial-monoidal-structure}
+  Suppose $(U, X, \alpha)$ and $(V, Y, \beta)$ are two objects of
+  $\Dial{M}{\Set}$. Then their tensor product is defined as follows:
+  \[ \small
+  (U, X, \alpha) \rhd (V, Y, \beta) = (U \times V, (V \to X) \times (U \to Y), \alpha \rhd \beta)
+  \]
+  where $- \to -$ is the function space from $\Set$, and $(\alpha
+  \rhd \beta)((u, v), (f, g)) = \alpha(u, f(v)) \circ \beta(g(u), v)$.
+\end{definition}
+
+\noindent
+It follows from de Paiva and Eades \cite{dePaiva2018} that this does
+indeed define a monoidal tensor product, but take note of the fact
+that this tensor product is indeed non-commutative, because the
+non-commutative multiplication of the biclosed poset is used to define
+the relation of the tensor product.
+
+The tensor product has two right adjoints making $\Dial{M}{\Set}$
+biclosed.
+\begin{definition}
+  \label{def:dial-is-biclosed}
+  Suppose $(U, X, \alpha)$ and $(V, Y, \beta)$ are two objects of
+  $\Dial{M}{\Set}$. Then two internal-homs can be defined as follows:
+  \[ \small
+  \begin{array}{lll}
+    (U, X, \alpha) \lto (V, Y, \beta) = ((U \to V) \times (Y \to X), U \times Y, \alpha \lto \beta)\\
+    (V, Y, \beta) \rto (U, X, \alpha) = ((U \to V) \times (Y \to X), U \times Y, \alpha \rto \beta)\\
+  \end{array}
+  \]
+\end{definition}
+\noindent
+It is straightforward to show that the typical bijections defining the
+corresponding adjunctions hold; see de Paiva and Eades for the details
+\cite{dePaiva2018}.
+
+We now extend $\Dial{M}{\Set}$ with two modalities: the usual
+modality, of-course, denoted $!A$, and the exchange modality denoted
+$\xi A$.  However, we must first extended biclosed posets to
+include an exchange operation.
+\begin{definition}
+  \label{def:biclosed-exchange}
+  A \textbf{biclosed poset with exchange} is a biclosed poset $(M,
+  \leq, \circ, e, \lto, \rto)$ equipped with an unary operation
+  $\xi : M \to M$ satisfying the following:
+  \[ \small
+  \setlength{\arraycolsep}{4px}
+  \begin{array}{lll}
+    \begin{array}{lll}
+    \text{(Compatibility)} & a \leq b \text{ implies } \xi a \leq \xi b \text{ for all } a,b,c \in M\\
+    \text{(Minimality)} & \xi a \leq a \text{ for all } a \in M\\    
+  \end{array}
+  &
+  \begin{array}{lll}
+    \text{(Duplication)} & \xi a \leq \xi\xi a \text{ for all } a \in M\\
+    \text{(Exchange)} & (\xi a \circ \xi b) \leq (\xi b \circ \xi a) \text{ for all } a, b \in M\\
+  \end{array}
+  \end{array}
+  \]
+\end{definition}
+\noindent
+This definition is where the construction given here departs from the
+definition of biclosed posets with exchange given by de Paiva and
+Eades \cite{dePaiva2018}.
+
+We can now define the two modalities in $\Dial{M}{\Set}$ where $M$ is
+a biclosed poset with exchange.
+\begin{definition}
+  \label{def:modalities-dial}
+  Suppose $(U, X, \alpha)$ is an object of $\Dial{M}{\Set}$ where $M$
+  is a biclosed poset with exchange. Then the \textbf{of-course} and
+  \textbf{exchange} modalities can be defined as 
+  $! (U, X, \alpha) = (U, U \to X^*, !\alpha)$ and
+  $\xi (U, X, \alpha) = (U, X, \xi \alpha)$
+  where $X^*$ is the free commutative monoid on $X$, $(!\alpha)(u, f)
+  = \alpha(u, x_1) \circ \cdots \circ \alpha(u, x_i)$ for $f(u) =
+  (x_1, \ldots, x_i)$, and $(\xi \alpha)(u, x) = \xi (\alpha(u,
+  x))$.
+\end{definition}
+This definition highlights a fundamental difference between the two
+modalities.  The definition of the exchange modality relies on an
+extension of biclosed posets with essentially the exchange modality in
+the category of posets.  However, the of-course modality is defined by
+the structure already present in $\Dial{M}{\Set}$, specifically, the
+structure of $\Set$.
+
+Both of the modalities have the structure of a comonad.  That is,
+there are monoidal natural transformations $\varepsilon_! : !A \mto
+A$, $\varepsilon_\xi : \xi A \mto A$, $\delta_! : !A \mto !!A$,
+and $\delta_\xi : \xi A \mto \xi\xi A$ which satisfy the
+appropriate diagrams; see the formalization for the full
+proofs. Furthermore, these comonads come equipped with arrows $w : !A
+\mto I$, $d : !A \mto !A \otimes !A$, $\e{A,B} : \xi A \otimes \xi B \mto \xi B
+\otimes \xi A$. 
+
+Finally, using the fact that $\Dial{M}{\Set}$ for any biclosed poset
+is essentially a non-commutative formalization of Bierman's linear
+categories \cite{Bierman:1994} we can use Benton's construction of an
+LNL model from a linear category to obtain a LAM model, and hence,
+obtain the following.
+\begin{theorem}
+  \label{theorem:sound-dial-exchange-!}
+  Suppose $M$ is a biclosed poset with exchange.  Then
+  $\Dial{M}{\Set}$ is a sound and complete model for CNC logic.
+\end{theorem}
+

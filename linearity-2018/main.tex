@@ -16,6 +16,7 @@
 \usepackage{comment}
 \usepackage{graphicx}
 \usepackage[inline]{enumitem}
+\usepackage{bbm}
 
 \usepackage{caption}
 \captionsetup[figure]{name=Figure}
@@ -188,7 +189,20 @@ Valeria de Paiva
 \maketitle 
 
 \begin{abstract}
-  TODO
+  In this paper we introduce Commutative/Non-Commutative Logic (CNC
+  logic) and two categorical models for CNC logic.  This work
+  abstracts Benton's Linear/Non-Linear Logic \cite{Benton:1994} by
+  removing the existence of the exchange structural rule. One should
+  view this logic as composed of two logics; one sitting to the left
+  of the other.  On the left, there is intuitionistic linear logic,
+  and on the right is a mixed commutative/non-commutative
+  formalization of the Lambek calculus. Then both of these logics are
+  connected via a pair of monoidal adjoint functors.  An exchange
+  modality is then derivable within the logic using the adjunction
+  between both sides.  Thus, the adjoint functors allow one to pull
+  the exchange structural rule from the left side to the right side.
+  We then give a categorical model in terms of a monoidal adjunction,
+  and then a concrete model in terms of dialectica Lambek spaces.
 \end{abstract}
 
 \section{Introduction}
@@ -208,7 +222,7 @@ Valeria de Paiva
 
 \section{A Model in Dialectica Spaces}
 \label{sec:a-model-in-dialectica-spaces}
-
+\input{dialectica-spaces}
 % section a_model_in_dialectica_spaces (end)
 
 \bibliographystyle{plainurl}

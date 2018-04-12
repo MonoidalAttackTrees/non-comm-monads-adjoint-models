@@ -48,7 +48,7 @@ LAM-output.tex : LAM/LAM.ott LAM.tex
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex adjoint-models.tex LAM-output.tex
+$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex adjoint-models.tex LAM-output.tex dialectica-spaces.tex
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	bibtex $(TexFileName)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
