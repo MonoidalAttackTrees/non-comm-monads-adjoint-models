@@ -9,7 +9,7 @@ define the syntax for CNC logic.
 \begin{definition}
   \label{def:Lambek-syntax}
   The following grammar describes the syntax of CNC logic:
-  \begin{center}\vspace{-5px}
+  \begin{center}\vspace{-3px}\small
     \begin{math}
       \begin{array}{lll}        
         \text{($\cat{C}$-Types)} & [[W]],[[X]],[[Y]],[[Z]] ::= [[UnitT]] \mid [[X (*) Y]] \mid [[X -o Y]] \mid [[Gf A]]\\
@@ -17,8 +17,8 @@ define the syntax for CNC logic.
         \text{($\cat{C}$-Terms)} & [[t]] ::= [[x]] \mid [[trivT]] \mid [[t1 (*) t2]] \mid [[let t1 : X be q in t2]] \mid [[\x:X.t]] \mid [[t1 t2]] \mid [[ex t1 , t2 with x1 , x2 in t3]] \mid [[Gf s]]\\
         \text{($\cat{L}$-Terms)} & [[s]] ::= [[x]] \mid [[trivS]] \mid [[s1 (>) s2]] \mid [[let s1 : A be p in s2]] \mid [[let t : X be q in s]] \mid [[\l x : A.s]] \mid [[\r x : A . s]] \\
         & \,\,\,\,\,\,\,\,\,\mid [[appl s1 s2]] \mid [[appr s1 s2]] \mid [[F t]]\\        
-        \text{($\cat{C}$-Patterns)} & [[q]] ::= [[trivTp]] \mid [[x (*) y]] \mid [[Gf q]]\\
-        \text{($\cat{L}$-Patterns)} & [[p]] ::= [[trivSp]] \mid [[x (>) y]] \mid [[F p]]\\        
+        \text{($\cat{C}$-Patterns)} & [[q]] ::= [[trivTp]] \mid [[x]] \mid [[q1 (*) q2]] \mid [[Gf p]]\\
+        \text{($\cat{L}$-Patterns)} & [[p]] ::= [[trivSp]] \mid [[x]] \mid [[p1 (>) p2]] \mid [[F q]]\\        
         \text{($\cat{C}$-Contexts)} & [[I]],[[P]] ::= [[.]] \mid [[x : X]] \mid [[I,P]]\\
         \text{($\cat{L}$-Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[x : X]] \mid [[G;D]]\\        
         \text{($\cat{C}$-Typing Judgment)} & [[I |-c t : X]]\\
@@ -29,7 +29,7 @@ define the syntax for CNC logic.
 \end{definition}
 
 The syntax for $\cat{C}$-types are the standard types for
-intuitionistic linear logic.  We have a unit $[[UnitT]]$, tensor
+intuitionistic linear logic.  We have a constant $[[UnitT]]$, tensor
 product $[[X (*) Y]]$, and linear implication $[[X -o Y]]$, but just
 as in LNL logic we also have a type $[[Gf A]]$ where $[[A]]$ is an
 $\cat{L}$-type; that is, a type from the non-commutative side
