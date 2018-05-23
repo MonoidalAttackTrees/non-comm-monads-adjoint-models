@@ -5189,10 +5189,10 @@ elimination rules:
       \inferrule* [right={\tiny FE}] {
         $$\mprset{flushleft}
         \inferrule* [right={\tiny FI}] {
-          {[[I |-c y : X]]}
-        }{[[I |-l F y : F X]]} \\
+          {[[I |-c t : X]]}
+        }{[[I |-l F t : F X]]} \\
          {[[D1, x : X, D2 |-l s : A]]}
-      }{[[D1, I, D2 |-l let F x : F X be F y in s : A]]}
+      }{[[D1, I, D2 |-l let F t : F X be F x in s : A]]}
     \end{math}
   \end{center}
   normalizes to
@@ -5201,9 +5201,9 @@ elimination rules:
     \begin{math}
       $$\mprset{flushleft}
       \inferrule* [right={\tiny cut1}] {
-        {[[I |-c y : X]]} \\
+        {[[I |-c t : X]]} \\
         {[[D1, x : X, D2 |-l s : A]]}
-      }{[[D1, I, D2 |-l [y / x]s : A]]}
+      }{[[D1, I, D2 |-l [t / x]s : A]]}
     \end{math}
   \end{center}
 
@@ -5447,7 +5447,7 @@ elimination rules:
       \tiny
       \begin{math}
         $$\mprset{flushleft}
-        \inferrule* [right={\tiny tenE}] {
+        \inferrule* [right={\tiny unitE}] {
           $$\mprset{flushleft}
           \inferrule* [right={\tiny impE}] {
             {[[I1 |-c t1 : UnitT]]} \\
@@ -5464,7 +5464,7 @@ elimination rules:
         $$\mprset{flushleft}
         \inferrule* [right={\tiny impE}] {
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny tenE}] {
+          \inferrule* [right={\tiny unitE}] {
             {[[I1 |-c t1 : UnitT]]} \\
             {[[I3 |-c t3 : UnitT]]}
           }{[[I1, I3 |-c let t1 : UnitT be trivT in t3 : UnitT]]}
@@ -5472,7 +5472,37 @@ elimination rules:
         }{[[I2, I1, I3 |-c app t2 (let t1 : UnitT be trivT in t3) : UnitT]]}
       \end{math}
     \end{center}
-  \item (\NDdruleTXXimpEName, \NDdruleTXXtenEName): ?
+
+  \item (\NDdruleTXXimpEName, \NDdruleTXXtenEName):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny impE}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny tenE}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 -o Y1]]} \\
+            {[[P2 |-c t3 : X1]]}
+          }{[[I1, x : X2, y : Y2, I2, P2 |-c app t1 t3 : Y1]]}
+           {[[P2 |-c t2 : X2 (x) Y2]]}
+        }{[[I1, P1, I2, P2 |-c let t2 : X2 (x) Y2 be x (x) y in (app t1 t3) : Y1]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 -o Y1]]} \\
+            {[[P1 |-c t2 : X2 (x) Y2]]}
+          }{[[I1, P1, I2 |-c let t2 : X2 (x) Y2 be x (x) y in t1 : X1 -o Y1]]} \\
+           {[[P2 |-c t3 : X1]]}
+        }{[[I1, P1, I2, P2 |-c app (let t2 : X2 (x) Y2 be x (x) y in t1) t3 : Y1]]}
+      \end{math}
+    \end{center}
   \item (\NDdruleTXXimpEName, \NDdruleTXXimpEName): ?
   \end{itemize}
 
@@ -5741,10 +5771,10 @@ elimination rules:
           $$\mprset{flushleft}
           \inferrule* [right={\tiny FE}] {
             {[[G1, x : X, G2 |-l s1 : UnitS]]} \\
-            {[[D1 |-l y : F X]]}
-          }{[[G1, D1, G2 |-l let F x : F X be y in s1 : UnitS]]} \\
-           {[[D2 |-l s2 : A]]}
-        }{[[G1, D1, G2, D2 |-l let (let F x : F X be y in s1) : UnitS be trivS in s2 : A]]}
+            {[[D1 |-l s2 : F X]]}
+          }{[[G1, D1, G2 |-l let s2 : F X be F x in s1 : UnitS]]} \\
+           {[[D2 |-l s3 : A]]}
+        }{[[G1, D1, G2, D2 |-l let (let s2 : F X be F x in s1) : UnitS be trivS in s3 : A]]}
       \end{math}
     \end{center}
     commutes to
@@ -5756,10 +5786,10 @@ elimination rules:
           $$\mprset{flushleft}
           \inferrule* [right={\tiny unitE2}] {
             {[[G1, x : X, G2 |-l s1 : UnitS]]} \\
-            {[[D2 |-l s2 : A]]}
-          }{[[G1, x : X, G2, D2 |-l let s1 : UnitS be trivS in s2 : A]]} \\
-           {[[D1 |-l y : F X]]}
-        }{[[G1, D1, G2, D2 |-l let F x : F X be y in (let s1 : UnitS be trivS in s2) : A]]}
+            {[[D2 |-l s3 : A]]}
+          }{[[G1, x : X, G2, D2 |-l let s1 : UnitS be trivS in s3 : A]]} \\
+           {[[D1 |-l s2 : F X]]}
+        }{[[G1, D1, G2, D2 |-l let s2 : F X be F x in (let s1 : UnitS be trivS in s2) : A]]}
       \end{math}
     \end{center}
   \item (\NDdruleSXXFEName, \NDdruleSXXtenETwoName):

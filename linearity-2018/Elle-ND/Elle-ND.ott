@@ -155,7 +155,9 @@ terminals :: 'terminals_' ::=
   | |-l   :: :: VdashL
   {{tex \vdash_\mathcal{L} }}
   | ~>   :: :: To
-  {{tex \leadsto }}
+  {{tex \leadsto_\beta }}
+  | ~~   :: :: Commute
+  {{tex \leadsto_\mathsf{c} }}
  
 defns
   Jtype :: '' ::=
@@ -272,11 +274,13 @@ by
   ---------------------------------------- :: cut2
   D1;G;D2 |-l [s1/x]s2 : B
 
+
+
 defns
   Reduction :: '' ::=
 
 defn
-  t1 ~> t2 :: :: tred :: 'Tred_'
+  t1 ~> t2 :: :: tred :: 'Tbeta_'
 by 
 
   ------------------------------------ :: letU
@@ -306,7 +310,7 @@ by
   let t1 : X be p in (t1 t2) ~> (let t1 : X be p in t1) (let t1 : X be p in t2)
 
 defn
-  s1 ~> s2 :: :: sred :: 'Sred_'
+  s1 ~> s2 :: :: sred :: 'Sbeta_'
 by 
 
   ------------------------------------ :: letU1
@@ -315,14 +319,14 @@ by
   ------------------------------------ :: letU2
   let trivT : UnitT be trivTp in s ~> s
 
-  ---------------------------------------------------------- :: letT1
-  let t1 (*) t2 : X (*) Y be x (>) y in s3 ~> [t1/x][t2/y]s3
+  -------------------------------------------------------- :: letT1
+  let t1 (*) t2 : X (*) Y be x (>) y in s ~> [t1/x][t2/y]s
 
   ---------------------------------------------------------- :: letT2
   let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3
 
   ----------------------------------- :: letF
-  let F t : F X be F y in s ~> [t/y]s
+  let F t : F X be F x in s ~> [t/x]s
 
   ------------------------------- :: lamL
   appl (\l x:A.s1) s2 ~> [s2/x]s1
@@ -363,3 +367,100 @@ by
 
   --------------------------------------------------------------------------------------- :: letAppr
   let s1 : A be p in (appr s1 s2) ~> appr (let s1 : A be p in s1) (let s1 : A be p in s2)
+
+
+
+defns
+  Commuting :: '' ::=
+
+defn
+  t1 ~~ t2 :: :: tcom :: 'Tcom_'
+by 
+  
+  --------------------------------------------------------------------------------------------------------------------------- :: unitE_unitE
+  let (let t2 : UnitT be trivTp in t1) : UnitT be trivTp in t3 ~~ let t2 : UnitT be trivTp in (let t1 : UnitT be trivTp in t3)
+  
+  --------------------------------------------------------------------------------------------------------------------------------- :: unitE_tenE
+  let (let t2 : UnitT be trivTp in t1) : X (*) Y be x (*) y in t3 ~~ let t2 : UnitT be trivTp in (let t1 : X (*) Y be x (*) y in t3)
+
+  -------------------------------------------------------------------------- :: unitE_impE
+  (let t2 : UnitT be trivTp in t1) t3 ~~ let t2 : UnitT be trivTp in (t1 t3)
+
+  ---------------------------------------------------------------------------------------------------------------------------------- :: tenE_unitE
+  let (let t2 : X (*) Y be x (*) y in t1) : UnitT be trivTp in t3 ~~ let t2 : X (*) Y be x (*) y in (let t1 : UnitT be trivTp in t3)
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------ :: tenE_tenE
+  let (let t2 : X2 (*) Y2 be x (*) y in t1) : X1 (*) Y1 be w (*) z in t3 ~~ let t2 : X2 (*) Y2 be x (*) y in (let t1 : X1 (*) Y1 be w (*) z in t3)
+
+  ------------------------------------------------------------------------------------- :: tenE_impE
+  (let t2 : X2 (*) Y2 be x (*) y in t1) t3 ~~ let t2 : X2 (*) Y2 be x (*) y in (t1 t3)
+  
+  -------------------------------------------------------------------------- :: impE_unitE
+  let (t2 t1) : UnitT be trivTp in t3 ~~ t2 (let t1 : UnitT be trivTp in t3)
+
+defn
+  s1 ~~ s2 :: :: scom :: 'Scom_'
+by 
+  
+  --------------------------------------------------------------------------------------------------------------------------- :: unitE_unitE
+  let (let s2 : UnitS be trivSp in s1) : UnitS be trivSp in s3 ~~ let s2 : UnitS be trivSp in (let s1 : UnitS be trivSp in s3)
+  
+  --------------------------------------------------------------------------------------------------------------------------- :: unitE2_unitE
+  let (let t : UnitT be trivTp in s1) : UnitS be trivSp in s2 ~~ let t : UnitT be trivTp in (let s1 : UnitS be trivSp in s2)
+
+  ------------------------------------------------------------------------------------ :: unitE_imprE
+  appr (let s2 : UnitS be trivSp in s1) s3 ~~ let s2 : UnitS be trivSp in (appr s1 s3)
+
+  ------------------------------------------------------------------------------------ :: unitE2_imprE
+  appr (let t : UnitT be trivTp in s1) s2 ~~ let t : UnitT be trivTp in (appr s1 s2)
+
+  ------------------------------------------------------------------------------------------------------------------ :: unitE_FE
+  let (let s2 : UnitS be trivSp in s1) : F X be F x in s3 ~~ let s2 : UnitS be trivSp in (let s1 : F X be F x in s3)
+
+  ------------------------------------------------------------------------------------------------------------------ :: unitE2_FE
+  let (let t : UnitT be trivTp in s1) : F X be F x in s2 ~~ let t : UnitT be trivTp in (let s1 : F X be F x in s2)
+
+  ---------------------------------------------------------------------------------------------------------------------------------- :: tenE_unitE
+  let (let s2 : A (>) B be x (>) y in s1) : UnitS be trivSp in s3 ~~ let s2 : A (>) B be x (>) y in (let s1 : UnitS be trivSp in s3)
+
+  ---------------------------------------------------------------------------------------------------------------------------------- :: tenE2_unitE
+  let (let t : X (*) Y be x (*) y in s1) : UnitS be trivSp in s2 ~~ let t : X (*) Y be x (*) y in (let s1 : UnitS be trivSp in s2)
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------ :: tenE_tenE
+  let (let s2 : A2 (>) B2 be x (>) y in s1) : A1 (>) B1 be w (>) z in s3 ~~ let s2 : A2 (>) B2 be x (>) y in (let s1 : A1 (>) B1 be w (>) z in s3)
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------ :: tenE2_tenE
+  let (let t : X (*) Y be x (*) y in s1) : A1 (>) B1 be w (>) z in s2 ~~ let t : X (*) Y be x (*) y in (let s1 : A1 (>) B1 be w (>) z in s2)
+
+  ---------------------------------------------------------------------------------------------- :: tenE_imprE
+  appr (let s2 : A2 (>) B2 be x (>) y in s1) s3 ~~ let s2 : A2 (>) B2 be x (>) y in (appr s1 s3)
+
+  ---------------------------------------------------------------------------------------------- :: tenE2_imprE
+  appr (let t : X (*) Y be x (*) y in s1) s2 ~~ let t : X (*) Y be x (*) y in (appr s1 s2)
+
+  ---------------------------------------------------------------------------------------------- :: tenE_implE
+  appl (let s2 : A2 (>) B2 be x (>) y in s1) s3 ~~ let s2 : A2 (>) B2 be x (>) y in (appl s1 s3)
+
+  ---------------------------------------------------------------------------------------------- :: tenE2_implE
+  appl (let t : X (*) Y be x (*) y in s1) s2 ~~ let t : X (*) Y be x (*) y in (appl s1 s2)
+
+  ------------------------------------------------------------------------------------------------------------------------ :: tenE_FE
+  let (let s2 : A (>) B be x (>) y in s1) : F X be F z in s3 ~~ let s2 : A (>) B be x (>) y in (let s1 : F X be F z in s3)
+
+  ---------------------------------------------------------------------------------------------------------------------- :: tenE2_FE
+  let (let t : X (*) Y be x (*) y in s1) : F Z be F z in s3 ~~ let t : X (*) Y be x (*) y in (let s1 : F Z be F z in s3)
+
+  ------------------------------------------------------------------------------------------------------------------ :: FE_unitE
+  let (let s2 : F X be F x in s1) : UnitS be trivSp in s3 ~~ let s2 : F X be F x in (let s1 : UnitS be trivSp in s2)
+
+  ------------------------------------------------------------------------------------------------------------------------ :: FE_tenE
+  let (let s2 : F X be F x in s1) : A (>) B be x (>) y in s3 ~~ let s2 : F X be F x in (let s1 : A (>) B be x (>) y in s3)
+
+  ------------------------------------------------------------------------- :: FE_imprE
+  appr (let s2 : F X be F x in s1) s3 ~~ let s2 : F X be F x in (appr s1 s3)
+
+  ------------------------------------------------------------------------- :: FE_implE
+  appl (let s2 : F X be F x in s1) s3 ~~ let s2 : F X be F x in (appl s1 s3)
+
+  -------------------------------------------------------------------------------------------------------- :: FE_FE
+  let (let s2 : F X be F x in s1) : F Y be F y in s3 ~~ let s2 : F X be F x in (let s1 : F Y be F y in s3)

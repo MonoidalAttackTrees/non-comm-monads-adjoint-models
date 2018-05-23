@@ -1,0 +1,1025 @@
+We now introduce Commutative/Non-commutative (CNC) logic in the form
+of a term assignment.  One should view this logic as composed of two
+logics; one sitting to the left of the other.  On the left, there is
+intuitionistic linear logic, denoted by $\cat{C}$, and on the right is
+the Lambek calculus denoted by $\cat{L}$.  Then we connect these two
+systems by a pair of monoidal adjoint functors $\cat{C} : \func{F}
+\dashv \func{G} : \cat{L}$.  Keeping this intuition in mind we now
+define the syntax for CNC logic.
+\begin{definition}
+  \label{def:Lambek-syntax}
+  The following grammar describes the syntax of CNC logic:
+  \begin{center}\vspace{-3px}\small
+    \begin{math}
+      \begin{array}{lll}        
+        \text{($\cat{C}$-Types)} & [[W]],[[X]],[[Y]],[[Z]] ::= [[UnitT]] \mid [[X (*) Y]] \mid [[X -o Y]] \mid [[Gf A]]\\
+        \text{($\cat{L}$-Types)} & [[A]],[[B]],[[C]],[[DT]] ::= [[UnitS]] \mid [[A (>) B]] \mid [[A -> B]] \mid [[B <- A]] \mid [[F X]]\\        
+        \text{($\cat{C}$-Terms)} & [[t]] ::= [[x]] \mid [[trivT]] \mid [[t1 (*) t2]] \mid [[let t1 : X be q in t2]] \mid [[\x:X.t]] \mid [[t1 t2]] \mid [[ex t1 , t2 with x1 , x2 in t3]] \mid [[Gf s]]\\
+        \text{($\cat{L}$-Terms)} & [[s]] ::= [[x]] \mid [[trivS]] \mid [[s1 (>) s2]] \mid [[let s1 : A be p in s2]] \mid [[let t : X be q in s]] \mid [[\l x : A.s]] \mid [[\r x : A . s]] \\
+        & \,\,\,\,\,\,\,\,\,\mid [[appl s1 s2]] \mid [[appr s1 s2]] \mid [[F t]]\\        
+        \text{($\cat{C}$-Patterns)} & [[q]] ::= [[trivTp]] \mid [[x]] \mid [[q1 (*) q2]] \mid [[Gf p]]\\
+        \text{($\cat{L}$-Patterns)} & [[p]] ::= [[trivSp]] \mid [[x]] \mid [[p1 (>) p2]] \mid [[F q]]\\        
+        \text{($\cat{C}$-Contexts)} & [[I]],[[P]] ::= [[.]] \mid [[x : X]] \mid [[I,P]]\\
+        \text{($\cat{L}$-Contexts)} & [[G]],[[D]] ::= [[.]] \mid [[x : A]] \mid [[x : X]] \mid [[G;D]]\\        
+        \text{($\cat{C}$-Typing Judgment)} & [[I |-c t : X]]\\
+        \text{($\cat{L}$-Typing Judgment)} & [[G |-l s : A]]\\
+      \end{array}
+    \end{math}
+  \end{center}
+\end{definition}
+
+The syntax for $\cat{C}$-types are the standard types for
+intuitionistic linear logic.  We have a constant $[[UnitT]]$, tensor
+product $[[X (*) Y]]$, and linear implication $[[X -o Y]]$, but just
+as in LNL logic we also have a type $[[Gf A]]$ where $[[A]]$ is an
+$\cat{L}$-type; that is, a type from the non-commutative side
+corresponding to the right-adjoint functor between $\cat{L}$ and
+$\cat{C}$. This functor can be used to import types and terms from the
+non-commutative side into the commutative side.  Now $\cat{C}$-typing
+judgments are denoted by $[[P |-c t : X]]$ where $[[P]]$ is a sequence
+of pairs of variables and their types, denoted by $[[x : X]]$, $[[t]]$
+is a $\cat{C}$-term, and $[[X]]$ is a $\cat{C}$-type.  The
+$\cat{C}$-terms are all standard, but $[[Gf s]]$ corresponds to the
+morphism part of the right-adjoint of the adjunction between both
+logics, and $[[ex t1 , t2 with x1 , x2 in t3]]$ is the introduction
+form for the structural rule exchange.
+
+The non-commutative side is a bit more interesting than the
+commutative side just introduced.  The $\cat{L}$-typing judgment has
+the form $[[G |-l s : A]]$ where $[[G]]$ is now a $\cat{L}$-context,
+denoted by $[[G]]$ or $[[D]]$. These contexts are ordered sequences of
+pairs of free variables with their types from \emph{both} sides
+denoted by $[[x : B]]$ and $[[x : X]]$ respectively. Finally, the term
+$[[s]]$ is a $\cat{L}$-term, and $[[A]]$ is a $\cat{L}$-type.  Given
+two typing contexts $[[G]]$ and $[[D]]$ we denote their concatenation
+by $[[G;D]]$; we use a semicolon here to emphasize the fact that the
+contexts are ordered.
+
+The context consisting of hypotheses from both sides goes back to
+Benton~\cite{Benton:1994} and is a property unique to adjoint logics
+such as Benton's LNL logic and CNC logic.  This is also a very useful
+property because it allows one to make use of both sides within the
+Lambek calculus without the need to annotate every formula with a
+modality.
+
+The reader familiar with LNL logic will notice that our typing
+judgment, $[[G |-l s : A]]$, differs from Benton's. His is of the form
+$\Gamma;\Delta \vdash t : A$, where $\Gamma$ contains non-linear
+formulas, and $\Delta$ contains linear formulas.  Just as Benton
+remarks, the splitting of his contexts was a presentational device.
+One should view his contexts as merged, and hence, linear formulas
+were fully mixed with non-linear formulas.  Now why did we not use
+this presentational device?  Because, when contexts from LNL logic
+become out of order Benton could use the exchange rule to put them
+back in order again, but we no longer have general exchange. Thus, we
+are not able to keep the context organized in this way.
+
+The syntax for $\cat{L}$-types are of the typical form for the Lambek
+Calculus.  We have an unit type $[[UnitS]]$, a non-commutative tensor
+product $[[A (>) B]]$, right implication $[[A -> B]]$, and left
+implication $[[B <- A]]$.  $\cat{L}$-terms correspond to introduction
+and elimination forms for each of the previous types.  For example,
+$[[s1 (>) s2]]$ introduces a tensor, and $[[let s1 : A (>) B be x (>)
+    y in s2]]$ eliminates a tensor.
+
+The typing rules for CNC logic can be found in
+Figure~\ref{fig:CNC-typing-rules}.
+\begin{figure}
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+      \begin{mathpar}
+      \NDdruleTXXid{} \and
+      \NDdruleTXXunitI{} \and
+      \NDdruleTXXunitE{} \and
+      \NDdruleTXXtenI{} \and
+      \NDdruleTXXtenE{} \and
+      \NDdruleTXXimpI{} \and
+      \NDdruleTXXimpE{} \and
+      \NDdruleTXXGI{} \and
+      \NDdruleTXXbeta{} \and
+      \NDdruleTXXcut{}      
+      \end{mathpar}
+      \\
+      \\
+      \hline
+      \\[5px]
+    \begin{mathpar}
+      \NDdruleSXXid{} \and
+      \NDdruleSXXunitI{} \and
+      \NDdruleSXXunitETwo{} \and
+      \NDdruleSXXunitEOne{} \and
+      \NDdruleSXXtenI{} \and
+      \NDdruleSXXtenETwo{} \and
+      \NDdruleSXXtenEOne{} \and
+      \NDdruleSXXimprI{} \and
+      \NDdruleSXXimprE{} \and
+      \NDdruleSXXimplI{} \and
+      \NDdruleSXXimplE{} \and
+      \NDdruleSXXFI{} \and
+      \NDdruleSXXFE{} \and
+      \NDdruleSXXGE{} \and
+      \NDdruleSXXbeta{} \and
+      \NDdruleSXXcutTwo{} \and
+      \NDdruleSXXcutOne{}
+    \end{mathpar}\\\\
+    \hline
+  \end{tabular}  
+  \caption{Typing Rules for CNC Logic}
+  \label{fig:CNC-typing-rules}
+\end{figure}
+We split the figure in two: the top of the figure are the rules of
+intuitionistic linear logic whose judgment is the $\mathcal{C}$-typing
+judgment denoted by $[[P |-c t : X]]$, and the bottom of the figure
+are the rules for the mixed commutative/non-commutative Lambek
+calculus whose judgment is the $\mathcal{L}$-judgment denoted by $[[G
+    |-l s : A]]$, but the two halves are connected via the functor
+rules $\NDdruleTXXGIName{}$, $\NDdruleSXXGEName{}$,
+$\NDdruleSXXFIName{}$, and $\NDdruleSXXFEName{}$.  Just as in LNL
+logic, the fact that the context $[[G]]$ on the $\mathcal{L}$ side of
+the logic is mixed results in this side having additional elimination
+rules, because the type being eliminated is constructed on the
+$\mathcal{C}$ side of the logic; for example, the rules
+$\NDdruleSXXunitEOneName{}$, $\NDdruleSXXtenEOneName{}$, and
+$\NDdruleSXXcutOneName{}$ are additional mixed rules.
+
+
+\textbf{Additional Results.} The following subsection shows the
+reduction rules for CNC Logic. In addition to the results given in this
+paper we also have defined a sequent calculus for CNC logic, proved
+cut elimination, and proved the the sequent calculus formalization is
+equivalent to the natural deduction formalization given here.
+Furthermore, we proved strong normalization of CNC logic via a
+translation to LNL logic.  We omit these results due to space.
+
+
+
+\subsection{Reduction Rules}
+Figure~\ref{fig:CNC-beta-reduction} shows the normalization procedure
+by considering each pair of introduction and elimination rules. For
+each row, the formula in the left column normalizes to the formula in 
+the right.
+\begin{figure}
+  \scriptsize
+  \bgroup
+  \def\arraystretch{1.5}
+  \begin{tabular}{|>{\centering\arraybackslash}m{8.2cm}|>{\centering\arraybackslash}m{8.2cm}|}
+    \hline
+    % (C_unitI, C_unitE)
+    \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleTXXunitIName{}$}] {
+        \,
+      }{[[. |-c trivT : UnitT]]} \\
+       {[[I |-c t : X]]}
+    }{[[I |-c let trivT : UnitT be trivTp in t : X]]}
+    \end{math} 
+    &
+    \begin{math}
+      [[I |-c t : X]]
+    \end{math}
+    \\
+    \hline
+    % (C_unitI, LC_unitE)
+    \begin{math}
+    $$\mprset{flushleft}
+     \inferrule* [right={\tiny $\NDdruleSXXunitEOneName{}$}] {
+       $$\mprset{flushleft}
+       \inferrule* [right={\tiny $\NDdruleTXXunitIName{}$}] {
+         \,
+        }{[[. |-c trivT : UnitT]]} \\
+         {[[D |-l s : A]]}
+      }{[[D |-l let trivT : UnitT be trivTp in s : A]]}
+    \end{math}
+    &
+    \begin{math}
+      [[D |-l s : A]]
+    \end{math} \\
+    \hline
+    % (C_tensorI, C_tensorE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenIName{}$}] {
+          {[[I1 |-c t1 : X]]} \\
+          {[[I2 |-c t2 : Y]]}
+        }{[[I1, I2 |-c t1 (*) t2 : X (*) Y]]} \\
+         {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+      }{[[P1, I1, I2, P2 |-c let t1 (*) t2 : X (*) Y be x (*) y in t3 : Z]]}
+    \end{math}
+    &
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleTXXcutName{}$}] {
+        {[[I1 |-c t1 : X]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXcutName{}$}] {
+          {[[I2 |-c t2 : Y]]} \\
+          {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+        }{[[P1, x : X, I2, P2 |-c [t2 / y]t3 : Z]]}
+      }{[[P1, I1, I2, P2 |-c [t1 / x][t2 / y]t3 : Z]]}
+    \end{math}
+    \\
+    \hline
+    % (C_tensorI, LC_tensorE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXtenEOneName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenIName{}$}] {
+          {[[I |-c t1 : X]]} \\
+          {[[P |-c t2 : Y]]}
+        }{[[I, P |-c t1 (*) t2 : X (*) Y]]} \\
+         {[[G; x : X; y : Y; D |-l s : A]]}
+      }{[[G; I; P; D |-l let t1 (*) t2 : X (*) Y be x (*) y in s : A]]}
+    \end{math}
+    &
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXcutOneName{}$}] {
+        {[[I1 |-c t1 : X]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXcutOneName{}$}] {
+          {[[P |-c t2 : Y]]} \\
+          {[[G; x : X; y : Y; D |-l s : A]]}
+        }{[[G; x : X; P; D |-l [t2 / y]s : A]]}
+      }{[[G; I; P; D |-l [t1 / x][t2 / y]s : A]]}
+    \end{math}
+    \\
+    \hline
+    % (C_impI, C_impE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXimpIName{}$}] {
+          {[[I, x : X |-c t1 : Y]]}
+        }{[[I |-c \ x : X . t1 : X -o Y]]} \\
+         {[[P |-c t2 : X]]}
+      }{[[I, P |-c (\ x : X . t1) t2 : Y]]}
+    \end{math}
+    &
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleTXXcutName{}$}] {
+        {[[I, x : X |-c t1 : Y]]} \\
+        {[[P |-c t2 : X]]}
+      }{[[I, P |-c [t2 / x]t1 : Y]]}
+    \end{math}
+    \\
+    \hline
+    % (L_unitI, L_unitE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitIName{}$}] {
+          \,
+        }{[[. |-l trivS : UnitS]]} \\
+         {[[D |-l s : A]]}
+      }{[[D |-l let trivS : UnitS be trivSp in s : A]]}
+    \end{math}
+    &
+    \begin{math}
+      [[D |-l s : A]]
+    \end{math}
+    \\
+    \hline
+    % (L_tenI, L_tenE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenIName{}$}] {
+          {[[G1 |-l s1 : A]]} \\
+          {[[G2 |-l s2 : B]]}
+        }{[[G1; G2 |-l s1 (>) s2 : A (>) B]]} \\
+         {[[D1; x : A; y : B; D2 |-l s3 : C]]}
+      }{[[D1; G1; G2; D2 |-l let s1 (>) s2 : A (>) B be x (>) y in s3 : C]]}
+    \end{math}
+    &
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXcutTwoName{}$}] {
+        {[[G1 |-l s1 : A]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXcutTwoName{}$}] {
+          {[[G2 |-l s2 : B]]} \\
+          {[[D1; x : X; y : Y; D2 |-l s3 : C]]}
+        }{[[D1; x : X; G2; D2 |-l [s2 / y]s3 : C]]}
+      }{[[D1; G1; G2; D2 |-l [s1 / x][s2 / y]s3 : C]]}
+    \end{math}
+    \\
+    \hline
+    % (L_imprI, L_imprE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimprIName{}$}] {
+          {[[G; x : A |-l s1 : B]]}
+        }{[[G |-l \r x : A . s1 : A -> B]]} \\
+         {[[D |-l s2 : A]]}
+      }{[[G; D |-l appr (\r x : A . s1) s2 : B]]}
+    \end{math}
+    &
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXcutTwoName{}$}] {
+        {[[G; x : A |-l s1 : B]]} \\
+        {[[D |-l s2 : A]]}
+      }{[[G; D |-l [s2 / x]s1 : B]]}
+    \end{math}
+    \\
+    \hline
+    % (L_implI, L_implE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimplIName{}$}] {
+          {[[x : A; G |-l s1 : B]]}
+        }{[[G |-l \l x : A . s1 : B <- A]]} \\
+         {[[D |-l s2 : A]]}
+      }{[[D; G |-l appl (\l x : A . s1) s2 : B]]}
+    \end{math}
+    &
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXcutTwoName{}$}] {
+        {[[x : A; G |-l s1 : B]]} \\
+        {[[D |-l s2 : A]]}
+      }{[[D; G |-l [s2 / x]s1 : B]]}
+    \end{math}
+    \\
+    \hline
+    % (L_FI, L_FE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXFIName{}$}] {
+          {[[I |-c y : X]]}
+        }{[[I |-l F y : F X]]} \\
+         {[[D1; x : X; D2 |-l s : A]]}
+      }{[[D1; I; D2 |-l let F x : F X be F y in s : A]]}
+    \end{math}
+    &
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXcutOneName{}$}] {
+        {[[I |-c y : X]]} \\
+        {[[D1; x : X; D2 |-l s : A]]}
+      }{[[D1; I; D2 |-l [y / x]s : A]]}
+    \end{math}
+    \\
+    \hline
+    % (C_GI, L_GE)
+    \begin{math}
+    $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXGIName{}$}] {
+          {[[I |-l s : A]]}
+        }{[[I |-c Gf s : Gf A]]}
+      }{[[I |-l derelict (Gf s) : A]]}
+    \end{math}
+    &
+    \begin{math}
+      [[I |-l s : A]]
+    \end{math}
+    \\
+    \hline
+  \end{tabular}  
+  \egroup
+  \caption{One Step $\beta$-Reduction for CNC Logic}
+  \label{fig:CNC-beta-reduction}
+\end{figure}
+The following lists the commuting conversion rules for CNC Logic. We
+list the rules case by case for each elimination rule.
+\begin{itemize}
+\item Commutation of $\mathrm{UnitT}_E$:
+  \begin{itemize}
+  \item ($\NDdruleTXXunitEName{}$, $\NDdruleTXXunitEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+            {[[I1 |-c t1 : UnitT]]} \\
+            {[[I2 |-c t2 : UnitT]]}
+          }{[[I2, I1 |-c let t2 : UnitT be trivTp in t1 : UnitT]]} \\
+          {[[I3 |-c t3 : X]]}
+        }{[[I2, I1, I3 |-c let (let t2 : UnitT be trivTp in t1) : UnitT be trivTp in t3 : X]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+            {[[I1 |-c t1 : UnitT]]} \\
+            {[[I3 |-c t3 : X]]}
+          }{[[I1, I3 |-c let t1 : UnitT be trivTp in t3 : X]]} \\
+           {[[I2 |-c t2 : UnitT]]}
+        }{[[I2, I1, I3 |-c let t2 : UnitT be trivTp in (let t1 : UnitT be trivTp in t3) : X]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleTXXunitEName{}$, $\NDdruleTXXtenEName{}$) need multiple exchanges at the end:
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+            {[[I1 |-c t1 : X (*) Y]]} \\
+            {[[I2 |-c t2 : UnitT]]}
+          }{[[I2, I1 |-c let t2 : UnitT be trivTp in t1 : X (*) Y]]} \\
+           {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+        }{[[P1, I2, I1, P2 |-c let (let t2 : UnitT be trivTp in t1) : X (*) Y be x (*) y in t3 : Z]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1 |-c t1 : X (*) Y]]} \\
+            {[[P1, x : X, y : Y, P2 |-c t3 : Z]]}
+          }{[[P1, I1, P2 |-c let t1 : X (*) Y be x (*) y in t3 : Z]]} \\
+           {[[I2 |-c t2 : UnitT]]}
+        }{[[I2, P1, I1, P2 |-c let t2 : UnitT be trivTp in (let t1 : X (*) Y be x (*) y in t3) : Z]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleTXXunitEName{}$, $\NDdruleTXXimpEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+            {[[I1 |-c t1 : X -o Y]]} \\
+            {[[I2 |-c t2 : UnitT]]}
+          }{[[I2, I1 |-c let t2 : UnitT be trivTp in t1 : X -o Y]]} \\
+           {[[I3 |-c t3 : X]]}
+        }{[[I2, I1, I3 |-c (let t2 : UnitT be trivTp in t1) t3 : Y]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+            {[[I1 |-c t1 : X -o Y]]} \\
+            {[[I3 |-c t3 : X]]}
+          }{[[I1, I3 |-c t1 t3 : Y]]} \\
+           {[[I2 |-c t2 : UnitT]]}
+        }{[[I2, I1, I3 |-c let t2 : UnitT be trivTp in (t1 t3) : Y]]}
+      \end{math}
+    \end{center}
+  \end{itemize}
+\item Commutation of $\otimes_E$:
+  \begin{itemize}
+  \item ($\NDdruleTXXtenEName{}$, $\NDdruleTXXunitEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1, x : X, y : Y, I2 |-c t1 : UnitT]]} \\
+            {[[P1 |-c t2 : X (*) Y]]}
+          }{[[I1, P1, I2 |-c let t2 : X (*) Y be x (*) y in t1 : UnitT]]} \\
+           {[[P2 |-c t3 : Z]]}
+        }{[[I1, P1, I2, P2 |-c let (let t2 : X (*) Y be x (*) y in t1) : UnitT be trivTp in t3 : Z]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+            {[[I1, x : X, y : Y, I2 |-c t1 : UnitT]]} \\
+            {[[P2 |-c t3 : Z]]}
+          }{[[I1, x : X, y : Y, I2, P2 |-c let t1 : UnitT be trivTp in t3 : Z]]} \\
+           {[[P1 |-c t2 : X (*) Y]]}
+        }{[[I1, P1, I2, P2 |-c let t2 : X (*) Y be x (*) y in (let t1 : UnitT be trivTp in t3) : Z]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleTXXtenEName{}$, $\NDdruleTXXtenEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 (*) Y1]]} \\
+            {[[P |-c t2 : X2 (*) Y2]]}
+          }{[[I1, P, I2 |-c let t2 : X2 (*) Y2 be x (*) y in t1 : X1 (*) Y1]]} \\
+           {[[P1, w : X1, z : Y1, P2 |-c t3 : Z]]}
+        }{[[P1, I1, P, I2, P2 |-c let (let t2 : X2 (*) Y2 be x (*) y in t1) : X1 (*) Y1 be w (*) z in t3 : Z]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 (*) Y1]]} \\
+            {[[P1, w : X1, z : Y1, P2 |-c t3 : Z]]}
+          }{[[P1, I1, x : X2, y : Y2, I2, P2 |-c let t1 : X1 (*) Y1 be w (*) z in t3 : Z]]} \\
+           {[[P |-c t2 : X2 (*) Y2]]}
+        }{[[P1, I1, P, I2, P2 |-c let t2 : X2 (*) Y2 be x (*) y in (let t1 : X1 (*) Y1 be w (*) z in t3) : Z]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleTXXtenEName{}$, $\NDdruleTXXimpEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 -o Y1]]} \\
+            {[[P1 |-c t2 : X2 (*) Y2]]}
+          }{[[I1, P1, I2 |-c let t2 : X2 (*) Y2 be x (*) y in t1 : X1 -o Y1]]} \\
+           {[[P2 |-c t3 : X1]]}
+        }{[[I1, P1, I2, P2 |-c (let t2 : X2 (*) Y2 be x (*) y in t1) t3 : Y1]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 -o Y1]]} \\
+            {[[P2 |-c t3 : X1]]}
+          }{[[I1, x : X2, y : Y2, I2, P2 |-c t1 t3 : Y1]]} \\
+           {[[P1 |-c t2 : X2 (*) Y2]]}
+        }{[[I1, P1, I2, P2 |-c let t2 : X2 (*) Y2 be x (*) y in (t1 t3) : Y1]]}
+      \end{math}
+    \end{center}
+  \end{itemize}
+\item Commutation of $\multimap_E$:
+  \begin{itemize}
+  \item ($\NDdruleTXXimpEName{}$, $\NDdruleTXXunitEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+            {[[I1 |-c t1 : UnitT]]} \\
+            {[[I2 |-c t2 : UnitT -o UnitT]]}
+          }{[[I2, I1 |-c t2 t1 : UnitT]]} \\
+           {[[I3 |-c t3 : UnitT]]}
+        }{[[I2, I1, I3 |-c let (t2 t1) : UnitT be trivTp in t3 : UnitT]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXunitEName{}$}] {
+            {[[I1 |-c t1 : UnitT]]} \\
+            {[[I3 |-c t3 : UnitT]]}
+          }{[[I1, I3 |-c let t1 : UnitT be trivTp in t3 : UnitT]]}
+           {[[I2 |-c t2 : UnitT -o UnitT]]}
+        }{[[I2, I1, I3 |-c t2 (let t1 : UnitT be trivTp in t3) : UnitT]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleTXXimpEName{}$, $\NDdruleTXXtenEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 -o Y1]]} \\
+            {[[P2 |-c t3 : X1]]}
+          }{[[I1, x : X2, y : Y2, I2, P2 |-c t1 t3 : Y1]]} \\
+           {[[P1 |-c t2 : X2 (*) Y2]]}
+        }{[[I1, P1, I2, P2 |-c let t2 : X2 (*) Y2 be x (*) y in (t1 t3) : Y1]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleTXXimpEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleTXXtenEName{}$}] {
+            {[[I1, x : X2, y : Y2, I2 |-c t1 : X1 -o Y1]]} \\
+            {[[P1 |-c t2 : X2 (*) Y2]]}
+          }{[[I1, P1, I2 |-c let t2 : X2 (*) Y2 be x (*) y in t1 : X1 -o Y1]]} \\
+           {[[P2 |-c t3 : X1]]}
+        }{[[I1, P1, I2, P2 |-c (let t2 : X2 (*) Y2 be x (*) y in t1) t3 : Y1]]}
+      \end{math}
+    \end{center}
+  \item {\color{red} ($\NDdruleTXXimpEName{}$, $\NDdruleTXXimpEName{}$): ?}
+  \end{itemize}
+\item Commutation of $\tri_E$:
+  \begin{itemize}
+  \item ($\NDdruleSXXunitETwoName{}$, $\NDdruleSXXunitETwoName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1 |-l s1 : UnitS]]} \\
+            {[[G2 |-l s2 : UnitS]]}
+          }{[[G2; G1 |-l let s2 : UnitS be trivSp in s1 : UnitS]]} \\
+           {[[G3 |-l s3 : A]]}
+        }{[[G2; G1; G3 |-l let (let s2 : UnitS be trivSp in s1) : UnitS be trivSp in s3 : A]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1 |-l s1 : UnitS]]} \\
+            {[[G3 |-l s3 : A]]}
+          }{[[G1; G3 |-l let s1 : UnitS be trivSp in s3 : A]]} \\
+           {[[G2 |-l s2 : UnitS]]}
+        }{[[G2; G1; G3 |-l let s2 : UnitS be trivSp in (let s1 : UnitS be trivSp in s3) : A]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXunitETwoName{}$, $\NDdruleSXXtenETwoName{}$): {\color{red} Does NOT commute}
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1 |-l s1 : A (>) B]]} \\
+            {[[G2 |-l s2 : UnitS]]}
+          }{[[G2; G1 |-l let s2 : UnitS be trivSp in s1 : A (>) B]]} \\
+           {[[D1; x : A; y : B; D2 |-l s3 : C]]}
+        }{[[D1; G2; G1; D2 |-l let (let s2 : UnitS be trivSp in s1) : A (>) B be x (>) y in s3 : C]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1 |-l s1 : A (>) B]]} \\
+            {[[D1; x : A; y : B; D2 |-l s3 : C]]}
+          }{[[D1; G1; D2 |-l let s1 : A (>) B be x (>) y in s3 : C]]} \\
+           {[[G2 |-l s2 : UnitS]]}
+        }{[[G2; D1; G1; D2 |-l let s2 : UnitS be trivSp in (let s1 : A (>) B be x (>) y in s3) : C]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXunitETwoName{}$, $\NDdruleSXXimprEName{}$): 
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1 |-l s1 : A -> B]]} \\
+            {[[G2 |-l s2 : UnitS]]}
+          }{[[G2; G1 |-l let s2 : UnitS be trivSp in s1 : A -> B]]} \\
+           {[[G3 |-l s3 : A]]}
+        }{[[G2; G1; G3 |-l appr (let s2 : UnitS be trivSp in s1) s3 : B]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+            {[[G1 |-l s1 : A -> B]]} \\
+            {[[G3 |-l s3 : A]]}
+          }{[[G1; G3 |-l appr s1 s3 : B]]} \\
+           {[[G2 |-l s2 : UnitS]]}
+        }{[[G2; G1; G3 |-l let s2 : UnitS be trivSp in (appr s1 s3) : B]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXunitETwoName{}$, $\NDdruleSXXimplEName{}$): {\color{red} Does NOT commute.}
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1 |-l s1 : B <- A]]} \\
+            {[[G2 |-l s2 : UnitS]]}
+          }{[[G2; G1 |-l let s2 : UnitS be trivSp in s1 : B <- A]]} \\
+           {[[G3 |-l s3 : A]]}
+        }{[[G3; G2; G1 |-l appl (let s2 : UnitS be trivSp in s1) s3 : B]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+            {[[G1 |-l s1 : B <- A]]} \\
+            {[[G3 |-l s3 : A]]}
+          }{[[G3; G1 |-l appl s1 s3 : B]]} \\
+           {[[G2 |-l s2 : UnitS]]}
+        }{[[G2; G3; G1 |-l let s2 : UnitS be trivSp in (appl s1 s3) : B]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXtenETwoName{}$, $\NDdruleSXXunitETwoName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1; x : A; y : B; G2 |-l s1 : UnitS]]} \\
+            {[[D1 |-l s2 : A (>) B]]}
+          }{[[G1; D1; G2 |-l let s2 : A (>) B be x (>) y in s1 : UnitS]]} \\
+           {[[D2 |-l s3 : C]]}
+        }{[[G1; D1; G2; D2 |-l let (let s2 : A (>) B be x (>) y in s1) : UnitS be trivSp in s3 : C]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1; x : A; y : B; G2 |-l s1 : UnitS]]} \\
+            {[[D2 |-l s3 : C]]}
+          }{[[G1; x : A; y : B; G2; D2 |-l let s1 : UnitS be trivSp in s3 : C]]} \\
+           {[[D1 |-l s2 : A (>) B]]}
+        }{[[G1; D1; G2; D2 |-l let s2 : A (>) B be x (>) y in (let s1 : UnitS be trivSp in s3) : C]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXtenETwoName{}$, $\NDdruleSXXtenETwoName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1; x : A2; y : B2; G2 |-l s1 : A1 (>) B1]]} \\
+            {[[G |-l s2 : A2 (>) B2]]}
+          }{[[G1; G; G2 |-l let s2 : A2 (>) B2 be x (>) y in s1 : A1 (>) B1]]} \\
+           {[[D1; w : A1; z : B1; D2 |-l s3 : C]]}
+        }{[[D1; G1; G; G2; D2 |-l let (let s2 : A2 (>) B2 be x (>) y in s1) : A1 (>) B1 be w (>) z in s3 : C]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1; x : A2; y : B2; G2 |-l s1 : A1 (>) B1]]} \\
+            {[[D1; w : A1; z : B1; D2 |-l s3 : C]]}
+          }{[[D1; G1; x : A2; y : B2; G2; D2 |-l let s1 : A1 (>) B1 be w (>) z in s3 : C]]}
+            {[[G |-l s2 : A2 (>) B2]]}
+        }{[[D1; G1; G; G2; D2 |-l let s2 : A2 (>) B2 be x (>) y in (let s1 : A1 (>) B1 be x (>) z in s3) : C]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXtenETwoName{}$, $\NDdruleSXXimprEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1; x : A2; y : B2; G2 |-l s1 : A1 -> B1]]} \\
+            {[[D1 |-l s2 : A2 (>) B2]]}
+          }{[[G1; D1; G2 |-l let s2 : A2 (>) B2 be x (>) y in s1 : A1 -> B1]]} \\
+           {[[D2 |-l s3 : A1]]}
+        }{[[G1; D1; G2; D2 |-l appr (let s2 : A2 (>) B2 be x (>) y in s1) s3 : B1]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+            {[[G1; x : A2; y : B2; G2 |-l s1 : A1 -> B1]]} \\
+            {[[D2 |-l s3 : A1]]}
+          }{[[G1; x : A2; y : B2; G2; D2 |-l appr s1 s3 : B1]]} \\
+            {[[D1 |-l s2 : A2 (>) B2]]}
+        }{[[G1; D1; G2; D2 |-l let s2 : A2 (>) B2 be x (>) y in (appr s1 s3) : B1]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXtenETwoName{}$, $\NDdruleSXXimplEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1; x : A2; y : B2; G2 |-l s1 : B1 <- A1]]} \\
+            {[[D1 |-l s2 : A2 (>) B2]]}
+          }{[[G1; D1; G2 |-l let s2 : A2 (>) B2 be x (>) y in s1 : B1 <- A1]]} \\
+           {[[D2 |-l s3 : A1]]}
+        }{[[D2; G1; D1; G2 |-l appl (let s2 : A2 (>) B2 be x (>) y in s1) s3 : B1]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+            {[[G1; x : A2; y : B2; G2 |-l s1 : B1 <- A1]]} \\
+            {[[D2 |-l s3 : A1]]}
+          }{[[D2; G1; x : A2; y : B2; G2 |-l appl s1 s3 : B1]]} \\
+            {[[D1 |-l s2 : A2 (>) B2]]}
+        }{[[D2; G1; D1; G2 |-l let s2 : A2 (>) B2 be x (>) y in (appl s1 s3) : B1]]}
+      \end{math}
+    \end{center}
+  
+  \end{itemize}
+\item Commutation of $F_E$:
+  \begin{itemize}
+  \item ($\NDdruleSXXFEName{}$, $\NDdruleSXXunitETwoName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : UnitS]]} \\
+            {[[D1 |-l y : F X]]}
+          }{[[G1; D1; G2 |-l let F x : F X be y in s1 : UnitS]]} \\
+           {[[D2 |-l s2 : A]]}
+        }{[[G1; D1; G2; D2 |-l let (let F x : F X be y in s1) : UnitS be trivSp in s2 : A]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXunitETwoName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : UnitS]]} \\
+            {[[D2 |-l s2 : A]]}
+          }{[[G1; x : X; G2; D2 |-l let s1 : UnitS be trivSp in s2 : A]]} \\
+           {[[D1 |-l y : F X]]}
+        }{[[G1; D1; G2; D2 |-l let F x : F X be y in (let s1 : UnitS be trivSp in s2) : A]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXFEName{}$, $\NDdruleSXXtenETwoName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : A (>) B]]} \\
+            {[[D |-l y : F X]]}
+          }{[[G1; D; G2 |-l let F x : F X be y in s1 : A (>) B]]} \\
+           {[[D1; x : A; y : B; D2 |-l s2 : C]]}
+        }{[[D1; G1; D; G2; D2 |-l let (let F x : F X be y in s1) : A (>) B be x (>) y in s2 : C]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXtenETwoName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : A (>) B]]} \\
+            {[[D1; x : A; y : B; D2 |-l s2 : C]]}
+          }{[[D1; G1; x : X; G2; D2 |-l let s1 : A (>) B be x (>) y in s2 : C]]} \\
+           {[[D |-l y : F X]]}
+        }{[[D1; G1; D; G2; D2 |-l let F x : F X be y in (let s1 : A (>) B be x (>) y in s2) : C]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXFEName{}$, $\NDdruleSXXimprEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : A -> B]]} \\
+            {[[D1 |-l y : F X]]}
+          }{[[G1; D1; G2 |-l let F x : F X be y in s1 : A -> B]]} \\
+           {[[D2 |-l s2 : A]]}
+        }{[[G1; D1; G2; D2 |-l appr (let F x : F X be y in s1) s2 : B]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXimprEName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : A -> B]]} \\
+            {[[D2 |-l s2 : A]]}
+          }{[[G1; x : X; G2; D2 |-l appr s1 s2 : B]]} \\
+           {[[D1 |-l y : F X]]}
+        }{[[G1; D1; G2; D2 |-l let F x : F X be y in (appr s1 s2) : B]]}
+      \end{math}
+    \end{center}
+  \item ($\NDdruleSXXFEName{}$, $\NDdruleSXXimplEName{}$):
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : A <- B]]} \\
+            {[[D1 |-l y : F X]]}
+          }{[[G1; D1; G2 |-l let F x : F X be y in s1 : A <- B]]} \\
+           {[[D2 |-l s2 : A]]}
+        }{[[D2; G1; D1; G2 |-l appl (let F x : F X be y in s1) s2 : B]]}
+      \end{math}
+    \end{center}
+    commutes to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right={\tiny $\NDdruleSXXFEName{}$}] {
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny $\NDdruleSXXimplEName{}$}] {
+            {[[G1; x : X; G2 |-l s1 : A <- B]]} \\
+            {[[D2 |-l s2 : A]]}
+          }{[[D2; G1; x : X; G2 |-l appl s1 s2 : B]]} \\
+           {[[D1 |-l y : F X]]}
+        }{[[D2; G1; D1; G2 |-l let F x : F X be y in (appl s1 s2) : B]]}
+      \end{math}
+    \end{center}
+  \end{itemize}
+\end{itemize}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: main.tex
+%%% End:
