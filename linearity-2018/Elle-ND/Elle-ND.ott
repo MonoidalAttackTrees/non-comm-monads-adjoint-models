@@ -316,9 +316,6 @@ by
   ------------------------------------ :: letU1
   let trivS : UnitS be trivSp in s ~> s
 
-  ------------------------------------ :: letU2
-  let trivT : UnitT be trivTp in s ~> s
-
   -------------------------------------------------------- :: letT1
   let t1 (*) t2 : X (*) Y be x (>) y in s ~> [t1/x][t2/y]s
 
@@ -350,8 +347,8 @@ by
   ------------------------- :: appr2
   appr s1 s2 ~> appr s1 s2'
 
-  ------------------ :: derelict
-  derelict Gf s ~> s
+  -------------------- :: derelict
+  derelict (Gf s) ~> s
 
   ---------------------------------------------------------------- :: applLet
   appl (let s : A be p in s1) s2 ~> let s : A be p in (appl s1 s2)
@@ -396,7 +393,7 @@ by
   (let t2 : X2 (*) Y2 be x (*) y in t1) t3 ~~ let t2 : X2 (*) Y2 be x (*) y in (t1 t3)
   
   -------------------------------------------------------------------------- :: impE_unitE
-  let (t2 t1) : UnitT be trivTp in t3 ~~ t2 (let t1 : UnitT be trivTp in t3)
+  let (t1 t2) : UnitT be trivTp in t3 ~~ t1 (let t2 : UnitT be trivTp in t3)
 
 defn
   s1 ~~ s2 :: :: scom :: 'Scom_'

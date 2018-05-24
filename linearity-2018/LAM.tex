@@ -144,12 +144,62 @@ $\NDdruleSXXunitEOneName{}$, $\NDdruleSXXtenEOneName{}$, and
 $\NDdruleSXXcutOneName{}$ are additional mixed rules.
 
 The one step $\beta$-reduction rules are listed in
-Figure~\ref{fig:CNC-beta-reductions}. Similar as the typing rules, the
-figure is splitted in two: the top are the rules of the intuitionistic
-linear logic, and the bottom are those of the mixed
-commutative/non-commutative Lambek calculus. The reduction relation
-$\leadsto_\beta$ is defined to be the precongruence closures of the
-one step $\beta$-reduction rules. 
+Figure~\ref{fig:CNC-beta-reductions}. Similarly to the typing rules,
+the figure is split in two: the top lists the rules of the
+intuitionistic linear logic, and the bottom are those of the mixed
+commutative/non-commutative Lambek calculus. 
+\renewcommand{\NDdruleTbetaXXletUName}{}
+\renewcommand{\NDdruleTbetaXXletTName}{}
+\renewcommand{\NDdruleTbetaXXlamName}{}
+\renewcommand{\NDdruleTbetaXXappOneName}{}
+\renewcommand{\NDdruleTbetaXXappTwoName}{}
+\renewcommand{\NDdruleTbetaXXappLetName}{}
+\renewcommand{\NDdruleTbetaXXletLetName}{}
+\renewcommand{\NDdruleTbetaXXletAppName}{}
+\renewcommand{\NDdruleSbetaXXletUOneName}{}
+\renewcommand{\NDdruleSbetaXXletTOneName}{}
+\renewcommand{\NDdruleSbetaXXletTTwoName}{}
+\renewcommand{\NDdruleSbetaXXletFName}{}
+\renewcommand{\NDdruleSbetaXXlamLName}{}
+\renewcommand{\NDdruleSbetaXXlamRName}{}
+\renewcommand{\NDdruleSbetaXXapplOneName}{}
+\renewcommand{\NDdruleSbetaXXapplTwoName}{}
+\renewcommand{\NDdruleSbetaXXapprOneName}{}
+\renewcommand{\NDdruleSbetaXXapprTwoName}{}
+\renewcommand{\NDdruleSbetaXXderelictName}{}
+\renewcommand{\NDdruleSbetaXXapplLetName}{}
+\renewcommand{\NDdruleSbetaXXapprLetName}{}
+\renewcommand{\NDdruleSbetaXXletLetName}{}
+\renewcommand{\NDdruleSbetaXXletApplName}{}
+\renewcommand{\NDdruleSbetaXXletApprName}{}
+\renewcommand{\NDdruleTcomXXunitEXXunitEName}{}
+\renewcommand{\NDdruleTcomXXunitEXXtenEName}{}
+\renewcommand{\NDdruleTcomXXunitEXXimpEName}{}
+\renewcommand{\NDdruleTcomXXtenEXXunitEName}{}
+\renewcommand{\NDdruleTcomXXtenEXXtenEName}{}
+\renewcommand{\NDdruleTcomXXtenEXXimpEName}{}
+\renewcommand{\NDdruleTcomXXimpEXXunitEName}{}
+\renewcommand{\NDdruleScomXXunitEXXunitEName}{}
+\renewcommand{\NDdruleScomXXunitETwoXXunitEName}{}
+\renewcommand{\NDdruleScomXXunitEXXimprEName}{}
+\renewcommand{\NDdruleScomXXunitETwoXXimprEName}{}
+\renewcommand{\NDdruleScomXXunitEXXFEName}{}
+\renewcommand{\NDdruleScomXXunitETwoXXFEName}{}
+\renewcommand{\NDdruleScomXXtenEXXunitEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXunitEName}{}
+\renewcommand{\NDdruleScomXXtenEXXtenEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXtenEName}{}
+\renewcommand{\NDdruleScomXXtenEXXimprEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXimprEName}{}
+\renewcommand{\NDdruleScomXXtenEXXimplEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXimplEName}{}
+\renewcommand{\NDdruleScomXXtenEXXFEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXFEName}{}
+\renewcommand{\NDdruleScomXXFEXXunitEName}{}
+\renewcommand{\NDdruleScomXXFEXXtenEName}{}
+\renewcommand{\NDdruleScomXXFEXXimprEName}{}
+\renewcommand{\NDdruleScomXXFEXXimplEName}{}
+\renewcommand{\NDdruleScomXXFEXXFEName}{}
 \begin{figure}[!h]
   \footnotesize
   \begin{tabular}{|c|}
@@ -165,7 +215,6 @@ one step $\beta$-reduction rules.
       \\
     \begin{mathpar}
       \NDdruleSbetaXXletUOne{} \and
-      \NDdruleSbetaXXletUTwo{} \and
       \NDdruleSbetaXXletTOne{} \and
       \NDdruleSbetaXXletTTwo{} \and
       \NDdruleSbetaXXletF{} \and
@@ -175,14 +224,14 @@ one step $\beta$-reduction rules.
     \end{mathpar}\\\\
     \hline
   \end{tabular}  
-  \caption{Term calculus $\beta$-reductions}
+  \caption{$\beta$-reductions for CNC Logic}
   \label{fig:CNC-beta-reductions}
 \end{figure}
 
 
-The comuting conversions can be found in
-Figures~\ref{fig:CNC-commutating-conversions-intuitionistic}-\ref{fig:CNC-commutating-conversions-both}. We divide the rules into three parts
-due to the length. The first part,
+The commuting conversions can be found in
+Figures~\ref{fig:CNC-commutating-conversions-intuitionistic}-\ref{fig:CNC-commutating-conversions-both}. We
+divide the rules into three parts due to the length. The first part,
 Figure~\ref{fig:CNC-commutating-conversions-intuitionistic}, includes
 the rules for the intuitionistic linear logic. The second,
 Figure~\ref{fig:CNC-commutating-conversions-mixed}, includes the rules
@@ -207,7 +256,7 @@ rules $\NDdruleSXXunitEOneName{}$ and $\NDdruleSXXtenEOneName{}$.
     \\
     \hline
   \end{tabular}  
-  \caption{Term Calculus Ccommuting Cconversions: intuitionistic linear logic rules}
+  \caption{Commuting Conversions: Intuitionistic Linear Logic}
   \label{fig:CNC-commutating-conversions-intuitionistic}
 \end{figure}
 \begin{figure}[!h]
@@ -231,7 +280,7 @@ rules $\NDdruleSXXunitEOneName{}$ and $\NDdruleSXXtenEOneName{}$.
     \end{mathpar}\\\\
     \hline
   \end{tabular}  
-  \caption{Term Calculus for Commuting Conversions: commutative/non-commutative Lambek calculus rules}
+  \caption{Commuting Conversions: Commutative/Non-commutative Lambek Calculus}
   \label{fig:CNC-commutating-conversions-mixed}
 \end{figure}
 \begin{figure}[!h]
@@ -250,7 +299,7 @@ rules $\NDdruleSXXunitEOneName{}$ and $\NDdruleSXXtenEOneName{}$.
     \end{mathpar}\\\\
     \hline
   \end{tabular}  
-  \caption{Term Calculus Commuting Conversions: mixed rules}
+  \caption{Commuting Conversions: Mixed Rules}
   \label{fig:CNC-commutating-conversions-both}
 \end{figure}
 
