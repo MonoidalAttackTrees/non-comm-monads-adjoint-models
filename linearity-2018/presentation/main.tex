@@ -5,14 +5,31 @@
 \usepackage{lmodern}
 \usepackage[scale=2]{ccicons}
 
-% TODO: 
-%   position adjustement
-%   change colours
-%       
+\usepackage{bussproofs}
 
-% Watermark background (simple theme)
+\usepackage{mathpartir}
 
-%\setwatermark{\includegraphics[height=8cm]{img/Heckert_GNU_white.png}}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning}
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black,
+           text width=7.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+
 
 
 \title{On the Lambek Calculus with an Exchange Modality}
@@ -31,25 +48,19 @@
 %--------------------------------------------------
 \begin{frame}{Outline 1}
 \begin{itemize}
-\item Of-course modality of linear logic
-      \begin{enumerate}
-      \item Importance/applicion areas of linear logic: linguistics, and
-            process modeling
-      \item Brief introduction to the of-course modality: \\
-            include the weakening and contraction rules
-      \item Example usage of the of-course modality from linguistics and
-            process modeling
-      \end{enumerate}
-\item Objective
-      \begin{enumerate}
-      \item To isolate exchange using a modality in the same way that the
-            of-course modality of linear logic, $!A$, isolates weakening
-            and contraction
-      \item Include example rules for exchange that look similar to the
-            weakening and contraction rules for $!A$
-      \end{enumerate}
-\item Why do we care/why do we want to isolate exchange: example from
-      process modeling
+\item Objective: To isolate exchange using a modality, $eA$, in the same
+      way that the of-course modality of linear logic, $!A$, isolates
+      weakening and contraction. \\
+      $\Rightarrow$ \\
+      To add an exchange modality, $eA$, such that one can show
+      that $eA\otimes eB\multimap eB\otimes eA$ holds
+\item Motivation: In process calculi: $A\otimes B$ as both processes in
+      parallel, $A\triangleright B$ as first runs process $A$ and then
+      process $B$ \\
+      \textit{A note on notation}
+\item Basic Approach: generalize LNL model
+\item Introduction to LNL model: with diagram
+\item How to generalize LNL model to monoidal categories
 \end{itemize}
 \end{frame}
 
@@ -60,7 +71,7 @@
 %--------------------------------------------------
 \begin{frame}{Outline 2}
 \begin{itemize}
-\item General approach
+\item CNL Logic:
       \begin{enumerate}
       \item Introduce the term CNC logic
       \item Brief description of CNC logic: abstracts Benton's LNL logic by
@@ -84,9 +95,182 @@
 
 
 %--------------------------------------------------
+% 1.a. Objective (a)
 %--------------------------------------------------
+\begin{frame}{Objective}
+
+Linear logic uses the of-course modality, $!A$, to isolate
+\textit{weakening} and \textit{contraction}:
+$$\mbox{Weakening: }!X \rightarrow I$$
+$$\mbox{Contraction: }!X \rightarrow !X \otimes !X$$
+
+\invisible{
+\begin{block}{}
+To isolate \textit{exchange} using a modality, $eA$:
+$$eA\otimes eB\multimap eB\otimes eA$$.
+\end{block}
+}
+
+\end{frame}
+
+
 %--------------------------------------------------
+% 1.b. Objective (b)
+%--------------------------------------------------
+\begin{frame}{Objective}
+
+Linear logic uses the of-course modality, $!A$, to isolate
+\textit{weakening} and \textit{contraction}:
+$$\mbox{Weakening: }!X \rightarrow I$$
+$$\mbox{Contraction: }!X \rightarrow !X \otimes !X$$
+
+\begin{block}{Exchange Modality}
+To isolate \textit{exchange} using a modality, $eA$:
+\begin{gather*}
+eA\otimes eB\multimap eB\otimes eA
+\end{gather*}
+\end{block}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 2. Motivation
+%--------------------------------------------------
+\begin{frame}{Motivation}
+
+In process calculi, to model sequential composition of processes:
+
+\begin{columns}
+\column{.4\textwidth}
+  \begin{block}{$A\otimes B$}
+  \begin{itemize}
+  \item Commutative tensor product
+  \item Processes $A$ and $B$ run in parallel
+  \end{itemize}
+  \end{block}
+\column{.4\textwidth}
+  \begin{block}{$A\triangleright B$}
+  \begin{itemize}
+  \item Non-commutative tensor product
+  \item Process $A$ runs first, then process $B$
+  \end{itemize}
+  \end{block}
+\end{columns}
+
+\end{frame}
+
+%--------------------------------------------------
+% 3. Basic Approach
+%--------------------------------------------------
+\begin{frame}{Basic Approach}
+
+Abstract Benton's Linear/Non-Linear (LNL) model:
+\begin{itemize}
+\item Remove the exchange structural rule
+\item Two logics:
+      \begin{itemize}
+      \item Intuitionistic linear logic
+      \item Lambek Calculus
+      \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 4. LNL Model
+%--------------------------------------------------
+\begin{frame}{Linear/Non-Linear Model}
+
+A symmetric monoidal adjunction $F\dashv G$:
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm, auto,]
+  \scriptsize
+  \node (adjoint) {$\perp$};
+  \node[punkt,left=of adjoint] (ccc) {Cartesian Closed Category};
+  \node[punkt,right=of adjoint] (smcc) {Symmetric Monoidal Closed Category}
+    edge[<-,bend right=45] node[above] {$F$} (ccc)
+    edge[->,bend left=45] node[auto] {$G$} (ccc);
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 5.a. CNC Model (a)
+%--------------------------------------------------
+\begin{frame}{Commutative/Non-Commutative Model}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm, auto,]
+  \scriptsize
+  \node (adjoint1) {$\perp$};
+  \node[punkt,left=of adjoint1] (ccc) {Cartesian Closed Category};
+  \node[punkt,right=of adjoint1] (smcc) {Symmetric Monoidal Closed Category}
+    edge[<-,bend right=45] node[above] {$F$} (ccc)
+    edge[->,bend left=45] node[auto] {$G$} (ccc);
+  \node[right=of smcc,cyan] (adjoint2) {$\perp$};
+  \node[punkt,right=of adjoint2,cyan] (lambek) {Lambek Category}
+    edge[<-,bend right=45,cyan] node[above] {$F'$} (smcc)
+    edge[->,bend left=45,cyan] node[auto] {$G'$} (smcc);
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 5.b. CNC Model (b)
+%--------------------------------------------------
+\begin{frame}{Commutative/Non-Commutative Model}
+
+A monoidal adjunction $F\dashv G$:
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm, auto,]
+  \scriptsize
+  \node (adjoint) {$\perp$};
+  \node[punkt,left=of adjoint] (smcc) {Symmetric Monoidal Closed Category};
+  \node[punkt,right=of adjoint] (lambek) {Lambek Category}
+    edge[<-,bend right=45] node[above] {$F$} (smcc)
+    edge[->,bend left=45] node[auto] {$G$} (smcc);
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 6. CNC Logic
+%--------------------------------------------------
+\begin{frame}{CNC Logic}
+
+(Add ILL to the left of the diagram of CNC model, \\
+add Lambek calculus to the right)
+
+\end{frame}
 
 
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
