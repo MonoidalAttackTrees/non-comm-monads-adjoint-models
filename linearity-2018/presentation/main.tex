@@ -43,56 +43,6 @@
 \maketitle
 
 
-%--------------------------------------------------
-% (Temporary slide)
-%--------------------------------------------------
-\begin{frame}{Outline 1}
-\begin{itemize}
-\item Objective: To isolate exchange using a modality, $eA$, in the same
-      way that the of-course modality of linear logic, $!A$, isolates
-      weakening and contraction. \\
-      $\Rightarrow$ \\
-      To add an exchange modality, $eA$, such that one can show
-      that $eA\otimes eB\multimap eB\otimes eA$ holds
-\item Motivation: In process calculi: $A\otimes B$ as both processes in
-      parallel, $A\triangleright B$ as first runs process $A$ and then
-      process $B$ \\
-      \textit{A note on notation}
-\item Basic Approach: generalize LNL model
-\item Introduction to LNL model: with diagram
-\item How to generalize LNL model to monoidal categories
-\end{itemize}
-\end{frame}
-
-
-
-%--------------------------------------------------
-% (Temporary slide)
-%--------------------------------------------------
-\begin{frame}{Outline 2}
-\begin{itemize}
-\item CNL Logic:
-      \begin{enumerate}
-      \item Introduce the term CNC logic
-      \item Brief description of CNC logic: abstracts Benton's LNL logic by
-            removing the existince of the exchange structural rule
-      \item A diagram for Benton's LNL logic, and LNL categorical model
-      \item A diagram for CNC logic and the categorical model, compare with 
-            LNL
-      \end{enumerate}
-\item Previous approach in isolating exchange
-      \begin{itemize}
-      \item Brief introduction to the inference rules of reference 8
-      \item Limitations of the approach
-      \end{itemize}
-\item More detailed introduction to CNC logic: include some example rules
-\item One slide for other results: $\beta$-reductions, commuting
-      conversions, sequent calculus, natural deduction, etc
-\item One slide for dialectica model
-\item Conclusion ``take away'' slide
-\end{itemize}
-\end{frame}
-
 
 %--------------------------------------------------
 % 1.a. Objective (a)
@@ -105,9 +55,11 @@ $$\mbox{Weakening: }!X \rightarrow I$$
 $$\mbox{Contraction: }!X \rightarrow !X \otimes !X$$
 
 \invisible{
-\begin{block}{}
+\begin{block}{Exchange Modality}
 To isolate \textit{exchange} using a modality, $eA$:
-$$eA\otimes eB\multimap eB\otimes eA$$.
+\begin{gather*}
+eA\otimes eB\multimap eB\otimes eA
+\end{gather*}
 \end{block}
 }
 
@@ -179,22 +131,73 @@ Abstract Benton's Linear/Non-Linear (LNL) model:
 
 
 %--------------------------------------------------
-% 4. LNL Model
+% 4.a. LNL Model (a)
 %--------------------------------------------------
 \begin{frame}{Linear/Non-Linear Model}
 
 A symmetric monoidal adjunction $F\dashv G$:
+\begin{itemize}
+\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
+\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
+\end{itemize}
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm, auto,]
-  \scriptsize
+  \tiny
   \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (ccc) {Cartesian Closed Category};
-  \node[punkt,right=of adjoint] (smcc) {Symmetric Monoidal Closed Category}
+  \node[punkt,left=of adjoint] (ccc) {$\mathcal{C}$: Cartesian Closed Category};
+  \node[punkt,right=of adjoint] (smcc) {$\mathcal{L}$: Symmetric Monoidal Closed Category}
     edge[<-,bend right=45] node[above] {$F$} (ccc)
     edge[->,bend left=45] node[auto] {$G$} (ccc);
 \end{tikzpicture}
 \end{center}
+
+\invisible{
+\begin{block}{}
+\begin{itemize}
+\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the CCC: strong and
+      commutative.
+\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the SMCC: symmetric
+      monoidal.
+\item Of-course modality: $!=FG$
+\end{itemize}
+\end{block}
+}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 4.b. LNL Model (b)
+%--------------------------------------------------
+\begin{frame}{Linear/Non-Linear Model}
+
+A symmetric monoidal adjunction $F\dashv G$:
+\begin{itemize}
+\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
+\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm, auto,]
+  \tiny
+  \node (adjoint) {$\perp$};
+  \node[punkt,left=of adjoint] (ccc) {$\mathcal{C}$: Cartesian Closed Category};
+  \node[punkt,right=of adjoint] (smcc) {$\mathcal{L}$: Symmetric Monoidal Closed Category}
+    edge[<-,bend right=45] node[above] {$F$} (ccc)
+    edge[->,bend left=45] node[auto] {$G$} (ccc);
+\end{tikzpicture}
+\end{center}
+
+\begin{block}{}
+\begin{itemize}
+\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the CCC: strong and
+      commutative.
+\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the SMCC: symmetric
+      monoidal.
+\item Of-course modality: $!=FG$
+\end{itemize}
+\end{block}
 
 \end{frame}
 
@@ -202,11 +205,11 @@ A symmetric monoidal adjunction $F\dashv G$:
 %--------------------------------------------------
 % 5.a. CNC Model (a)
 %--------------------------------------------------
-\begin{frame}{Commutative/Non-Commutative Model}
+\begin{frame}{Commutative/Non-Commutative (CNC) Model}
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm, auto,]
-  \scriptsize
+  \tiny
   \node (adjoint1) {$\perp$};
   \node[punkt,left=of adjoint1] (ccc) {Cartesian Closed Category};
   \node[punkt,right=of adjoint1] (smcc) {Symmetric Monoidal Closed Category}
@@ -225,20 +228,77 @@ A symmetric monoidal adjunction $F\dashv G$:
 %--------------------------------------------------
 % 5.b. CNC Model (b)
 %--------------------------------------------------
-\begin{frame}{Commutative/Non-Commutative Model}
+\begin{frame}{Commutative/Non-Commutative (CNC) Model}
 
 A monoidal adjunction $F\dashv G$:
+\begin{itemize}
+\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
+\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
+\end{itemize}
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm, auto,]
-  \scriptsize
+  \tiny
   \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (smcc) {Symmetric Monoidal Closed Category};
-  \node[punkt,right=of adjoint] (lambek) {Lambek Category}
+  \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
+  \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
     edge[<-,bend right=45] node[above] {$F$} (smcc)
     edge[->,bend left=45] node[auto] {$G$} (smcc);
 \end{tikzpicture}
 \end{center}
+
+\invisible{
+\begin{block}{}
+\begin{itemize}
+\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the SMCC: strong but
+      non-commutative
+\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the Lambek category:
+      monoidal
+\item Exchange: a natural transformation
+      $\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in
+      the co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad \\
+      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal closed
+\end{itemize}
+\end{block}
+}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 5.c. CNC Model (c)
+%--------------------------------------------------
+\begin{frame}{Commutative/Non-Commutative (CNC) Model}
+
+A monoidal adjunction $F\dashv G$:
+\begin{itemize}
+\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
+\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm, auto,]
+  \tiny
+  \node (adjoint) {$\perp$};
+  \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
+  \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
+    edge[<-,bend right=45] node[above] {$F$} (smcc)
+    edge[->,bend left=45] node[auto] {$G$} (smcc);
+\end{tikzpicture}
+\end{center}
+
+\begin{block}{}
+\begin{itemize}
+\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the SMCC: strong but
+      non-commutative
+\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the Lambek category:
+      monoidal
+\item Exchange: a natural transformation
+      $\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in
+      the co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad \\
+      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal closed
+\end{itemize}
+\end{block}
 
 \end{frame}
 
@@ -248,11 +308,143 @@ A monoidal adjunction $F\dashv G$:
 %--------------------------------------------------
 \begin{frame}{CNC Logic}
 
-(Add ILL to the left of the diagram of CNC model, \\
-add Lambek calculus to the right)
+\begin{itemize}
+\item Left: Intuitionistic Linear Logic
+\item Right: Mixed Commutative/Non-commutative Lambek Calculus
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm, auto,]
+  \tiny
+  \node (adjoint) {$\perp$};
+  \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
+  \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
+    edge[<-,bend right=45] node[above] {$F$} (smcc)
+    edge[->,bend left=45] node[auto] {$G$} (smcc);
+  \scriptsize
+\end{tikzpicture}
+\end{center}
 
 \end{frame}
 
+%--------------------------------------------------
+% 7. CNC Logic: Notation
+%--------------------------------------------------
+\begin{frame}{CNC Logic: Notation}
+
+\begin{columns}
+\column{0.47\textwidth}
+  \centerline{\textbf{Intuitionistic Linear Logic}}
+
+  $\mathcal{C}$-Types: $W$, $X$, $Y$, $Z$ \\
+  $\mathcal{C}$-Terms: $t$ \\
+  $\mathcal{C}$-Contexts: $\Phi$, $\Psi$ \\
+  $\mathcal{C}$-Typing Judgment: $\Phi,\Psi \vdash_\mathcal{C} t:X$
+
+\column{0.47\textwidth}
+  \centerline{\textbf{Lambek Calculus}}
+
+  $\mathcal{L}$-Types: $A$, $B$, $C$, $D$ \\
+  $\mathcal{L}$-Terms: $s$ \\
+  $\mathcal{L}$-Contexts: $\Gamma$, $\Delta$ \\
+  $\mathcal{L}$-Typing Judgment: $\Gamma;\Delta \vdash_\mathcal{L} s:A$
+\end{columns}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 8. CNC Logic: Example Typing Rules
+%--------------------------------------------------
+\begin{frame}{CNC Logic: Example Typing Rules}
+
+\begin{itemize}
+\item Exchange rules:
+  \begin{prooftree}
+  \scriptsize
+  \AxiomC{$\Phi,x:X,y:Y,\Psi \vdash_\mathcal{C} t:Z$}
+  \LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathrm{ex}$}
+  \UnaryInfC{$\Phi,z:Y,w:X,\Psi \vdash_\mathcal{C} \mathrm{ex}\ w,z\ \mathrm{with}\ x,y\ \mathrm{in}\ t:Z$}
+  \end{prooftree}
+
+  \begin{prooftree}
+  \scriptsize
+  \AxiomC{$\Gamma;x:X;y:Y;\Delta \vdash_\mathcal{L} s:A$}
+  \LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathrm{ex}$}
+  \UnaryInfC{$\Gamma;z:Y;w:X;\Delta \vdash_\mathcal{L} \mathrm{ex}\ w,z\ \mathrm{with}\ x,y\ \mathrm{in}\ s:A$}
+  \end{prooftree}
+
+\item Cut rules:
+  \begin{prooftree}
+  \scriptsize
+  \AxiomC{$\Phi\vdash_\mathcal{C}t_1:X$}
+  \AxiomC{$\Psi_1,x:X,\Psi_2\vdash_\mathcal{C}t2:Y$}
+  \LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathrm{Cut}$}
+  \BinaryInfC{$\Psi_1,\Phi,\Psi_2\vdash_\mathcal{C}[t1/x]t2:Y$}
+  \end{prooftree}
+
+  \begin{prooftree}
+  \scriptsize
+  \AxiomC{$\Gamma\vdash_\mathcal{L}s_1:A$}
+  \AxiomC{$\Delta_1;x:X;\Delta_2\vdash_\mathcal{L}s2:B$}
+  \LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathrm{Cut}$}
+  \BinaryInfC{$\Delta_1;\Gamma;\Delta_2\vdash_\mathcal{C}[s1/x]s2:B$}
+  \end{prooftree}
+
+  \begin{prooftree}
+  \scriptsize
+  \AxiomC{$\Phi\vdash_\mathcal{C}s:X$}
+  \AxiomC{$\Gamma_1;x:X;\Gamma_2\vdash_\mathcal{L}s:A$}
+  \LeftLabel{}\RightLabel{$\mathcal{LC}$-$\mathrm{Cut}$}
+  \BinaryInfC{$\Gamma_1;\Phi;\Gamma_2\vdash_\mathcal{C}[t/x]s:A$}
+  \end{prooftree}
+\end{itemize}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 9. CNC Logic: Other Results
+%--------------------------------------------------
+\begin{frame}{CNC Logic: Other Results}
+
+\begin{itemize}
+\item $\beta$-reductions: one step $\beta$-reduction rules
+\item Commuting conversions
+\item Cut elimination
+\item Equivalence between sequent calculus and natural deduction
+\item Strong normalization via a translation to LNL logic
+\item Different categorical model: dialectica categories
+\end{itemize}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 10. Conclusion
+%--------------------------------------------------
+\begin{frame}{Conclusion}
+
+\begin{itemize}
+\item Commutative/Non-commutative Logic:
+      \begin{itemize}
+      \item Left: Intuitionistic linear logic
+      \item Right: Lambek calculus
+      \end{itemize}
+\item Categorical Model: a monoidal adjunction
+      \begin{itemize}
+      \item Left: Symmetric monoidal closed category
+      \item Right: Lambek category
+      \end{itemize}
+\end{itemize}
+
+\begin{block}{Exchange Natural Transformation}
+$\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in the
+co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad on the Lambek
+category
+\end{block}
+
+\end{frame}
 
 
 \end{document}

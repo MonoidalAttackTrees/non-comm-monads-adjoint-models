@@ -37,7 +37,8 @@ pdf : $(PDF)
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile beamerthemesimple.sty
+$(PDF) : main.tex Makefile beamerthemesimple.sty 
+
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	bibtex $(TexFileName)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
