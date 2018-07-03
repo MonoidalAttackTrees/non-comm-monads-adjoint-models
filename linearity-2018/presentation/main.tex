@@ -34,7 +34,7 @@
 
 \title{On the Lambek Calculus with an Exchange Modality}
 \subtitle{}
-\date{July 5, 2018}
+\date{July 7, 2018}
 \author{Jiaming Jiang$^1$, Harley Eades III$^2$, Valeria de Paiva$^3$}
 \institute{$^1$North Carolina State University; $^2$Augusta University; $^3$Nuance Communications}
 
@@ -51,8 +51,8 @@
 
 Linear logic uses the of-course modality, $!A$, to isolate
 \textit{weakening} and \textit{contraction}:
-$$\mbox{Weakening: }!X \rightarrow I$$
-$$\mbox{Contraction: }!X \rightarrow !X \otimes !X$$
+$$\mbox{Weakening: }!A \rightarrow I$$
+$$\mbox{Contraction: }!A \rightarrow !A \otimes !A$$
 
 \invisible{
 \begin{block}{Exchange Modality}
@@ -73,8 +73,8 @@ eA\otimes eB\multimap eB\otimes eA
 
 Linear logic uses the of-course modality, $!A$, to isolate
 \textit{weakening} and \textit{contraction}:
-$$\mbox{Weakening: }!X \rightarrow I$$
-$$\mbox{Contraction: }!X \rightarrow !X \otimes !X$$
+$$\mbox{Weakening: }!A \rightarrow I$$
+$$\mbox{Contraction: }!A \rightarrow !A \otimes !A$$
 
 \begin{block}{Exchange Modality}
 To isolate \textit{exchange} using a modality, $eA$:
@@ -119,7 +119,8 @@ In process calculi, to model sequential composition of processes:
 
 Abstract Benton's Linear/Non-Linear (LNL) model:
 \begin{itemize}
-\item Remove the exchange structural rule
+\item Remove the exchange structural rule: implicit in
+      $\Phi,\Psi;\Gamma,\Delta$
 \item Two logics:
       \begin{itemize}
       \item Intuitionistic linear logic
@@ -156,9 +157,9 @@ A symmetric monoidal adjunction $F\dashv G$:
 \begin{block}{}
 \begin{itemize}
 \item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the CCC: strong and
-      commutative.
+      commutative
 \item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the SMCC: symmetric
-      monoidal.
+      monoidal
 \item Of-course modality: $!=FG$
 \end{itemize}
 \end{block}
@@ -192,9 +193,9 @@ A symmetric monoidal adjunction $F\dashv G$:
 \begin{block}{}
 \begin{itemize}
 \item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the CCC: strong and
-      commutative.
+      commutative
 \item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the SMCC: symmetric
-      monoidal.
+      monoidal
 \item Of-course modality: $!=FG$
 \end{itemize}
 \end{block}
@@ -257,7 +258,7 @@ A monoidal adjunction $F\dashv G$:
 \item Exchange: a natural transformation
       $\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in
       the co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad \\
-      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal closed
+      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal 
 \end{itemize}
 \end{block}
 }
@@ -296,7 +297,7 @@ A monoidal adjunction $F\dashv G$:
 \item Exchange: a natural transformation
       $\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in
       the co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad \\
-      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal closed
+      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal 
 \end{itemize}
 \end{block}
 
@@ -309,8 +310,8 @@ A monoidal adjunction $F\dashv G$:
 \begin{frame}{CNC Logic}
 
 \begin{itemize}
-\item Left: Intuitionistic Linear Logic
-\item Right: Mixed Commutative/Non-commutative Lambek Calculus
+\item Left: intuitionistic linear logic
+\item Right: mixed commutative/non-commutative Lambek calculus
 \end{itemize}
 
 \begin{center}
@@ -354,51 +355,131 @@ A monoidal adjunction $F\dashv G$:
 
 
 %--------------------------------------------------
-% 8. CNC Logic: Example Typing Rules
+% 8.a. CNC Logic: Example Typing Rules (a)
 %--------------------------------------------------
 \begin{frame}{CNC Logic: Example Typing Rules}
 
-\begin{itemize}
-\item Exchange rules:
-  \begin{prooftree}
-  \scriptsize
-  \AxiomC{$\Phi,x:X,y:Y,\Psi \vdash_\mathcal{C} t:Z$}
-  \LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathrm{ex}$}
-  \UnaryInfC{$\Phi,z:Y,w:X,\Psi \vdash_\mathcal{C} \mathrm{ex}\ w,z\ \mathrm{with}\ x,y\ \mathrm{in}\ t:Z$}
-  \end{prooftree}
+Exchange rules:
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi,x:X,y:Y,\Psi \vdash_\mathcal{C} t:Z$}
+\LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathsf{ex}$}
+\UnaryInfC{$\Phi,z:Y,w:X,\Psi \vdash_\mathcal{C} \mathsf{ex}\ w,z\ \mathsf{with}\ x,y\ \mathsf{in}\ t:Z$}
+\end{prooftree}
 
-  \begin{prooftree}
-  \scriptsize
-  \AxiomC{$\Gamma;x:X;y:Y;\Delta \vdash_\mathcal{L} s:A$}
-  \LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathrm{ex}$}
-  \UnaryInfC{$\Gamma;z:Y;w:X;\Delta \vdash_\mathcal{L} \mathrm{ex}\ w,z\ \mathrm{with}\ x,y\ \mathrm{in}\ s:A$}
-  \end{prooftree}
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Gamma;x:X;y:Y;\Delta \vdash_\mathcal{L} s:A$}
+\LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathsf{ex}$}
+\UnaryInfC{$\Gamma;z:Y;w:X;\Delta \vdash_\mathcal{L} \mathsf{ex}\ w,z\ \mathsf{with}\ x,y\ \mathsf{in}\ s:A$}
+\end{prooftree}
 
-\item Cut rules:
-  \begin{prooftree}
-  \scriptsize
-  \AxiomC{$\Phi\vdash_\mathcal{C}t_1:X$}
-  \AxiomC{$\Psi_1,x:X,\Psi_2\vdash_\mathcal{C}t2:Y$}
-  \LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathrm{Cut}$}
-  \BinaryInfC{$\Psi_1,\Phi,\Psi_2\vdash_\mathcal{C}[t1/x]t2:Y$}
-  \end{prooftree}
+%Cut rules:
+%  \begin{prooftree}
+%  \scriptsize
+%  \AxiomC{$\Phi\vdash_\mathcal{C}t_1:X$}
+%  \AxiomC{$\Psi_1,x:X,\Psi_2\vdash_\mathcal{C}t2:Y$}
+%  \LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathrm{Cut}$}
+%  \BinaryInfC{$\Psi_1,\Phi,\Psi_2\vdash_\mathcal{C}[t1/x]t2:Y$}
+%  \end{prooftree}
+%
+%  \begin{prooftree}
+%  \scriptsize
+%  \AxiomC{$\Gamma\vdash_\mathcal{L}s_1:A$}
+%  \AxiomC{$\Delta_1;x:X;\Delta_2\vdash_\mathcal{L}s2:B$}
+%  \LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathrm{Cut}$}
+%  \BinaryInfC{$\Delta_1;\Gamma;\Delta_2\vdash_\mathcal{C}[s1/x]s2:B$}
+%  \end{prooftree}
+%
+%  \begin{prooftree}
+%  \scriptsize
+%  \AxiomC{$\Phi\vdash_\mathcal{C}s:X$}
+%  \AxiomC{$\Gamma_1;x:X;\Gamma_2\vdash_\mathcal{L}s:A$}
+%  \LeftLabel{}\RightLabel{$\mathcal{LC}$-$\mathrm{Cut}$}
+%  \BinaryInfC{$\Gamma_1;\Phi;\Gamma_2\vdash_\mathcal{C}[t/x]s:A$}
+%  \end{prooftree}
 
-  \begin{prooftree}
-  \scriptsize
-  \AxiomC{$\Gamma\vdash_\mathcal{L}s_1:A$}
-  \AxiomC{$\Delta_1;x:X;\Delta_2\vdash_\mathcal{L}s2:B$}
-  \LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathrm{Cut}$}
-  \BinaryInfC{$\Delta_1;\Gamma;\Delta_2\vdash_\mathcal{C}[s1/x]s2:B$}
-  \end{prooftree}
+\end{frame}
 
-  \begin{prooftree}
-  \scriptsize
-  \AxiomC{$\Phi\vdash_\mathcal{C}s:X$}
-  \AxiomC{$\Gamma_1;x:X;\Gamma_2\vdash_\mathcal{L}s:A$}
-  \LeftLabel{}\RightLabel{$\mathcal{LC}$-$\mathrm{Cut}$}
-  \BinaryInfC{$\Gamma_1;\Phi;\Gamma_2\vdash_\mathcal{C}[t/x]s:A$}
-  \end{prooftree}
-\end{itemize}
+
+%--------------------------------------------------
+% 8.b. CNC Logic: Example Typing Rules (b)
+%--------------------------------------------------
+\begin{frame}{CNC Logic: Example Typing Rules}
+
+
+Functor rules for $\mathsf{G}$:
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi\vdash_\mathcal{L}s:A$}
+\LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathsf{G}_I$}
+\UnaryInfC{$\Phi\vdash_\mathcal{C}\mathsf{G}s:\mathsf{G}A$}
+\end{prooftree}
+
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi\vdash_\mathcal{C}t:\mathsf{G}A$}
+\LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathsf{G}_E$}
+\UnaryInfC{$\Phi\vdash_\mathcal{L}\mathsf{derelict}\ t:A$}
+\end{prooftree}
+
+\invisible{
+Functor rules for $\mathsf{F}$:
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi\vdash_\mathcal{C}t:X$}
+\LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathsf{F}_I$}
+\UnaryInfC{$\Phi\vdash_\mathcal{L}\mathsf{F}t:\mathsf{F}X$}
+\end{prooftree}
+
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Gamma\vdash_\mathcal{L}s_1:\mathsf{F}X$}
+\AxiomC{$\Delta_1;x:X;\Delta_2\vdash_\mathcal{L}s_2:A$}
+\LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathsf{F}_E$}
+\BinaryInfC{$\Delta_1;\Gamma;\Delta_2\vdash_\mathcal{L}\mathsf{let}\ s_1:\mathsf{F}X\ \mathsf{be}\ \mathsf{F}x\ \mathsf{in}\ s_2:A$}
+\end{prooftree}
+}
+
+\end{frame}
+
+
+%--------------------------------------------------
+% 8.c. CNC Logic: Example Typing Rules (c)
+%--------------------------------------------------
+\begin{frame}{CNC Logic: Example Typing Rules}
+
+
+Functor rules for $\mathsf{G}$:
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi\vdash_\mathcal{L}s:A$}
+\LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathsf{G}_I$}
+\UnaryInfC{$\Phi\vdash_\mathcal{C}\mathsf{G}s:\mathsf{G}A$}
+\end{prooftree}
+
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi\vdash_\mathcal{C}t:\mathsf{G}A$}
+\LeftLabel{}\RightLabel{$\mathcal{C}$-$\mathsf{G}_E$}
+\UnaryInfC{$\Phi\vdash_\mathcal{L}\mathsf{derelict}\ t:A$}
+\end{prooftree}
+
+Functor rules for $\mathsf{F}$:
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Phi\vdash_\mathcal{C}t:X$}
+\LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathsf{F}_I$}
+\UnaryInfC{$\Phi\vdash_\mathcal{L}\mathsf{F}t:\mathsf{F}X$}
+\end{prooftree}
+
+\begin{prooftree}
+\scriptsize
+\AxiomC{$\Gamma\vdash_\mathcal{L}s_1:\mathsf{F}X$}
+\AxiomC{$\Delta_1;x:X;\Delta_2\vdash_\mathcal{L}s_2:A$}
+\LeftLabel{}\RightLabel{$\mathcal{L}$-$\mathsf{F}_E$}
+\BinaryInfC{$\Delta_1;\Gamma;\Delta_2\vdash_\mathcal{L}\mathsf{let}\ s_1:\mathsf{F}X\ \mathsf{be}\ \mathsf{F}x\ \mathsf{in}\ s_2:A$}
+\end{prooftree}
 
 \end{frame}
 
@@ -414,7 +495,7 @@ A monoidal adjunction $F\dashv G$:
 \item Cut elimination
 \item Equivalence between sequent calculus and natural deduction
 \item Strong normalization via a translation to LNL logic
-\item Different categorical model: dialectica categories
+\item A concrete model in dialectica categories
 \end{itemize}
 
 \end{frame}
@@ -428,12 +509,12 @@ A monoidal adjunction $F\dashv G$:
 \begin{itemize}
 \item Commutative/Non-commutative Logic:
       \begin{itemize}
-      \item Left: Intuitionistic linear logic
+      \item Left: intuitionistic linear logic
       \item Right: Lambek calculus
       \end{itemize}
-\item Categorical Model: a monoidal adjunction
+\item Categorical model: a monoidal adjunction
       \begin{itemize}
-      \item Left: Symmetric monoidal closed category
+      \item Left: symmetric monoidal closed category
       \item Right: Lambek category
       \end{itemize}
 \end{itemize}

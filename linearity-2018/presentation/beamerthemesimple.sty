@@ -65,8 +65,9 @@
   % overlays semitransparentes
   \setbeamercovered{transparent}
   
-  % incluir el contador de diapos
-  \setbeamertemplate{footline}[frame number]
+  % include frame number at bottom right without total
+  \setbeamertemplate{footline}{%
+   \raisebox{5pt}{\makebox[0.991\paperwidth]{\hfill\makebox[10pt]{\scriptsize\insertframenumber}}}}
   
   % eliminar íconos de nav.
   \setbeamertemplate{navigation symbols}{}
