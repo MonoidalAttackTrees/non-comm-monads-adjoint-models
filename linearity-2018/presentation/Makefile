@@ -40,7 +40,7 @@ pdf : $(PDF)
 $(PDF) : main.tex Makefile beamerthemesimple.sty 
 
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
-	bibtex $(TexFileName)
+# bibtex $(TexFileName)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 
