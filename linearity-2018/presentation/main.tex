@@ -430,7 +430,7 @@ Linear Logic takes for granted the structural rule:
         \tiny
         \node (adjoint) {$\perp$};
         \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
-        \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Mixed Lambek Category}
+        \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
         edge[<-,bend right=45] node[above] {$F$} (smcc)
         edge[->,bend left=45] node[auto] {$G$} (smcc);
       \end{tikzpicture}
@@ -438,7 +438,7 @@ Linear Logic takes for granted the structural rule:
     
   \item Exchange modality: $eA = FGA$
   \item[]
-  \item Natural transformation: $eA \rhd be \mto^{\mathsf{ex}} eB \rhd eA$
+  \item Natural transformation: $eA \rhd eB \mto^{\mathsf{ex}} eB \rhd eA$
   \end{itemize}
 
 \end{frame}
