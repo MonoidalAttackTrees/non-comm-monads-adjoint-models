@@ -88,3 +88,7 @@ Elle-ND/Elle-ND-ott.tex
 *.toc
 
 *.vrb
+/linearity-2018/presentation/#main.tex#
+/linearity-2018/presentation/.#main.tex
+/linearity-2018/presentation/presentation.out
+/linearity-2018/presentation/presentation.tex

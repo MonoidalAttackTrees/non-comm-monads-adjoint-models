@@ -4,6 +4,8 @@
 
 \usepackage{lmodern}
 \usepackage[scale=2]{ccicons}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{cmll}
 
 \usepackage{bussproofs}
 
@@ -30,12 +32,98 @@
            shorten >=2pt,}
 }
 
+\usepackage[barr]{xy}
+\let\mto\to
+\let\to\relax
+\newcommand{\ndto}[1]{\to_{#1}}
+\newcommand{\ndwedge}[1]{\wedge_{#1}}
+\newcommand{\rto}{\leftharpoonup}
+\newcommand{\lto}{\rightharpoonup}
+\newcommand{\tri}{\triangleright}
+\newcommand{\LNL}{\mathit{LNL}}
 
+% Commands that are useful for writing about type theory and programming language design.
+%% \newcommand{\case}[4]{\text{case}\ #1\ \text{of}\ #2\text{.}#3\text{,}#2\text{.}#4}
+\newcommand{\interp}[1]{\llbracket #1 \rrbracket}
+\newcommand{\normto}[0]{\rightsquigarrow^{!}}
+\newcommand{\join}[0]{\downarrow}
+\newcommand{\redto}[0]{\rightsquigarrow}
+\newcommand{\nat}[0]{\mathbb{N}}
+\newcommand{\fun}[2]{\lambda #1.#2}
+\newcommand{\CRI}[0]{\text{CR-Norm}}
+\newcommand{\CRII}[0]{\text{CR-Pres}}
+\newcommand{\CRIII}[0]{\text{CR-Prog}}
+\newcommand{\subexp}[0]{\sqsubseteq}
+
+%% Must include \usepackage{mathrsfs} for this to work.
+
+%% \date{}
+
+\let\b\relax
+\let\d\relax
+\let\t\relax
+\let\r\relax
+\let\c\relax
+\let\j\relax
+\let\wn\relax
+\let\H\relax
+
+% Cat commands.
+\newcommand{\powerset}[1]{\mathcal{P}(#1)}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\func}[1]{\mathsf{#1}}
+\newcommand{\iso}[0]{\mathsf{iso}}
+\newcommand{\H}[0]{\func{H}}
+\newcommand{\J}[0]{\func{J}}
+\newcommand{\catop}[1]{\cat{#1}^{\mathsf{op}}}
+\newcommand{\Hom}[3]{\mathsf{Hom}_{\cat{#1}}(#2,#3)}
+\newcommand{\limp}[0]{\multimap}
+\newcommand{\colimp}[0]{\multimapdotinv}
+\newcommand{\dial}[1]{\mathsf{Dial_{#1}}(\mathsf{Sets^{op}})}
+\newcommand{\dialSets}[1]{\mathsf{Dial_{#1}}(\mathsf{Sets})}
+\newcommand{\dcSets}[1]{\mathsf{DC_{#1}}(\mathsf{Sets})}
+\newcommand{\sets}[0]{\mathsf{Sets}}
+\newcommand{\obj}[1]{\mathsf{Obj}(#1)}
+\newcommand{\mor}[1]{\mathsf{Mor(#1)}}
+\newcommand{\id}[0]{\mathsf{id}}
+\newcommand{\Id}[0]{\mathsf{Id}}
+\newcommand{\lett}[0]{\mathsf{let}\,}
+\newcommand{\inn}[0]{\,\mathsf{in}\,}
+\newcommand{\cur}[1]{\mathsf{cur}(#1)}
+\newcommand{\curi}[1]{\mathsf{cur}^{-1}(#1)}
+
+\newcommand{\w}[1]{\mathsf{weak}_{#1}}
+\newcommand{\c}[1]{\mathsf{contra}_{#1}}
+\newcommand{\cL}[1]{\mathsf{contraL}_{#1}}
+\newcommand{\cR}[1]{\mathsf{contraR}_{#1}}
+\newcommand{\e}[1]{\mathsf{ex}_{#1}}
+
+\newcommand{\m}[1]{\mathsf{m}_{#1}}
+\newcommand{\n}[1]{\mathsf{n}_{#1}}
+\newcommand{\b}[1]{\mathsf{b}_{#1}}
+\newcommand{\d}[1]{\mathsf{d}_{#1}}
+\newcommand{\h}[1]{\mathsf{h}_{#1}}
+\newcommand{\p}[1]{\mathsf{p}_{#1}}
+\newcommand{\q}[1]{\mathsf{q}_{#1}}
+\newcommand{\t}[1]{\mathsf{t}_{#1}}
+\newcommand{\r}[1]{\mathsf{r}_{#1}}
+\newcommand{\s}[1]{\mathsf{s}_{#1}}
+\newcommand{\j}[1]{\mathsf{j}_{#1}}
+\newcommand{\jinv}[1]{\mathsf{j}^{-1}_{#1}}
+\newcommand{\wn}[0]{\mathop{?}}
+\newcommand{\codiag}[1]{\bigtriangledown_{#1}}
+
+\newcommand{\seq}{\rhd}
+
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\Dial}[2]{\mathsf{Dial}_{#1}(#2)}
+
+\input{Elle-ND-inc}
 
 \title{On the Lambek Calculus with an Exchange Modality}
 \subtitle{}
-\date{July 7, 2018}
-\author{Jiaming Jiang$^1$, Harley Eades III$^2$, Valeria de Paiva$^3$}
+\date{}
+\author{Jiaming Jiang$^1$, \textbf{Harley Eades III}$^2$, Valeria de Paiva$^3$}
 \institute{$^1$North Carolina State University; $^2$Augusta University; $^3$Nuance Communications}
 
 \begin{document}
@@ -47,183 +135,287 @@
 %--------------------------------------------------
 % 1.a. Objective (a)
 %--------------------------------------------------
-\begin{frame}{Objective}
+\begin{frame}{Linearity and Non-Linearity}
 
-Linear logic uses the of-course modality, $!A$, to isolate
-\textit{weakening} and \textit{contraction}:
-$$\mbox{Weakening: }!A \rightarrow I$$
-$$\mbox{Contraction: }!A \rightarrow !A \otimes !A$$
-
-\invisible{
-\begin{block}{Exchange Modality}
-To isolate \textit{exchange} using a modality, $eA$:
-\begin{gather*}
-eA\otimes eB\multimap eB\otimes eA
-\end{gather*}
-\end{block}
-}
-
-\end{frame}
-
-
-%--------------------------------------------------
-% 1.b. Objective (b)
-%--------------------------------------------------
-\begin{frame}{Objective}
-
-Linear logic uses the of-course modality, $!A$, to isolate
-\textit{weakening} and \textit{contraction}:
-$$\mbox{Weakening: }!A \rightarrow I$$
-$$\mbox{Contraction: }!A \rightarrow !A \otimes !A$$
-
-\begin{block}{Exchange Modality}
-To isolate \textit{exchange} using a modality, $eA$:
-\begin{gather*}
-eA\otimes eB\multimap eB\otimes eA
-\end{gather*}
-\end{block}
-
-\end{frame}
-
-
-%--------------------------------------------------
-% 2. Motivation
-%--------------------------------------------------
-\begin{frame}{Motivation}
-
-In process calculi, to model sequential composition of processes:
-
-\begin{columns}
-\column{.4\textwidth}
-  \begin{block}{$A\otimes B$}
-  \begin{itemize}
-  \item Commutative tensor product
-  \item Processes $A$ and $B$ run in parallel
+\begin{itemize}
+  \item Girard bridged linearity with non-linearity via $!A$.
+  \item[]
+  \item This modality isolates the structural rules:
+    \begin{center}
+      \begin{math}
+        \begin{array}{ccc}
+          \\
+          $$\mprset{flushleft}
+        \inferrule* [right=weak] {
+          \Gamma_1,\Gamma_2 \vdash B
+        }{\Gamma_1,!A,\Gamma_2}
+        & \quad\quad & 
+        $$\mprset{flushleft}
+        \inferrule* [right=contract] {
+          \Gamma_1,!A,!A,\Gamma_2 \vdash B
+        }{\Gamma_1,!A,\Gamma_2}
+        \end{array}
+      \end{math}
+    \end{center}
+  \item[]
+  \item Linear Logic = linearity + of-course
+  \item[]
+  \item[]
+  \item[]
+    
   \end{itemize}
-  \end{block}
-\column{.4\textwidth}
-  \begin{block}{$A\triangleright B$}
+\end{frame}
+
+\begin{frame}{Linearity and Non-Linearity}
+Linear Logic takes for granted the structural rule:
+  \begin{center}
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right=Ex] {
+        \Gamma_1,A,B,\Gamma_2 \vdash C
+      }{\Gamma_1,B,A,\Gamma_2 \vdash C}
+    \end{math}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{Lambek Calculus}
   \begin{itemize}
-  \item Non-commutative tensor product
-  \item Process $A$ runs first, then process $B$
+  \item Lambek invented what we call the Lambek Calculus to give a
+    mathematical semantics to sentence structure.
+  \item[]
+  \item Lambek Calculus = linearity - exchange
+    \begin{itemize}
+    \item Non-commutative tensor: $A \rhd B$
+    \item Non-commutative implications: $[[B <- A]]$ and $[[A -> B]]$
+    \end{itemize}
+  \item[]
+  \item No modalities
+  \item[]
+  \item Applications in security, linguistics, and resource modeling.
+  \item[]
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Lambek Calculus}
+  The rules for left and right implication:
+  \begin{center}
+    \begin{math}
+      \begin{array}{lll}
+        $$\mprset{flushleft}
+        \inferrule* [right=ILr] {
+          A,\Gamma \vdash B
+        }{\Gamma \vdash [[B <- A]]}
+        & \quad\quad &
+        $$\mprset{flushleft}
+        \inferrule* [right=IRr] {
+          \Gamma,A \vdash B
+        }{\Gamma \vdash [[A -> B]]}
+      \end{array}
+    \end{math}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Lambek Calculus}
+  \begin{itemize}
+  \item ``Elise'' has type $n$
+  \item[]
+  \item ``Elise works'' has type $s$
+  \item[]
+  \item ``works'' has type $s [[<-]] n$
+  \item[]
+  \item ``(Elise works) here'' has type $s$
+  \item[] 
+  \item ``never'' has type $(s [[<-]] n) [[->]] (s [[<-]] n)$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lambek Calculus}
+  \begin{itemize}
+  \item ``and'' has type $s [[->]] (s [[<-]] s)$
+  \item[]
+  \item But, isn't ``and'' commutative in English?
+  \end{itemize}
+  \begin{block}{Question posed by computational linguists:}
+    Can a we add a modality to the Lambek Calculus that does for
+    exchange what of-course does for weakening and contraction?
   \end{block}
-\end{columns}
-
 \end{frame}
 
-%--------------------------------------------------
-% 3. Basic Approach
-%--------------------------------------------------
-\begin{frame}{Basic Approach}
+\begin{frame}{Benton's Linear/Non-Linear Logic}
+  
+  \begin{itemize}
+  \item[] Benton realized:
+    \begin{itemize}
+    \item $!A$ is a comonad, and so, induces an adjunction:
+      \begin{center}
+        \begin{tikzpicture}[node distance=0.5cm, auto,]
+          \tiny
+          \node (adjoint) {{\large $\perp$}};
+          \node[punkt,left=of adjoint] (ccc) {Co-Eilenberg-Moore Category};
+          \node[punkt,right=of adjoint] (smcc) {Symmetric Monoidal Closed Category + $!A$}
+          edge[<-,bend right=45] node[above] {$F$} (ccc)
+          edge[->,bend left=45] node[auto] {$G$} (ccc);
+        \end{tikzpicture}
+      \end{center}
 
-Abstract Benton's Linear/Non-Linear (LNL) model:
-\begin{itemize}
-\item Remove the exchange structural rule: implicit in
-      $\Phi,\Psi;\Gamma,\Delta$
-\item Two logics:
-      \begin{itemize}
-      \item Intuitionistic linear logic
-      \item Lambek Calculus
-      \end{itemize}
-\end{itemize}
-
+    \item Symmetric Monoidal Closed Category + $!A$: a model of linear logic.
+    \item[]
+    \item Co-Eilenberg-Moore Category: a model intuitionistic logic.
+    \item[]
+    \item[]
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
+\begin{frame}{Benton's Linear/Non-Linear Logic}
 
-%--------------------------------------------------
-% 4.a. LNL Model (a)
-%--------------------------------------------------
-\begin{frame}{Linear/Non-Linear Model}
+  \begin{itemize}
+  \item[] Generalized this realization:  
+    \begin{itemize}
+    \item Symmetric Monoidal Adjunction:
+      \begin{center}
+        \begin{tikzpicture}[node distance=0.5cm, auto,]
+          \tiny
+          \node (adjoint) {{\large $\perp$}};
+          \node[punkt,left=of adjoint] (ccc) {Cartesian Closed Category};
+          \node[punkt,right=of adjoint] (smcc) {Symmetric Monoidal Closed Category}
+          edge[<-,bend right=45] node[above] {$F$} (ccc)
+          edge[->,bend left=45] node[auto] {$G$} (ccc);
+        \end{tikzpicture}
+      \end{center}
 
-A symmetric monoidal adjunction $F\dashv G$:
-\begin{itemize}
-\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
-\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
-\end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm, auto,]
-  \tiny
-  \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (ccc) {$\mathcal{C}$: Cartesian Closed Category};
-  \node[punkt,right=of adjoint] (smcc) {$\mathcal{L}$: Symmetric Monoidal Closed Category}
-    edge[<-,bend right=45] node[above] {$F$} (ccc)
-    edge[->,bend left=45] node[auto] {$G$} (ccc);
-\end{tikzpicture}
-\end{center}
-
-\invisible{
-\begin{block}{}
-\begin{itemize}
-\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the CCC: strong and
-      commutative
-\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the SMCC: symmetric
-      monoidal
-\item Of-course modality: $!=FG$
-\end{itemize}
-\end{block}
-}
-
+    \item $!A = FGA$
+    \item[]
+    \item[]
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
+\begin{frame}{Benton's Linear/Non-Linear Logic}
 
-%--------------------------------------------------
-% 4.b. LNL Model (b)
-%--------------------------------------------------
-\begin{frame}{Linear/Non-Linear Model}
-
-A symmetric monoidal adjunction $F\dashv G$:
-\begin{itemize}
-\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
-\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
-\end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm, auto,]
-  \tiny
-  \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (ccc) {$\mathcal{C}$: Cartesian Closed Category};
-  \node[punkt,right=of adjoint] (smcc) {$\mathcal{L}$: Symmetric Monoidal Closed Category}
-    edge[<-,bend right=45] node[above] {$F$} (ccc)
-    edge[->,bend left=45] node[auto] {$G$} (ccc);
-\end{tikzpicture}
-\end{center}
-
-\begin{block}{}
-\begin{itemize}
-\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the CCC: strong and
-      commutative
-\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the SMCC: symmetric
-      monoidal
-\item Of-course modality: $!=FG$
-\end{itemize}
-\end{block}
-
+  \begin{itemize}
+  \item[] Brought this new perspective to the logical side:
+    \begin{itemize}
+    \item Syntactic Symmetric Monoidal Adjunction:
+      \begin{center}
+        \begin{tikzpicture}[node distance=0.5cm, auto,]
+          \tiny
+          \node (adjoint) {{\large $\perp$}};
+          \node[punkt,left=of adjoint] (ccc) {Intuitionistic Logic};
+          \node[punkt,right=of adjoint] (smcc) {Mixed Linear/Non-linear Logic}
+          edge[<-,bend right=45] node[above] {$F$} (ccc)
+          edge[->,bend left=45] node[auto] {$G$} (ccc);
+        \end{tikzpicture}
+      \end{center}
+    \item Mixed Judgment: $\Gamma;\Delta \vdash A$
+    \item[]
+    \item Definable: $!A = FGA$
+    \item[]
+    \item[]
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
-
-%--------------------------------------------------
-% 5.a. CNC Model (a)
-%--------------------------------------------------
-\begin{frame}{Commutative/Non-Commutative (CNC) Model}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm, auto,]
-  \tiny
-  \node (adjoint1) {$\perp$};
-  \node[punkt,left=of adjoint1] (ccc) {Cartesian Closed Category};
-  \node[punkt,right=of adjoint1] (smcc) {Symmetric Monoidal Closed Category}
-    edge[<-,bend right=45] node[above] {$F$} (ccc)
-    edge[->,bend left=45] node[auto] {$G$} (ccc);
-  \node[right=of smcc,cyan] (adjoint2) {$\perp$};
-  \node[punkt,right=of adjoint2,cyan] (lambek) {Lambek Category}
-    edge[<-,bend right=45,cyan] node[above] {$F'$} (smcc)
-    edge[->,bend left=45,cyan] node[auto] {$G'$} (smcc);
-\end{tikzpicture}
-\end{center}
-
+\begin{frame}{Melli\`es's Generalization}
+  \begin{itemize}
+  \item[] General Recipe:
+    \begin{center}
+      \begin{tikzpicture}[node distance=0.5cm, auto,]
+        \tiny
+        \node (adjoint) {{\large $\perp$}};
+        \node[punkt,left=of adjoint] (ccc) {Logic with additional structural rules};
+        \node[punkt,right=of adjoint] (smcc) {Mixed Logic}
+        edge[<-,bend right=45] node[above] {$F$} (ccc)
+        edge[->,bend left=45] node[auto] {$G$} (ccc);
+      \end{tikzpicture}
+    \end{center}
+  \end{itemize}  
 \end{frame}
+
+\begin{frame}{Melli\`es's Generalization}
+  Composing Modalities:
+    \begin{center}
+      \begin{tabular}{cccc}
+        \begin{tikzpicture}[node distance=0.5cm, auto,]
+          \tiny
+          \node (adjoint) {{\large $\perp$}};
+          \node[punkt,left=of adjoint] (ccc) {Logic A + Structural Rule + Structural Rule};
+          \node[punkt,right=of adjoint] (smcc) {Logic A + Structural Rule}
+          edge[<-,bend right=45] node[above] {$F_2$} (ccc)
+          edge[->,bend left=45] node[auto] {$G_2$} (ccc);
+        \end{tikzpicture}
+        &
+        \quad
+        &
+        \begin{tikzpicture}[node distance=0.5cm, auto,]
+          \tiny
+          \node (adjoint) {{\large $\perp$}};
+          \node[punkt,left=of adjoint] (ccc) {Logic A + Structural Rule};
+          \node[punkt,right=of adjoint] (smcc) {Logic A}
+          edge[<-,bend right=45] node[above] {$F_1$} (ccc)
+          edge[->,bend left=45] node[auto] {$G_1$} (ccc);
+        \end{tikzpicture}
+      \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Melli\`es's Generalization}
+  \begin{itemize}
+  \item Composing Modalities:
+    \begin{center}
+      \begin{tikzpicture}[node distance=0.5cm, auto,]
+        \tiny
+        \node (adjoint1) {$\perp$};
+        \node[punkt,left=of adjoint1] (ccc) {Logic A + Structural Rule + Structural Rule};
+        \node[punkt,right=of adjoint1] (smcc) {Logic A + Structural Rule}
+        edge[<-,bend right=45] node[above] {$F_2$} (ccc)
+        edge[->,bend left=45] node[auto] {$G_2$} (ccc);
+        \node[right=of smcc,cyan] (adjoint2) {{\large $\perp$}};
+        \node[punkt,right=of adjoint2,cyan] (lambek) {Logic A}
+        edge[<-,bend right=45,cyan] node[above] {$F_1$} (smcc)
+        edge[->,bend left=45,cyan] node[auto] {$G_1$} (smcc);
+
+        %% \draw [->,red] (ccc) to [out=60,in=120] (lambek) node[above] {A};
+        %% \draw [->,red] (lambek) to [out=-120,in=-60] (ccc);
+      \end{tikzpicture}
+    \end{center}
+
+  \item $!_1A = F_1G_1 A$
+  \item $!_2B = F_2G_2 B$
+  \item $!_3A = F_1F_2G_2G_1A = !_1!_2A$
+  \item[]
+  \item Only considered weakening and contraction
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Melli\`es's Generalization}
+  \begin{block}{Question}
+    What about exchange?
+  \end{block}
+\end{frame}
+
+%% %--------------------------------------------------
+%% % 5.a. CNC Model (a)
+%% %--------------------------------------------------
+%% \begin{frame}{Commutative/Non-Commutative (CNC) Model}
+
+%% \begin{center}
+%% \begin{tikzpicture}[node distance=0.5cm, auto,]
+%%   \tiny
+%%   \node (adjoint1) {$\perp$};
+%%   \node[punkt,left=of adjoint1] (ccc) {Cartesian Closed Category};
+%%   \node[punkt,right=of adjoint1] (smcc) {Symmetric Monoidal Closed Category}
+%%     edge[<-,bend right=45] node[above] {$F$} (ccc)
+%%     edge[->,bend left=45] node[auto] {$G$} (ccc);
+%%   \node[right=of smcc,cyan] (adjoint2) {$\perp$};
+%%   \node[punkt,right=of adjoint2,cyan] (lambek) {Lambek Category}
+%%     edge[<-,bend right=45,cyan] node[above] {$F'$} (smcc)
+%%     edge[->,bend left=45,cyan] node[auto] {$G'$} (smcc);
+%% \end{tikzpicture}
+%% \end{center}
+
+%% \end{frame}
 
 
 %--------------------------------------------------
@@ -231,128 +423,90 @@ A symmetric monoidal adjunction $F\dashv G$:
 %--------------------------------------------------
 \begin{frame}{Commutative/Non-Commutative (CNC) Model}
 
-A monoidal adjunction $F\dashv G$:
-\begin{itemize}
-\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
-\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
-\end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm, auto,]
-  \tiny
-  \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
-  \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
-    edge[<-,bend right=45] node[above] {$F$} (smcc)
-    edge[->,bend left=45] node[auto] {$G$} (smcc);
-\end{tikzpicture}
-\end{center}
-
-\invisible{
-\begin{block}{}
-\begin{itemize}
-\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the SMCC: strong but
-      non-commutative
-\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the Lambek category:
-      monoidal
-\item Exchange: a natural transformation
-      $\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in
-      the co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad \\
-      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal 
-\end{itemize}
-\end{block}
-}
+  \begin{itemize}
+  \item Monoidal Adjunction:
+    \begin{center}
+      \begin{tikzpicture}[node distance=0.5cm, auto,]
+        \tiny
+        \node (adjoint) {$\perp$};
+        \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
+        \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Mixed Lambek Category}
+        edge[<-,bend right=45] node[above] {$F$} (smcc)
+        edge[->,bend left=45] node[auto] {$G$} (smcc);
+      \end{tikzpicture}
+    \end{center}
+    
+  \item Exchange modality: $eA = FGA$
+  \item[]
+  \item Natural transformation: $eA \rhd be \mto^{\mathsf{ex}} eB \rhd eA$
+  \end{itemize}
 
 \end{frame}
 
-
-%--------------------------------------------------
-% 5.c. CNC Model (c)
-%--------------------------------------------------
 \begin{frame}{Commutative/Non-Commutative (CNC) Model}
 
-A monoidal adjunction $F\dashv G$:
-\begin{itemize}
-\item Counit: $\varepsilon:FG\rightarrow id_\mathcal{C}$
-\item Unit: $\eta:id_\mathcal{L}\rightarrow GF$
-\end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm, auto,]
-  \tiny
-  \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
-  \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
-    edge[<-,bend right=45] node[above] {$F$} (smcc)
-    edge[->,bend left=45] node[auto] {$G$} (smcc);
-\end{tikzpicture}
-\end{center}
-
-\begin{block}{}
-\begin{itemize}
-\item Monad $(GF,\eta,\mu=G\varepsilon_F)$ on the SMCC: strong but
-      non-commutative
-\item Comonad $(FG,\varepsilon,\delta=F\eta_G)$ on the Lambek category:
-      monoidal
-\item Exchange: a natural transformation
-      $\mathrm{ex}^{FG}:A\triangleright B\rightarrow B\triangleright A$ in
-      the co-Eilenberg-Moore category $\mathcal{L}^{FG}$ of the comonad \\
-      $\Rightarrow$: $\mathcal{L}^{FG}$ is symmetric monoidal 
-\end{itemize}
-\end{block}
-
+  \begin{itemize}
+  \item Benton and Wadler ask, is it possible to model non-commutative
+    monads using adjoint models similar to LNL models?
+  \item[]
+  \item Yes!
+    \begin{lemma}
+      \label{lemma:non-com-CNC}
+      The monad induced by a CNC model is non-commutative.
+    \end{lemma}
+  \item[]
+  \item[]
+  \item[]
+  \end{itemize}  
 \end{frame}
-
 
 %--------------------------------------------------
 % 6. CNC Logic
 %--------------------------------------------------
-\begin{frame}{CNC Logic}
+\begin{frame}{Commutative/Non-Commutative (CNC) Logic}
 
 \begin{itemize}
-\item Left: intuitionistic linear logic
-\item Right: mixed commutative/non-commutative Lambek calculus
+\item Syntactic Monoidal Adjunction:
+  
+  \begin{center}
+    \begin{tikzpicture}[node distance=0.5cm, auto,]
+      \tiny
+      \node (adjoint) {$\perp$};
+      \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Linear Logic};
+      \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Mixed Lambek Calculus}
+      edge[<-,bend right=45] node[above] {$F$} (smcc)
+      edge[->,bend left=45] node[auto] {$G$} (smcc);
+      \scriptsize
+    \end{tikzpicture}
+  \end{center}
+
+\item Linear Logic: $[[I |-c t : X]]$
+\item[]
+\item Mixed Lambek Calculus: $[[G |-l s : A]]$
+  \begin{itemize}
+  \item $\Gamma$ is a mixed context
+  \end{itemize}
 \end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm, auto,]
-  \tiny
-  \node (adjoint) {$\perp$};
-  \node[punkt,left=of adjoint] (smcc) {$\mathcal{C}$: Symmetric Monoidal Closed Category};
-  \node[punkt,right=of adjoint] (lambek) {$\mathcal{L}$: Lambek Category}
-    edge[<-,bend right=45] node[above] {$F$} (smcc)
-    edge[->,bend left=45] node[auto] {$G$} (smcc);
-  \scriptsize
-\end{tikzpicture}
-\end{center}
-
 \end{frame}
 
-%--------------------------------------------------
-% 7. CNC Logic: Notation
-%--------------------------------------------------
-\begin{frame}{CNC Logic: Notation}
-
-\begin{columns}
-\column{0.47\textwidth}
-  \centerline{\textbf{Intuitionistic Linear Logic}}
-
-  $\mathcal{C}$-Types: $W$, $X$, $Y$, $Z$ \\
-  $\mathcal{C}$-Terms: $t$ \\
-  $\mathcal{C}$-Contexts: $\Phi$, $\Psi$ \\
-  $\mathcal{C}$-Typing Judgment: $\Phi,\Psi \vdash_\mathcal{C} t:X$
-
-\column{0.47\textwidth}
-  \centerline{\textbf{Lambek Calculus}}
-
-  $\mathcal{L}$-Types: $A$, $B$, $C$, $D$ \\
-  $\mathcal{L}$-Terms: $s$ \\
-  $\mathcal{L}$-Contexts: $\Gamma$, $\Delta$ \\
-  $\mathcal{L}$-Typing Judgment: $\Gamma;\Delta \vdash_\mathcal{L} s:A$
-\end{columns}
-
+\begin{frame}{Commutative/Non-Commutative (CNC) Logic}
+  \begin{itemize}
+  \item LNL Logic: $\Gamma;\Delta \vdash_{\mathcal{L}} t : A$
+    \begin{itemize}
+    \item $\Gamma$ - Non-linear formulas
+    \item $\Delta$ - linear formulas
+    \item $\Gamma;\Delta$ is a presentational device and works because of exchange
+    \item $\Gamma;\Delta$ should be thought of as completely mixed
+    \end{itemize}
+  \item[]
+  \item CNC Logic: $[[G |-l s : A]]$
+    \begin{itemize}
+    \item $\Gamma$ contains both commutative and non-commutative hypothesis that are syntacticly distinguished
+    \end{itemize}
+  \item[]
+  \item[]
+  \end{itemize}
 \end{frame}
-
 
 %--------------------------------------------------
 % 8.a. CNC Logic: Example Typing Rules (a)
@@ -500,6 +654,88 @@ Functor rules for $\mathsf{F}$:
 
 \end{frame}
 
+\begin{frame}{Dialectica Model}  
+  \begin{itemize}
+  \item Dialectica categories were invented by Valeria de Paiva when Hyland and her were studying a categorification of G\"odel's Dialectica interpretation
+  \item[]
+  \item They are a sound and complete model for full intuitionistic linear logic
+  \item[]
+  \item It's possible to model CNC logic as a dialectica category
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Dialectica Model}
+  \begin{definition}
+  \label{def:dialectica-lambek-spaces}
+  Suppose $(M, \leq, \circ, e, \lto, \rto,xi)$ is a biclosed poset with exchange. Then
+  we define the category of \textbf{dialectica Lambek spaces},
+  $\mathsf{Dial}_M(\Set)$, as follows:
+  \begin{itemize}
+  \item[-] objects, or dialectica Lambek spaces, are triples $(U, X,
+    \alpha)$ where $U$ and $X$ are sets, and $\alpha : U \times X \mto
+    M$ is a generalized relation over $M$, and
+
+  \item[-] maps that are pairs $(f, F) : (U , X, \alpha) \mto (V , Y ,
+    \beta)$ where $f : U \mto V$, and $F : Y \mto X$ are functions
+    such that the weak adjointness condition
+    $\forall u \in U.\forall y \in Y. \alpha(u , F(y)) \leq \beta(f(u), y)$
+    holds.
+  \end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}{Dialectica Model}
+  \begin{definition}
+  \label{def:biclosed-exchange}
+  A \textbf{biclosed poset with exchange} is a biclosed poset $(M,
+  \leq, \circ, e, \lto, \rto)$ equipped with an unary operation
+  $\xi : M \to M$ satisfying the following:
+  \[ \small
+  \setlength{\arraycolsep}{4px}
+  \begin{array}{lll}
+    \begin{array}{lll}
+    \text{(Compatibility)} & a \leq b \text{ implies } \xi a \leq \xi b \text{ for all } a,b,c \in M\\    
+  \end{array}
+  \\\\
+  \begin{array}{lll}
+    \text{(Minimality)} & \xi a \leq a \text{ for all } a \in M\\    
+    \text{(Duplication)} & \xi a \leq \xi\xi a \text{ for all } a \in M\\
+  \end{array}
+  \\\\
+  \begin{array}{lll}
+    \text{(Exchange)} & (\xi a \circ \xi b) \leq (\xi b \circ \xi a) \text{ for all } a, b \in M\\
+  \end{array}
+  \end{array}
+  \]
+\end{definition}
+\end{frame}
+
+\begin{frame}{Dialectica Model}
+  \begin{itemize}
+  \item[] Properties:
+    \begin{itemize}
+    \item Monoidal Closed with both implications
+    \item Has both of-course and exchange modalities:
+      \begin{definition}
+        \label{def:modalities-dial}
+        Suppose $(U, X, \alpha)$ is an object of $\Dial{M}{\Set}$ where $M$
+        is a biclosed poset with exchange. Then the \textbf{of-course} and
+        \textbf{exchange} modalities can be defined as:
+        \begin{center}
+            \begin{tabular}{lll}
+              $! (U, X, \alpha) = (U, U \rightarrow X^*, !\alpha)$\\
+              \\
+              $\xi (U, X, \alpha) = (U, X, \xi \alpha)$              
+            \end{tabular}
+        \end{center}
+        where $X^*$ is the free commutative monoid on $X$, $(!\alpha)(u, f)
+              = \alpha(u, x_1) \circ \cdots \circ \alpha(u, x_i)$ for $f(u) =
+              (x_1, \ldots, x_i)$, and $(\xi \alpha)(u, x) = \xi (\alpha(u,
+              x))$
+      \end{definition}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 
 %--------------------------------------------------
 % 10. Conclusion
