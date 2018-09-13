@@ -1,0 +1,62 @@
+# Linearity Paper Final Version Revision
+
+May 22, 2018
+
+## -------------------- Review 1 --------------------
+PAPER: 3
+TITLE: On the Lambek Calculus with an Exchange Modality AUTHORS: Jiaming Jiang, Harley Eades Iii and Valeria de Paiva
+Overall evaluation: 1 (weak accept)
+----------- Overall evaluation -----------
+This paper introduces a type system for (non-symmetric) monoidal adjunctions between a symmetric monoidal closed category and a monoidal bi-closed category called CNC logic. It can be considered as a variant of Benton's LNL logic for symmetric monoidal adjunctions between a cartesian closed category and a symmetric monoidal closed category.
+This paper is in general clearly written and should be easy to follow for readers familiar with the categorical models of linear logic. I did not check the detail
+of CNC logic (largely because there is no information on its equational or rewriting theory). However, since it is based on well-established categorical structures, I believe that there should be no substantial errors.
+My knowledge on the Lambek Calculus is rather limited, but I think that having a good categorical semantics and type system for Lambek Calculus should be useful and makes a good case of technology-transfer from Linear Logic to the Lambek Calculus. Thus I recommend acceptance.
+- Lemma 7:
+I think that this result was already in Kock's 1970 original paper.
+- Corollary 11:
+I think that the statement of this corollary is wrong. As Benton (and many other people) points out, the category of coalgebras of a linear exponential comonad on a symmetric monoidal closed category does not have to be cartesian closed (and we should take some subcategory instead). The same applies to the setting of this paper.
+- Theorem 18:
+I am not sure what "a complete moel" means - completeness w.r.t. derivablity or w.r.t. equational theory? (It seems that the same question applies to
+[8].)
+- Section 4:
+I agree that the Dialectica categories developped here are interesting,
+but also wonder if some much easier models could also do the good job without
+much technical complication.
+For instance, starting with a strong monoidal functor F:C->D from a symmetric monoidal category C to a monoidal category D, the monoidal cocompletion (i.e. taking the presheaf categories) immediately gives an LAM [C^op,Set] -> [D^op.Set], thus
+a sound model of CNC logic.
+- A work which might be related to this paper is
+Masahito Hasegawa:
+Linear Exponential Comonads without Symmetry. LINEARITY 2016: 54-63
+where the author axiomatizes comonads corresponding to monoidal adjunctions between a cartesian category and a monoidal category. It might be interesting
+to do the same for LAM (which should be something like "linear exchange comonads").
+- On the direction of arrows:
+It seems that the direction of arrow types is not in harmony with the standard Lambek Calculus nor with the usual convention for internal homs in monoidal bi-closed categories. Is there any reason for this choice?
+
+### Response to Review 1:
+* Will add the reference by Hasegawa. 
+* Lemma 7
+Only found half of it is in Kock's 1970 paper. The full if and only if version is in Kock's 1972 paper.
+As said at the beginning of the 1972 paper: "In [4] (i.e., *Monads on Symmetric Monoidal Closed Categories*) we proved that a commutative monad on a symmetric monoidal closed category carries the structure of a symmetric monoidal monad ([4], Theorem 3.2). We here prove the converse, so that, taken together, we have: there is a 1-1 correspondence between commutative monads and symmetric monoidal monads (Theorem 2.3 below)."
+**Have added the reference and changed the citation for Lemma 7.**
+* Corollary 11
+The reviewer thought we were trying to prove that it is cartesian closed.
+The reviewer writes "As Benton (and many other people) points out, the category of coalgebras of a linear exponential comonad on a symmetric monoidal closed category does not have to be cartesian closed (and we should take some subcategory instead)."
+**Didn't change anything**
+* Theorem 18
+The reviewer is not sure what "complete" means.
+**Added "(w.r.t. derivability and quational theory)"**
+* Direction of Arrows
+Not sure why the reviewer thinks the direction of arrows is wrong. Wikipedia on closed monoidal category uses $\Rightarrow$ for right adjoint and $\Leftarrow$ for left adjoint. The original Lambek paper uses \ and /. The page on closed monoidal cateogry in nLab (https://ncatlab.org/nlab/show/closed+monoidal+category) uses square brackets, i.e., $[b,c]$ for $b\Rightarrow c$.
+**Didn't change anything**
+
+
+## ----------------------- Review 2 ---------------------
+PAPER: 3
+TITLE: On the Lambek Calculus with an Exchange Modality AUTHORS: Jiaming Jiang, Harley Eades Iii and Valeria de Paiva
+Overall evaluation: 2 (accept)
+----------- Overall evaluation -----------
+The paper seems as a good contribution to the development of the research in Lambek Calculus and its extensions and in Non Commutative Linear Logic. The results seem accurate and well presented. The authors have a very good experience in this field. It would be interesting to compare this work with Non Commutative Logic introduced by Abrusci and Ruet.
+
+### Response to Review 2
+* Reference by Abrusci and Ruet:
+**Will add the reference.**

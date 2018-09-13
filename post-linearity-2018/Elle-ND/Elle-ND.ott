@@ -1,0 +1,463 @@
+% Input variables.
+metavar vars ,  n , a, x , y, z , w , m , o ::=  
+indexvar ivar, i , k , j , l ::=
+metavar const, b ::= 
+
+grammar
+
+
+% Lambek category:
+A, B, C, DT {{tex D }} :: 'lform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | UnitS   ::   :: UnitS
+  {{tex \mathsf{Unit} }}
+  | A (>) B ::   :: Lambek
+  | A -> B  ::   :: RFun          
+  | A <- B  ::   :: LFun          
+  | ( A )   :: M :: Parens 
+  | h( A )  :: M :: HiddenParens 
+  {{ tex [[A]] }}
+  | F X     ::   :: LeftAdj
+  {{tex \mathsf{F}[[X]] }}
+
+% Symmetric monoidal closed category:
+W, X, Y, Z :: 'sform_' ::=
+  | Base    ::   :: Base          
+  {{tex \mathsf{B} }}
+  | UnitT   ::   :: UnitT
+  {{tex \mathsf{Unit} }}
+  | X (*) Y ::   :: Tensor        
+  | X -o Y  ::   :: Fun          
+  | ( X )   :: M :: Parens 
+  | h( X )  :: M :: HiddenParens 
+  {{ tex [[X]] }}
+  | Gf A     ::   :: RightAdj
+  {{tex \mathsf{G}[[A]] }}
+
+T :: 'type_' ::=
+  | A :: :: LType
+  | X :: :: SType
+
+p , q :: 'pattern_' ::=
+  | - :: :: hole
+  {{tex \star }}
+  | x :: :: var
+  | trivTp :: :: trivT
+  {{tex \mathsf{triv} }}
+  | trivSp :: :: trivS
+  {{tex \mathsf{triv} }}
+  | p (*) p' :: :: ten
+  | p (>) p' :: :: lambek
+  | F p :: :: LeftAdj
+  {{tex \mathsf{F}\,[[p]] }}
+  | Gf p     ::   :: RightAdj
+  {{tex \mathsf{G}\,[[p]] }}
+
+s :: 'term_' ::=
+  | x :: :: Var
+  | b :: :: Const
+  | trivS :: :: UnitS
+  {{tex \mathsf{triv} }}
+  | let s1 : A be p in s2 :: :: let1
+  {{tex \mathsf{let}\,[[s1]] : [[A]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
+  | let t : X be p in s :: :: let2
+  {{tex \mathsf{let}\,[[t]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s]] }}
+  | s1 (>) s2 :: :: Tensor
+  | \l x : A . s :: :: LFun
+  {{tex \lambda_l [[x]] : [[A]].[[s]] }}
+  | \r x : A . s :: :: RFun
+  {{tex \lambda_r [[x]] : [[A]].[[s]] }}
+  | appl s1 s2   :: :: Appl
+  {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
+  | appr s1 s2   :: :: Appr
+  {{tex \mathsf{app}_r\,[[s1]]\,[[s2]] }}  
+  | derelict t :: :: Derelict
+  {{tex \mathsf{derelict}\,[[t]] }}
+  | ex s1 , s2 with x1 , x2 in s3 :: :: Ex
+  {{tex \mathsf{ex}\,[[s1]],[[s2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[s3]] }}
+  | [ s1 / x ] s2 :: M :: Subst
+  | [ t / x ] s   :: M :: Subst2
+  | ( s )         :: S :: parens
+  | h( s )        :: M :: hparen
+  {{tex [[s]] }}
+  | F t           ::   :: LeftAdj
+  {{tex \mathsf{F}[[t]] }}
+
+t :: 'sterm_' ::=
+  | x :: :: Var
+  | b :: :: Const
+  | trivT :: :: UnitT
+  {{tex \mathsf{triv} }}
+  | let t1 : X be p in t2 :: :: let
+  {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
+  | t1 (*) t2 :: :: Tensor
+  | \ x : X . t :: :: Fun
+  {{tex \lambda [[x]] : [[X]].[[t]] }}  
+  | t1 t2   :: :: App
+  {{tex [[t1]] [[t2]] }}  
+  | ex t1 , t2 with x1 , x2 in t3 :: :: Ex
+  {{tex \mathsf{ex}\,[[t1]],[[t2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[t3]] }}
+  | [ t1 / x ] t2 :: M :: Subst
+  | ( t )         :: S :: parens
+  | h( t )        :: M :: hparen
+  | Gf s           ::   :: RightAdj
+  {{tex \mathsf{G}\,[[s]] }}
+
+I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | I1 , I2 ::   :: Ext
+  | x : X   ::   :: ElC
+  | ( I )   :: S :: Paren
+
+G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
+  | .       ::   :: Empty
+  {{tex \cdot }}
+  | x : A   ::   :: El
+  | I       ::   :: CCtx
+  | G1 ; G2 ::   :: Ext
+  | ( G )   :: S :: Paren
+
+formula :: 'formula_' ::=
+  | judgement            ::   :: judgement
+  | formula1 && formula2 :: M :: quad
+  {{tex [[formula1]] \quad [[formula2]] }}
+  | formula1 ... formulai :: M :: vec
+  | ( formula )          :: S :: parens
+  {{tex [[formula]] }}
+  | x nin FV ( s ) :: :: FV
+  {{tex [[x]] \not\in \mathsf{FV}([[s]]) }}
+  | x nin1 | G , D , P | :: :: NiNCtx1
+  {{tex [[x]] \not\in | [[G]], [[D]], [[P]] | }}
+  | x nin2 | G , D |     :: :: NiNCtx2
+  {{tex [[x]] \not\in | [[G]], [[D]] | }}
+
+terminals :: 'terminals_' ::=
+  | (*)  :: :: Tensor
+  {{tex \otimes }}
+  | (>)  :: :: Lambek
+  {{tex \triangleright }}
+  | (e)  :: :: ETensor
+  {{tex \circop{e} }}  
+  | (w)  :: :: WTensor
+  {{tex \circop{w} }}  
+  | (c)  :: :: CTensor
+  {{tex \circop{c} }}
+  | ->   :: :: LFun
+  {{tex \rightharpoonup }}
+  | <-   :: :: RFun
+  {{tex \leftharpoonup }}
+  | -o   :: :: Limp
+  {{tex \multimap }}
+  | |-c   :: :: VdashC
+  {{tex \vdash_\mathcal{C} }}
+  | |-l   :: :: VdashL
+  {{tex \vdash_\mathcal{L} }}
+  | ~>   :: :: To
+  {{tex \leadsto_\beta }}
+  | ~~   :: :: Commute
+  {{tex \leadsto_\mathsf{c} }}
+ 
+defns
+  Jtype :: '' ::=
+
+defn
+  I |-c t : X :: :: tty :: 'T_'
+by 
+
+  --------------- :: id
+  x : X |-c x : X
+
+  ------------------- :: unitI
+  . |-c trivT : UnitT
+
+  I |-c t1 : UnitT && P |-c t2 : Y
+  ------------------------------------------ :: unitE
+  I, P |-c let t1 : UnitT be trivTp in t2 : Y
+
+  I |-c t1 : X && P |-c t2 : Y
+  ---------------------------- :: tenI
+  I, P |-c t1 (*) t2 : X (*) Y  
+
+  I |-c t1 : X (*) Y && P1, x : X, y : Y, P2 |-c t2 : Z
+  ----------------------------------------------------- :: tenE
+  P1, I, P2 |-c let t1 : X (*) Y be x (*) y in t2 : Z
+
+  I, x : X |-c t : Y
+  ---------------------- :: impI
+  I |-c \ x:X.t : X -o Y
+  
+  I |-c t1 : X -o Y && P |-c t2 : X
+  --------------------------------- :: impE
+  I, P |-c t1 t2 : Y
+
+  I |-l s : A
+  ----------------- :: GI
+  I |-c Gf s : Gf A
+  
+  I, x : X, y : Y, P |-c t : Z 
+  ------------------------------------------------ :: beta
+  I, z : Y, w : X, P |-c ex w, z with x, y in t : Z
+
+  I |-c t1 : X && P1, x : X, P2 |-c t2 : Y
+  --------------------------------------- :: cut
+  P1, I, P2 |-c [t1/x]t2 : Y
+
+defn
+  G |-l s : A :: :: sty :: 'S_'
+by
+
+  --------------- :: id
+  x : A |-l x : A
+
+  ------------------- :: unitI
+  . |-l trivS : UnitS
+
+  I |-c t : UnitT && G |-l s : A
+  ---------------------------------------- :: unitE1
+  I;G |-l let t : UnitT be trivTp in s : A
+
+  G |-l s1 : UnitS && D |-l s2 : A
+  ------------------------------------------ :: unitE2
+  G;D |-l let s1 : UnitS be trivSp in s2 : A
+
+  G |-l s1 : A && D |-l s2 : B
+  ---------------------------- :: tenI
+  G;D |-l s1 (>) s2 : A (>) B
+
+  I |-c t : X (*) Y && G1;x : X;y : Y;G2 |-l s : A
+  ------------------------------------------------ :: tenE1
+  G1;I;G2 |-l let t : X (*) Y be x (*) y in s : A
+
+  G |-l s1 : A (>) B && D1;x : A;y : B;D2 |-l s2 : C
+  ---------------------------------------------------- :: tenE2
+  D1;G;D2  |-l let s1 : A (>) B be x (>) y in s2 : C
+
+  G;x : A |-l s : B
+  ----------------------- :: imprI
+  G |-l \r x:A.s : A -> B
+
+  G |-l s1 : A -> B && D |-l s2 : A
+  --------------------------------- :: imprE
+  G;D |-l appr s1 s2 : B
+
+  x : A;G |-l s : B
+  ----------------------- :: implI
+  G |-l \l x:A.s : B <- A
+
+  G |-l s1 : B <- A && D |-l s2 : A
+  --------------------------------- :: implE
+  D;G |-l appl s1 s2 : B
+
+  I |-c t : X
+  --------------- :: FI
+  I |-l F t : F X
+
+  G |-l s1 : F X && D1;x : X;D2 |-l s2 : A
+  ------------------------------------------- :: FE
+  D1;G;D2 |-l let s1 : F X be F x in s2 : A
+
+  I |-c t : Gf A
+  -------------------- :: GE
+  I |-l derelict t : A
+
+  G;x : X;y : Y;D |-l s : A
+  ----------------------------------------------- :: beta
+  G;z : Y;w : X;D |-l ex w,z with x,y in s : A
+
+  I |-c t : X && G1;x : X;G2 |-l s : A
+  -------------------------------------- :: cut1
+  G1;I;G1 |-l [t/x]s : A
+
+  G |-l s1 : A && D1;x : A;D2 |-l s2 : B
+  ---------------------------------------- :: cut2
+  D1;G;D2 |-l [s1/x]s2 : B
+
+
+
+defns
+  Reduction :: '' ::=
+
+defn
+  t1 ~> t2 :: :: tred :: 'Tbeta_'
+by 
+
+  ------------------------------------ :: letU
+  let trivT : UnitT be trivTp in t ~> t
+
+  ---------------------------------------------------------- :: letT
+  let t1 (*) t2 : X (*) Y be x (*) y in t3 ~> [t1/x][t2/y]t3
+
+  ------------------------- :: lam
+  (\ x:X.t1) t2 ~> [t2/x]t1
+
+  t1 ~> t1'
+  ----------------------- :: app1
+  t1 t2 ~> t1' t2
+
+  t2 ~> t2'
+  ----------------------- :: app2
+  t1 t2 ~> t1 t2'
+
+  -------------------------------------------------------------- :: appLet
+  (let t : X be p in t1) t2 ~> let t : X be p in (t1 t2)
+
+  ---------------------------------------------------------------------------------------------- :: letLet
+  let (let t2 : X be p1 in t1) : Y be p2 in t3 ~> let t2 : X be p1 in let t1 : Y be p2 in t3
+
+  ------------------------------------------------------------------------------------- :: letApp
+  let t1 : X be p in (t1 t2) ~> (let t1 : X be p in t1) (let t1 : X be p in t2)
+
+defn
+  s1 ~> s2 :: :: sred :: 'Sbeta_'
+by 
+
+  ------------------------------------ :: letU1
+  let trivS : UnitS be trivSp in s ~> s
+
+  -------------------------------------------------------- :: letT1
+  let t1 (*) t2 : X (*) Y be x (>) y in s ~> [t1/x][t2/y]s
+
+  ---------------------------------------------------------- :: letT2
+  let s1 (>) s2 : A (>) B be x (>) y in s3 ~> [s1/x][s2/y]s3
+
+  ----------------------------------- :: letF
+  let F t : F X be F x in s ~> [t/x]s
+
+  ------------------------------- :: lamL
+  appl (\l x:A.s1) s2 ~> [s2/x]s1
+
+  ------------------------------- :: lamR
+  appr (\r x:A.s1) s2 ~> [s2/x]s1
+  
+  s1 ~> s1'
+  ------------------------- :: appl1
+  appl s1 s2 ~> appl s1' s2
+
+  s2 ~> s2'
+  ------------------------- :: appl2
+  appl s1 s2 ~> appl s1 s2'
+
+  s1 ~> s1'
+  ------------------------- :: appr1
+  appr s1 s2 ~> appr s1' s2
+
+  s2 ~> s2'
+  ------------------------- :: appr2
+  appr s1 s2 ~> appr s1 s2'
+
+  -------------------- :: derelict
+  derelict (Gf s) ~> s
+
+  ---------------------------------------------------------------- :: applLet
+  appl (let s : A be p in s1) s2 ~> let s : A be p in (appl s1 s2)
+
+  ---------------------------------------------------------------- :: apprLet
+  appr (let s : A be p in s1) s2 ~> let s : A be p in (appr s1 s2)
+
+  ---------------------------------------------------------------------------------------------- :: letLet
+  let (let s2 : A be p1 in s1) : B be p2 in s3 ~> let s2 : A be p1 in let s1 : B be p2 in s3
+
+  -------------------------------------------------------------------------------------- :: letAppl
+  let s1 : A be p in (appl s1 s2) ~> appl (let s1 : A be p in s1) (let s1 : A be p in s2)
+
+  --------------------------------------------------------------------------------------- :: letAppr
+  let s1 : A be p in (appr s1 s2) ~> appr (let s1 : A be p in s1) (let s1 : A be p in s2)
+
+
+
+defns
+  Commuting :: '' ::=
+
+defn
+  t1 ~~ t2 :: :: tcom :: 'Tcom_'
+by 
+  
+  --------------------------------------------------------------------------------------------------------------------------- :: unitE_unitE
+  let (let t2 : UnitT be trivTp in t1) : UnitT be trivTp in t3 ~~ let t2 : UnitT be trivTp in (let t1 : UnitT be trivTp in t3)
+  
+  --------------------------------------------------------------------------------------------------------------------------------- :: unitE_tenE
+  let (let t2 : UnitT be trivTp in t1) : X (*) Y be x (*) y in t3 ~~ let t2 : UnitT be trivTp in (let t1 : X (*) Y be x (*) y in t3)
+
+  -------------------------------------------------------------------------- :: unitE_impE
+  (let t2 : UnitT be trivTp in t1) t3 ~~ let t2 : UnitT be trivTp in (t1 t3)
+
+  ---------------------------------------------------------------------------------------------------------------------------------- :: tenE_unitE
+  let (let t2 : X (*) Y be x (*) y in t1) : UnitT be trivTp in t3 ~~ let t2 : X (*) Y be x (*) y in (let t1 : UnitT be trivTp in t3)
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------ :: tenE_tenE
+  let (let t2 : X2 (*) Y2 be x (*) y in t1) : X1 (*) Y1 be w (*) z in t3 ~~ let t2 : X2 (*) Y2 be x (*) y in (let t1 : X1 (*) Y1 be w (*) z in t3)
+
+  ------------------------------------------------------------------------------------- :: tenE_impE
+  (let t2 : X2 (*) Y2 be x (*) y in t1) t3 ~~ let t2 : X2 (*) Y2 be x (*) y in (t1 t3)
+  
+  -------------------------------------------------------------------------- :: impE_unitE
+  let (t1 t2) : UnitT be trivTp in t3 ~~ t1 (let t2 : UnitT be trivTp in t3)
+
+defn
+  s1 ~~ s2 :: :: scom :: 'Scom_'
+by 
+  
+  --------------------------------------------------------------------------------------------------------------------------- :: unitE_unitE
+  let (let s2 : UnitS be trivSp in s1) : UnitS be trivSp in s3 ~~ let s2 : UnitS be trivSp in (let s1 : UnitS be trivSp in s3)
+  
+  --------------------------------------------------------------------------------------------------------------------------- :: unitE2_unitE
+  let (let t : UnitT be trivTp in s1) : UnitS be trivSp in s2 ~~ let t : UnitT be trivTp in (let s1 : UnitS be trivSp in s2)
+
+  ------------------------------------------------------------------------------------ :: unitE_imprE
+  appr (let s2 : UnitS be trivSp in s1) s3 ~~ let s2 : UnitS be trivSp in (appr s1 s3)
+
+  ------------------------------------------------------------------------------------ :: unitE2_imprE
+  appr (let t : UnitT be trivTp in s1) s2 ~~ let t : UnitT be trivTp in (appr s1 s2)
+
+  ------------------------------------------------------------------------------------------------------------------ :: unitE_FE
+  let (let s2 : UnitS be trivSp in s1) : F X be F x in s3 ~~ let s2 : UnitS be trivSp in (let s1 : F X be F x in s3)
+
+  ------------------------------------------------------------------------------------------------------------------ :: unitE2_FE
+  let (let t : UnitT be trivTp in s1) : F X be F x in s2 ~~ let t : UnitT be trivTp in (let s1 : F X be F x in s2)
+
+  ---------------------------------------------------------------------------------------------------------------------------------- :: tenE_unitE
+  let (let s2 : A (>) B be x (>) y in s1) : UnitS be trivSp in s3 ~~ let s2 : A (>) B be x (>) y in (let s1 : UnitS be trivSp in s3)
+
+  ---------------------------------------------------------------------------------------------------------------------------------- :: tenE2_unitE
+  let (let t : X (*) Y be x (*) y in s1) : UnitS be trivSp in s2 ~~ let t : X (*) Y be x (*) y in (let s1 : UnitS be trivSp in s2)
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------ :: tenE_tenE
+  let (let s2 : A2 (>) B2 be x (>) y in s1) : A1 (>) B1 be w (>) z in s3 ~~ let s2 : A2 (>) B2 be x (>) y in (let s1 : A1 (>) B1 be w (>) z in s3)
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------ :: tenE2_tenE
+  let (let t : X (*) Y be x (*) y in s1) : A1 (>) B1 be w (>) z in s2 ~~ let t : X (*) Y be x (*) y in (let s1 : A1 (>) B1 be w (>) z in s2)
+
+  ---------------------------------------------------------------------------------------------- :: tenE_imprE
+  appr (let s2 : A2 (>) B2 be x (>) y in s1) s3 ~~ let s2 : A2 (>) B2 be x (>) y in (appr s1 s3)
+
+  ---------------------------------------------------------------------------------------------- :: tenE2_imprE
+  appr (let t : X (*) Y be x (*) y in s1) s2 ~~ let t : X (*) Y be x (*) y in (appr s1 s2)
+
+  ---------------------------------------------------------------------------------------------- :: tenE_implE
+  appl (let s2 : A2 (>) B2 be x (>) y in s1) s3 ~~ let s2 : A2 (>) B2 be x (>) y in (appl s1 s3)
+
+  ---------------------------------------------------------------------------------------------- :: tenE2_implE
+  appl (let t : X (*) Y be x (*) y in s1) s2 ~~ let t : X (*) Y be x (*) y in (appl s1 s2)
+
+  ------------------------------------------------------------------------------------------------------------------------ :: tenE_FE
+  let (let s2 : A (>) B be x (>) y in s1) : F X be F z in s3 ~~ let s2 : A (>) B be x (>) y in (let s1 : F X be F z in s3)
+
+  ---------------------------------------------------------------------------------------------------------------------- :: tenE2_FE
+  let (let t : X (*) Y be x (*) y in s1) : F Z be F z in s3 ~~ let t : X (*) Y be x (*) y in (let s1 : F Z be F z in s3)
+
+  ------------------------------------------------------------------------------------------------------------------ :: FE_unitE
+  let (let s2 : F X be F x in s1) : UnitS be trivSp in s3 ~~ let s2 : F X be F x in (let s1 : UnitS be trivSp in s2)
+
+  ------------------------------------------------------------------------------------------------------------------------ :: FE_tenE
+  let (let s2 : F X be F x in s1) : A (>) B be x (>) y in s3 ~~ let s2 : F X be F x in (let s1 : A (>) B be x (>) y in s3)
+
+  ------------------------------------------------------------------------- :: FE_imprE
+  appr (let s2 : F X be F x in s1) s3 ~~ let s2 : F X be F x in (appr s1 s3)
+
+  ------------------------------------------------------------------------- :: FE_implE
+  appl (let s2 : F X be F x in s1) s3 ~~ let s2 : F X be F x in (appl s1 s3)
+
+  -------------------------------------------------------------------------------------------------------- :: FE_FE
+  let (let s2 : F X be F x in s1) : F Y be F y in s3 ~~ let s2 : F X be F x in (let s1 : F Y be F y in s3)
