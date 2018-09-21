@@ -41,7 +41,7 @@ logic-output.tex : logic.tex Elle-ND/Elle-ND.ott Elle/Elle.ott Elle-to-LNL-inc.t
 	@$(OTT) $(OTT_FLAGS) -i Elle/Elle.ott -o Elle-output.tex -tex_name_prefix Elle \
 		-tex_filter logic-output1.tex logic-output.tex
 
-LAM-output.tex : LAM/LAM.ott LAM.tex
+LAM-output.tex : Elle-ND/Elle-ND.ott LAM.tex
 	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
 		-tex_filter LAM.tex LAM-output.tex	
 
