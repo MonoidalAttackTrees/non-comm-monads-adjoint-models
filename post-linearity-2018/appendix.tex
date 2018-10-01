@@ -970,6 +970,8 @@ $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |[[B <
   \end{math}
 \end{center}
 
+
+
 \subsubsection{The Commutative Unit $[[UnitT]]$}
 \begin{itemize}
 \item Case 1:
@@ -990,10 +992,10 @@ $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |[[B <
             {
               \begin{array}{c}
                 \pi \\
-                {[[I |-c X]]}
+                {[[I, P |-c X]]}
               \end{array}
             }
-          }{[[UnitT, I |-c X]]}
+          }{[[I, UnitT, P |-c X]]}
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |[[UnitT]]|$. The proof $\Pi$
@@ -1018,10 +1020,10 @@ $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |[[B <
             {
               \begin{array}{c}
                 \pi \\
-                {[[G |-l A]]}
+                {[[G; D |-l A]]}
               \end{array}
             }
-          }{[[UnitT; G |-l A]]}
+          }{[[G; UnitT; D |-l A]]}
         \end{math}
       \end{center}
       Similar as above, $\Pi$ is $\pi$.
@@ -1046,14 +1048,14 @@ $c(\Pi)\leq max\{c(\pi_1),c(\pi_2),c(\pi_3),|A|+1,|B|+1\}\leq |A|+|B|+1 = |[[B <
       {
         \begin{array}{c}
           \pi \\
-          {[[D |-l A]]}
+          {[[G; D |-l A]]}
         \end{array}
       }
-    }{[[UnitS; D |-l A]]}
+    }{[[G; UnitS; D |-l A]]}
   \end{math}
 \end{center}
-By assumption, $c(\Pi_1),c(\Pi_2)\leq |[[UnitS]]|$. The proof $\Pi$
-is the subproof $\pi$ in $\Pi_2$ for sequent $[[D |-l A]]$. So
+By assumption, $c(\Pi_1),c(\Pi_2)\leq |[[UnitS]]|$. The proof $\Pi$ is the
+subproof $\pi$ in $\Pi_2$ for sequent $[[D |-l A]]$. So
 $c(\Pi)=c(\Pi_2)\leq |[[UnitS]]|$.
 
 \subsubsection{The Functor $F$}
@@ -1692,7 +1694,7 @@ $c(\Pi)\leq |B|$.
 
 \subsubsection{Left introduction of the commutative unit $[[UnitT]]$}
 \begin{itemize}
-\item Case 1 (Does not work):
+\item Case 1:
       \begin{center}
         \scriptsize
         $\Pi_1$:
@@ -1702,10 +1704,10 @@ $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[I |-c X]]}
+                {[[I1, I2 |-c X]]}
               \end{array}
             }
-          }{[[UnitT, I |-c X]]}
+          }{[[I1, UnitT, I2 |-c X]]}
         \end{math}
         \qquad\qquad
         \begin{math}
@@ -1716,28 +1718,26 @@ $c(\Pi)\leq |B|$.
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction, there is a
-      proof $\Pi'$ from $\pi$ and $\Pi_2$ for sequent $[[P1, I, P2 |-c Y]]$
+      proof $\Pi'$ from $\pi$ and $\Pi_2$ for sequent
+      $[[P1, I1, I2, P2 |-c Y]]$
       s.t. $c(\Pi')\leq |X|$. Therefore, the proof $\Pi$ can be constructed
       as follows, and $c(\Pi)=c(\Pi')\leq |X|$.
       \begin{center}
         \scriptsize
         \begin{math}
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny series of ex}] {
-            $$\mprset{flushleft}
-            \inferrule* [right={\tiny unitL}] {
-              {
-                \begin{array}{c}
-                  \Pi' \\
-                  {[[P1, I, P2 |-c Y]]}
-                \end{array}
-              }
-            }{[[UnitT, P1, I, P2 |-c Y]]}
-          }{[[P1, UnitT, I, P2 |-c Y]]}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \Pi' \\
+                {[[P1, I1, I2, P2 |-c Y]]}
+              \end{array}
+            }
+          }{[[P1, I1, UnitT, I2, P2 |-c Y]]}
         \end{math}
       \end{center}
 
-\item Case 2 (Does not work):
+\item Case 2:
       \begin{center}
         \scriptsize
         $\Pi_1$:
@@ -1747,10 +1747,10 @@ $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[I |-c X]]}
+                {[[I1, I2 |-c X]]}
               \end{array}
             }
-          }{[[UnitT, I |-c X]]}
+          }{[[I1, UnitT, I2 |-c X]]}
         \end{math}
         \qquad\qquad
         \begin{math}
@@ -1760,21 +1760,40 @@ $c(\Pi)\leq |B|$.
           \end{array}
         \end{math}
       \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction, there is a
+      proof $\Pi'$ from $\pi$ and $\Pi_2$ for sequent
+      $[[G1; I1; I2; G2 |-l A]]$
+      s.t. $c(\Pi')\leq |X|$. Therefore, the proof $\Pi$ can be constructed
+      as follows, and $c(\Pi)=c(\Pi')\leq |X|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \Pi' \\
+                {[[G1; I1; I2; G2 |-l A]]}
+              \end{array}
+            }
+          }{[[G1; I1; UnitT; I2; G2 |-l A]]}
+        \end{math}
+      \end{center}
 
-\item Case 3 (Does not work):
+\item Case 3:
       \begin{center}
         \scriptsize
         $\Pi_1$:
         \begin{math}
           $$\mprset{flushleft}
-          \inferrule* [right={\tiny unitL1}] {
+          \inferrule* [right={\tiny unitL}] {
             {
               \begin{array}{c}
                 \pi \\
-                {[[D |-l A]]}
+                {[[D1; D2 |-l A]]}
               \end{array}
             }
-          }{[[UnitT; D |-l A]]}
+          }{[[D1; UnitT; D2 |-l A]]}
         \end{math}
         \qquad\qquad
         \begin{math}
@@ -1782,6 +1801,25 @@ $c(\Pi)\leq |B|$.
             \Pi_2 \\
             {[[G1; A; G2 |-l B]]}
           \end{array}
+        \end{math}
+      \end{center}
+      By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction, there is a
+      proof $\Pi'$ from $\pi$ and $\Pi_2$ for sequent
+      $[[G1; D1; D2; G2 |-l B]]$
+      s.t. $c(\Pi')\leq |X|$. Therefore, the proof $\Pi$ can be constructed
+      as follows, and $c(\Pi)=c(\Pi')\leq |X|$.
+      \begin{center}
+        \scriptsize
+        \begin{math}
+          $$\mprset{flushleft}
+          \inferrule* [right={\tiny unitL}] {
+            {
+              \begin{array}{c}
+                \Pi' \\
+                {[[G1; D1; D2; G2 |-l B]]}
+              \end{array}
+            }
+          }{[[G1; D1; UnitT; D2; G2 |-l B]]}
         \end{math}
       \end{center}
 \end{itemize}
@@ -1794,14 +1832,14 @@ $c(\Pi)\leq |B|$.
   $\Pi_1$:
   \begin{math}
     $$\mprset{flushleft}
-    \inferrule* [right={\tiny unitL2}] {
+    \inferrule* [right={\tiny unitL}] {
       {
         \begin{array}{c}
           \pi \\
-          {[[D |-l A]]}
+          {[[D1; D2 |-l A]]}
         \end{array}
       }
-    }{[[UnitS; D |-l A]]}
+    }{[[D1; UnitS; D2 |-l A]]}
   \end{math}
   \qquad\qquad
   \begin{math}
@@ -1809,6 +1847,25 @@ $c(\Pi)\leq |B|$.
       \Pi_2 \\
       {[[G1; A; G2 |-l B]]}
     \end{array}
+  \end{math}
+\end{center}
+By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction, there is a
+proof $\Pi'$ from $\pi$ and $\Pi_2$ for sequent
+$[[G1; D1; D2; G2 |-l B]]$
+s.t. $c(\Pi')\leq |X|$. Therefore, the proof $\Pi$ can be constructed
+as follows, and $c(\Pi)=c(\Pi')\leq |X|$.
+\begin{center}
+  \scriptsize
+  \begin{math}
+    $$\mprset{flushleft}
+    \inferrule* [right={\tiny unitL}] {
+      {
+        \begin{array}{c}
+          \Pi' \\
+          {[[G1; D1; D2; G2 |-l B]]}
+        \end{array}
+      }
+    }{[[G1; D1; UnitS; D2; G2 |-l B]]}
   \end{math}
 \end{center}
 
@@ -3762,14 +3819,15 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[I1, X, I2 |-c Y]]}
+                {[[I1, I2, X, I3 |-c Y]]}
               \end{array}
             }
-          }{[[UnitT, I1, X, I2 |-c Y]]}
+          }{[[I1, UnitT, I2, X, I3 |-c Y]]}
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction on $\Pi_1$
-      and $\pi$, there is a proof $\Pi'$ for sequent $[[I1, P, I2 |-c Y]]$
+      and $\pi$, there is a proof $\Pi'$ for sequent
+      $[[I1, I2, P, I3 |-c Y]]$
       s.t. $c(\Pi') \leq |X|$. Therefore, the proof $\Pi$ can be
       constructed as follows with $c(\Pi) = c(\Pi') \leq |X|$.
       \begin{center}
@@ -3780,10 +3838,10 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \Pi' \\
-                {[[I1, P, I2 |-c Y]]}
+                {[[I1, I2, P, I3 |-c Y]]}
               \end{array}
             }
-          }{[[UnitT, I1, P, I2 |-c Y]]}
+          }{[[I1, UnitT, I2, P, I3 |-c Y]]}
         \end{math}
       \end{center}
 
@@ -3804,14 +3862,15 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[G1; X; G2 |-l A]]}
+                {[[G1; G2; X; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitT; G1; X; G2 |-l A]]}
+          }{[[G1; UnitT; G2; X; G3 |-l A]]}
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction on $\Pi_1$
-      and $\pi$, there is a proof $\Pi'$ for sequent $[[G1; I; G2 |-l A]]$
+      and $\pi$, there is a proof $\Pi'$ for sequent
+      $[[G1; G2; I; G2 |-l A]]$
       s.t. $c(\Pi') \leq |X|$. Therefore, the proof $\Pi$ can be
       constructed as follows with $c(\Pi) = c(\Pi') \leq |X|$.
       \begin{center}
@@ -3822,10 +3881,10 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \Pi' \\
-                {[[G1; I; G2 |-l A]]}
+                {[[G1; G2; I; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitT; G1; I; G2 |-l A]]}
+          }{[[G1; UnitT; G2; I; G3 |-l A]]}
         \end{math}
       \end{center}
 
@@ -3846,14 +3905,15 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[G1; B; G2 |-l A]]}
+                {[[G1; G2; B; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitT; G1; B; G2 |-l A]]}
+          }{[[G1; UnitT; G2; B; G3 |-l A]]}
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |B|$. By induction on $\Pi_1$
-      and $\pi$, there is a proof $\Pi'$ for sequent $[[G1; D; G2 |-l A]]$
+      and $\pi$, there is a proof $\Pi'$ for sequent
+      $[[G1; G2; D; G3 |-l A]]$
       s.t. $c(\Pi') \leq |B|$. Therefore, the proof $\Pi$ can be
       constructed as follows with $c(\Pi) = c(\Pi') \leq |B|$.
       \begin{center}
@@ -3864,10 +3924,10 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \Pi' \\
-                {[[G1; D; G2 |-l A]]}
+                {[[G1; G2; D; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitT; G1; D; G2 |-l A]]}
+          }{[[G1; UnitT; G2; D; G3 |-l A]]}
         \end{math}
       \end{center}
 \end{itemize}
@@ -3891,14 +3951,15 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[G1; X; G2 |-l A]]}
+                {[[G1; G2; X; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitS; G1; X; G2 |-l A]]}
+          }{[[G1; UnitS; G2; X; G3 |-l A]]}
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|$. By induction on $\Pi_1$
-      and $\pi$, there is a proof $\Pi'$ for sequent $[[G1; I; G2 |-l A]]$
+      and $\pi$, there is a proof $\Pi'$ for sequent
+      $[[G1; G2; I; G3 |-l A]]$
       s.t. $c(\Pi') \leq |X|$. Therefore, the proof $\Pi$ can be
       constructed as follows with $c(\Pi) = c(\Pi') \leq |X|$.
       \begin{center}
@@ -3909,10 +3970,10 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \Pi' \\
-                {[[G1; I; G2 |-l A]]}
+                {[[G1; G2; I; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitS; G1; I; G2 |-l A]]}
+          }{[[G1; UnitS; G2; I; G3 |-l A]]}
         \end{math}
       \end{center}
 
@@ -3933,14 +3994,15 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \pi \\
-                {[[G1; B; G2 |-l A]]}
+                {[[G1; G2; B; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitS; G1; B; G2 |-l A]]}
+          }{[[G1; UnitS; G2; B; G3 |-l A]]}
         \end{math}
       \end{center}
       By assumption, $c(\Pi_1),c(\Pi_2)\leq |B|$. By induction on $\Pi_1$
-      and $\pi$, there is a proof $\Pi'$ for sequent $[[G1; D; G2 |-l A]]$
+      and $\pi$, there is a proof $\Pi'$ for sequent
+      $[[G1; G2; D; G3 |-l A]]$
       s.t. $c(\Pi') \leq |B|$. Therefore, the proof $\Pi$ can be
       constructed as follows with $c(\Pi) = c(\Pi') \leq |B|$.
       \begin{center}
@@ -3951,10 +4013,10 @@ proof $\Pi$ can be constructed as follows with $c(\Pi)\leq |B|$.
             {
               \begin{array}{c}
                 \Pi' \\
-                {[[G1; D; G2 |-l A]]}
+                {[[G1; G2; D; G3 |-l A]]}
               \end{array}
             }
-          }{[[UnitS; G1; D; G2 |-l A]]}
+          }{[[G1; UnitS; G2; D; G3 |-l A]]}
         \end{math}
       \end{center}
 \end{itemize}
