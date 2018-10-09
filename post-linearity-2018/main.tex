@@ -24,7 +24,7 @@
 
 \input{Elle-ND-inc}
 \renewcommand{\NDdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
-\renewcommand{\NDdruleTXXidName}{\mathcal{C}\text{-id}}
+\renewcommand{\NDdruleTXXidName}{\mathcal{C}\text{-ax}}
 \renewcommand{\NDdruleTXXunitIName}{\mathcal{C}\text{-}\mathsf{Unit}_I}
 \renewcommand{\NDdruleTXXunitEName}{\mathcal{C}\text{-}\mathsf{Unit}_E}
 \renewcommand{\NDdruleTXXtenIName}{\mathcal{C}\text{-}\otimes_I}
@@ -34,7 +34,7 @@
 \renewcommand{\NDdruleTXXGIName}{\mathcal{C}\text{-}\mathsf{G}_I}
 \renewcommand{\NDdruleTXXbetaName}{\mathcal{C}\text{-}\mathsf{ex}}
 \renewcommand{\NDdruleTXXcutName}{\mathcal{C}\text{-}\mathsf{Cut}}
-\renewcommand{\NDdruleSXXidName}{\mathcal{L}\text{-}\text{id}}
+\renewcommand{\NDdruleSXXidName}{\mathcal{L}\text{-ax}}
 \renewcommand{\NDdruleSXXunitIName}{\mathcal{L}\text{-}\mathsf{Unit}_I}
 \renewcommand{\NDdruleSXXunitEOneName}{\mathcal{LC}\text{-}\mathsf{Unit}_E}
 \renewcommand{\NDdruleSXXunitETwoName}{\mathcal{L}\text{-}\mathsf{Unit}_E}
@@ -53,6 +53,66 @@
 \renewcommand{\NDdruleSXXcutTwoName}{\mathcal{L}\text{-}\mathsf{Cut}}
 
 \input{ElleType-inc}
+\renewcommand{\SCdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+\renewcommand{\SCdruleTXXaxName}{\mathcal{C}\text{-ax}}
+\renewcommand{\SCdruleTXXunitLName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleTXXunitRName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleTXXtenLName}{\mathcal{C}\text{-}\otimes_L}
+\renewcommand{\SCdruleTXXtenRName}{\mathcal{C}\text{-}\otimes_R}
+\renewcommand{\SCdruleTXXimpLName}{\mathcal{C}\text{-}\multimap_L}
+\renewcommand{\SCdruleTXXimpRName}{\mathcal{C}\text{-}\multimap_R}
+\renewcommand{\SCdruleTXXGrName}{\mathcal{C}\text{-}\mathsf{G}_R}
+\renewcommand{\SCdruleTXXcutName}{\mathcal{C}\text{-}\mathsf{Cut}}
+\renewcommand{\SCdruleTXXexName}{\mathcal{C}\text{-}\mathsf{ex}}
+\renewcommand{\SCdruleSXXaxName}{\mathcal{L}\text{-ax}}
+\renewcommand{\SCdruleSXXunitLOneName}{\mathcal{LC}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleSXXunitLTwoName}{\mathcal{L}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleSXXunitRName}{\mathcal{L}\text{-}\mathsf{Unit}_R}
+\renewcommand{\SCdruleSXXexName}{\mathcal{L}\text{-}\mathsf{ex}}
+\renewcommand{\SCdruleSXXtenLOneName}{\mathcal{LC}\text{-}\otimes_L}
+\renewcommand{\SCdruleSXXtenLTwoName}{\mathcal{L}\text{-}\otimes_L}
+\renewcommand{\SCdruleSXXtenRName}{\mathcal{L}\text{-}\otimes_R}
+\renewcommand{\SCdruleSXXimpLName}{\mathcal{L}\text{-}\multimap_L}
+\renewcommand{\SCdruleSXXimprLName}{\mathcal{L}\text{-}\rightharpoonup_L}
+\renewcommand{\SCdruleSXXimprRName}{\mathcal{L}\text{-}\rightharpoonup_R}
+\renewcommand{\SCdruleSXXimplLName}{\mathcal{L}\text{-}\leftharpoonup_L}
+\renewcommand{\SCdruleSXXimplRName}{\mathcal{L}\text{-}\leftharpoonup_R}
+\renewcommand{\SCdruleSXXFlName}{\mathcal{L}\text{-}\mathsf{F}_L}
+\renewcommand{\SCdruleSXXFrName}{\mathcal{L}\text{-}\mathsf{F}_R}
+\renewcommand{\SCdruleSXXGlName}{\mathcal{L}\text{-}\mathsf{G}_L}
+\renewcommand{\SCdruleSXXcutOneName}{\mathcal{LC}\text{-}\mathsf{Cut}}
+\renewcommand{\SCdruleSXXcutTwoName}{\mathcal{L}\text{-}\mathsf{Cut}}
+
+\input{Elle-inc}
+\renewcommand{\Elledrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+\renewcommand{\ElledruleTXXaxName}{\mathcal{C}\text{-ax}}
+\renewcommand{\ElledruleTXXunitLName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleTXXunitRName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleTXXtenLName}{\mathcal{C}\text{-}\otimes_L}
+\renewcommand{\ElledruleTXXtenRName}{\mathcal{C}\text{-}\otimes_R}
+\renewcommand{\ElledruleTXXimpLName}{\mathcal{C}\text{-}\multimap_L}
+\renewcommand{\ElledruleTXXimpRName}{\mathcal{C}\text{-}\multimap_R}
+\renewcommand{\ElledruleTXXGrName}{\mathcal{C}\text{-}\mathsf{G}_R}
+\renewcommand{\ElledruleTXXcutName}{\mathcal{C}\text{-}\mathsf{Cut}}
+\renewcommand{\ElledruleTXXexName}{\mathcal{C}\text{-}\mathsf{ex}}
+\renewcommand{\ElledruleSXXaxName}{\mathcal{L}\text{-ax}}
+\renewcommand{\ElledruleSXXunitLOneName}{\mathcal{LC}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleSXXunitLTwoName}{\mathcal{L}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleSXXunitRName}{\mathcal{L}\text{-}\mathsf{Unit}_R}
+\renewcommand{\ElledruleSXXexName}{\mathcal{L}\text{-}\mathsf{ex}}
+\renewcommand{\ElledruleSXXtenLOneName}{\mathcal{LC}\text{-}\otimes_L}
+\renewcommand{\ElledruleSXXtenLTwoName}{\mathcal{L}\text{-}\otimes_L}
+\renewcommand{\ElledruleSXXtenRName}{\mathcal{L}\text{-}\otimes_R}
+\renewcommand{\ElledruleSXXimpLName}{\mathcal{L}\text{-}\multimap_L}
+\renewcommand{\ElledruleSXXimprLName}{\mathcal{L}\text{-}\rightharpoonup_L}
+\renewcommand{\ElledruleSXXimprRName}{\mathcal{L}\text{-}\rightharpoonup_R}
+\renewcommand{\ElledruleSXXimplLName}{\mathcal{L}\text{-}\leftharpoonup_L}
+\renewcommand{\ElledruleSXXimplRName}{\mathcal{L}\text{-}\leftharpoonup_R}
+\renewcommand{\ElledruleSXXFlName}{\mathcal{L}\text{-}\mathsf{F}_L}
+\renewcommand{\ElledruleSXXFrName}{\mathcal{L}\text{-}\mathsf{F}_R}
+\renewcommand{\ElledruleSXXGlName}{\mathcal{L}\text{-}\mathsf{G}_L}
+\renewcommand{\ElledruleSXXcutOneName}{\mathcal{LC}\text{-}\mathsf{Cut}}
+\renewcommand{\ElledruleSXXcutTwoName}{\mathcal{L}\text{-}\mathsf{Cut}}
 
 \input{dePaiva-Eades-LAM-ott}
 \renewcommand{\Ldrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,\Ldrulename{#4}}}
@@ -248,7 +308,7 @@ Valeria de Paiva
 \appendix
 \label{sec:appendix}
 \input{appendix-output}
-
+\input{appendix2-output}
 
 
 \end{document}

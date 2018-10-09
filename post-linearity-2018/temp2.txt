@@ -1,0 +1,126 @@
+
+defns
+  Jty :: '' ::=
+
+defn
+  I |-c X :: :: tse :: 'Tty_'
+by
+
+  ------- :: ax
+  X |-c X 
+
+  I |-c X
+  -------------- :: unitL
+  UnitT, I |-c X
+
+  ----------- :: unitR
+  . |-c UnitT
+
+  I, X, Y, P |-c Z
+  ---------------- :: beta
+  I, Y, X, P |-c Z
+
+  I |-c X && P1, X, P2 |-c Y
+  -------------------------- :: cut
+  P1, I, P2 |-c Y
+
+  I, X, Y, P |-c Z
+  ------------------- :: tenL
+  I, X (x) Y, P |-c Z
+
+  I |-c X && P |-c Y
+  ------------------ :: tenR
+  I, P |-c X (x) Y
+
+  I, X |-c Y
+  ------------ :: impR
+  I |-c X -o Y
+
+  I |-c X && P1, Y, P2 |-c Z
+  -------------------------- :: impL
+  P1, X -o Y, I, P2 |-c Z
+
+  I |-l A
+  ---------- :: GR
+  I |-c Gf A
+
+defn
+  G |-l A :: :: sse :: 'Sty_'
+by
+
+  ------- :: ax
+  A |-l A
+
+  D |-l A
+  -------------- :: unitL1
+  UnitT, D |-l A
+
+  D |-l A
+  -------------- :: unitL2
+  UnitS, D |-l A
+  
+  ----------- :: unitR
+  . |-l UnitS
+
+  G, X, Y, D |-l A
+  ---------------- :: beta
+  G, Y, X, D |-l A
+
+  I |-c X && G1, X, G2 |-l A
+  -------------------------- :: cut1
+  G1, I, G2 |-l A
+
+  G |-l A && D1, A, D2 |-l B
+  -------------------------- :: cut2
+  D1, A, D2 |-l B
+
+  G, X, Y, D |-l A
+  ------------------- :: tenL1
+  G, X (x) Y, D |-l A
+
+  G, A, B, D |-l C
+  ------------------- :: tenL2
+  G, A (>) B, D |-l C
+
+  G |-l A && D |-l B
+  ------------------ :: tenR
+  G, D |-l A (>) B
+
+  I |-c X && G, Y, D |-l A
+  ------------------------ :: impL
+  G, X -o Y, I, D |-l A
+
+  G |-l A && D1, B, D2 |-l C
+  -------------------------- :: imprL
+  D1, A -> B, G, D2 |-l C
+
+  G |-l A && D1, B, D2 |-l C
+  --------------------- :: implL
+  D1, G, B <- A, D2 |-l C
+
+  G, A |-l B
+  ------------ :: imprR
+  G |-l A -> B
+
+  A, G |-l B
+  ------------ :: implR
+  G |-l B <- A
+
+  I |-c X
+  --------- :: FR
+  I |-l F X
+
+  G, X, D |-l A
+  --------------- :: FL
+  G, F X, D |-l A
+
+  G, A, D |-l B
+  ---------------- :: GL
+  G, Gf A, D |-l B
+
+
+
+
+
+
+

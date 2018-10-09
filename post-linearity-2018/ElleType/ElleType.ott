@@ -140,11 +140,11 @@ by
 
   G; D |-l A
   ----------------- :: unitL1
-  G; UnitS; D |-l A
+  G; UnitT; D |-l A
 
   G; D |-l A
   ----------------- :: unitL2
-  G; UnitT; D |-l A
+  G; UnitS; D |-l A
 
   ----------- :: unitR
   . |-l UnitS

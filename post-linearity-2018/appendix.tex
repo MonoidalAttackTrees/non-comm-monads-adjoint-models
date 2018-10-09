@@ -1,4 +1,5 @@
 \section{Proof For Lemma~\ref{lem:cut-reduction}}
+\label{app:cut-reduction}
 
 
 \subsection{Commuting Conversion Cut vs. Cut}
@@ -503,7 +504,7 @@
 
 \subsection{The Exchange Steps}
 
-\subsubsection{\SCdruleTXXexName}
+\subsubsection{$\SCdruleTXXexName$}
 
 \begin{itemize}
 % Conclusion vs. C-ex Case 1
@@ -4694,6 +4695,308 @@ constructed as follows with $c(\Pi) = c(\Pi') \leq |X|$.
 
 \end{itemize}
 
+
+
+%--------------------------------------------------
+%--------------------------------------------------
+\section{Proof For Theorem~\ref{thm:m-natural-iso}}
+\label{app:m-natural-iso}
+
+We need to show that $\m{X,Y}\circ\p{X,Y}=id_{F(X\otimes Y)}$ and
+  $\p{X,Y}\circ\m{X,Y}=id_{FX\tri FX}$. The two equations hold because the following diagrams
+  commute: (1)-adjunction; (2)-$\eta$ is a monoidal natural transformation; (3)-naturality of
+  $\varepsilon$; (4)-adjunction; (5)-naturality of $\m{}$; (6)-$\varepsilon$ is a monoidal
+  natural transformation.
+  \begin{mathpar}
+  \bfig
+    \square/->`=`->`/<1600,800>[
+      F(X\otimes Y)`F(GFX\otimes GFY)`F(X\otimes Y)`FG(FX\tri FY);
+      F(\eta_X\otimes\eta_Y)``F\n{FX,FY}`]
+    \Atrianglepair|mmmbb|/->``->`<-`<-/<800,400>[
+      FGF(X\otimes Y)`F(X\otimes Y)`FX\tri FY`FG(FX\tri FY);
+      \varepsilon_{F(X\otimes Y)}``FG\m{X,Y}`\m{X,Y}`\varepsilon_{FX\tri FY}]
+    \morphism(0,800)|m|<800,-400>[F(X\otimes Y)`FGF(X\otimes Y);F\eta_{X\otimes Y}]
+    \morphism(300,450)//<0,0>[`;(1)]
+    \morphism(1200,600)//<0,0>[`;(2)]
+    \morphism(800,200)//<0,0>[`;(3)]
+  \efig
+  \and
+  \bfig
+    \square/->`=`->`/<1800,800>[
+      FX\tri FY`F(X\otimes Y)`FX\tri FY`F(GFX\otimes GFY);
+      \m{X,Y}``F(\eta_X\otimes\eta_Y)`]
+    \Atrianglepair|mmmbb|/->``->`<-`<-/<900,400>[
+      FGFX\tri FGFY`FX\tri FY`FG(FX\tri FY)`F(GFX\otimes GFY);
+      \varepsilon_{FX}\tri\varepsilon_{FY}``\m{GFX,GFY}`\varepsilon_{FX\tri FY}`F\n{FX,FY}]
+    \morphism(0,800)|m|<900,-400>[FX\tri FY`FGFX\tri FGFY;F\eta_X\tri F\eta_Y]
+    \morphism(300,450)//<0,0>[`;(4)]
+    \morphism(1300,600)//<0,0>[`;(5)]
+    \morphism(900,200)//<0,0>[`;(6)]
+  \efig
+  \end{mathpar}
+
+
+
+%--------------------------------------------------
+%--------------------------------------------------
+\section{Proof For Lemma~\ref{lem:monoidal-monad}}
+\label{app:monoidal-monad}
+
+Let $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ be a LAM. We define the monad
+$(T,\eta:id_\cat{C}\rightarrow T,\mu:T^2\rightarrow T)$ on $\cat{C}$ as
+$T=GF$, $\eta_X:X\rightarrow GFX$, and
+$\mu_X=G\varepsilon_{FX}:GFGFX\rightarrow GFX$. Since $(F,\m{})$ and
+$(G,\n{})$ are monoidal functors, we have
+$$\t{X,Y}=G\m{X,Y}\circ\n{FX,FY}:TX\otimes TY\rightarrow T(X\otimes Y) \qquad\mbox{and}\qquad\t{I}=G\m{I}\circ\n{I'}:I\rightarrow TI.$$
+The monad $T$ being monoidal means:
+\begin{enumerate}
+\item $T$ is a monoidal functor, i.e. the folllowing diagrams commute:
+      \begin{mathpar}
+      \bfig
+        \hSquares/->`->`->``->`->`->/<400>[
+          (TX\otimes TY)\otimes TZ`TX\otimes(TY\otimes TZ)`TX\otimes T(Y\otimes Z)`
+          T(X\otimes Y)\otimes TZ`T((X\otimes Y)\otimes Z)`T(X\otimes(Y\otimes Z));
+          \alpha_{TX,TY,TZ}`id_{TX}\otimes\t{Y,Z}`\t{X,Y}\otimes id_{TZ}``
+          \t{X,Y\otimes Z}`\t{X\otimes Y,Z}`T\alpha_{X,Y,Z}]
+        \morphism(1300,200)//<0,0>[`;(1)]
+      \efig
+      \and
+      \bfig
+        \square/->`->`<-`->/<600,400>[
+          I\otimes TX`TX`TI\otimes TX`T(I\otimes X);
+          \lambda_{TX}`\t{I}\otimes id_{TX}`T\lambda_X`\t{I,X}]
+        \morphism(350,200)//<0,0>[`;(2)]
+      \efig
+      \and
+      \bfig
+        \square/->`->`<-`->/<600,400>[
+          TX\otimes I`TX`TX\otimes TI`T(X\otimes I);
+          \rho_{TX}`id_{TX}\otimes\t{I}`T\rho_X`\t{X,I}]
+        \morphism(350,200)//<0,0>[`;(3)]
+      \efig
+      \end{mathpar}
+      We write $GF$ instead of $T$ in the proof for clarity. \\
+      By replacing $\t{X,Y}$ with its definition, diagram (1) above
+      commutes by the following commutative diagram, in which the two
+      hexagons commute because $G$ and $F$ are monoidal functors, and the
+      two quadrilaterals commute by the naturality of $\n{}$.
+      \begin{mathpar}
+      \bfig
+        \iiixiii/->`->`->``->```->`<-`->``/<1400,400>[
+          (GFX\otimes GFY)\otimes GFZ`GFX\otimes(GFY\otimes GFZ)`GFX\otimes G(FY\tri FZ)`
+          G(FX\tri FY)\otimes GFZ`G(FX\tri(FY\tri FZ))`GFX\otimes GF(Y\otimes Z)`
+          GF(X\otimes Y)\otimes GFZ`G((FX\tri FY)\tri FZ)`G(FX\tri F(Y\otimes Z));
+          \alpha_{GFX,GFY,GFZ}`id_{GFX}\otimes\n{FY,FZ}`\n{FX,FY}\otimes id_{GFZ}``
+          id_{GFX}\otimes G\m{Y,Z}```G\m{X,Y}\otimes id_{GFZ}`G\alpha'_{FX,FY,FZ}`
+          \n{FX,F(Y\otimes Z)}``]
+        \morphism(2800,800)|m|<-1400,-400>[
+          GFX\otimes G(FY\tri FZ)`G(FX\tri(FY\tri FZ));\n{FX,FY\tri FZ}]
+        \morphism(0,400)|m|<1400,-400>[
+          G(FX\tri FY)\otimes GFZ`G((FX\tri FY)\tri FZ);\n{FX\tri FY,FZ}]
+        \morphism(1400,400)|m|<1400,-400>[
+          G(FX\tri(FY\tri FZ))`G(FX\tri F(Y\otimes Z));G(id_{FX}\tri\m{Y,Z})]
+        \ptriangle(0,-400)|mlm|/`->`->/<1400,400>[
+          GF(X\otimes Y)\otimes GFZ`G((FX\tri FY)\tri FZ)`G(F(X\otimes Y)\tri FZ);
+          `\n{F(X\otimes Y),FZ}`G(\m{X,Y}\otimes id_{FZ})]
+        \morphism(0,-400)|b|<1400,0>[
+          G(F(X\otimes Y)\tri FZ)`GF((X\otimes Y)\otimes Z);G\m{X\otimes Y,Z}]
+        \dtriangle(1400,-400)|mrb|/`->`->/<1400,400>[
+          G(FX\tri F(Y\otimes Z))`GF((X\otimes Y)\otimes Z)`GF(X\otimes(Y\otimes Z));
+          `G\m{X,Y\otimes Z}`GF\alpha_{X,Y,Z}]
+      \efig
+      \end{mathpar}
+      Diagram (2) commutes by the following commutative diagrams, in which
+      the top quadrilateral commutes because $G$ is monoidal, the right
+      quadrilateral commutes because $F$ is monoidal, and the left square
+      commutes by the naturality of $\n{}$.
+      \begin{mathpar}
+      \bfig
+        \ptriangle/->`->`/<1600,400>[
+          I\otimes GFX`GFX`GI'\otimes GFX;\lambda_{GFX}`\n{I'}\otimes id_{GFX}`]
+        \square(0,-400)|lmmb|<800,400>[
+          GI'\otimes GFX`G(I'\tri FX)`GFI\otimes GFX`G(FI\tri FX);
+          \n{I',FX}`G\m{I}\otimes id_{GFX}`G(\m{I}\tri id_{FX})`\n{FI,FX}]
+        \morphism(800,0)|m|<800,400>[G(I'\tri FX)`GFX;G\lambda'_{FX}]
+        \dtriangle(800,-400)/`<-`->/<800,800>[
+          GFX`G(FI\tri FX)`GF(I\otimes X);
+          `GF\lambda_X`G\m{I,X}]
+      \efig
+      \end{mathpar}
+      Similarly, diagram (3) commutes as follows:
+      \begin{mathpar}
+      \bfig
+        \ptriangle/->`->`/<1600,400>[
+          GFX\otimes I`GFX`GFX\otimes GI';\rho_{GFX}`id_{GFX}\otimes\n{I'}`]
+        \square(0,-400)|lmmb|<800,400>[
+          GFX\otimes GI'`G(FX\tri I')`GFX\otimes GFI`G(FX\tri FI);
+          \n{FX,I'}`id_{GFX}\otimes G\m{I}`G(id_{FX}\otimes\m{I})`\n{FX,FI}]
+        \morphism(800,0)|m|<800,400>[G(FX\tri I')`GFX;G\rho'_{FX}]
+        \dtriangle(800,-400)/`<-`->/<800,800>[
+          GFX`G(FX\tri FI)`GF(X\otimes I);
+          `GF\rho_X`G\m{X,I}]
+      \efig
+      \end{mathpar}
+\item $\eta$ is a monoidal natural transformation. In fact, since $\eta$
+      is the unit of the monoidal adjunction, $\eta$ is monoidal by
+      definition and thus the following two diagrams commute.
+      \begin{mathpar}
+      \bfig
+        \square/=`->`->`->/<600,400>[
+          X\otimes Y`X\otimes Y`TX\otimes TY`T(X\otimes Y);
+          `\eta_X\otimes\eta_Y`\eta_{X\otimes Y}`\t{X,Y}]
+      \efig
+      \and
+      \bfig
+        \Vtriangle/->`=`<-/<400,400>[I`TI`I;\eta_I``\t{I}]
+      \efig
+      \end{mathpar}
+\item $\mu$ is a monoidal natural transformation. It is obvious that since
+      $\mu=G\varepsilon_{FA}$ and $\varepsilon$ is monoidal, so is $\mu$.
+      Thus the following diagrams commute.
+      \begin{mathpar}
+      \bfig
+        \square/`->`->`->/<1500,400>[
+          T^2X\otimes T^2Y`T^2(X\otimes Y)`TX\otimes TY`T(X\otimes Y);
+          `\mu_X\otimes\mu_Y`\mu_{X\otimes Y}`\t{X,Y}]
+        \morphism(0,400)<800,0>[T^2X\otimes T^2Y`T(TX\otimes TY);\t{TX,TY}]
+        \morphism(800,400)<700,0>[T(TX\otimes TY)`T^2(X\otimes Y);T\t{X,Y}]
+      \efig
+      \and
+      \bfig
+        \square/->`<-`<-`<-/<400,400>[T^2I`TI`TI`I;\mu_I`T\t{I}`\t{I}`\t{I}]
+      \efig
+      \end{mathpar}
+\end{enumerate}
+
+
+
+%--------------------------------------------------
+%--------------------------------------------------
+\section{Proof For Lemma~\ref{lem:strong-monad}}
+\label{app:strong-monad}
+
+\begin{definition}
+\label{def:strong-monad}
+Let $(\cat{M},\tri,I,\alpha,\lambda,\rho)$ be a monoidal category and
+$(T,\eta,\mu)$ be a monad on $\cat{M}$. $T$ is a \textbf{strong monad} if
+there is natural transformation $\tau$, called the \textbf{tensorial
+strength}, with components $\tau_{A,B}:A\tri TB\rightarrow T(A\tri B)$
+such that the following diagrams commute:
+\begin{mathpar}
+\bfig
+  \Vtriangle<400,400>[I\tri TA`T(I\tri A)`TA;\tau_{I,A}`\lambda_{TA}`T\lambda_A]
+\efig
+\and
+\bfig
+  \Vtriangle<400,400>[
+    A\tri B`A\tri TB`T(A\tri B);id_A\tri\eta_B`\eta_{A\tri B}`\tau_{A,B}]
+\efig
+\and
+\bfig
+  \square/->`->`->`/<1800,400>[
+    (A\tri B)\tri TC`T((A\tri B)\tri C)`
+    A\tri(B\tri TC)`T(A\tri(B\tri C));
+    \tau_{A\tri B,C}`\alpha_{A,B,TC}`T\alpha_{A,B,C}`]
+  \morphism<900,0>[A\tri(B\tri TC)`A\tri T(B\tri C);id_A\tri\tau_{B,C}]
+  \morphism(900,0)<900,0>[A\tri T(B\tri C)`T(A\tri(B\tri C));\tau_{A,B\tri C}]  \efig
+\and
+\bfig
+  \square/`->`->`->/<1400,400>[
+    A\tri T^2B`T^2(A\tri B)`A\tri TB`T(A\tri B);
+    `id_A\tri\mu_B`\mu_{A\tri B}`\tau_{A,B}]
+  \morphism(0,400)<700,0>[A\tri T^2B`T(A\tri TB);\tau_{A,TB}]
+  \morphism(700,400)<700,0>[T(A\tri TB)`T^2(A\tri B);T\tau_{A,B}]
+\efig
+\end{mathpar}
+\end{definition}
+\noindent
+The proof for Lemma~\ref{lem:strong-monad} goes as follows.
+\noindent
+Let $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ be a LAM, where
+$(\cat{C},\otimes,I,\alpha,\lambda,\rho)$ is symmetric monoidal closed,
+and \\ $(\cat{L},\tri,I',\alpha',\lambda',\rho')$ is Lambek. In
+Lemma~\ref{lem:monoidal-monad}, we have proved that the monad
+$(T=GF,\eta,\mu)$ is monoidal with the natural transformation
+$\t{X,Y}:TX\otimes TY\rightarrow T(X\otimes Y)$ and the morphism
+$\t{I}:I\rightarrow TI$.
+\noindent
+We define the tensorial strength
+$\tau_{X,Y}:X\otimes TY\rightarrow T(X\otimes Y)$ as
+$$\tau_{X,Y}=\t{X,Y}\circ(\eta_X\otimes id_{TY}).$$
+Since $\eta$ is a monoidal natural transformation, we have
+$\eta_I=G\m{I}\circ\n{I'}$, and thus $\eta_I=\t{I}$. The following diagram
+commutes because $T$ is monoidal, where the composition
+$\t{I,X}\circ(\t{I}\otimes id_{TX})$ is the definition of $\tau_{I,X}$. So
+the first triangle in Defition~\ref{def:strong-monad} commutes.
+\begin{mathpar}
+\bfig
+  \square/->`->`->`<-/<600,400>[
+    I\otimes TX`TI\otimes TX`TX`T(I\otimes X);
+    \t{I}\otimes id_{TX}`\lambda_{TX}`\t{I,X}`T\lambda_X]
+\efig
+\end{mathpar}
+Similarly, by using the definition of $\tau$, the the second triangle in the definition is
+equivalent to the following diagram, which commutes because $\eta$ is a monoidal natural
+transformation:
+\begin{mathpar}
+\bfig
+  \square/->`->`->`<-/<600,400>[
+    X\otimes Y`X\otimes TY`T(X\otimes Y)`TX\otimes TY;
+    id_X\otimes\eta_Y`\eta_{X\otimes Y}`\eta_X\otimes id_{TY}`\t{X,Y}]
+  \morphism(0,400)|m|<600,-400>[X\otimes Y`TX\otimes TY;\eta_X\otimes\eta_Y]
+\efig
+\end{mathpar}
+The first pentagon in the definition commutes by the following commutative diagrams, because
+$\eta$ and $\alpha$ are natural transformations and $T$ is monoidal:
+\begin{mathpar}
+\bfig
+  \qtriangle|amm|/->`->`<-/<1000,400>[
+    (X\otimes Y)\otimes TZ`T(X\otimes Y)\otimes TZ`(TX\otimes TY)\otimes TZ;
+    \eta_{X\otimes Y}\otimes id_{TZ}`
+    (\eta_X\otimes\eta_Y)\otimes id_{TZ}`
+    \t{X,Y}\otimes id_{TZ}]
+  \morphism(0,400)<0,-400>[(X\otimes Y)\otimes TZ`X\otimes(Y\otimes TZ);\alpha_{X,Y,TZ}]
+  \morphism(1000,0)|m|<0,-400>[
+    (TX\otimes TY)\otimes TZ`TX\otimes(TY\otimes TZ);\alpha_{TX,TY,TZ}]
+  \Dtriangle(0,-800)|lmm|/->`->`<-/<1000,400>[
+    X\otimes(Y\otimes TZ)`TX\otimes(TY\otimes TZ)`X\otimes(TY\otimes TZ);
+    id_X\otimes(\eta_Y\otimes id_{TZ})`
+    \eta_X\otimes(\eta_Y\otimes id_{TZ})`
+    \eta_X\otimes id_{TY\otimes TZ}]
+  \morphism(0,-800)|b|<1000,0>[
+    X\otimes(TY\otimes TZ)`X\otimes T(Y\otimes Z);id_X\otimes\t{Y,Z}]
+  \qtriangle(1000,0)|amr|/->``->/<1000,400>[
+    T(X\otimes Y)\otimes TZ`T((X\otimes Y)\otimes Z)`T(X\otimes(Y\otimes Z));
+    \t{X\otimes Y,Z}``T\alpha_{X,Y,Z}]
+  \morphism(2000,-800)<0,800>[
+    TX\otimes T(Y\otimes Z)`T(X\otimes(Y\otimes Z));\t{X,Y\otimes Z}]
+  \btriangle(1000,-800)|mmb|/`->`->/<1000,400>[
+    TX\otimes(TY\otimes TZ)`X\otimes T(Y\otimes Z)`TX\otimes T(Y\otimes Z);
+    `id_{TX}\otimes\t{Y,Z}`\eta_X\otimes id_{T(Y\otimes Z)}]
+\efig
+\end{mathpar}
+The last diagram in the definition commtues by the following commutative diagram, because
+$T$ is a monad, $\t{}$ is a natural transformation, and $\mu$ is a monoidal natural
+transformation:
+\begin{mathpar}
+\bfig
+  \ptriangle/->`->`/<700,400>[
+    X\otimes T^2Y`TX\otimes T^2Y`X\otimes TY;\eta_X\otimes id_{T^2Y}`id_X\otimes\mu_Y`]
+  \btriangle(0,-400)/->``->/<700,400>[
+    X\otimes TY`TX\otimes TY`T(X\otimes Y);\eta_X\otimes id_{TY}``\t{X,Y}]
+  \morphism(700,400)|m|<-700,-800>[TX\otimes T^2Y`TX\otimes TY;id_{TX}\otimes\mu_Y]
+  \morphism(700,0)|m|<-700,-400>[TX\otimes T^2Y`TX\otimes TY;id_{TX}\otimes\mu_Y]
+  \qtriangle(700,0)/->``->/<1800,400>[
+    TX\otimes T^2Y`T(X\otimes TY)`T(TX\otimes TY);\t{X,TY}``T(\eta_X\otimes id_{TY})]
+  \btriangle(700,0)|mmm|/=`->`<-/<900,400>[
+    TX\otimes T^2Y`TX\otimes T^2Y`T^2X\otimes T^2Y;
+    `T\eta_X\otimes id_{T^2Y}`\mu_X\otimes id_{T^2Y}]
+  \morphism(1600,0)|m|<900,0>[T^2X\otimes T^2Y`T(TX\otimes TY);\t{TX,TY}]
+  \morphism(1600,0)|m|<-1600,-400>[T^2X\otimes T^2Y`TX\otimes TY;\mu_X\otimes\mu_Y]
+  \dtriangle(700,-400)/`->`<-/<1800,400>[
+    T(TX\otimes TY)`T(X\otimes Y)`T^2(X\otimes Y);`T\t{X,Y}`\mu_{X\otimes Y}]
+\efig
+\end{mathpar}
 
 
 

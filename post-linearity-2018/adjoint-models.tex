@@ -41,7 +41,6 @@ $\m{I} : I' \mto FI$ is an isomorphism. This is essential for modeling
 certain rules of CNC logic, such as tensor elimination in natural
 deduction.  We define the inverses of $\m{X,Y}:FX\tri FY\rightarrow
 F(X\otimes Y)$ and $\m{I}:I'\rightarrow FI$ as:
-\vspace{-20px}
 \begin{mathpar}
 \bfig
   \morphism<1000,0>[\p{X,Y}:F(X\otimes Y)`F(GFX\otimes GFY);F(\eta_X\otimes\eta_Y)]
@@ -57,11 +56,32 @@ F(X\otimes Y)$ and $\m{I}:I'\rightarrow FI$ as:
 We can now see that this straightforwardly follows from Benton's proof.
 
 \begin{theorem}
-  $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$.
+\label{thm:m-natural-iso}
+  $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$. 
 \end{theorem}
 \begin{proof}
   This proof follows by a diagram chase using the adjunction in the
-  definition of a LAM and naturality.
+  definition of a LAM and naturality. The detail of the proof is in
+  Appendix~\ref{app:m-natural-iso}.
+\end{proof}
+
+\begin{theorem}
+\label{thm:m-iso}
+  $\m{I}$ is an isomorphism and its inverse is $\p{I}$.
+\end{theorem}
+\begin{proof}
+  This is equivalent to equations $\m{I}\circ\p{I}=id_{FI}$ and
+  $\p{I}\circ\m{I}=id_{I'}$, equivalent to the following diagrams, which
+  commute because $\varepsilon$ is a monoidal natural transformation.
+  \begin{mathpar}
+  \bfig
+    \square/->`=`->`<-/<400,400>[FI`FGI'`FI`I';F\n{I'}``\varepsilon_{I'}`\m{I}]
+  \efig
+  \and
+  \bfig
+    \square/->`=`->`<-/<400,400>[I'`FI`I'`FGI';\m{I}``F\n{I'}`\varepsilon_{I'}]
+  \efig
+  \end{mathpar}
 \end{proof}
 
 \textbf{Strong non-commutative monad}. Next we show that the monad on
@@ -74,6 +94,10 @@ following answers their question in the positive.
 \label{lem:monoidal-monad}
 The monad induced by any LAM, $GF : \cat{C} \mto \cat{C}$, is monoidal.
 \end{lemma}
+\begin{proof}
+  The proof is done by checking the conditions for a functor being monoidal.
+  The detail of the proof is in Appendix~\ref{app:monoidal-monad}.
+\end{proof}
 \noindent
 However, the monad is not symmetric because the following diagram does
 not commute.
@@ -103,6 +127,14 @@ strong.
   The monad, $GF : \cat{C} \mto \cat{C}$, on the symmetric monoidal
   closed category in LAM is strong.
 \end{lemma}
+\begin{proof}
+The proof is done by frist defining a natural transformation $\tau$, called
+the \textbf{tensorial strength}, with components
+$\tau_{A,B}:A\tri TB\rightarrow T(A\tri B)$, and then proving the
+commutativity of several diagrams through diagram chasing. The formal
+definition for a strong monad and the full proof are in
+Appendix~\ref{app:strong-monad}.
+\end{proof}
 \noindent
 Finally, we obtain the non-communativity of the monad induced by any
 LAM as follows.
@@ -151,9 +183,28 @@ co-Eilenberg-Moore category is symmetric monoidal closed.
     \morphism(2200,0)<700,0>[F(GB\otimes GA)`FG(B\tri A);F\n{B,A}]
     \morphism(2900,0)<500,0>[FG(B\tri A)`B\tri A;\varepsilon_{B\tri A}]
   \efig$$
-  in which $\e{}$ is the exchange for $\cat{C}$.  The remainder of the
-  proof is fairly straightforward, and shows that the typical diagrams
-  for any symmetric monoidal category hold.
+  in which $\e{}$ is the exchange for $\cat{C}$. Then $\e{}^{FG}$ is a
+  natural transformation because the following diagrams commute for
+  morphisms $f:A\rightarrow A'$ and $g:B\rightarrow B'$:
+  \begin{mathpar}
+  \bfig
+    \square|almb|<700,400>[
+      A\tri B`FGA\tri FGB`A'\tri B'`FGA'\tri FGB';
+      h_A\tri h_B`f\tri g`FGf\tri FGg`h_{A'}\tri h_{B'}]
+    \square(700,0)|ammb|/->``->`->/<800,400>[
+      FGA\tri FGB`F(GA\otimes GB)`FGA'\tri FGB'`F(GA'\otimes GB');
+      \m{GA,GB}``F(Gf\otimes Gg)`\m{GA',GB'}]
+    \square(1500,0)|ammb|/->``->`->/<800,400>[
+      F(GA\otimes GB)`F(GB\otimes GA)`F(GA'\otimes GB')`F(GB'\otimes GA');
+      F\e{A,B}``F(Gg\otimes Gf)`F\e{A',B'}]
+    \square(2300,0)|ammb|/->``->`->/<800,400>[
+      F(GB\otimes GA)`FG(B\tri A)`F(GB'\otimes GA')`FG(B'\tri A');
+      F\n{B,A}``FG(g\tri f)`F\n{B',A'}]
+    \square(3100,0)|amrb|/->``->`->/<600,400>[
+      FG(B\tri A)`B\tri A`FG(B'\tri A')`B'\tri A';
+      \varepsilon_{B\tri A}``g\tri f`\varepsilon_{B'\tri A'}]
+  \efig
+  \end{mathpar}
 \end{proof}
 
 \begin{corollary}

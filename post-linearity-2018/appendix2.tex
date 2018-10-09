@@ -1,0 +1,556 @@
+
+%--------------------------------------------------
+%--------------------------------------------------
+\section{Equivalence of Sequent Calculus and Natural Deduction Formalizations}
+\label{app:seq-nat-equiv}
+
+We prove the equivalence of the sequence calculus formalization and the
+natural deduction formalization given in the paper by defining two
+mappings, one from the rules in natural decution to proofs the sequent
+calculus, and the other is from the rules in sequent calculus to proofs in
+natural deduction.
+
+
+
+\subsection{Mapping from Natural Deduction to Sequent Calculus}
+
+Function $S:\mathit{ND}\rightarrow\mathit{SE}$ maps a rule in the natural
+deduction formalization to a proof of the same sequent in the sequent
+calculus. The function is defined as follows:
+
+\begin{itemize}
+\item The axioms map to axioms.
+\item Introduction rules map to right rules.
+\item Elimination rules map to combinations of left rules with cuts:
+  \begin{itemize}
+  \item $\NDdruleTXXunitEName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleTXXunitE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleTXXcutName$] {
+          {[[I |-c t1 : UnitT]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleTXXunitLName$] {
+            {[[P |-c t2 : Y]]}
+          }{[[x : UnitT, P |-c let x : UnitT be trivTp in t2 : Y]]}
+        }{[[I, P |-c [t1 / x](let x : UnitT be trivTp in t2) : Y]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleTXXtenEName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleTXXtenE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleTXXcutName$] {
+          {[[I |-c t1 : X (*) Y]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleTXXtenLName$] {
+            {[[P1, x : X, y : Y, P2 |-c t2 : Z]]}
+          }{[[P1, z : X (*) Y, P2 |-c let z : X (*) Y be x (*) y in t2 : Z]]}
+        }{[[P1, I, P2 |-c [t1 / z](let z : X (*) Y be x (*) y in t2) : Z]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleTXXimpEName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleTXXimpE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleTXXcutName$] {
+          {[[I |-c t1 : X -o Y]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleTXXimpLName$] {
+            {[[P |-c t2 : X]]} \\
+            $$\mprset{flushleft}
+            \inferrule* [right=$\ElledruleTXXaxName$] {
+              \\
+            }{[[x : Y |-c x : Y]]}
+          }{[[y : X -o Y, P |-c [y t2 / x]x : Y]]}
+        }{[[I, P |-c [t1 / y][y t2 / x]x : Y]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXunitEOneName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXunitEOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutOneName$] {
+          {[[I |-c t : UnitT]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXunitLOneName$] {
+            {[[G |-l s : A]]}
+          }{[[x : UnitT; G |-l let x : UnitT be trivTp in s : A]]}
+        }{[[I; P |-l [t / x](let x : UnitT be trivTp in s) : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXunitETwoName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXunitETwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutTwoName$] {
+          {[[G |-l s1 : UnitS]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXunitLTwoName$] {
+            {[[D |-l s2 : A]]}
+          }{[[x : UnitS; D |-l let x : UnitS be trivSp in s2 : A]]}
+        }{[[G; D |-l [s1 / x](let x : UnitS be trivSp in s2) : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXtenEOneName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXtenEOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutOneName$] {
+          {[[I |-c t : X (*) Y]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXtenLOneName$] {
+            {[[G1; x : X; y : Y; G2 |-l s : A]]}
+          }{[[G1; z : X (*) Y; G2 |-l let z : X (*) Y be x (*) y in s : A]]}
+        }{[[G1; I; G2 |-l [t / z](let z : X (*) Y be x (*) y in s) : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXtenETwoName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXtenETwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutTwoName$] {
+          {[[G |-l s1 : A (>) B]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXtenLTwoName$] {
+            {[[D1; x : A; y : B; D2 |-l s2 : C]]}
+          }{[[D1; z : A (>) B; D2 |-l let z : A (>) B be x (>) y in s2 : C]]}
+        }{[[D1; G; D2 |-l [s1 / z](let z : A (>) B be x (>) y in s2) : C]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXimprEName:$
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXimprE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutTwoName$] {
+          {[[G |-l s1 : A -> B]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXimprLName$] {
+            {[[D |-l s2 : A]]} \\
+            $$\mprset{flushleft}
+            \inferrule* [right={\footnotesize ax}] {
+              \\
+            }{[[x : B |-l x : B]]}
+          }{[[y : A -> B; D |-l [appr y s2 / x]x : B]]}
+        }{[[G; D |-l [s1 / y][appr y s2 / x]x : B]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXimplEName:$
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXimplE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutTwoName$] {
+          {[[G |-l s1 : B <- A]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXimplLName$] {
+            {[[D |-l s2 : A]]} \\
+            $$\mprset{flushleft}
+            \inferrule* [right=$\ElledruleSXXaxName$] {
+              \\
+            }{[[x : B |-l x : B]]}
+          }{[[D; y : B <- A |-l [appl y s2 / x]x : B]]}
+        }{[[D; G |-l [s1 / y][appl y s2 / x]x : B]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXFEName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXFE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutTwoName$] {
+          {[[G |-l y : F X]]} \\
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXFlName$] {
+            {[[D1; x : X; D2 |-l s : A]]}
+          }{[[D1; z : F X; D2 |-l let z : F X be F x in s : A]]}
+        }{[[D1; G; D2 |-l [y / z](let y : F X be F x in s) : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\NDdruleSXXGEName$:
+    \begin{center}
+      \footnotesize
+      $\NDdruleSXXGE{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\ElledruleSXXcutOneName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\ElledruleSXXGlName$] {
+            $$\mprset{flushleft}
+            \inferrule* [right=$\ElledruleSXXaxName$] {
+              \\
+            }{[[x : A |-l x : A]]}
+          }{[[y : Gf A |-l let y : Gf A be Gf x in x : A]]} \\
+           {[[I |-c t : Gf A]]}
+        }{[[I |-l [t / y](let y : Gf A be Gf x in x) : A]]}
+      \end{math}
+    \end{center}
+  \end{itemize}
+\end{itemize}
+
+
+
+\subsection{Mapping from Sequent Calculus to Natural Deduction}
+Function $N:\mathit{SE}\rightarrow\mathit{ND}$ maps a rule in the sequent
+calculus to a proof of the same sequent in the natural deduction. The
+function is defined as follows:
+
+\begin{itemize}
+\item Axioms map to axioms.
+\item Right rules map to introductions.
+\item Left rules map to eliminations modulo some structural fiddling.
+  \begin{itemize}
+  \item $\ElledruleTXXunitLName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleTXXunitL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleTXXcutName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleTXXidName$] {
+            \\
+          }{[[x : UnitT |-c x : UnitT]]} \\
+          {[[I, P |-c t : X]]}
+        }{[[I, P |-c let x : UnitT be trivTp in t : X]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleTXXtenLName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleTXXtenL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleTXXtenEName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleTXXidName$] {
+            \\
+          }{[[z : X (*) Y |-c z : X (*) Y]]} \\
+          {[[I, x : X, y : Y, P |-c t : Z]]}
+        }{[[I, z : X (*) Y, P |-c let z : X (*) Y be x (*) y in t : Z]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleTXXimpLName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleTXXimpL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleTXXcutName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleTXXimpEName$] {
+            $$\mprset{flushleft}
+            \inferrule* [right=$\NDdruleTXXidName$] {
+              \\
+            }{[[y : X -o Y |-c y : X -o Y]]} \\
+            {[[I |-c t1 : X]]}
+          }{[[y : X -o Y, I |-c y t1 : Y]]} \\
+           {[[P1, x : Y, P2 |-c t2 : Z]]}
+        }{[[P1, y : X -o Y, I, P2 |-c [y t1 / x]t2 : Z]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXunitLOneName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXunitLOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXunitEOneName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleTXXidName$] {
+            \\
+          }{[[x : UnitT |-c x : UnitT]]} \\
+          {[[G; D |-l s : A]]}
+        }{[[G; x : UnitT; D |-l let x : UnitT be trivTp in s : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXunitLTwoName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXunitLTwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXunitETwoName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleSXXidName$] {
+            \\
+          }{[[x : UnitS |-l x : UnitS]]} \\
+          {[[G; D |-l s : A]]}
+        }{[[G; x : UnitS; D |-l let x : UnitS be trivSp in s : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXtenLOneName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXtenLOne{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXtenEOneName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleTXXidName$] {
+            \\
+          }{[[z : X (*) Y |-c z : X (*) Y]]} \\
+          {[[G; x : X; y : Y; D |-l s : A]]}
+        }{[[G; z : X (*) Y; D |-l let z : X (*) Y be x (*) y in s : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXtenLTwoName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXtenLTwo{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXtenETwoName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleSXXidName$] {
+            \\
+          }{[[z : A (>) B |-l z : A (>) B]]} \\
+          {[[G; x : A; y : B; D |-l s : C]]}
+        }{[[G; z : A (>) B; D |-l let z : A (>) B be x (>) y in s : C]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXimpLName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXimpL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXcutOneName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleTXXimpEName$] {
+            $$\mprset{flushleft}
+            \inferrule* [right=$\NDdruleSXXidName$] {
+              \\
+            }{[[y : X -o Y |-c y : X -o Y]]} \\
+            {[[I |-c t : X]]}
+          }{[[y : X -o Y, I |-c y t : Y]]} \\
+           {[[G; x : Y; D |-l s : A]]}
+        }{[[G; y : X -o Y; I; D |-l [y t / x]s : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXimprLName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXimprL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXcutTwoName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleSXXimprEName$] {
+            $$\mprset{flushleft}
+            \inferrule* [right=$\NDdruleSXXidName$] {
+              \\
+            }{[[y : A -> B |-l y : A -> B]]} \\
+            {[[G |-l s1 : A]]}
+          }{[[y : A -> B; G |-l appr y s1 : B]]} \\
+           {[[D1; x : B; D2 |-l s2 : C]]}
+        }{[[D1; y : A -> B; G; D2 |-l [appr y s1 / x]s2 : C]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXimplLName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXimplL{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXcutTwoName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleSXXimplEName$] {
+            $$\mprset{flushleft}
+            \inferrule* [right=$\NDdruleSXXidName$] {
+              \\
+            }{[[y : B <- A |-l y : B <- A]]} \\
+            {[[G |-l s1 : A]]}
+          }{[[G; y : B <- A |-l appl y s1 : B]]} \\
+           {[[D1; x : B; D2 |-l s2 : C]]}
+        }{[[D1; G; y : B <- A; D2 |-l [appl y s1 / x]s2 : C]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXFlName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXFl{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXFEName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleSXXidName$] {
+            \\
+          }{[[y : F X |-l y : F X]]} \\
+          {[[G; x : X; D |-l s : A]]}
+        }{[[G; y : F X; D |-l let F x : F X be y in s : A]]}
+      \end{math}
+    \end{center}
+
+  \item $\ElledruleSXXGlName$:
+    \begin{center}
+      \footnotesize
+      $\ElledruleSXXGl{}$
+    \end{center}
+    maps to
+    \begin{center}
+      \footnotesize
+      \begin{math}
+        $$\mprset{flushleft}
+        \inferrule* [right=$\NDdruleSXXcutTwoName$] {
+          $$\mprset{flushleft}
+          \inferrule* [right=$\NDdruleSXXGEName$] {
+            $$\mprset{flushleft}
+            \inferrule* [right=$\NDdruleSXXidName$] {
+              \\
+            }{[[y : Gf A |-c y : Gf A]]}
+          }{[[y : Gf A |-l derelict y : A]]} \\
+           {[[G; x : A; D |-l s : B]]}
+        }{[[G; y : Gf A; D |-l [derelict y / x]s : B]]}
+      \end{math}
+    \end{center}
+    
+  \end{itemize}
+\end{itemize}
+
+
+
+%--------------------------------------------------
+%--------------------------------------------------
+\section{Strong Normalization}
+\label{app:strong-normalization}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

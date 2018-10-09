@@ -7,11 +7,11 @@ grammar
 
 
 % Lambek category:
-A, B, C :: 'lform_' ::=
+A, B, C, DT {{tex D}} :: 'lform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
   | UnitS    ::   :: UnitS
-  {{tex \mathsf{UnitS} }}
+  {{tex \mathsf{Unit} }}
   | A (>) B ::   :: Tensor        
   | A -> B  ::   :: RFun          
   | A <- B  ::   :: LFun          
@@ -22,12 +22,12 @@ A, B, C :: 'lform_' ::=
   {{tex \mathsf{F}[[X]] }}
 
 % Symmetric monoidal closed category:
-X, Y, Z :: 'sform_' ::=
+W, X, Y, Z :: 'sform_' ::=
   | Base    ::   :: Base          
   {{tex \mathsf{B} }}
   | UnitT    ::   :: UnitT
-  {{tex \mathsf{UnitT} }}
-  | X (x) Y ::   :: Tensor        
+  {{tex \mathsf{Unit} }}
+  | X (*) Y ::   :: Tensor        
   | X -o Y  ::   :: Fun          
   | ( X )   :: M :: Parens 
   | h( X )  :: M :: HiddenParens 
@@ -39,15 +39,15 @@ T :: 'type_' ::=
   | A :: :: LType
   | X :: :: SType
 
-p :: 'pattern_' ::=
+p, q :: 'pattern_' ::=
   | - :: :: hole
   {{tex \star }}
   | x :: :: var
-  | trivT :: :: trivT
-  {{tex \mathsf{trivT} }}
-  | trivS :: :: trivS
-  {{tex \mathsf{trivS} }}
-  | p (x) p' :: :: ten
+  | trivTp :: :: trivT
+  {{tex \mathsf{triv} }}
+  | trivSp :: :: trivS
+  {{tex \mathsf{triv} }}
+  | p (*) p' :: :: ten
   | p (>) p' :: :: lambek
   | F p :: :: LeftAdj
   {{tex \mathsf{F}\,[[p]] }}
@@ -57,12 +57,12 @@ p :: 'pattern_' ::=
 s :: 'term_' ::=
   | x :: :: Var
   | b :: :: Const
-  | trivS :: :: UnitS
-  {{tex \mathsf{trivS} }}
-  | let s1 : T be p in s2 :: :: let1
-  {{tex \mathsf{let}\,[[s1]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
-  | let t : T be p in s :: :: let2
-  {{tex \mathsf{let}\,[[t]] : [[T]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s]] }}
+  | trivSp :: :: UnitS
+  {{tex \mathsf{triv} }}
+  | let s1 : A be p in s2 :: :: let1
+  {{tex \mathsf{let}\,[[s1]] : [[A]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s2]] }}
+  | let t : X be p in s :: :: let2
+  {{tex \mathsf{let}\,[[t]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[s]] }}
   | s1 (>) s2 :: :: Tensor
   | \l x : A . s :: :: LFun
   {{tex \lambda_l [[x]] : [[A]].[[s]] }}
@@ -72,14 +72,10 @@ s :: 'term_' ::=
   {{tex \mathsf{app}_l\,[[s1]]\,[[s2]] }}
   | appr s1 s2   :: :: Appr
   {{tex \mathsf{app}_r\,[[s1]]\,[[s2]] }}
+  | derelict t :: :: Derelict
+  {{tex \mathsf{derelict}\,[[t]] }}
   | ex s1 , s2 with x1 , x2 in s3 :: :: Ex
   {{tex \mathsf{ex}\,[[s1]],[[s2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[s3]] }}
-  | contrR x as s1 , s2 in s3 :: :: ContrR
-  {{tex \mathsf{contrR}\,[[x]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
-  | contrL x as s1 , s2 in s3 :: :: ContrL
-  {{tex \mathsf{contrL}\,[[x]]\,\mathsf{as}\,[[s1]],[[s2]]\,\mathsf{in}\,[[s3]] }}
-  | weak x in s :: :: Weak
-  {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[s]] }}
   | [ s1 / x ] s2 :: M :: Subst
   | [ t / x ] s   :: M :: Subst2
   | ( s )         :: S :: parens
@@ -91,23 +87,17 @@ s :: 'term_' ::=
 t :: 'sterm_' ::=
   | x :: :: Var
   | b :: :: Const
-  | trivT :: :: UnitT
-  {{tex \mathsf{trivT} }}
+  | trivTp :: :: UnitT
+  {{tex \mathsf{triv} }}
   | let t1 : X be p in t2 :: :: let
   {{tex \mathsf{let}\,[[t1]] : [[X]]\,\mathsf{be}\,[[p]]\,\mathsf{in}\,[[t2]] }}
-  | t1 (x) t2 :: :: Tensor
+  | t1 (*) t2 :: :: Tensor
   | \ x : X . t :: :: Fun
   {{tex \lambda [[x]] : [[X]].[[t]] }}  
-  | app t1 t2   :: :: App
-  {{tex \mathsf{app}\,[[t1]]\,[[t2]] }}  
+  | t1 t2   :: :: App
+  {{tex [[t1]] [[t2]] }}  
   | ex t1 , t2 with x1 , x2 in t3 :: :: Ex
   {{tex \mathsf{ex}\,[[t1]],[[t2]]\,\mathsf{with}\,[[x1]],[[x2]]\,\mathsf{in}\,[[t3]] }}
-  | contrR x as t1 , t2 in t3 :: :: ContrR
-  {{tex \mathsf{contrR}\,[[x]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
-  | contrL x as t1 , t2 in t3 :: :: ContrL
-  {{tex \mathsf{contrR}\,[[x]]\,\mathsf{as}\,[[t1]],[[t2]]\,\mathsf{in}\,[[t3]] }}
-  | weak x in t :: :: Weak
-  {{tex \mathsf{weak}\,[[x]]\,\mathsf{in}\,[[t]] }}
   | [ t1 / x ] t2 :: M :: Subst
   | ( t )         :: S :: parens
   | h( t )        :: M :: hparen
@@ -119,16 +109,14 @@ I {{tex \Phi}}, P {{tex \Psi}} :: 'CCtx_' ::=
   {{tex \cdot }}
   | I1 , I2 ::   :: Ext
   | x : X   ::   :: ElC
-  | X       ::   :: ElCty
   | ( I )   :: S :: Paren
 
 G {{tex \Gamma}}, D {{tex \Delta}} :: 'Ctx_' ::=
   | .       ::   :: Empty
   {{tex \cdot }}
   | x : A   ::   :: El
-  | A       ::   :: Elty
   | I       ::   :: CCtx
-  | G1 , G2 ::   :: Ext
+  | G1 ; G2 ::   :: Ext
   | ( G )   :: S :: Paren
 
 formula :: 'formula_' ::=
@@ -144,15 +132,9 @@ formula :: 'formula_' ::=
   {{tex [[x]] \not\in | [[G]], [[D]], [[P]] | }}
   | x nin2 | G , D |     :: :: NiNCtx2
   {{tex [[x]] \not\in | [[G]], [[D]] | }}
-  | x nin3 | I , P |     :: :: NiNCtx3
-  {{tex [[x]] \not\in | [[I]], [[P]] | }}
 
 terminals :: 'terminals_' ::=
-  | UnitT :: :: UnitT
-  {{tex \mathsf{UnitT} }}
-  | UnitS :: :: UnitS
-  {{tex \mathsf{UnitS} }}
-  | (x)  :: :: Tensor
+  | (*)  :: :: Tensor
   {{tex \otimes }}
   | (>)  :: :: Lambek
   {{tex \triangleright }}
@@ -174,6 +156,8 @@ terminals :: 'terminals_' ::=
   {{tex \vdash_\mathcal{L} }}
   | ~>   :: :: To
   {{tex \leadsto }}
+  | ~~   :: :: Commute
+  {{tex \leadsto_\mathsf{c} }}
  
 defns
   Jtype :: '' ::=
@@ -185,52 +169,40 @@ by
   --------------- :: ax
   x : X |-c x : X
 
-  P |-c t : X
-  ------------------------------------------------ :: unitL
-  x : UnitT, P |-c let x : UnitT be trivT in t : X
+  I, P |-c t : X
+  --------------------------------------------------- :: unitL
+  I, x : UnitT, P |-c let x : UnitT be trivTp in t : X
 
-  ------------------- :: unitR
-  . |-c trivT : UnitT
+  -------------------- :: unitR
+  . |-c trivTp : UnitT
 
   I, x : X, y : Y, P |-c t : Z
-  ------------------------------------------------- :: beta
-  I, z : Y, w : X, P |-c ex w, z with x, y in t : Z
+  --------------------------------------------------------- :: tenL
+  I, z : X (*) Y, P |-c let z : X (*) Y be x (*) y in t : Z
 
-  I1, x : X, I2, y : X, I3 |-c t : Y
-  ----------------------------------------------- :: contrR
-  I1, I2, z : X, I3 |-c contrR z as x, y in t : Y
+  I |-c t1 : X && P |-c t2 : Y
+  ---------------------------- :: tenR
+  I, P |-c t1 (*) t2 : X (*) Y  
 
-  I1, x : X, I2, y : X, I3 |-c t : Y
-  ----------------------------------------------- :: contrL
-  I1, z : X, I2, I3 |-c contrR z as x, y in t : Y
+  I |-c t1 : X && P1, x : Y, P2 |-c t2 : Z
+  -------------------------------------------- :: impL
+  P1, y : X -o Y, I, P2 |-c [y t1/x]t2 : Z
 
-  I, P |-c t : Y && x nin2 |I, P|
-  ------------------------------- :: weak
-  I, x : X, P |-c weak x in t : Y
+  I, x : X, P |-c t : Y
+  ------------------------- :: impR
+  I, P |-c \ x:X.t : X -o Y
+
+  I |-l s : A
+  ----------------- :: Gr
+  I |-c Gf s : Gf A
 
   I |-c t1 : X && P1, x : X, P2 |-c t2 : Y
   --------------------------------------- :: cut
   P1, I, P2 |-c [t1/x]t2 : Y
 
   I, x : X, y : Y, P |-c t : Z
-  --------------------------------------------------------- :: tenL
-  I, z : X (x) Y, P |-c let z : X (x) Y be x (x) y in t : Z
-
-  I |-c t1 : X && P |-c t2 : Y
-  ---------------------------- :: tenR
-  I, P |-c t1 (x) t2 : X (x) Y  
-
-  I, x : X |-c t : Y
-  ------------------------- :: impR
-  I |-c \ x:X.t : X -o Y
-
-  I |-c t1 : X && P1, x : Y, P2 |-c t2 : Z
-  -------------------------------------------- :: impL
-  P1, y : X -o Y, I, P2 |-c [app y t1/x]t2 : Z
-
-  I |-l s : A
-  ----------------- :: Gr
-  I |-c Gf s : Gf A
+  ------------------------------------------------- :: ex
+  I, z : Y, w : X, P |-c ex w, z with x, y in t : Z
 
 defn
   G |-l s : A :: :: sty :: 'S_'
@@ -239,209 +211,72 @@ by
   --------------- :: ax
   x : A |-l x : A
 
-  D |-l s : A
+  G; D |-l s : A
   --------------------------------------------------- :: unitL1
-  x : UnitT, D |-l let x : UnitT be trivT in s : A
+  G; x : UnitT; D |-l let x : UnitT be trivTp in s : A
 
-  D |-l s : A
+  G; D |-l s : A
   --------------------------------------------------- :: unitL2
-  x : UnitS, D |-l let x : UnitS be trivS in s : A
+  G; x : UnitS; D |-l let x : UnitS be trivSp in s : A
 
-  ------------------- :: unitR
-  . |-l trivS : UnitS
+  -------------------- :: unitR
+  . |-l trivSp : UnitS
 
-  G, x : X, y : Y, D |-l s : A
-  ------------------------------------------------- :: beta
-  G, z : Y, w : X, D |-l ex w, z with x, y in s : A
+  G; x : X; y : Y; D |-l s : A
+  ------------------------------------------------- :: ex
+  G; z : Y; w : X; D |-l ex w, z with x, y in s : A
 
-  G1, x : X, G2, y : X, G3 |-l s : A
-  ----------------------------------------------- :: contrR
-  G1, G2, y : X, G3 |-l contrR z as x, y in s : A
-
-  G1, x : X, G2, y : X, G3 |-l s : A
-  ----------------------------------------------- :: contrL
-  G1, y : X, G2, G3 |-l contrR z as x, y in s : A
-
-  G, D |-l s : A && x nin2 |G, D|
-  ------------------------------- :: weak
-  G, x : X, D |-l weak x in s : B
-
-  I |-c t : X && G1, x : X, G2 |-l s : A
-  -------------------------------------- :: cut1
-  G1, I, G1 |-l [t/x]s : A
-
-  G |-l s1 : A && D1, x : A, D2 |-l s2 : B
-  ---------------------------------------- :: cut2
-  D1, G, D2 |-l [s1/x]s2 : B
-
-  G, x : X, y : Y, D |-l s : A
+  G; x : X; y : Y; D |-l s : A
   --------------------------------------------------------- :: tenL1
-  G, z : X (x) Y, D |-l let z : X (x) Y be x (x) y in s : A
+  G; z : X (*) Y; D |-l let z : X (*) Y be x (*) y in s : A
 
-  G, x : A, y : B, D |-l s : C
+  G; x : A; y : B; D |-l s : C
   --------------------------------------------------------- :: tenL2
-  G, z : A (>) B, D |-l let z : A (>) B be x (>) y in s : C
+  G; z : A (>) B; D |-l let z : A (>) B be x (>) y in s : C
 
   G |-l s1 : A && D |-l s2 : B
   ---------------------------- :: tenR
-  G, D |-l s1 (>) s2 : A (>) B
+  G; D |-l s1 (>) s2 : A (>) B
 
-  I |-c t : X && G, x : Y, D |-l s : A
+  I |-c t : X && G; x : Y; D |-l s : A
   ---------------------------------------- :: impL
-  G, y : X -o Y, I, D |-l [app y t/x]s : A
+  G; y : X -o Y; I; D |-l [y t/x]s : A
 
-  G |-l s1 : A && D1, x : B, D2 |-l s2 : C
+  G |-l s1 : A && D1; x : B; D2 |-l s2 : C
   --------------------------------------------- :: imprL
-  D1, y : A -> B, G, D2 |-l [appr y s1/x]s2 : C
+  D1; y : A -> B; G; D2 |-l [appr y s1/x]s2 : C
 
-  G |-l s1 : A && D1, x : B, D2 |-l s2 : C
-  --------------------------------------------- :: implL
-  D1, G, y : B <- A, D2 |-l [appl y s1/x]s2 : C
-
-  G, x : A |-l s : B
+  G; x : A |-l s : B
   ----------------------- :: imprR
   G |-l \r x:A.s : A -> B
 
-  x : A, G |-l s : B
+  G |-l s1 : A && D1; x : B; D2 |-l s2 : C
+  --------------------------------------------- :: implL
+  D1; G; y : B <- A; D2 |-l [appl y s1/x]s2 : C
+
+  x : A; G |-l s : B
   ------------------------ :: implR
   G |-l \l x:A.s : B <- A
+
+  G; x : X; D |-l s : A
+  --------------------------------------------- :: Fl
+  G; y : F X; D |-l let y : F X be F x in s : A
 
   I |-c t : X
   --------------- :: Fr
   I |-l F t : F X
 
-  G, x : X, D |-l s : A
-  --------------------------------------------- :: Fl
-  G, y : F X, D |-l let y : F X be F x in s : A
-
-  G, x : A, D |-l s : B
+  G; x : A; D |-l s : B
   ------------------------------------------------ :: Gl
-  G, y : Gf A, D |-l let y : Gf A be Gf x in s : B
+  G; y : Gf A; D |-l let y : Gf A be Gf x in s : B
 
-defns
-  Jty :: '' ::=
+  I |-c t : X && G1; x : X; G2 |-l s : A
+  -------------------------------------- :: cut1
+  G1; I; G1 |-l [t/x]s : A
 
-defn
-  I |-c X :: :: tse :: 'Tty_'
-by
-
-  ------- :: ax
-  X |-c X 
-
-  I |-c X
-  -------------- :: unitL
-  UnitT, I |-c X
-
-  ----------- :: unitR
-  . |-c UnitT
-
-  I, X, Y, P |-c Z
-  ---------------- :: beta
-  I, Y, X, P |-c Z
-
-  I |-c X && P1, X, P2 |-c Y
-  -------------------------- :: cut
-  P1, I, P2 |-c Y
-
-  I, X, Y, P |-c Z
-  ------------------- :: tenL
-  I, X (x) Y, P |-c Z
-
-  I |-c X && P |-c Y
-  ------------------ :: tenR
-  I, P |-c X (x) Y
-
-  I, X |-c Y
-  ------------ :: impR
-  I |-c X -o Y
-
-  I |-c X && P1, Y, P2 |-c Z
-  -------------------------- :: impL
-  P1, X -o Y, I, P2 |-c Z
-
-  I |-l A
-  ---------- :: GR
-  I |-c Gf A
-
-defn
-  G |-l A :: :: sse :: 'Sty_'
-by
-
-  ------- :: ax
-  A |-l A
-
-  D |-l A
-  -------------- :: unitL1
-  UnitT, D |-l A
-
-  D |-l A
-  -------------- :: unitL2
-  UnitS, D |-l A
-  
-  ----------- :: unitR
-  . |-l UnitS
-
-  G, X, Y, D |-l A
-  ---------------- :: beta
-  G, Y, X, D |-l A
-
-  I |-c X && G1, X, G2 |-l A
-  -------------------------- :: cut1
-  G1, I, G2 |-l A
-
-  G |-l A && D1, A, D2 |-l B
-  -------------------------- :: cut2
-  D1, A, D2 |-l B
-
-  G, X, Y, D |-l A
-  ------------------- :: tenL1
-  G, X (x) Y, D |-l A
-
-  G, A, B, D |-l C
-  ------------------- :: tenL2
-  G, A (>) B, D |-l C
-
-  G |-l A && D |-l B
-  ------------------ :: tenR
-  G, D |-l A (>) B
-
-  I |-c X && G, Y, D |-l A
-  ------------------------ :: impL
-  G, X -o Y, I, D |-l A
-
-  G |-l A && D1, B, D2 |-l C
-  -------------------------- :: imprL
-  D1, A -> B, G, D2 |-l C
-
-  G |-l A && D1, B, D2 |-l C
-  --------------------- :: implL
-  D1, G, B <- A, D2 |-l C
-
-  G, A |-l B
-  ------------ :: imprR
-  G |-l A -> B
-
-  A, G |-l B
-  ------------ :: implR
-  G |-l B <- A
-
-  I |-c X
-  --------- :: FR
-  I |-l F X
-
-  G, X, D |-l A
-  --------------- :: FL
-  G, F X, D |-l A
-
-  G, A, D |-l B
-  ---------------- :: GL
-  G, Gf A, D |-l B
-
-
-
-
-
-
+  G |-l s1 : A && D1; x : A; D2 |-l s2 : B
+  ---------------------------------------- :: cut2
+  D1; G; D2 |-l [s1/x]s2 : B
 
 
 
