@@ -4703,37 +4703,38 @@ constructed as follows with $c(\Pi) = c(\Pi') \leq |X|$.
 \label{app:m-natural-iso}
 
 We need to show that $\m{X,Y}\circ\p{X,Y}=id_{F(X\otimes Y)}$ and
-  $\p{X,Y}\circ\m{X,Y}=id_{FX\tri FX}$. The two equations hold because the following diagrams
-  commute: (1)-adjunction; (2)-$\eta$ is a monoidal natural transformation; (3)-naturality of
-  $\varepsilon$; (4)-adjunction; (5)-naturality of $\m{}$; (6)-$\varepsilon$ is a monoidal
-  natural transformation.
-  \begin{mathpar}
-  \bfig
-    \square/->`=`->`/<1600,800>[
-      F(X\otimes Y)`F(GFX\otimes GFY)`F(X\otimes Y)`FG(FX\tri FY);
-      F(\eta_X\otimes\eta_Y)``F\n{FX,FY}`]
-    \Atrianglepair|mmmbb|/->``->`<-`<-/<800,400>[
-      FGF(X\otimes Y)`F(X\otimes Y)`FX\tri FY`FG(FX\tri FY);
-      \varepsilon_{F(X\otimes Y)}``FG\m{X,Y}`\m{X,Y}`\varepsilon_{FX\tri FY}]
-    \morphism(0,800)|m|<800,-400>[F(X\otimes Y)`FGF(X\otimes Y);F\eta_{X\otimes Y}]
-    \morphism(300,450)//<0,0>[`;(1)]
-    \morphism(1200,600)//<0,0>[`;(2)]
-    \morphism(800,200)//<0,0>[`;(3)]
-  \efig
-  \and
-  \bfig
-    \square/->`=`->`/<1800,800>[
-      FX\tri FY`F(X\otimes Y)`FX\tri FY`F(GFX\otimes GFY);
-      \m{X,Y}``F(\eta_X\otimes\eta_Y)`]
-    \Atrianglepair|mmmbb|/->``->`<-`<-/<900,400>[
-      FGFX\tri FGFY`FX\tri FY`FG(FX\tri FY)`F(GFX\otimes GFY);
-      \varepsilon_{FX}\tri\varepsilon_{FY}``\m{GFX,GFY}`\varepsilon_{FX\tri FY}`F\n{FX,FY}]
-    \morphism(0,800)|m|<900,-400>[FX\tri FY`FGFX\tri FGFY;F\eta_X\tri F\eta_Y]
-    \morphism(300,450)//<0,0>[`;(4)]
-    \morphism(1300,600)//<0,0>[`;(5)]
-    \morphism(900,200)//<0,0>[`;(6)]
-  \efig
-  \end{mathpar}
+$\p{X,Y}\circ\m{X,Y}=id_{FX\tri FX}$. The two equations hold because the
+following diagrams commute: (1)-adjunction; (2)-$\eta$ is a monoidal
+natural transformation; (3)-naturality of $\varepsilon$; (4)-adjunction;
+(5)-naturality of $\m{}$; (6)-$\varepsilon$ is a monoidal natural
+transformation.
+\begin{mathpar}
+\bfig
+  \square/->`=`->`/<1600,800>[
+    F(X\otimes Y)`F(GFX\otimes GFY)`F(X\otimes Y)`FG(FX\tri FY);
+    F(\eta_X\otimes\eta_Y)``F\n{FX,FY}`]
+  \Atrianglepair|mmmbb|/->``->`<-`<-/<800,400>[
+    FGF(X\otimes Y)`F(X\otimes Y)`FX\tri FY`FG(FX\tri FY);
+    \varepsilon_{F(X\otimes Y)}``FG\m{X,Y}`\m{X,Y}`\varepsilon_{FX\tri FY}]
+  \morphism(0,800)|m|<800,-400>[F(X\otimes Y)`FGF(X\otimes Y);F\eta_{X\otimes Y}]
+  \morphism(300,450)//<0,0>[`;(1)]
+  \morphism(1200,600)//<0,0>[`;(2)]
+  \morphism(800,200)//<0,0>[`;(3)]
+\efig
+\and
+\bfig
+  \square/->`=`->`/<1800,800>[
+    FX\tri FY`F(X\otimes Y)`FX\tri FY`F(GFX\otimes GFY);
+    \m{X,Y}``F(\eta_X\otimes\eta_Y)`]
+  \Atrianglepair|mmmbb|/->``->`<-`<-/<900,400>[
+    FGFX\tri FGFY`FX\tri FY`FG(FX\tri FY)`F(GFX\otimes GFY);
+    \varepsilon_{FX}\tri\varepsilon_{FY}``\m{GFX,GFY}`\varepsilon_{FX\tri FY}`F\n{FX,FY}]
+  \morphism(0,800)|m|<900,-400>[FX\tri FY`FGFX\tri FGFY;F\eta_X\tri F\eta_Y]
+  \morphism(300,450)//<0,0>[`;(4)]
+  \morphism(1300,600)//<0,0>[`;(5)]
+  \morphism(900,200)//<0,0>[`;(6)]
+\efig
+\end{mathpar}
 
 
 

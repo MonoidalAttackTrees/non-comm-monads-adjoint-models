@@ -192,6 +192,10 @@ by
   ------------------------------------- :: sub
   Ph |-c [t1 / x]t2 : Y
 
+  Ph |-c t : Y
+  ------------------- :: weakening
+  Ph, x : X |-c t : Y
+
 defn
   G |-l s : A :: :: sty :: 'S_'
 by
@@ -242,7 +246,9 @@ by
   ------------------------------------------- :: sub2
   Ph; G, D |-l [s1 / x]s2 : B
 
-
+  Ph; D |-l s : A
+  ---------------------- :: weakening
+  Ph, x : X; D |-l s : A
 
 defns
   Reduction :: '' ::=

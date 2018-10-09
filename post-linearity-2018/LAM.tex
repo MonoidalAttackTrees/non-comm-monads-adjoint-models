@@ -262,12 +262,57 @@ rules $\NDdruleSXXunitEOneName{}$ and $\NDdruleSXXtenEOneName{}$.
   \label{fig:CNC-commutating-conversions-both}
 \end{figure}
 
-\textbf{Additional Results.} In addition to the results given so far, we
-also proved that the sequent calculus formalization is equivalent to the
-natural deduction formalization given here
-(Appendix~\ref{app:seq-nat-equiv}). Furthermore, we proved strong
-normalization of CNC logic via a translation to LNL logic
-(Appendix~\ref{app:strong-normalization}).
+We also proved that the sequent calculus formalization given in
+Figure~\ref{fig:CNC-sequent-calculus} is equivalent to the typing rules (or
+else called the natural deduction formalization) given in
+Figure~\ref{fig:CNC-typing-rules} are equivalent, as stated in the following
+theorem.
+\begin{theorem}
+  \label{thm:sc-nd-equiv}
+  The sequent calculus ($\mathit{SC}$) and natural deduction ($\mathit{ND}$)
+  formalizations for CNC logic are equivalent in the sense that there are
+  two mappins $N:\mathit{SC}\rightarrow\mathit{ND}$ and
+  $S:\mathit{ND}\rightarrow\mathit{SC}$ that map each rule in $\mathit{SC}$
+  to a proof in $\mathit{ND}$, and each rule in $\mathit{ND}$ to a proof
+  in $\mathit{SC}$, respectively.
+\end{theorem}
+\begin{proof}
+  The proof is done case by case on each rule in the sequence calculus and
+  natural deduction formalizations. It is obvious that the axioms in one
+  formalization can be mapped to the axioms in the other. The introduction
+  rules in $\mathit{ND}$ are mapped to the right rules in $\mathit{SC}$, and
+  vice versa. The elimination rules and lefts rules are mapped to each other
+  with some fiddling. For instance, the elimination rule for the
+  non-commutative tensor is mapped to the following proof in $\mathit{SC}$:
+  \begin{center}
+    \scriptsize
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\scriptsize $\ElledruleTXXcutName$}] {
+        {[[I |-c t1 : X (*) Y]]} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\scriptsize $\ElledruleTXXtenLName$}] {
+          {[[P1, x : X, y : Y, P2 |-c t2 : Z]]}
+        }{[[P1, z : X (*) Y, P2 |-c let z : X (*) Y be x (*) y in t2 : Z]]}
+      }{[[P1, I, P2 |-c [t1 / z](let z : X (*) Y be x (*) y in t2) : Z]]}
+    \end{math}
+  \end{center}
+  The full proof is in Appendix~\ref{app:sc-nd-equiv}.
+\end{proof}
+
+Finally, we proved strong normalization of CNC logic via a translation to
+LNL logic. The proof is in Appendix~\ref{app:strong-normalization}. We first
+define a function $CL$ that maps our term assignment for natural deduction
+to Benton's term assignment, and then shows that if there is reduction
+$[[t1 ~> t2]]$ (resp. $[[s1 ~> s2]]$) in CNC, then there is a reduction
+$CL(t_1)\leadsto CL(t_2)$ (resp. $CL(s_1)\leadsto CL(s_2)$) in LNL. Recall
+that a LNL model consists of an adjunction $F:\cat{C}\dashv\cat{L}:G$ in
+which $\cat{C}$ is a cartesian closed category and $\cat{L}$ is a SMCC.
+The basic idea of mapping a LAM model to a LNL model is mapping the SMCC in
+LAM to the cartesian closed category in LNL, and the Lambek category in LAM
+to the SMCC in LNL. For instance, $s_1\triangleright s_2$ in CNC, where
+$[[s1]]$ and $[[s2]]$ are atomic terms, maps to $s_1\otimes s_2$ in LNL.
+
 
 
 

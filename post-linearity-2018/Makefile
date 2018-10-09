@@ -34,6 +34,13 @@ quick : quick-pdf
 
 pdf : $(PDF)
 
+appendix3-output.tex : appendix3.tex Elle-ND/Elle-ND.ott LNL/LNL.ott 
+	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
+		-tex_filter appendix3.tex appendix3-output1.tex
+	scripts/prepr_double_ott.sh appendix3-output1.tex
+	@$(OTT) $(OTT_FLAGS) -i LNL/LNL.ott -o LNL-inc.tex -tex_name_prefix LNL \
+	-tex_filter appendix3-output1.tex appendix3-output.tex
+
 appendix2-output.tex : appendix2.tex Elle-ND/Elle-ND.ott Elle/Elle.ott
 	@$(OTT) $(OTT_FLAGS) -i Elle-ND/Elle-ND.ott -o Elle-ND-inc.tex -tex_name_prefix ND \
 		-tex_filter appendix2.tex appendix2-output1.tex
@@ -63,7 +70,7 @@ LAM-output.tex : LAM/LAM.ott LAM.tex
 # Now this takes the full LaTex translation and compiles it using
 # pdflatex.
 # main.pdf : main.tex Makefile adjoint-model.tex ref.bib
-$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex adjoint-models.tex LAM-output.tex dialectica-spaces.tex fwork.tex sequent-output.tex appendix-output.tex appendix2-output.tex
+$(PDF) : main.tex Makefile ref.bib Makefile introduction.tex adjoint-models.tex LAM-output.tex dialectica-spaces.tex fwork.tex sequent-output.tex appendix-output.tex appendix2-output.tex appendix3-output.tex
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)
 	bibtex $(TexFileName)
 	$(PDFLATEX) -jobname=$(TexFileName) $(OTTOutputFile)

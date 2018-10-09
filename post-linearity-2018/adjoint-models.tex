@@ -41,30 +41,23 @@ $\m{I} : I' \mto FI$ is an isomorphism. This is essential for modeling
 certain rules of CNC logic, such as tensor elimination in natural
 deduction.  We define the inverses of $\m{X,Y}:FX\tri FY\rightarrow
 F(X\otimes Y)$ and $\m{I}:I'\rightarrow FI$ as:
+\vspace{-1em}
 \begin{mathpar}
+\footnotesize
 \bfig
   \morphism<1000,0>[\p{X,Y}:F(X\otimes Y)`F(GFX\otimes GFY);F(\eta_X\otimes\eta_Y)]
   \morphism(1000,0)<900,0>[F(GFX\otimes GFY)`FG(FX\tri FY);F\n{FX,FY}]
   \morphism(1900,0)<750,0>[FG(FX\tri FY)`FX\tri FY;\varepsilon_{FX\tri FX}]
 \efig
-\and
+\end{mathpar}
+\vspace{-1.6em}
+\begin{mathpar}
+\footnotesize
 \bfig
   \morphism<500,0>[\p{I}:FI`FGI';F\n{I'}]
   \morphism(500,0)<400,0>[FGI'`I';\varepsilon_{I'}]
 \efig
 \end{mathpar}
-We can now see that this straightforwardly follows from Benton's proof.
-
-\begin{theorem}
-\label{thm:m-natural-iso}
-  $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$. 
-\end{theorem}
-\begin{proof}
-  This proof follows by a diagram chase using the adjunction in the
-  definition of a LAM and naturality. The detail of the proof is in
-  Appendix~\ref{app:m-natural-iso}.
-\end{proof}
-
 \begin{theorem}
 \label{thm:m-iso}
   $\m{I}$ is an isomorphism and its inverse is $\p{I}$.
@@ -74,12 +67,57 @@ We can now see that this straightforwardly follows from Benton's proof.
   $\p{I}\circ\m{I}=id_{I'}$, equivalent to the following diagrams, which
   commute because $\varepsilon$ is a monoidal natural transformation.
   \begin{mathpar}
+  \footnotesize
   \bfig
     \square/->`=`->`<-/<400,400>[FI`FGI'`FI`I';F\n{I'}``\varepsilon_{I'}`\m{I}]
   \efig
   \and
   \bfig
     \square/->`=`->`<-/<400,400>[I'`FI`I'`FGI';\m{I}``F\n{I'}`\varepsilon_{I'}]
+  \efig
+  \end{mathpar}
+\end{proof}
+
+\begin{theorem}
+\label{thm:m-natural-iso}
+  $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$. 
+\end{theorem}
+\begin{proof}
+  This is equivalent to that the two equations
+  $\m{X,Y}\circ\p{X,Y}=id_{F(X\otimes Y)}$ and
+  $\p{X,Y}\circ\m{X,Y}=id_{FX\tri FX}$ hold, which is proved because the
+  following diagrams commute: (1)-adjunction; (2)-$\eta$ is a monoidal
+  natural transformation; (3)-naturality of $\varepsilon$; (4)-adjunction;
+  (5)-naturality of $\m{}$; (6)-$\varepsilon$ is a monoidal natural
+  transformation.
+  \begin{mathpar}
+  \footnotesize
+  \bfig
+    \square/->`=`->`/<1600,800>[
+      F(X\otimes Y)`F(GFX\otimes GFY)`F(X\otimes Y)`FG(FX\tri FY);
+      F(\eta_X\otimes\eta_Y)``F\n{FX,FY}`]
+    \Atrianglepair|mmmbb|/->``->`<-`<-/<800,400>[
+      FGF(X\otimes Y)`F(X\otimes Y)`FX\tri FY`FG(FX\tri FY);
+      \varepsilon_{F(X\otimes Y)}``FG\m{X,Y}`\m{X,Y}`\varepsilon_{FX\tri FY}]
+    \morphism(0,800)|m|<800,-400>[F(X\otimes Y)`FGF(X\otimes Y);F\eta_{X\otimes Y}]
+    \morphism(300,450)//<0,0>[`;(1)]
+    \morphism(1200,600)//<0,0>[`;(2)]
+    \morphism(800,200)//<0,0>[`;(3)]
+  \efig
+  \end{mathpar}
+  \begin{mathpar}
+  \footnotesize
+  \bfig
+    \square/->`=`->`/<1800,800>[
+      FX\tri FY`F(X\otimes Y)`FX\tri FY`F(GFX\otimes GFY);
+      \m{X,Y}``F(\eta_X\otimes\eta_Y)`]
+    \Atrianglepair|mmmbb|/->``->`<-`<-/<900,400>[
+      FGFX\tri FGFY`FX\tri FY`FG(FX\tri FY)`F(GFX\otimes GFY);
+      \varepsilon_{FX}\tri\varepsilon_{FY}``\m{GFX,GFY}`\varepsilon_{FX\tri FY}`F\n{FX,FY}]
+    \morphism(0,800)|m|<900,-400>[FX\tri FY`FGFX\tri FGFY;F\eta_X\tri F\eta_Y]
+    \morphism(300,450)//<0,0>[`;(4)]
+    \morphism(1300,600)//<0,0>[`;(5)]
+    \morphism(900,200)//<0,0>[`;(6)]
   \efig
   \end{mathpar}
 \end{proof}

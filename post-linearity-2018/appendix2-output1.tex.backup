@@ -2,7 +2,7 @@
 %--------------------------------------------------
 %--------------------------------------------------
 \section{Equivalence of Sequent Calculus and Natural Deduction Formalizations}
-\label{app:seq-nat-equiv}
+\label{app:sc-nd-equiv}
 
 We prove the equivalence of the sequence calculus formalization and the
 natural deduction formalization given in the paper by defining two
@@ -14,7 +14,7 @@ natural deduction.
 
 \subsection{Mapping from Natural Deduction to Sequent Calculus}
 
-Function $S:\mathit{ND}\rightarrow\mathit{SE}$ maps a rule in the natural
+Function $S:\mathit{ND}\rightarrow\mathit{SC}$ maps a rule in the natural
 deduction formalization to a proof of the same sequent in the sequent
 calculus. The function is defined as follows:
 
@@ -263,7 +263,7 @@ calculus. The function is defined as follows:
 
 
 \subsection{Mapping from Sequent Calculus to Natural Deduction}
-Function $N:\mathit{SE}\rightarrow\mathit{ND}$ maps a rule in the sequent
+Function $N:\mathit{SC}\rightarrow\mathit{ND}$ maps a rule in the sequent
 calculus to a proof of the same sequent in the natural deduction. The
 function is defined as follows:
 
@@ -536,10 +536,6 @@ function is defined as follows:
 
 
 
-%--------------------------------------------------
-%--------------------------------------------------
-\section{Strong Normalization}
-\label{app:strong-normalization}
 
 
 
