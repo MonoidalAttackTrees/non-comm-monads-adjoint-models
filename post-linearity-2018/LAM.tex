@@ -300,22 +300,27 @@ theorem.
   The full proof is in Appendix~\ref{app:sc-nd-equiv}.
 \end{proof}
 
-Finally, we proved strong normalization of CNC logic via a translation to
-LNL logic. The proof is in Appendix~\ref{app:strong-normalization}. We first
-define a function $CL$ that maps our term assignment for natural deduction
-to Benton's term assignment, and then shows that if there is reduction
-$[[t1 ~> t2]]$ (resp. $[[s1 ~> s2]]$) in CNC, then there is a reduction
-$CL(t_1)\leadsto CL(t_2)$ (resp. $CL(s_1)\leadsto CL(s_2)$) in LNL. Recall
-that a LNL model consists of an adjunction $F:\cat{C}\dashv\cat{L}:G$ in
-which $\cat{C}$ is a cartesian closed category and $\cat{L}$ is a SMCC.
-The basic idea of mapping a LAM model to a LNL model is mapping the SMCC in
-LAM to the cartesian closed category in LNL, and the Lambek category in LAM
-to the SMCC in LNL. For instance, $s_1\triangleright s_2$ in CNC, where
-$[[s1]]$ and $[[s2]]$ are atomic terms, maps to $s_1\otimes s_2$ in LNL.
+\noindent
+Finally, we have strong normalization of CNC logic.
 
-
-
-
+\begin{theorem}[Strong Normalization]
+  \label{thm:strong-normalization}
+  CNC logic is strongly normalizing.
+\end{theorem}
+\begin{proof}
+  The proof is via a translation to LNL logic. The proof is in
+  Appendix~\ref{app:strong-normalization}. We first define a function
+  $CL$ that maps our term assignment for natural deduction to Benton's
+  term assignment, and then shows that if there is reduction $[[t1 ~>  t2]]$ (resp. $[[s1 ~> s2]]$) in CNC, then there is a reduction
+  $CL(t_1)\leadsto CL(t_2)$ (resp. $CL(s_1)\leadsto CL(s_2)$) in
+  LNL. Recall that a LNL model consists of an adjunction
+  $F:\cat{C}\dashv\cat{L}:G$ in which $\cat{C}$ is a cartesian closed
+  category and $\cat{L}$ is a SMCC.  The basic idea of mapping a LAM
+  model to a LNL model is mapping the SMCC in LAM to the cartesian
+  closed category in LNL, and the Lambek category in LAM to the SMCC in
+  LNL. For instance, $s_1\triangleright s_2$ in CNC, where $[[s1]]$ and
+  $[[s2]]$ are atomic terms, maps to $CL(s_1)\otimes CL(s_2)$ in LNL.
+\end{proof}
 
 %%% Local Variables: 
 %%% mode: latex
