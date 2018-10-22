@@ -4,7 +4,8 @@
 Following a similar syntax, we use $<<Ph, P>>$, $<<X>>,<<Y>>$ for the
 cartesian closed category in LNL, and $<<G,D>>$, $<<A>>, <<B>>$ for the
 SMCC. The term assignment for LNL is included in Figure~\ref{fig:lnl} for
-reference.
+reference. Note that subsitutions $\NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{2}}}}$, $\NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}$,
+and $\NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{2}}}}$ are also present in LNL.
 
 \begin{figure}[!h]
  \scriptsize
@@ -83,6 +84,31 @@ types, and $s$ is an atomic term.
         $CL(\Gamma)=CL(<<P>>);\LNL(<<D>>)$, where $<<P>>$ is the multiset of
         commutative contexts in $\Gamma$, and $<<D>>$ is the multiset of
         non-commutative contexts in $\Gamma$.
+  \item $CL( \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X} \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}} ) = << [ t1' / x' ] t2' >>$,
+        where $<<t1'>> = CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>> = CL(\NDnt{t_{{\mathrm{2}}}})$, and $<<x'>>$
+        is any variable of type $<<X'>> = CL(\NDnt{X})$.
+  \item $CL( \mathsf{let}\, \NDnt{t}  :  \NDnt{X} \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \NDnt{s} ) = << [ t' / x' ] s' >>$,
+        where $<<t'>> = CL(\NDnt{t})$, $<<s'>> = CL(\NDnt{s})$, and $<<x'>>$
+        is any variable of type $<<X'>> = CL(\NDnt{X})$.
+  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A be * in s2'>>$,
+        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$, and
+        $<<A'>> = CL(\NDnt{A})$.
+  \item $CL( \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{Z} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}} ) = [snd(t1') / y'][fst(t1') / x']t2'$
+        where $<<t1'>> = CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>> = CL(\NDnt{t_{{\mathrm{2}}}})$,
+        $<<x'>> = CL(\NDmv{x})$, and $<<y'>> = CL(\NDmv{y})$.
+  \item $CL( \mathsf{let}\, \NDnt{t}  :  \NDnt{Z} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s} ) = [snd(t') / y'][fst(t') / x']s'$
+        where $<<t'>> = CL(\NDnt{t})$, $<<s'>> = CL(\NDnt{s})$,
+        $<<x'>> = CL(\NDmv{x})$, and $<<y'>> = CL(\NDmv{y})$.
+  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A' be x' (x) y' in s2'>>$,
+        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$,
+        $<<x'>> = CL(\NDmv{x})$, $<<y'>> = CL(\NDmv{y})$, $<<A'>> = CL(\NDnt{A})$.
+  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A' be x' (x) y' in s2'>>$,
+        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$,
+        $<<x'>> = CL(\NDmv{x})$, $<<y'>> = CL(\NDmv{y})$, and
+        $<<A'>> = CL(\NDnt{A})$.
+  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\,  \mathsf{F}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A' be F x' in s2'>>$,
+        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$,
+        $<<x'>> = CL(\NDmv{x})$, and $<<A'>> = CL(\NDnt{A})$.
   \end{itemize}
 \end{definition}
 

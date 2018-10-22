@@ -4,7 +4,8 @@
 Following a similar syntax, we use $<<Ph, P>>$, $<<X>>,<<Y>>$ for the
 cartesian closed category in LNL, and $<<G,D>>$, $<<A>>, <<B>>$ for the
 SMCC. The term assignment for LNL is included in Figure~\ref{fig:lnl} for
-reference.
+reference. Note that subsitutions $[[ [t1 / x] t2 ]]$, $[[ [t / x] s ]]$,
+and $[[ [s1 / x] s2 ]]$ are also present in LNL.
 
 \begin{figure}[!h]
  \scriptsize
@@ -83,6 +84,31 @@ types, and $s$ is an atomic term.
         $CL([[G]])=CL(<<P>>);\LNL(<<D>>)$, where $<<P>>$ is the multiset of
         commutative contexts in $[[G]]$, and $<<D>>$ is the multiset of
         non-commutative contexts in $[[G]]$.
+  \item $CL([[let t1 : X be trivTp in t2]]) = << [ t1' / x' ] t2' >>$,
+        where $<<t1'>> = CL([[t1]])$, $<<t2'>> = CL([[t2]])$, and $<<x'>>$
+        is any variable of type $<<X'>> = CL([[X]])$.
+  \item $CL([[let t : X be trivTp in s]]) = << [ t' / x' ] s' >>$,
+        where $<<t'>> = CL([[t]])$, $<<s'>> = CL([[s]])$, and $<<x'>>$
+        is any variable of type $<<X'>> = CL([[X]])$.
+  \item $CL([[let s1 : A be trivSp in s2]]) = <<let s1' : A be * in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$, and
+        $<<A'>> = CL([[A]])$.
+  \item $CL([[let t1 : Z be x (*) y in t2]]) = [snd(t1') / y'][fst(t1') / x']t2'$
+        where $<<t1'>> = CL([[t1]])$, $<<t2'>> = CL([[t2]])$,
+        $<<x'>> = CL([[x]])$, and $<<y'>> = CL([[y]])$.
+  \item $CL([[let t : Z be x (*) y in s]]) = [snd(t') / y'][fst(t') / x']s'$
+        where $<<t'>> = CL([[t]])$, $<<s'>> = CL([[s]])$,
+        $<<x'>> = CL([[x]])$, and $<<y'>> = CL([[y]])$.
+  \item $CL([[let s1 : A be x (>) y in s2]]) = <<let s1' : A' be x' (x) y' in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$,
+        $<<x'>> = CL([[x]])$, $<<y'>> = CL([[y]])$, $<<A'>> = CL([[A]])$.
+  \item $CL([[let s1 : A be x (>) y in s2]]) = <<let s1' : A' be x' (x) y' in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$,
+        $<<x'>> = CL([[x]])$, $<<y'>> = CL([[y]])$, and
+        $<<A'>> = CL([[A]])$.
+  \item $CL([[let s1 : A be F x in s2]]) = <<let s1' : A' be F x' in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$,
+        $<<x'>> = CL([[x]])$, and $<<A'>> = CL([[A]])$.
   \end{itemize}
 \end{definition}
 
