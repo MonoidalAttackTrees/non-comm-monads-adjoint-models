@@ -54,19 +54,26 @@ $\NDnt{A}$, $\NDnt{B}$, $\NDnt{Y}$, $\NDnt{Z}$, $\NDnt{C_{{\mathrm{1}}}}$ and $\
 types, and $s$ is an atomic term.
 
 \begin{definition}
-  The function $CL$ that maps CNL to LNL is defined recursively as follows:
+  The function $CL$ that maps CNC to LNL is defined recursively as follows:
   \begin{itemize}
   \item Variables map to themselves: $CL(\NDmv{x}) = [[x]]$
-  \item $CL( \mathsf{triv} ) = [[u]], \qquad CL( \mathsf{triv} ) = [[*]], \qquad CL( \mathsf{Unit} ) = [[1]], \qquad CL( \mathsf{Unit} ) = [[I]]$
+  \item Commutative unit: $CL( \mathsf{triv} ) = [[u]] \qquad CL( \mathsf{Unit} ) = [[1]]$
+  \item Non-commutative unit: $CL( \mathsf{triv} ) = [[*]], \qquad CL( \mathsf{Unit} ) = [[I]]$
   \item Other atomic types map to themselves: $CL(\NDnt{X}) = [[X]]$,
         $CL(\NDnt{A}) = [[A]]$
   \item Other atomic terms map to themselves: $CL(\NDnt{t}) = [[t]]$,
         $CL(\NDnt{s}) = [[s]]$
-  \item $CL(\NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}) = (CL(t_1),\LNL(t_2)), \qquad CL(\NDnt{X}  \otimes  \NDnt{Y})=CL(X)\times CL(Y) $
+  \item $CL(\NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}) = (CL(t_1),CL(t_2)), \qquad CL(\NDnt{X}  \otimes  \NDnt{Y})=CL(X)\times CL(Y) $
   \item $CL(\NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}) = CL(s_1)\otimes CL(s_2), \qquad CL(\NDnt{A}  \triangleright  \NDnt{B})=CL(A)\otimes CL(B)$
-  \item $CL( \NDnt{t_{{\mathrm{1}}}}   \NDnt{t_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(t_1)\,\,\,CL(t_2), \qquad CL(\NDnt{X}  \multimap  \NDnt{Y}) = CL(X) \multimap CL(Y)$
-  \item $CL( \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2), \qquad CL(\NDnt{A}  \rightharpoonup  \NDnt{B}) = CL(A) \multimap CL(B)$
-  \item $CL( \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2), \qquad CL(\NDnt{B}  \leftharpoonup  \NDnt{A}) = CL(A) \multimap CL(B)$
+  \item $CL( \NDnt{t_{{\mathrm{1}}}}   \NDnt{t_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(t_1)\,\,\,CL(t_2)$,
+        $\qquad CL( \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t} ) = \lambda CL(x):CL(X).CL(t)$,\\
+        $CL(\NDnt{X}  \multimap  \NDnt{Y}) = CL(X) \rightarrow CL(Y)$
+  \item $CL( \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2)$,
+        $\qquad CL( \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s} ) = \lambda CL(x):CL(A).CL(s)$,\\
+        $CL(\NDnt{A}  \rightharpoonup  \NDnt{B}) = CL(A) \multimap CL(B)$
+  \item $CL( \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2)$,
+        $\qquad CL( \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s} ) = \lambda CL(x):CL(A).CL(s)$,\\
+        $CL(\NDnt{B}  \leftharpoonup  \NDnt{A}) = CL(A) \multimap CL(B)$
   \item $CL( \mathsf{G}\, \NDnt{s} ) = \mathsf{G}\,CL([[s]])$, \qquad $CL( \mathsf{G} \NDnt{A} ) = \mathsf{G}\,CL([[A]])$
   \item $CL( \mathsf{F} \NDnt{t} ) = \mathsf{F}\,CL([[t]])$, \qquad $CL( \mathsf{F} \NDnt{X} ) = \mathsf{F}\,CL([[X]])$
   \item Suppose $\Phi$ is a commutative context, i.e.,
@@ -98,9 +105,11 @@ types, and $s$ is an atomic term.
               $$\mprset{flushleft}
               \inferrule* [right=$\LNLdruleTXXidName$] {
                 \\
-              }{[[., x : X |-c x : X]]}
+              }{[[., x' : X' |-c x' : X']]}
             \end{math}
           \end{center}
+          where $X'=CL(X)$, and $x'=CL(x)=x$ for $CL$ maps a variable to
+          itself.
 
     \item $\NDdruleTXXunitIName:$
           \begin{center}
@@ -117,6 +126,8 @@ types, and $s$ is an atomic term.
               }{[[. |-c u : 1]]}
             \end{math}
           \end{center}
+          since $CL( \mathsf{triv} ) = [[u]]$ and $CL( \mathsf{Unit} ) = [[1]]$ for
+          the commutative unit.
 
     \item $\NDdruleTXXunitEName:$
           \begin{center}
@@ -129,17 +140,20 @@ types, and $s$ is an atomic term.
             \begin{math}
               $$\mprset{flushleft}
               \inferrule* [right=$\LNLdruleTXXsubName$] {
-                {[[Ph |-c t1 : 1]]} \\
+                {[[Ph' |-c t1' : 1]]} \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right=$\LNLdruleTXXweakeningName$] {
-                    {[[P |-c t2 : Y]]}
-                  }{[[P, x : 1 |-c t2 : Y]]}
-                }{[[x : 1, P |-c t2 : Y]]}
-              }{[[Ph, P |-c [t1 / x]t2 : Y]]}
+                    {[[P' |-c t2' : Y']]}
+                  }{[[P', x : 1 |-c t2' : Y']]}
+                }{[[x : 1, P' |-c t2' : Y']]}
+              }{[[Ph', P' |-c [t1' / x']t2' : Y']]}
             \end{math}
           \end{center}
+          where $[[P']]=CL(\Psi)$, $[[Ph']]=CL(\Phi)$,
+          $[[t1']]=CL(\NDnt{t_{{\mathrm{1}}}})$, $[[t2']]=CL(\NDnt{t_{{\mathrm{2}}}})$, and
+          $[[Y']]=CL(\NDnt{Y})$.
 
     \item $\NDdruleTXXtenIName:$
           \begin{center}
@@ -154,19 +168,24 @@ types, and $s$ is an atomic term.
               \inferrule* [right=$\LNLdruleTXXprodEOneName$] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiple weakening}] {
-                  {[[Ph |-c t1 : X]]}
-                }{[[Ph, P |-c t1 : X]]}
+                  {[[Ph' |-c t1' : X']]}
+                }{[[Ph', P' |-c t1' : X']]}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiple weakening}] {
-                    {[[P |-c t2 : Y]]}
-                  }{[[P, Ph |-c t2 : Y]]}
-                }{[[Ph, P |-c t2 : Y]]}
-              }{[[Ph, P |-c (t1 , t2) : X (t) Y]]}
+                    {[[P' |-c t2' : Y']]}
+                  }{[[P', Ph' |-c t2' : Y']]}
+                }{[[Ph', P' |-c t2' : Y']]}
+              }{[[Ph', P' |-c (t1' , t2') : X' (t) Y']]}
             \end{math}
           \end{center}
+          where $[[P']]=CL(\Psi)$, $[[Ph']]=CL(\Phi)$,
+          $[[t1']]=CL(\NDnt{t_{{\mathrm{1}}}})$, $[[t2']]=CL(\NDnt{t_{{\mathrm{2}}}})$, and
+          $[[X']]=CL(\NDnt{X})$, $[[Y']]=CL(\NDnt{Y})$. Note that
+          $\NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}} : \NDnt{X}  \otimes  \NDnt{Y}$ is mapped to 
+          $(CL(\NDnt{t_{{\mathrm{1}}}}),CL(\NDnt{t_{{\mathrm{2}}}})) : CL(\NDnt{X})\times CL(\NDnt{Y})$.
 
     \item $\NDdruleTXXtenEName:$
           \begin{center}
@@ -187,24 +206,30 @@ types, and $s$ is an atomic term.
                       \inferrule* [right={\tiny $\LNLdruleTXXsubName$}] {
                         $$\mprset{flushleft}
                         \inferrule* [right={\tiny $\LNLdruleTXXprodEOneName$}] {
-                          {[[Ph |-c t1 : X (t) Y]]}
-                        }{[[Ph |-c fst(t1) : X]]}
+                          {[[Ph' |-c t1' : X' (t) Y']]}
+                        }{[[Ph' |-c fst(t1') : X']]}
                         \\
                         $$\mprset{flushleft}
                         \inferrule* [right={\tiny multiset}] {
-                          {[[P1, x : X, y : Y, P2 |-c t2 : Z]]}
-                        }{[[x : X, y : Y, P1, P2 |-c t2 : Z]]}
-                      }{[[Ph, y : Y, P1, P2 |-c [fst(t1) / x]t2 : Z]]}
-                    }{[[y : Y, Ph, P1, P2 |-c [fst(t1) / x]t2 : Z]]}
+                          {[[P1', x' : X', y' : Y', P2' |-c t2' : Z']]}
+                        }{[[x' : X', y' : Y', P1', P2' |-c t2' : Z']]}
+                      }{[[Ph', y' : Y', P1', P2' |-c [fst(t1') / x']t2' : Z']]}
+                    }{[[y' : Y', Ph', P1', P2' |-c [fst(t1') / x']t2' : Z']]}
                     \\
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny $\LNLdruleTXXprodETwoName$}] {
-                      {[[Ph |-c t1 : X (t) Y]]}
-                    }{[[Ph |-c snd(t1) : Y]]}
-                  }{[[Ph, Ph, P1, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z]]}
-              }{[[P1, Ph, P2 |-c [snd(t1) / y][fst(t1) / x]t2 : Z]]}
+                      {[[Ph' |-c t1' : X' (t) Y']]}
+                    }{[[Ph' |-c snd(t1') : Y']]}
+                  }{[[Ph', Ph', P1', P2' |-c [snd(t1') / y'][fst(t1') / x']t2' : Z']]}
+              }{[[P1', Ph', P2' |-c [snd(t1') / y'][fst(t1') / x']t2' : Z']]}
             \end{math}
           \end{center}
+          where $[[P']]=CL(\Psi)$, $[[Ph1']]=CL(\Phi_{{\mathrm{1}}})$,
+          $[[Ph2']]=CL(\Phi_{{\mathrm{2}}})$, $[[x']]=CL(\NDmv{x})=x$,
+          $[[y']]=CL(\NDmv{y})=y$, $[[t1']]=CL(\NDnt{t_{{\mathrm{1}}}})$, $[[t2']]=CL(\NDnt{t_{{\mathrm{2}}}})$,
+          $[[X']]=CL(\NDnt{X})$, $[[Y']]=CL(\NDnt{Y})$, $[[Z']]=CL(\NDnt{Z})$.
+          Note that $\NDnt{t_{{\mathrm{1}}}} : \NDnt{X}  \otimes  \NDnt{Y}$ is mapped to \\
+          $CL(\NDnt{t_{{\mathrm{1}}}}) : CL(\NDnt{X})\times CL(\NDnt{Y})$.
 
     \item $\NDdruleTXXimpIName:$
           \begin{center}
@@ -214,8 +239,15 @@ types, and $s$ is an atomic term.
           maps to
           \begin{center}
             \footnotesize
-            $\LNLdruleTXXimpI{}$
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\footnotesize $\LNLdruleTXXimpIName$}] {
+                {[[Ph', x' : X' |-c t' : Y']]}
+              }{[[Ph' |-c \ x' : X'.t' : X' -> Y']]}
+            \end{math}
           \end{center}
+          where $[[Ph']]=CL(\Phi)$, $[[x']]=CL(\NDmv{x})=x$,
+          $[[t']]=CL(\NDnt{t})$, $[[X']]=CL(\NDnt{X})$, $[[Y']]=CL(\NDnt{Y})$.
 
     \item $\NDdruleTXXimpEName{}:$
           \begin{center}
@@ -230,19 +262,22 @@ types, and $s$ is an atomic term.
               \inferrule* [right=$\LNLdruleTXXimpEName$] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiple weakening}] {
-                  {[[Ph |-c t1 : X -> Y]]}
-                }{[[Ph, P |-c t1 : X -> Y]]}
+                  {[[Ph' |-c t1' : X' -> Y']]}
+                }{[[Ph', P' |-c t1' : X' -> Y']]}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiple weakening}] {
-                    {[[P |-c t2 : X]]}
-                  }{[[P, Ph |-c t2 : X]]}
-                }{[[Ph, P |-c t2 : X]]}
-              }{[[Ph, P |-c app t1 t2 : Y]]}
+                    {[[P' |-c t2' : X']]}
+                  }{[[P', Ph' |-c t2' : X']]}
+                }{[[Ph', P' |-c t2' : X']]}
+              }{[[Ph', P' |-c app t1' t2' : Y']]}
             \end{math}
           \end{center}
+          where $[[P']]=CL(\Psi)$, $[[Ph']]=CL(\Phi)$,
+          $[[t1']]=CL(\NDnt{t_{{\mathrm{1}}}})$, $[[t2']]=CL(\NDnt{t_{{\mathrm{2}}}})$, $[[X']]=CL(\NDnt{X})$,
+          $[[Y']]=CL(\NDnt{Y})$.
 
     \item $\NDdruleTXXGIName:$
           \begin{center}
@@ -252,8 +287,14 @@ types, and $s$ is an atomic term.
           maps to 
           \begin{center}
             \footnotesize
-            $\LNLdruleTXXGI{}$
+            \begin{math}
+                $$\mprset{flushleft}
+                \inferrule* [right={\footnotesize $\LNLdruleTXXGIName$}] {
+                  {[[Ph' |-l s' : A']]}
+                }{[[Ph' |-c Gf s' : Gf A']]}
+            \end{math}
           \end{center}
+          where $[[Ph']]=CL(\Phi)$, $[[s']]=CL(\NDnt{s})$, $[[A']]=CL(\NDnt{A})$,
 
     \item $\NDdruleSXXidName:$
           \begin{center}
@@ -267,9 +308,10 @@ types, and $s$ is an atomic term.
               $$\mprset{flushleft}
               \inferrule* [right=$\LNLdruleTXXidName$] {
                 \\
-              }{[[.; x : A |-l x : A]]}
+              }{[[.; x' : A' |-l x' : A']]}
             \end{math}
           \end{center}
+          where $[[x']]=CL(\NDmv{x})$, $[[A']]=CL(\NDnt{A})$,
 
     \item $\NDdruleSXXunitIName:$
           \begin{center}
@@ -286,6 +328,8 @@ types, and $s$ is an atomic term.
               }{[[. |-l * : I]]}
             \end{math}
           \end{center}
+          since $CL( \mathsf{triv} ) = [[*]]$ and $CL( \mathsf{Unit} ) = [[I]]$ for the
+          non-commutative unit.
 
     \item $\NDdruleSXXunitEOneName:$
           \begin{center}
@@ -298,18 +342,20 @@ types, and $s$ is an atomic term.
             \begin{math}
               $$\mprset{flushleft}
               \inferrule* [right=$\LNLdruleSXXsubOneName$] {
-                {[[Ph |-c t : 1]]} \\
+                {[[Ph' |-c t' : 1]]} \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right=$\LNLdruleSXXweakeningName$] {
-                    {[[P; G' |-l s : A]]}
-                  }{[[P, x : 1; G' |-l s : A]]}
-                }{[[x : 1, P; G' |-l s : A]]}
-              }{[[Ph, P; G' |-l [t / x]s : A]]}
+                    {[[P'; G1' |-l s' : A']]}
+                  }{[[P', x : 1; G1' |-l s' : A']]}
+                }{[[x : 1, P'; G1' |-l s' : A']]}
+              }{[[Ph', P'; G1' |-l [t' / x']s' : A']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[P]]$ and $[[G']]$.
+          where $\Gamma$ is divided into $[[P]]$ and $[[G1]]$,
+          $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$, $[[P']]=CL(\Psi)$, $[[Ph']]=CL(\Phi)$,
+          $[[s']]=CL(\NDnt{s})$, $[[t']]=CL(\NDnt{t})$, $[[A']]=CL(\NDnt{A})$.
 
     \item $\NDdruleSXXunitETwoName:$
           \begin{center}
@@ -324,21 +370,23 @@ types, and $s$ is an atomic term.
               \inferrule* [right=$\LNLdruleSXXIEName$] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiple weakening}] {
-                  {[[Ph; G' |-l s1 : I]]}
-                }{[[Ph, P; G' |-l s1 : I]]}
+                  {[[Ph'; G1' |-l s1' : I]]}
+                }{[[Ph', P'; G1' |-l s1' : I]]}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiple weakening}] {
-                    {[[P; D' |-l s2 : A]]}
-                  }{[[P, Ph; D' |-l s2 : A]]}
-                }{[[Ph, P; D' |-l s2 : A]]}
-              }{[[Ph, P; G', D' |-l let s1 : I be * in s2 : A]]}
+                    {[[P'; D1' |-l s2' : A']]}
+                  }{[[P', Ph'; D1' |-l s2' : A']]}
+                }{[[Ph', P'; D1' |-l s2' : A]]}
+              }{[[Ph', P'; G', D1' |-l let s1' : I be * in s2' : A']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$, and $\Delta$
-          is divided into $[[P]]$ and $[[D']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$, and $\Delta$
+          is divided into $[[P]]$ and $[[D1]]$; and $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$,
+          $[[Ph']]=CL(\Phi)$, $[[D1']]=CL(\Delta_{{\mathrm{1}}})$, $[[P']]=CL(\Psi)$, 
+          $[[s1']]=CL(\NDnt{s_{{\mathrm{1}}}})$, $[[s2']]=CL(\NDnt{s_{{\mathrm{2}}}})$, $[[A']]=CL(\NDnt{A})$.
 
     \item $\NDdruleSXXtenIName:$
           \begin{center}
@@ -353,21 +401,24 @@ types, and $s$ is an atomic term.
               \inferrule* [right=$\LNLdruleSXXtenIName$] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiple weakening}] {
-                  {[[Ph; G' |-l s1 : A]]}
-                }{[[Ph, P; G' |-l s1 : A]]}
+                  {[[Ph'; G1' |-l s1' : A']]}
+                }{[[Ph', P'; G1' |-l s1' : A']]}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiple weakening}] {
-                    {[[P; D' |-l s2 : B]]}
-                  }{[[P, Ph; D' |-l s2 : B]]}
-                }{[[Ph, P; D' |-l s2 : B]]}
-              }{[[Ph, P; G', D' |-l s1 (x) s2 : A (x) B]]}
+                    {[[P'; D1' |-l s2' : B']]}
+                  }{[[P', Ph'; D1' |-l s2' : B']]}
+                }{[[Ph', P'; D1' |-l s2' : B']]}
+              }{[[Ph', P'; G1', D1' |-l s1' (x) s2' : A' (x) B']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$, and $\Delta$
-          is divided into $[[P]]$ and $[[D']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$, and $\Delta$
+          is divided into $[[P]]$ and $[[D1]]$; and $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$,
+          $[[Ph']]=CL(\Phi)$, $[[D1']]=CL(\Delta_{{\mathrm{1}}})$, $[[P']]=CL(\Psi)$, 
+          $[[s1']]=CL(\NDnt{s_{{\mathrm{1}}}})$, $[[s2']]=CL(\NDnt{s_{{\mathrm{2}}}})$, $[[A']]=CL(\NDnt{A})$,
+          $[[B']]=CL(\NDnt{B})$.
 
     \item $\NDdruleSXXtenEOneName:$
           \begin{center}
@@ -388,20 +439,26 @@ types, and $s$ is an atomic term.
                     \inferrule* [right={\tiny $\LNLdruleSXXsubOneName$}] {
                       $$\mprset{flushleft}
                       \inferrule* [right={\tiny $\LNLdruleTXXprodEOneName$}] {
-                        {[[Ph |-c t : X (t) Y]]}
-                      }{[[Ph |-c fst(t) : X]]} \\
-                       {[[x : X, y : Y, P; G1', G2' |-l s : A]]}
-                    }{[[Ph, y : Y, P; G1', G2' |-l [fst(t) / x]s : A]]}
-                  }{[[y : Y, Ph, P; G1', G2' |-l [fst(t) / x]s : A]]}
+                        {[[Ph' |-c t' : X' (t) Y']]}
+                      }{[[Ph' |-c fst(t') : X']]} \\
+                       {[[x' : X', y' : Y', P1', P2'; D1', D2' |-l s' : A']]}
+                    }{[[Ph', y' : Y', P1', P2'; D1', D2' |-l [fst(t') / x']s' : A']]}
+                  }{[[y' : Y', Ph', P1', P2'; D1', D2' |-l [fst(t') / x']s' : A']]}
                   \\
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny $\LNLdruleTXXprodETwoName$}] {
-                    {[[Ph |-c t : X (t) Y]]}
-                  }{[[Ph |-c snd(t) : Y]]} \\
-                }{[[Ph, Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A]]}
-              }{[[Ph, P; G1', G2' |-l [snd(t) / y][fst(t) / x]s : A]]}
+                    {[[Ph' |-c t' : X' (t) Y']]}
+                  }{[[Ph' |-c snd(t') : Y']]} \\
+                }{[[Ph', Ph', P1', P2'; D1', D2' |-l [snd(t') / y'][fst(t') / x']s' : A']]}
+              }{[[Ph', P1', P2'; D1', D2' |-l [snd(t') / y'][fst(t') / x']s' : A']]}
             \end{math}
           \end{center}
+          where $\Gamma_{{\mathrm{1}}}$ is divided into $[[P1]]$ and $[[D1]]$, and $\Gamma_{{\mathrm{2}}}$
+          is divided into $[[P2]]$ and $[[D2]]$; and $[[Ph']]=CL(\Phi)$,
+          $[[D1']]=CL(\Delta_{{\mathrm{1}}})$, $[[D2']]=CL(\Delta_{{\mathrm{2}}})$, $[[P1']]=CL(\Psi_{{\mathrm{1}}})$,
+          $[[P2']]=CL(\Psi_{{\mathrm{2}}})$,
+          $[[x']]=CL(\NDmv{x})$, $[[y']]=CL(\NDmv{y})$, $[[X']]=CL(\NDnt{X})$,
+          $[[Y']]=CL(\NDnt{Y})$, $[[A']]=CL(\NDnt{A})$.
 
     \item $\NDdruleSXXtenETwoName:$
           \begin{center}
@@ -418,23 +475,29 @@ types, and $s$ is an atomic term.
                 \inferrule* [right={\tiny $\LNLdruleSXXtenEName$}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny multiple weakening}] {
-                    {[[Ph; G' |-l s1 : A (x) B]]}
-                  }{[[Ph, P1, P2; G' |-l s1 : A (x) B]]}
+                    {[[Ph; G1' |-l s1 : A (x) B]]}
+                  }{[[Ph, P1, P2; G1' |-l s1 : A (x) B]]}
                   \\
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny multiset}] {
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny multiple weakening}] {
-                      {[[P1, P2; D1', x : A, y : B, D2' |-l s2 : C]]}
-                    }{[[P1, P2, Ph; D1', x : A, y : B, D2' |-l s2 : C]]}
-                  }{[[Ph, P1, P2; D1', D2', x : A, y : B |-l s2 : C]]}
-                }{[[Ph, P1, P2; G', D1', D2' |-l let s1 : A (x) B be x (x) y in s2 : C]]}
-              }{[[Ph, P1, P2; D1', G', D2' |-l let s1 : A (x) B be x (x) y in s2 : C]]}
+                      {[[P1, P2; D3', x : A, y : B, D4' |-l s2 : C]]}
+                    }{[[P1, P2, Ph; D3', x : A, y : B, D4' |-l s2 : C]]}
+                  }{[[Ph, P1, P2; D3', D4', x : A, y : B |-l s2 : C]]}
+                }{[[Ph, P1, P2; G1', D3', D4' |-l let s1 : A (x) B be x (x) y in s2 : C]]}
+              }{[[Ph, P1, P2; D3', G1', D4' |-l let s1 : A (x) B be x (x) y in s2 : C]]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$, $\Delta_{{\mathrm{1}}}$ is
-          divided into $[[P1]]$ and $[[D1']]$, and $\Delta_{{\mathrm{2}}}$ is divided into
-          $[[P2]]$ and $[[D2']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$, $\Delta_{{\mathrm{1}}}$ is
+          divided into $[[P1]]$ and $[[D3]]$, and $\Delta_{{\mathrm{2}}}$ is divided into
+          $[[P2]]$ and $[[D4]]$; and $[[Ph']]=CL(\Phi)$,
+          $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$, $[[D3']]=CL(\Delta_{{\mathrm{3}}})$, $[[D4']]=CL(\Delta_{{\mathrm{4}}})$,
+          $[[P1']]=CL(\Psi_{{\mathrm{1}}})$, $[[P2']]=CL(\Psi_{{\mathrm{2}}})$,
+          $[[x']]=CL(\NDmv{x})$, $[[y']]=CL(\NDmv{y})$, $[[s1']]=CL(\NDnt{s_{{\mathrm{1}}}})$,
+          $[[s2']]=CL(\NDnt{s_{{\mathrm{2}}}})$, $[[A']]=CL(\NDnt{A})$, $[[B']]=CL(\NDnt{B})$,
+          $[[C']]=CL(\NDnt{C})$.
+
 
     \item $\NDdruleSXXimprIName:$
           \begin{center}
@@ -447,11 +510,13 @@ types, and $s$ is an atomic term.
             \begin{math}
               $$\mprset{flushleft}
               \inferrule* [right=$\LNLdruleSXXimpIName$] {
-                {[[Ph; G', x : A |-l s : B]]}
-              }{[[Ph; G' |-l \ x : A . s : A -o B]]}
+                {[[Ph'; G1', x' : A' |-l s' : B']]}
+              }{[[Ph'; G1' |-l \ x' : A'. s' : A' -o B']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$; and
+          $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$, $[[Ph']]=CL(\Phi)$, $[[x']]=CL(\NDmv{x})$,
+          $[[A']]=CL(\NDnt{A})$, $[[B']]=CL(\NDnt{B})$.
 
     \item $\NDdruleSXXimprEName:$
           \begin{center}
@@ -466,21 +531,24 @@ types, and $s$ is an atomic term.
               \inferrule* [right=$\LNLdruleSXXimpEName$] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiple weakening}] {
-                  {[[Ph; G' |-l s1 : A -o B]]}
-                }{[[Ph, P; G' |-l s1 : A -o B]]}
+                  {[[Ph'; G1' |-l s1' : A' -o B']]}
+                }{[[Ph', P'; G1' |-l s1' : A' -o B']]}
                 \\
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiple weakening}] {
-                    {[[P; D' |-l s2 : A]]}
-                  }{[[P, Ph; D' |-l s2 : A]]}
-                }{[[Ph, P; D' |-l s2 : A]]}
-              }{[[Ph, P; G', D' |-l app s1 s2 : B]]}
+                    {[[P'; D1' |-l s2' : A']]}
+                  }{[[P', Ph'; D1' |-l s2' : A']]}
+                }{[[Ph', P'; D1' |-l s2' : A']]}
+              }{[[Ph', P'; G1', D1' |-l app s1' s2' : B']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$, and $\Delta$
-          is divided into $[[P]]$ and $[[D']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$, and $\Delta$
+          is divided into $[[P]]$ and $[[D1]]$; and 
+          $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$, $[[Ph']]=CL(\Phi)$, $[[D1']]=CL(\Delta_{{\mathrm{1}}})$,
+          $[[P']]=CL(\Psi)$, $[[s1']]=CL(\NDnt{s_{{\mathrm{1}}}})$, $[[s2']]=CL(\NDnt{s_{{\mathrm{2}}}})$,
+          $[[A']]=CL(\NDnt{A})$, and $[[B']]=CL(\NDnt{B})$.
 
     \item $\NDdruleSXXimplIName:$
           \begin{center}
@@ -495,12 +563,14 @@ types, and $s$ is an atomic term.
               \inferrule* [right=$\LNLdruleSXXimpIName$] {
                 $$\mprset{flushleft}
                 \inferrule* [right={\footnotesize multiset}] {
-                  {[[Ph; x : A, G' |-l s : B]]}
-                }{[[Ph; G', x : A |-l s : B]]}
-              }{[[Ph; G' |-l \ x : A . s : A -o B]]}
+                  {[[Ph'; x' : A', G1' |-l s' : B']]}
+                }{[[Ph'; G1', x' : A' |-l s' : B']]}
+              }{[[Ph'; G1' |-l \ x' : A' . s' : A' -o B']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$,
+          $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$, $[[Ph']]=CL(\Phi)$, $[[x']]=CL(\NDmv{x})$,
+          $[[s']]=CL(\NDnt{s})$, $[[A']]=CL(\NDnt{A})$, and $[[B']]=CL(\NDnt{B})$.
 
     \item $\NDdruleSXXimplEName:$
           \begin{center}
@@ -517,22 +587,25 @@ types, and $s$ is an atomic term.
                 \inferrule* [right=$\LNLdruleSXXimpEName$] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiple weakening}] {
-                    {[[Ph; G' |-l s1 : A -o B]]}
-                  }{[[Ph, P; G' |-l s1 : A -o B]]}
+                    {[[Ph'; G1' |-l s1' : A' -o B']]}
+                  }{[[Ph', P'; G1' |-l s1' : A' -o B']]}
                   \\
                   $$\mprset{flushleft}
                   \inferrule* [right={\footnotesize multiset}] {
                     $$\mprset{flushleft}
                     \inferrule* [right={\footnotesize multiple weakening}] {
-                      {[[P; D' |-l s2 : A]]}
-                    }{[[P, Ph; D' |-l s2 : A]]}
-                  }{[[Ph, P; D' |-l s2 : A]]}
-                }{[[Ph, P; G', D' |-l app s1 s2 : B]]}
-              }{[[P, Ph; D', G' |-l app s1 s2 : B]]}
+                      {[[P'; D1' |-l s2' : A']]}
+                    }{[[P', Ph'; D1' |-l s2' : A']]}
+                  }{[[Ph', P'; D1' |-l s2' : A']]}
+                }{[[Ph', P'; G1', D1' |-l app s1' s2' : B']]}
+              }{[[P', Ph'; D1', G1' |-l app s1' s2' : B']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$, and $\Delta$
-          is divided into $[[P]]$ and $[[D']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$, and $\Delta$
+          is divided into $[[P]]$ and $[[D1]]$; and $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$,
+          $[[D1']]=CL(\Delta_{{\mathrm{1}}})$, $[[Ph']]=CL(\Phi)$, $[[P']]=CL(\Psi)$,
+          $[[s1']]=CL(\NDnt{s_{{\mathrm{1}}}})$, $[[s2']]=CL(\NDnt{s_{{\mathrm{2}}}})$, $[[A']]=CL(\NDnt{A})$,
+          and $[[B']]=CL(\NDnt{B})$.
 
     \item $\NDdruleSXXFIName:$
           \begin{center}
@@ -542,8 +615,15 @@ types, and $s$ is an atomic term.
           maps to 
           \begin{center}
             \footnotesize
-            $\LNLdruleSXXFI{}$
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\footnotesize $\LNLdruleSXXFIName$}] {
+                {[[Ph' |-c t' : X']]}
+              }{[[Ph' |-l F t' : F X']]}
+            \end{math}
           \end{center}
+          where $[[Ph']]=CL(\Phi)$, $[[t']]=CL(\NDnt{t})$,
+          $[[X']]=CL(\NDnt{X})$.
 
     \item $\NDdruleSXXFEName:$
           \begin{center}
@@ -560,23 +640,27 @@ types, and $s$ is an atomic term.
                 \inferrule* [right={\tiny $\LNLdruleSXXFEName$}] {
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny multiple weakening}] {
-                    {[[Ph; G' |-l s1 : F X]]}
-                  }{[[Ph, P1, P2; G' |-l s1 : F X]]}
+                    {[[Ph'; G1' |-l s1' : F X']]}
+                  }{[[Ph', P1', P2'; G1' |-l s1' : F X']]}
                   \\
                   $$\mprset{flushleft}
                   \inferrule* [right={\tiny multiset}] {
                     $$\mprset{flushleft}
                     \inferrule* [right={\tiny multiple weakening}] {
-                      {[[P1, P2, x : X; D1', D2' |-l s2 : A]]}
-                    }{[[P1, P2, x : X, Ph; D1', D2' |-l s2 : A]]}
-                  }{[[Ph, P1, P2, x : X; D1', D2' |-l s2 : A]]}
-                }{[[Ph, P1, P2; G', D1', D2' |-l let s1 : F X be x in s2 : A]]}
-              }{[[Ph, P1, P2; D1', G', D2' |-l let s1 : F X be x in s2 : A]]}
+                      {[[P1', P2', x' : X'; D3', D4' |-l s2' : A']]}
+                    }{[[P1', P2', x' : X', Ph'; D3', D4' |-l s2' : A']]}
+                  }{[[Ph', P1', P2', x' : X'; D3', D4' |-l s2' : A']]}
+                }{[[Ph', P1', P2'; G1', D3', D4' |-l let s1' : F X' be F x' in s2' : A']]}
+              }{[[Ph', P1', P2'; D3', G1', D4' |-l let s1' : F X' be F x' in s2' : A']]}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $[[Ph]]$ and $[[G']]$, $\Delta_{{\mathrm{1}}}$ is
-          divided into $[[P1]]$ and $[[D1']]$, and $\Delta_{{\mathrm{2}}}$ is divided into
-          $[[P2]]$ and $[[D2']]$.
+          where $\Gamma$ is divided into $[[Ph]]$ and $[[G1]]$, $\Delta_{{\mathrm{1}}}$ is
+          divided into $[[P1]]$ and $[[D3]]$, and $\Delta_{{\mathrm{2}}}$ is divided into
+          $[[P2]]$ and $[[D4]]$; and $[[Ph']]=CL(\Phi)$,
+          $[[G1']]=CL(\Gamma_{{\mathrm{1}}})$, $[[D3']]=CL(\Delta_{{\mathrm{3}}})$, $[[D4']]=CL(\Delta_{{\mathrm{4}}})$,
+          $[[P1']]=CL(\Psi_{{\mathrm{1}}})$, $[[P2']]=CL(\Psi_{{\mathrm{2}}})$, $[[x']]=CL(\NDmv{x})$,
+          $[[s1']]=CL(\NDnt{s_{{\mathrm{1}}}})$, $[[s2']]=CL(\NDnt{s_{{\mathrm{2}}}})$, $[[A']]=CL(\NDnt{A})$,
+          $[[X']]=CL(\NDnt{X})$.
 
     \item $\NDdruleSXXGEName:$
           \begin{center}
@@ -586,14 +670,21 @@ types, and $s$ is an atomic term.
           maps to 
           \begin{center}
             \footnotesize
-            $\LNLdruleSXXGE{}$
+            \begin{math}
+              $$\mprset{flushleft}
+              \inferrule* [right={\footnotesize $\LNLdruleSXXGEName$}] {
+                {[[Ph' |-c t' : Gf A']]}
+              }{[[Ph' |-l derelict t' : A']]}
+            \end{math}
           \end{center}
+          where $[[Ph']]=CL(\Phi)$, $[[t']]=CL(\NDnt{t})$,
+          $[[A']]=CL(\NDnt{A})$.
   \end{itemize}
 \end{proof}
 
 \begin{lemma}
-  Suppose $\NDnt{t_{{\mathrm{1}}}}  \leadsto_\beta  \NDnt{t_{{\mathrm{2}}}}$ is a $\beta$-reduction rule in CNC. Then
-  $\LNL(t_1)\leadsto\LNL(t_2)$ is a $\beta$-reduction rule in LNL.
+  Suppose $\NDnt{t_{{\mathrm{1}}}}  \leadsto_\beta  \NDnt{t_{{\mathrm{2}}}}$ holds in CNC. Then $CL(t_1)\leadsto CL(t_2)$ holds
+  in LNL.
 \end{lemma}
 \begin{proof}
   The $\beta$-reductions are usually derived by normalizing pairs of the
