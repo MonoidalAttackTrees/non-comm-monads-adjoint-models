@@ -19,8 +19,8 @@ A, B, C :: 'lform_' ::=
   {{ tex [[A]] }}
   | F X     ::   :: LeftAdj
   {{tex \mathsf{F}[[X]] }}
-  | LNL( A ) :: M :: LNLT
-  {{tex \LNL([[A]]) }}
+  | CL( A ) :: M :: CLT
+  {{tex CL([[A]]) }}
 
 % Symmetric monoidal closed category:
 X, Y, Z :: 'sform_' ::=
@@ -78,8 +78,8 @@ s :: 'term_' ::=
   {{tex [[s]] }}
   | F t           ::   :: LeftAdj
   {{tex \mathsf{F}[[t]] }}
-  | LNL( s )      :: M :: LNLT
-  {{tex \LNL([[s]]) }}
+  | CL( s )      :: M :: CLT
+  {{tex CL([[s]]) }}
 
 t :: 'sterm_' ::=
   | x  :: :: Var

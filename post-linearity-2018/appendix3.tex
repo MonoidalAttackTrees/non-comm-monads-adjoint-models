@@ -700,20 +700,34 @@ types, and $s$ is an atomic term.
     \end{center}
     By the definition of the translation from CNC to LNL we know the following:
     \[
-      \LNL[[(appl (\l x:A.s1) s2)]] = <<app (\x:LNL(A).LNL(s1)) LNL(s2)>>\\
+    CL[[(appl (\l x:A.s1) s2)]] = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
     \]
+    Thus, this translation will clearly reduce to $<< [CL(s2)/x]CL(s1)>>$.
 
   \item[] Case.
     \begin{center}
       $\NDdruleSbetaXXlamR{}$
     \end{center}
-    
+    By the definition of the translation from CNC to LNL we know the following:
+    \[
+    CL[[(appr (\r x:A.s1) s2)]] = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
+    \]
+    Thus, this translation will clearly reduce to $<< [CL(s2)/x]CL(s1)>>$.
+
   \item[] Case.
     \begin{center}
-      $\NDdruleSbetaXXletTOne{}$
+      $\NDdruleSbetaXXletTTwo{}$
     \end{center}
+    By the definition of the translation from CNC to LNL we know the following:
+    \[
+    CL([[let s1 (>) s2 : A (>) B be x (>) y in s3]]) = <<let CL(s1) (x) CL(s2) : CL(A) (x) CL(B) be x (x) y in CL(s3)>>\\
+    \]
+    Again, this will clearly reduce to $<< [CL(s1)/x][CL(s2)/y]CL(s3) >>$.
 
-    
+    All other cases are similar.  The induction hypothesis is used
+    with respect to congruence rules where the induction hypothesis
+    will be applied to the premises, and then we apply the
+    corresponding rule in LNL logic.
   \end{itemize}
 \end{proof}
 

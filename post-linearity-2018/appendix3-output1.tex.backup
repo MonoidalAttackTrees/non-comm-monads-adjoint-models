@@ -700,20 +700,34 @@ types, and $s$ is an atomic term.
     \end{center}
     By the definition of the translation from CNC to LNL we know the following:
     \[
-      \LNL\NDsym{(}   \mathsf{app}_l\, \NDsym{(}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)} = <<app (\x:LNL(A).LNL(s1)) LNL(s2)>>\\
+    CL\NDsym{(}   \mathsf{app}_l\, \NDsym{(}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)} = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
     \]
+    Thus, this translation will clearly reduce to $<< [CL(s2)/x]CL(s1)>>$.
 
   \item[] Case.
     \begin{center}
       $\NDdruleSbetaXXlamR{}$
     \end{center}
-    
+    By the definition of the translation from CNC to LNL we know the following:
+    \[
+    CL\NDsym{(}   \mathsf{app}_r\, \NDsym{(}   \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)} = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
+    \]
+    Thus, this translation will clearly reduce to $<< [CL(s2)/x]CL(s1)>>$.
+
   \item[] Case.
     \begin{center}
-      $\NDdruleSbetaXXletTOne{}$
+      $\NDdruleSbetaXXletTTwo{}$
     \end{center}
+    By the definition of the translation from CNC to LNL we know the following:
+    \[
+    CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}} ) = <<let CL(s1) (x) CL(s2) : CL(A) (x) CL(B) be x (x) y in CL(s3)>>\\
+    \]
+    Again, this will clearly reduce to $<< [CL(s1)/x][CL(s2)/y]CL(s3) >>$.
 
-    
+    All other cases are similar.  The induction hypothesis is used
+    with respect to congruence rules where the induction hypothesis
+    will be applied to the premises, and then we apply the
+    corresponding rule in LNL logic.
   \end{itemize}
 \end{proof}
 
