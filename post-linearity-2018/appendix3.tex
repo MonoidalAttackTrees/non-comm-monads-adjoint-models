@@ -687,307 +687,33 @@ types, and $s$ is an atomic term.
   in LNL.
 \end{lemma}
 \begin{proof}
-  The $\beta$-reductions are usually derived by normalizing pairs of the
-  introduction and elimination rules of the same connective. We derive the
-  $\beta$-reductions for CNC by normalizing the proofs in LNL from which
-  pairs of introduction and elimination rules in LAM are mapped. We
-  simplify the mapped rules by only keeping the premises and conclusions
-  and excluding the middle steps, such as weakening, multiset, and
-  subsitutions.
+  This proof is by induction on the form of $[[t1 ~> t2]]$, but by
+  inspecting the definition of the translation from CNC to LNL it is
+  straightforward to see that there is a correspondence between the
+  reduction rules in CNC and those in LNL.  We give a few cases of the
+  proof, but the others are similar.
 
   \begin{itemize}
+  \item[] Case.
+    \begin{center}
+      $\NDdruleSbetaXXlamL{}$
+    \end{center}
+    By the definition of the translation from CNC to LNL we know the following:
+    \[
+      \LNL[[(appl (\l x:A.s1) s2)]] = <<app (\x:LNL(A).LNL(s1)) LNL(s2)>>\\
+    \]
 
-  \item ($\NDdruleTXXunitIName$, $\NDdruleTXXunitEName$):
+  \item[] Case.
     \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize unitE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right=$\LNLdruleTXXidName$] {
-            \,
-          }{<<Ph |-c u : 1>>} \\
-           {<<P |-c t : X>>}
-        }{<<Ph, P |-c [u / x]t : X>>}
-      \end{math}
-    \end{center}
-    normalizes to 
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize multiple weakening}] {
-          {<<P |-c t : X>>}
-        }{<<Ph, P |-c t : X>>}
-      \end{math}
-    \end{center}
-
-  \item ($\NDdruleTXXunitIName$, $\NDdruleSXXunitEOneName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize unitE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right=$\LNLdruleTXXidName$] {
-            \,
-          }{<<Ph |-c u : 1>>} \\
-           {<<P; G |-l s : A>>}
-        }{<<Ph, P; G |-l [u / x]s : A>>}
-      \end{math}
-    \end{center}
-    normalizes to 
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* {
-          {<<P; G |-l s : A>>}
-        }{<<Ph, P; G |-l s : A>>}
-      \end{math}
-    \end{center}
-
-  \item ($\NDdruleTXXtenIName$, $\NDdruleTXXtenEName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize tenE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize tenI}] {
-            {<<Ph1 |-c t1 : X>>} \\
-            {<<Ph2 |-c t2 : Y>>}
-          }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
-           {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
-        }{<<P1, Ph1, Ph2, P2 |-c [snd((t1, t2)) / y][fst((t1, t2)) / x]t3 : Z>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub}] {
-          {<<Ph1 |-c t1 : X>>} \\
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize sub}] {
-            {<<Ph2 |-c t2 : Y>>} \\
-            {<<P1, x : X, y : Y, P2 |-c t3 : Z>>}
-          }{<<P1, x : X, Ph2, P2 |-c [t2 / y]t3 : Z>>}
-        }{<<P1, Ph1, Ph2, P2 |-c [t1 / x][t2 / y]t3 : Z>>}
-      \end{math}
+      $\NDdruleSbetaXXlamR{}$
     \end{center}
     
-  \item ($\NDdruleTXXtenIName$, $\NDdruleSXXtenEOneName$):
+  \item[] Case.
     \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize tenE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize tenI}] {
-            {<<Ph1 |-c t1 : X>>} \\
-            {<<Ph2 |-c t2 : Y>>}
-          }{<<Ph1, Ph2 |-c (t1, t2) : X (t) Y>>} \\
-           {<<x : X, y : Y, P; G |-l s : A>>}
-        }{<<Ph1, Ph2, P; G |-l [snd((t1,t2)) / y][fst((t1,t2)) / x]s : A>>}
-      \end{math}
+      $\NDdruleSbetaXXletTOne{}$
     \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub1}] {
-          {<<Ph1 |-c t1 : X>>} \\
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize sub1}] {
-            {<<Ph2 |-c t2 : Y>>} \\
-            {<<x : X, y : Y, P; G |-l s : A>>}
-          }{<<x : X, Ph2, P; G |-l [t2 / y]s : A>>}
-        }{<<Ph1, Ph2, P; G |-l [t1 / x][t2 / y]s : A>>}
-      \end{math}
-    \end{center}
+
     
-  \item ($\NDdruleTXXimpIName$, $\NDdruleTXXimpEName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize impE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize impI}] {
-            {<<Ph, x : X |-c t1 : Y>>}
-          }{<<Ph |-c \ x : X . t1 : X -> Y>>} \\
-           {<<P |-c t2 : X>>}
-        }{<<Ph, P |-c app (\ x : X . t1) t2 : Y>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub}] {
-          {<<Ph, x : X |-c t1 : Y>>}
-          {<<P |-c t2 : X>>}
-        }{<<Ph, P |-c [t2 / x]t1 : Y>>}
-      \end{math}
-    \end{center}
-
-  \item ($\NDdruleSXXunitIName$, $\NDdruleSXXunitETwoName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-       $$\mprset{flushleft}
-       \inferrule* [right={\footnotesize unitE2}] {
-         $$\mprset{flushleft}
-         \inferrule* [right={\footnotesize unitI}] {
-           \,
-          }{<<Ph |-l * : I>>} \\
-           {<<P; D |-l s : A>>}
-        }{<<Ph, P; D |-l let * : I be * in s : A>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-       $$\mprset{flushleft}
-       \inferrule* {
-        {<<P; D |-l s : A>>}
-      }{<<Ph, P; D |-l s : A>>}
-      \end{math}
-    \end{center}
-
-  \item ($\NDdruleSXXtenIName$, $\NDdruleSXXtenETwoName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize tenE2}] {
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize tenI}] {
-            {<<Ph1; G1 |-l s1 : A>>}
-            {<<Ph2; G2 |-l s2 : B>>}
-          }{<<Ph1, Ph2, G1, G2 |-l s1 (x) s2 : A (x) B>>} \\
-           {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
-        }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l let s1 (x) s2 : A (x) B be x (x) y in s3 : C>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub2}] {
-          {<<Ph1; G1 |-l s1 : A>>}
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize sub2}] {
-            {<<Ph2; G2 |-l s2 : B>>} \\
-            {<<P; D1, x : A, y : B, D2 |-l s3 : C>>}
-          }{<<Ph2, P; D1, x : A, G2, D2 |-l [s2 / y]s3 : C>>}
-        }{<<Ph1, Ph2, P; D1, G1, G2, D2 |-l [s1 / x][s2 / y]s3 : C>>}
-      \end{math}
-    \end{center}
-          
-  \item ($\NDdruleSXXimprIName$, $\NDdruleSXXimprEName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-       $$\mprset{flushleft}
-       \inferrule* [right={\footnotesize imprE}] {
-         $$\mprset{flushleft}
-         \inferrule* [right={\footnotesize imprI}] {
-           {<<Ph; G, x : A |-l s1 : B>>}
-          }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
-           {<< P; D |-l s2 : A>>}
-        }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub2}] {
-          {<<Ph; G, x : A |-l s1 : B>>} \\
-          {<<P; D |-l s2 : A>>}
-        }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
-      \end{math}
-    \end{center}
-          
-  \item ($\NDdruleSXXimplIName$, $\NDdruleSXXimplEName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-       $$\mprset{flushleft}
-       \inferrule* [right={\footnotesize imprE}] {
-         $$\mprset{flushleft}
-         \inferrule* [right={\footnotesize imprI}] {
-           {<<Ph; x : A, G |-l s1 : B>>}
-          }{<<Ph; G |-l \ x : A . s1 : A -o B>>} \\
-           {<< P; D |-l s2 : A>>}
-        }{<<Ph, P; G, D |-l app (\ x : A . s1) s2 : B>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub2}] {
-          {<<Ph; x : A, G |-l s1 : B>>} \\
-          {<<P; D |-l s2 : A>>}
-        }{<<Ph, P; G, D |-l [s2 / x]s1 : B>>}
-      \end{math}
-    \end{center}
-          
-  \item ($\NDdruleSXXFIName$, $\NDdruleSXXFEName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize FE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize FI}] {
-            {<<Ph |-c t : X>>}
-          }{<<Ph |-l F t : F X>>}
-           {<<P, x : X; D1, D2 |-l s : A>>}
-        }{<<Ph, P; D1, D2 |-l let F t : F X be F x in s : A>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize sub1}] {
-          {<<Ph |-c t : X>>} \\
-          {<<P, x : X; D1, D2 |-l s : A>>}
-        }{<<Ph, P; D1, D2 |-l [t / x]s : A>>}
-      \end{math}
-    \end{center}
-
-  \item ($\NDdruleTXXGIName$, $\NDdruleSXXGEName$):
-    \begin{center}
-      \footnotesize
-      \begin{math}
-        $$\mprset{flushleft}
-        \inferrule* [right={\footnotesize GE}] {
-          $$\mprset{flushleft}
-          \inferrule* [right={\footnotesize GI}] {
-            {<<Ph |-l s : A>>}
-          }{<<Ph |-c Gf s : Gf A>>}
-        }{<<Ph |-l derelict (Gf s) : A>>}
-      \end{math}
-    \end{center}
-    normalizes to
-    \begin{center}
-      \footnotesize
-      ${<<Ph |-l s : A>>}$
-    \end{center}
-
   \end{itemize}
 \end{proof}
 
