@@ -118,7 +118,7 @@ $\NDdruleSXXcutOneName{}$.
 \end{figure}
 
 We prove cut elimination for the sequent calculus. We define the
-\textit{degree} $|X|$ (resp. $|A|$) of a commutative (resp. non-commutative)
+\textit{rank} $|X|$ (resp. $|A|$) of a commutative (resp. non-commutative)
 formula to be the number of logical connectives in the proposition. For
 instance, $|[[X (*) Y]]| = |[[X]]| + |[[Y]]| + 1$. The \textit{cut rank}
 $c(\Pi)$ of a proof $\Pi$ is one more than the maximum of the ranks of all
@@ -150,7 +150,7 @@ simpler cuts.
   $[[I1, X2, X1, I2 |-c Y]]$ and $\Pi_2$ is a proof of $[[P1, Y, P2
       |-c Z]]$.  Consider the case where the last step in $\Pi_1$ uses
   the rule $\NDdruleTXXbetaName{}$. $\Pi_1$ can be depicted as
-  follows, where the previous steps is denoted by $\pi$:
+  follows, where the previous steps are denoted by $\pi$:
   \begin{center}
     \scriptsize
     $\Pi_1$:
@@ -199,8 +199,8 @@ Then we have the following lemma.
   We prove the lemma by induction on $d(\Pi)$. We denote the proof $\Pi$ by 
   $\pi+r$, where $r$ is the last inference of $\Pi$ and $\pi$ denotes the
   rest of the proof. If $r$ is not a cut, then by induction hypothesis on
-  $\pi$, there is a proof $\pi'$ s.t. $c(\pi')>c(\pi)$ and $\Pi'=\pi'+r$.
-  Otherwise, we assume $r$ is a cut on a formula $X$. If $c(\Pi)>|X|+1$,
+  $\pi$, there is a proof $\pi'$ s.t. $c(\pi')<c(\pi)$ and $\Pi'=\pi'+r$.
+  Otherwise, we assume $r$ is a cut on a formula $Y$. If $c(\Pi)>|X|+1$,
   then there is a cut on $|Y|$ in $\pi$ with $|Y|>|X|$. So we can apply
   the induction hypothesis on $\pi$ to get $\Pi'$ with $c(\Pi')<c(\Pi)$. The
   last case to consider is when $c(\Pi)=|X|+1$ (note that $c(\Pi)$ cannot be
