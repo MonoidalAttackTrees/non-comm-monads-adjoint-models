@@ -1,0 +1,165 @@
+> thanks for submitting your paper to the Linearity-TLLA 2018
+> post-proceedings.  The reviewers were supportive but highlighted
+> that a revision is needed before publication. After discussion, it
+> was decided that your paper could be accepted under the condition
+> that you address the issues as requested by the reviewers. Due to
+> the EPTCS schedule for the proceedings, we can only wait until the
+> end of December for the revised version of your paper. If you are
+> able to revise the paper in this short time, please submit your
+> revised version in the Easychair website.  The reviews are attached
+> (in some cases the reviewers for the post proceedings were different
+> from the initial reviewers, in which case you will get both pre- and
+> post-reviews; when the same reviewer evaluated both versions of your
+> paper you will only see the latest review).  Please take into
+> account all the comments provided in the reviews to prepare the
+> revised version of your paper, with deadline end December.
+>
+> ----------------------- REVIEW 1 ---------------------
+> PAPER: 3
+> TITLE: On the Lambek Calculus with an Exchange Modality
+> AUTHORS: Jiaming Jiang, Harley Eades Iii and Valeria de Paiva
+>
+> Overall evaluation: 1 (weak accept)
+>
+> ----------- Overall evaluation -----------
+> This is a review on the revised paper submitted to the postproceedings.
+>
+> This paper introduces a type system for (non-symmetric) monoidal adjunctions
+> between a symmetric monoidal closed category and a monoidal bi-closed category
+> called CNC logic. It can be considered as a variant of Benton's LNL logic for
+> symmetric monoidal adjunctions between a cartesian closed category and a
+> symmetric monoidal closed category.
+>
+> My knowledge on the Lambek Calculus is rather limited, but I think that having a
+> good categorical semantics and type system for Lambek Calculus should be useful
+> and makes a good case of technology-transfer from Linear Logic to the Lambek
+> Calculus. Thus I recommend acceptance, though sections on categorical models should
+> be re-revised carefully, as there are a number of rough edges (please see below).
+>
+> ** Items which should be corrected/addressed in the final version **
+>
+> - On the direction of arrows:
+> It seems that the direction of arrow types is not in harmony with the standard
+> Lambek Calculus nor with the usual convention for internal homs in monoidal
+> bi-closed categories. Is there any reason for this choice?
+> It can be helpful to say that "A \rightharpoonup B" is "B/A" and "B \leftharpoonup A"
+> is "A\B" after Def 1.
+>
+> - page 7, Thm 7:
+> Here the SN of CNC logic is reduced to the SN of LNL logic via a
+> reduction-preserving translation. That is fine, but the SN proof of LNL logic
+> is not given in Benton's original paper. Could you provide a reference.
+>
+> - page 8, Def 8:
+> I would add a line after this definition saying that "Lambek categories are also known
+> as monoidal bi-closed categories".
+>
+> - page 9-10, Thm 10 and 11:
+> This is a classical result due to Kelly (left adjoint of a monoidal adjunction is
+> strong). You should ackowledge Kelly's work here (rather than reproducing the proof).
+>
+>  G.M. Kelly (1974): Doctrinal adjunction.
+>  In: Proceedings Sydney Category Theory Seminar 1972/1973,
+>  Lecture Notes in Mathematics 420, Springer-Verlag, pp. 257–280,.
+>
+> - page 10, paragraph before Lem 12:
+> I do not think that results in this section satisfactorily answer the question of
+> Benton and Wadler, because here it is only shown that *some* non-commutative
+> strong monads arise from LAMs; note that not all non-commutative strong monads
+> are monoidal.
+>
+> - page 11, sentence before Lem 14:
+> "non-commutativity of the monad induced by any LAM" is not quite correct.
+> At least replace "any" by "some".
+>
+> - page 11, Thm 15:
+> Again the statement is not correct, because some LAM gives rise to commutative strong
+> monads. The correct claim should be, for instance,
+> "There exists an LAM such that the induced monad has a non-commutative strength"
+> while this does not follow from Lem 13 and Lem 14 alone (but by giving a concrete
+> example).
+>
+> - page 11, Thm 17:
+> I think it is better to show that ex gives a symmetry on the category of coalgebras,
+> thus to show that (in addition to the naturality as shown in the paper) ex is invertible and
+> satisfies the hexagon axiom.
+>
+> - page 11, Cor 18:
+> What are free exponential coalgebras? If they mean exponentiable coalgebras (as in Benton's
+> work), I think it does not work well because you are handling monoidal categories
+> rather than cartesian categories (A and B being exponentiable does not imply A\tensor B
+> exponentiable in monoidal categories). I guess the proof is not correct.
+>
+> - page 12, before or after Def 21:
+> Give the definition of the tensor unit in Dial_M(Set).
+>
+> - page 13, Thm 25:
+> What is the "equational theory" in the completeness theorem on terms of CNC logic?
+> I guess that it is the congruence generated by the \beta-rules (Fig 3)
+> and commuting conversions (Fig 4, 5 and 6) plus some appropriate
+> \eta-rules (not found in the paper) - is this correct?
+> (My comment below is based on this reading.)
+>
+> - page 13, Thm 25 and the sentence before it:
+> I can believe that Dial_M(Set) is a sound model of CNC logic, but I would like to see how it
+> is shown to be complete. If I choose a stupid M, the resulting Dial_M(Set) is not complete at all.
+>
+> For instance, let M be the singleton 1 (with trivial structure of biclosed poset with exchange).
+> Then Dial_1(Set) is just the simple dualization Set x Set^op, which is (symmetric)
+> *-autonomous with (1,1) as the tensor unit at the same time as a dualizing object.
+> In this model, the map
+>
+>  (I o- (A -o I)) -o I  -->  A -o I  -->   (I o- (A -o I)) -o I
+>
+> agrees with the identity, while this is not the case in monoidal bi-closed categories
+> (and symmetric monoidal closed categories) in general (the triple-unit problem of
+> Mac Lane and Kelly).
+>
+> So I guess that this theorem is valid only for some nice M, but I cannot see how to obtain
+> such M. [An obvious candidate would be the biclosed poset of (equivalence classes of)
+> types ordered by the derivability - is this the intended M?]
+>
+> Apart from Thm 25, I would expect a (weaker) result, perhaps somewhere in Sec 4, saying
+> that LAMs give a sound and complete class of models of CNC logic, where it suffices to
+> construct a term model for showing the completeness.
+>
+> ** Additional comments **
+>
+> - page 11, Lemma 16:
+> This again goes back to the standard fact (likely due to Kelly) that monoidal comonads
+> (resp. monoidal adjunctions) are precisely comonads (resp. adjunctions) in the 2-category
+> of monoidal categories, (lax) monoidal functors and monoidal natural transformations.
+>
+> - page 14, end of Sec 6:
+> I think an answer to the problem of characterising comonads arising from LAMs is given
+> by so-called R-matrices considered by Bruguieres and Virelizier:
+>
+>  Bruguieres, A. and Virelizier, A. (2007) Hopf monads. Adv. Math. 215, 679--733.
+>
+> (Actually they considered comonoidal monads, but all the results make sense for monoidal
+> comonads by inverting all arrows.) In short, an R-matrix for a comonoidal monad K is a
+> natural transformation
+>
+>  R: KX \tensor KY -> Y \tensor X
+>
+> subject to a few coherence axioms. They study R-matrices for braiding, which can be
+> easily adopted to symmetry.  I think that comonads for LAMs are exactly monoidal comonads
+> equipped with an R-matrix.
+>
+>
+> ----------------------- REVIEW 2 ---------------------
+> PAPER: 3
+> TITLE: On the Lambek Calculus with an Exchange Modality
+> AUTHORS: Jiaming Jiang, Harley Eades Iii and Valeria de Paiva
+>
+> Overall evaluation: 1 (weak accept)
+>
+> ----------- Overall evaluation -----------
+> The paper seems as a good contribution to the development of the research in Lambek Calculus and its extensions and in Non Commutative Linear Logic.  The results seem accurate and well presented.  The authors have a very good experience in this field. It would be interesting to compare this work with Non Commutative Logic introduced by Abrusci and Ruet: but in the paper no  reference is made to Noncommutative Logic, and to a very long discussion (inside the community of researchers in Noncommutative linear logic, on the possible use of exchange modality to replace exchange rule.
+>
+> Lambek Calculus is presented in the paper in a non correct way, since the rules for right implication "A-->B" and the left implication "B>--A" are erroneously formulated. On page 3,
+> - in right rule of right implication the last hypothesis is discharged (whereas in Lambek calculus the first hypothesis is discharged in this rule),
+> - the left rule of right implication  gives a modus ponies in the form "A-->B, A |-B", whereas in lambek Calculus the modus ponies for right implication is "A, A-->B |-B"
+> - in right rule of left implication the first hypothesis is discharged (whereas in Lambek calculus the last hypothesis is discharged in this rule),
+> - the left rule of left implication  gives a modus ponies in the form "A, B<--A |-B", whereas in Lambek Calculus the modus ponies for right implication is " B<-- A, A |-B".
+> The publication of the paper presuppose the elimination of these errors.
