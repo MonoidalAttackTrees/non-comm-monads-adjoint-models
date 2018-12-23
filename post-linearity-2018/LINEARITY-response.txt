@@ -44,15 +44,18 @@
 > bi-closed categories. Is there any reason for this choice?
 > It can be helpful to say that "A \rightharpoonup B" is "B/A" and "B \leftharpoonup A"
 > is "A\B" after Def 1.
+JJ: Added some clarification at the last paragraph on Page 2.
 >
 > - page 7, Thm 7:
 > Here the SN of CNC logic is reduced to the SN of LNL logic via a
 > reduction-preserving translation. That is fine, but the SN proof of LNL logic
 > is not given in Benton's original paper. Could you provide a reference.
+JJ: Added reference to Mellies:2009.
 >
 > - page 8, Def 8:
 > I would add a line after this definition saying that "Lambek categories are also known
 > as monoidal bi-closed categories".
+JJ: Added.
 >
 > - page 9-10, Thm 10 and 11:
 > This is a classical result due to Kelly (left adjoint of a monoidal adjunction is
@@ -61,46 +64,52 @@
 >  G.M. Kelly (1974): Doctrinal adjunction.
 >  In: Proceedings Sydney Category Theory Seminar 1972/1973,
 >  Lecture Notes in Mathematics 420, Springer-Verlag, pp. 257–280,.
+JJ: Deleted Thm 10 and 11 and added reference to Kelly.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 >
-> - page 10, paragraph before Lem 12:
+> - page 10, paragraph before Lem 12 (now Lem 10):
 > I do not think that results in this section satisfactorily answer the question of
 > Benton and Wadler, because here it is only shown that *some* non-commutative
 > strong monads arise from LAMs; note that not all non-commutative strong monads
 > are monoidal.
+JJ: Done.
 >
-> - page 11, sentence before Lem 14:
+> - page 11, sentence before Lem 14 (now Lem 12):
 > "non-commutativity of the monad induced by any LAM" is not quite correct.
 > At least replace "any" by "some".
+JJ: Done. Should the "any" in Lem 14 be "some" as well?
 >
-> - page 11, Thm 15:
+> - page 11, Thm 15 (now Thm 13):
 > Again the statement is not correct, because some LAM gives rise to commutative strong
 > monads. The correct claim should be, for instance,
 > "There exists an LAM such that the induced monad has a non-commutative strength"
-> while this does not follow from Lem 13 and Lem 14 alone (but by giving a concrete
+> while this does not follow from Lem 13 (now Lem 11) and Lem 14 (now Lem 12) alone (but by giving a concrete
 > example).
+JJ: Rephrased Thm 13. But why doesn't it follow from Lem 11 and Lem 12?
 >
-> - page 11, Thm 17:
+> - page 11, Thm 17 (now 14):
 > I think it is better to show that ex gives a symmetry on the category of coalgebras,
 > thus to show that (in addition to the naturality as shown in the paper) ex is invertible and
-> satisfies the hexagon axiom.
+> satisfies the hexagon axiom..
+JJ: Added the diagram chasing for proving ex is a symmetry, i.e., ex_{B,A} \circ ex_{A,B} = id_A.
 >
-> - page 11, Cor 18:
+> - page 11, Cor 18 (now Cor 15):
 > What are free exponential coalgebras? If they mean exponentiable coalgebras (as in Benton's
 > work), I think it does not work well because you are handling monoidal categories
 > rather than cartesian categories (A and B being exponentiable does not imply A\tensor B
 > exponentiable in monoidal categories). I guess the proof is not correct.
+JJ: The proof we had in the original draft (non-comm-monads-adjoint-models/exchange-draft, Theorem 27 on page 13) is that "the co_EM category is symmetric monoidal closed". Should we change back to that?
 >
-> - page 12, before or after Def 21:
+> - page 12, before or after Def 21 (now Def 19):
 > Give the definition of the tensor unit in Dial_M(Set).
 >
-> - page 13, Thm 25:
+> - page 13, Thm 25 (now Thm 22):
 > What is the "equational theory" in the completeness theorem on terms of CNC logic?
 > I guess that it is the congruence generated by the \beta-rules (Fig 3)
 > and commuting conversions (Fig 4, 5 and 6) plus some appropriate
 > \eta-rules (not found in the paper) - is this correct?
 > (My comment below is based on this reading.)
 >
-> - page 13, Thm 25 and the sentence before it:
+> - page 13, Thm 25 (now Thm 22) and the sentence before it:
 > I can believe that Dial_M(Set) is a sound model of CNC logic, but I would like to see how it
 > is shown to be complete. If I choose a stupid M, the resulting Dial_M(Set) is not complete at all.
 >
@@ -129,6 +138,7 @@
 > This again goes back to the standard fact (likely due to Kelly) that monoidal comonads
 > (resp. monoidal adjunctions) are precisely comonads (resp. adjunctions) in the 2-category
 > of monoidal categories, (lax) monoidal functors and monoidal natural transformations.
+JJ: Deleted this lemma and added the reference in the "Comonad for exchange" paragraph (right above Theorem 14).
 >
 > - page 14, end of Sec 6:
 > I think an answer to the problem of characterising comonads arising from LAMs is given
@@ -155,10 +165,12 @@
 > Overall evaluation: 1 (weak accept)
 >
 > ----------- Overall evaluation -----------
-> The paper seems as a good contribution to the development of the research in Lambek Calculus and its extensions and in Non Commutative Linear Logic.  The results seem accurate and well presented.  The authors have a very good experience in this field. It would be interesting to compare this work with Non Commutative Logic introduced by Abrusci and Ruet: but in the paper no  reference is made to Noncommutative Logic, and to a very long discussion (inside the community of researchers in Noncommutative linear logic, on the possible use of exchange modality to replace exchange rule.
+> The paper seems as a good contribution to the development of the research in Lambek Calculus and its extensions and in Non Commutative Linear Logic.  The results seem accurate and well presented.  The authors have a very good experience in this field. It would be interesting to compare this work with Non Commutative Logic introduced by Abrusci and Ruet: but in the paper no reference is made to Noncommutative Logic, and to a very long discussion (inside the community of researchers in Noncommutative linear logic, on the possible use of exchange modality to replace exchange rule.
 >
 > Lambek Calculus is presented in the paper in a non correct way, since the rules for right implication "A-->B" and the left implication "B>--A" are erroneously formulated. On page 3,
+JJ: I think the one given on Review 1 is correct. A -> B is right, i.e., B/A; and B <- A is left, i.e., A\B. I found the notation for Lambek calculus here: http://lpcs.math.msu.su/~pentus/ftp/papers/ams.pdf. This reviewer seems to think -> is left, while <- is left. 
 > - in right rule of right implication the last hypothesis is discharged (whereas in Lambek calculus the first hypothesis is discharged in this rule),
+JJ: Based on the document on Lambek calculus (http://lpcs.math.msu.su/~pentus/ftp/papers/ams.pdf), it is the last hypothesis that is discharged in the rule ->R. Same for the rest of the responses. 
 > - the left rule of right implication  gives a modus ponies in the form "A-->B, A |-B", whereas in lambek Calculus the modus ponies for right implication is "A, A-->B |-B"
 > - in right rule of left implication the first hypothesis is discharged (whereas in Lambek calculus the last hypothesis is discharged in this rule),
 > - the left rule of left implication  gives a modus ponies in the form "A, B<--A |-B", whereas in Lambek Calculus the modus ponies for right implication is " B<-- A, A |-B".
