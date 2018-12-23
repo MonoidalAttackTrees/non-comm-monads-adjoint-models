@@ -17,6 +17,8 @@ category and a Lambek category.
   \end{array}
   \]  
 \end{definition}
+\noindent
+Lambek categories are also known as monoidal bi-closed categories.
 
 \begin{definition}
   A \textbf{Lambek Adjoint Model (LAM)}, $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$, consists of
@@ -58,76 +60,16 @@ F(X\otimes Y)$ and $\m{I}:I'\rightarrow FI$ as:
   \morphism(500,0)<400,0>[FGI'`I';\varepsilon_{I'}]
 \efig
 \end{mathpar}
-\begin{theorem}
-\label{thm:m-iso}
-  $\m{I}$ is an isomorphism and its inverse is $\p{I}$.
-\end{theorem}
-\begin{proof}
-  This is equivalent to equations $\m{I}\circ\p{I}=id_{FI}$ and
-  $\p{I}\circ\m{I}=id_{I'}$, equivalent to the following diagrams, which
-  commute because $\varepsilon$ is a monoidal natural transformation.
-  \begin{mathpar}
-  \footnotesize
-  \bfig
-    \square/->`=`->`<-/<400,400>[FI`FGI'`FI`I';F\n{I'}``\varepsilon_{I'}`\m{I}]
-  \efig
-  \and
-  \bfig
-    \square/->`=`->`<-/<400,400>[I'`FI`I'`FGI';\m{I}``F\n{I'}`\varepsilon_{I'}]
-  \efig
-  \end{mathpar}
-\end{proof}
-
-\begin{theorem}
-\label{thm:m-natural-iso}
-  $\m{X,Y}$ are components of a natural isomorphism and their inverses are $\p{X,Y}$. 
-\end{theorem}
-\begin{proof}
-  This is equivalent to that the two equations
-  $\m{X,Y}\circ\p{X,Y}=id_{F(X\otimes Y)}$ and
-  $\p{X,Y}\circ\m{X,Y}=id_{FX\tri FX}$ hold, which is proved because the
-  following diagrams commute: (1)-adjunction; (2)-$\eta$ is a monoidal
-  natural transformation; (3)-naturality of $\varepsilon$; (4)-adjunction;
-  (5)-naturality of $\m{}$; (6)-$\varepsilon$ is a monoidal natural
-  transformation.
-  \begin{mathpar}
-  \footnotesize
-  \bfig
-    \square/->`=`->`/<1600,800>[
-      F(X\otimes Y)`F(GFX\otimes GFY)`F(X\otimes Y)`FG(FX\tri FY);
-      F(\eta_X\otimes\eta_Y)``F\n{FX,FY}`]
-    \Atrianglepair|mmmbb|/->``->`<-`<-/<800,400>[
-      FGF(X\otimes Y)`F(X\otimes Y)`FX\tri FY`FG(FX\tri FY);
-      \varepsilon_{F(X\otimes Y)}``FG\m{X,Y}`\m{X,Y}`\varepsilon_{FX\tri FY}]
-    \morphism(0,800)|m|<800,-400>[F(X\otimes Y)`FGF(X\otimes Y);F\eta_{X\otimes Y}]
-    \morphism(300,450)//<0,0>[`;(1)]
-    \morphism(1200,600)//<0,0>[`;(2)]
-    \morphism(800,200)//<0,0>[`;(3)]
-  \efig
-  \end{mathpar}
-  \begin{mathpar}
-  \footnotesize
-  \bfig
-    \square/->`=`->`/<1800,800>[
-      FX\tri FY`F(X\otimes Y)`FX\tri FY`F(GFX\otimes GFY);
-      \m{X,Y}``F(\eta_X\otimes\eta_Y)`]
-    \Atrianglepair|mmmbb|/->``->`<-`<-/<900,400>[
-      FGFX\tri FGFY`FX\tri FY`FG(FX\tri FY)`F(GFX\otimes GFY);
-      \varepsilon_{FX}\tri\varepsilon_{FY}``\m{GFX,GFY}`\varepsilon_{FX\tri FY}`F\n{FX,FY}]
-    \morphism(0,800)|m|<900,-400>[FX\tri FY`FGFX\tri FGFY;F\eta_X\tri F\eta_Y]
-    \morphism(300,450)//<0,0>[`;(4)]
-    \morphism(1300,600)//<0,0>[`;(5)]
-    \morphism(900,200)//<0,0>[`;(6)]
-  \efig
-  \end{mathpar}
-\end{proof}
+Due to \cite{kelly1974doctrinal}, it can be easily shown that $\m{I}$ is an
+isomorphism with inverse, and that $\m{X,Y}$ are components of a natural
+isomorphism with inverses $\p{X,Y}$.
 
 \textbf{Strong non-commutative monad}. Next we show that the monad on
 $\cat{C}$ in LAM is strong but non-commutative. In Benton's LNL model,
 the monad on the cartesian closed category is commutative, but later
 Benton and Wadler \cite{Benton:1996} wonder, is it possible to model
 non-commutative monads using adjoint models similar to LNL models? The
-following answers their question in the positive.
+following answers their question in the positive w.r.t. the monoidal monads.
 \begin{lemma}
 \label{lem:monoidal-monad}
 The monad induced by any LAM, $GF : \cat{C} \mto \cat{C}$, is monoidal.
@@ -150,7 +92,7 @@ not commute.
 \efig
 \end{mathpar}
 Commutativity fails, because the functors defining the monad are not
-symmetric monoidal, but only monoidal.  This means that the diagram
+symmetric monoidal, but only monoidal. This means that the diagram
 \[
 \bfig
 \square<700,400>[
@@ -174,7 +116,7 @@ definition for a strong monad and the full proof are in
 Appendix~\ref{app:strong-monad}.
 \end{proof}
 \noindent
-Finally, we obtain the non-communativity of the monad induced by any
+Finally, we obtain the non-communativity of the monad induced by some 
 LAM as follows.
 \begin{lemma}[Due to Kock~\cite{kock1972strong}]
 \label{lem:monad-com-iff-sym}
@@ -183,8 +125,8 @@ LAM as follows.
 \end{lemma}
 
 \begin{theorem}
-  The monad, $GF : \cat{C} \mto \cat{C}$, on the SMCC in LAM is strong
-  but non-commutative.
+  There exists a LAM whose monad, $GF : \cat{C} \mto \cat{C}$, on the SMCC
+  in the LAM is strong but non-commutative.
 \end{theorem}
 \begin{proof}
   This proof follows from Lemma~\ref{lem:strong-monad} and
@@ -192,24 +134,18 @@ LAM as follows.
 \end{proof}
 
 \textbf{Comonad for exchange}.  We conclude this section by showing
-that the comonad induced by any LAM is monoidal and extends $\cat{L}$
-with exchange.  The latter is shown by proving that its corresponding
-co-Eilenberg-Moore category is symmetric monoidal closed.
-
-\begin{lemma}
-  The comonad, $FG : \cat{L} \mto \cat{L}$, on the Lambek category in any LAM is monoidal.
-\end{lemma}
-\begin{proof}
-  This proof follows by several diagram chases, but really does not
-  depart much from Benton's proof \cite{Benton:1994}.
-\end{proof}
+that the comonad induced by some LAM is monoidal and extends $\cat{L}$
+with exchange. The former is proved in \cite{kelly1974doctrinal}. The
+latter is shown by proving that its corresponding co-Eilenberg-Moore
+category is symmetric monoidal closed.
 
 \begin{theorem}
   \label{thm:em-exchange}
   Given a LAM $(\cat{C},\cat{L},F,G,\eta,\varepsilon)$ and the comonad
   $FG : \cat{L} \mto \cat{L}$, the co-Eilenberg-Moore category
   $\cat{L}^{FG}$ has an exchange natural transformation $\e{A,B}^{FG}:A\tri
-  B\rightarrow B\tri A$.
+  B\rightarrow B\tri A$, and $\e{A,B}^{FG}$ is a symmetry, i.e.,
+  $\e{A,B}^{FG} \circ \e{A,B}^{FG} = id_A$.
 \end{theorem}
 \begin{proof}
   The natural transformation $\e{A,B}^{FG}:A\tri B\rightarrow B\tri A$ is defied
@@ -241,6 +177,23 @@ co-Eilenberg-Moore category is symmetric monoidal closed.
     \square(3100,0)|amrb|/->``->`->/<600,400>[
       FG(B\tri A)`B\tri A`FG(B'\tri A')`B'\tri A';
       \varepsilon_{B\tri A}``g\tri f`\varepsilon_{B'\tri A'}]
+  \efig
+  \end{mathpar}
+  $\e{A,B}^{FG}$ is a symmetry because the following diagrams commute:
+  \begin{mathpar}
+  \bfig
+    \ptriangle|amm|/->`=`->/<600,600>[
+      A\tri B`FGA\tri FGB`A\tri B;h_A\tri h_B``\varepsilon_A\tri\varepsilon_B]
+    \morphism(600,0)|b|<-600,0>[FG(A\tri B)`A\tri B;\varepsilon_{A\tri B}]
+    \morphism(600,600)<700,0>[FGA\tri FGB`F(GA\otimes GB);\m{GA,GB}]
+    \morphism(1300,0)|b|<-700,0>[F(GA\otimes GB)`FG(A\tri B);F\n{A,B}]
+    \square(1300,0)/->`=`=`<-/<800,600>[
+      F(GA\otimes GB)`F(GB\otimes GA)`F(GA\otimes GB)`F(GB\otimes GA);F\e{A,B}```F\e{B,A}]
+    \qtriangle(2100,0)|amr|/->``->/<1400,600>[F(GB\otimes GA)`FG(B\tri A)`B\tri A;F\n{B,A}``\varepsilon_{B\tri A}]
+    \morphism(2900,0)|b|<-800,0>[FGB\tri FGA`F(GB\otimes GA);\m{GB,GA}]
+    \btriangle(2900,0)|mmb|/<-`=`<-/<600,400>[
+      B\tri A`FGB\tri FGA`B\tri A;
+      \varepsilon_B\tri\varepsilon_A``h_A\tri h_A])
   \efig
   \end{mathpar}
 \end{proof}
