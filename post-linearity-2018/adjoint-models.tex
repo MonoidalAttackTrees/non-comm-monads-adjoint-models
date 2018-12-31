@@ -69,7 +69,8 @@ $\cat{C}$ in LAM is strong but non-commutative. In Benton's LNL model,
 the monad on the cartesian closed category is commutative, but later
 Benton and Wadler \cite{Benton:1996} wonder, is it possible to model
 non-commutative monads using adjoint models similar to LNL models? The
-following answers their question in the positive w.r.t. the monoidal monads.
+following shows that LAMs correspond to strong non-commutative
+monoidal monads.
 \begin{lemma}
 \label{lem:monoidal-monad}
 The monad induced by any LAM, $GF : \cat{C} \mto \cat{C}$, is monoidal.
@@ -137,7 +138,7 @@ LAM as follows.
 that the comonad induced by some LAM is monoidal and extends $\cat{L}$
 with exchange. The former is proved in \cite{kelly1974doctrinal}. The
 latter is shown by proving that its corresponding co-Eilenberg-Moore
-category is symmetric monoidal closed.
+category is symmetric monoidal.
 
 \begin{theorem}
   \label{thm:em-exchange}
@@ -198,15 +199,15 @@ category is symmetric monoidal closed.
   \end{mathpar}
 \end{proof}
 
-\begin{corollary}
-  The subcategory, $\mathsf{Exp}(\cat{L}^{FG})$, of the
-  co-Eilenberg-Moore category $\cat{L}^{FG}$ consisting of the free
-  exponential coalgebras is symmetric monoidal closed.
-\end{corollary}
-\begin{proof}
-  The proof that $\mathsf{Exp}(\cat{L}^{FG})$ is monoidal closed
-  follows similarly to Benton~\cite{Benton:1994}.
-\end{proof}
+%% \begin{corollary}
+%%   The subcategory, $\mathsf{Exp}(\cat{L}^{FG})$, of the
+%%   co-Eilenberg-Moore category $\cat{L}^{FG}$ consisting of the free
+%%   exponential coalgebras is symmetric monoidal closed.
+%% \end{corollary}
+%% \begin{proof}
+%%   The proof that $\mathsf{Exp}(\cat{L}^{FG})$ is monoidal closed
+%%   follows similarly to Benton~\cite{Benton:1994}.
+%% \end{proof}
 
 %%% Local Variables: 
 %%% mode: latex
