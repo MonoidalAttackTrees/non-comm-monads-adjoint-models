@@ -72,6 +72,14 @@ monoidal biclosed.
   \]
   where $- \to -$ is the function space from $\Set$, and $(\alpha
   \rhd \beta)((u, v), (f, g)) = \alpha(u, f(v)) \circ \beta(g(u), v)$.
+
+  \ \\
+  \noindent
+  The unit of the above tensor product is defined as follows:
+  \[ \small
+  I = (\top , \top , \iota)
+  \]
+  where $\top$ is the initial object in $\Set$, and $\iota(*,*) = e$.
 \end{definition}
 
 \noindent
@@ -166,7 +174,7 @@ obtain the following.
 \begin{theorem}
   \label{theorem:sound-dial-exchange-!}
   Suppose $M$ is a biclosed poset with exchange.  Then
-  $\Dial{M}{\Set}$ is a sound and complete (w.r.t. derivability and
-  the equational theory) model for CNC logic.
+  $\Dial{M}{\Set}$ is a sound model for CNC logic.
 \end{theorem}
+
 
