@@ -2,10 +2,10 @@ Joachim Lambek first introduced the Syntactic Calculus, now known as
 the Lambek Calculus, in 1958 \cite{Lambek1958}.  Since then the Lambek
 Calculus has largely been motivated by providing an explanation of the
 mathematics of sentence structure, and can be found at the core of
-Categorical Grammar; a term first used in the title of Bar-Hillel,
+Categorial Grammar; a term first used in the title of Bar-Hillel,
 Gaifman and Shamir (1960), but categorical grammar began with
 Ajdukiewicz (1935) quite a few years earlier. At the end of the
-eighties the Lambek calculus and other systems of categorical grammars
+eighties the Lambek calculus and other systems of categorial grammars
 were taken up by computational linguists as exemplified by
 \cite{oehrle2012categorial,moortgat1988categorial,Barry:1991:PFS:977180.977215,hepple1990grammar}.
 

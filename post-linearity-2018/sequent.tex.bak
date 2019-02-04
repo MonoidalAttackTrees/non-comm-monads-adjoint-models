@@ -66,7 +66,7 @@ $[[B <- A]]$ as $A \backslash B$. We use $\rightharpoonup$ and
 $\leftharpoonup$ here instead to indicate they are two directions of
 the linear implication $\multimap$.
 
-The sequent calculus for CNC logic can be found in
+The sequenct calculus for CNC logic can be found in
 Figure~\ref{fig:CNC-sequent-calculus}. We split the figure in two: the top
 of the figure are the rules of intuitionistic linear logic whose sequents
 are the $\mathcal{C}$-sequents denoted by $[[P |-c X]]$, and the bottom of

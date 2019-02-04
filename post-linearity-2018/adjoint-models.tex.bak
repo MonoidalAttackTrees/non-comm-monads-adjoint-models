@@ -1,6 +1,6 @@
 In this section we introduce Lambek Adjoint Models (LAMs). Benton's
 LNL model consists of a symmetric monoidal adjunction
-$F:\cat{C}\dashv\cat{L}:G$ between a Cartesian closed category
+$F:\cat{C}\dashv\cat{L}:G$ between a cartesian closed category
 $\cat{C}$ and a symmetric monoidal closed category $\cat{L}$. LAM
 consists of a monoidal adjunction between a symmetric monoidal closed
 category and a Lambek category.
@@ -66,7 +66,7 @@ isomorphism with inverses $\p{X,Y}$.
 
 \textbf{Strong non-commutative monad}. Next we show that the monad on
 $\cat{C}$ in LAM is strong but non-commutative. In Benton's LNL model,
-the monad on the Cartesian closed category is commutative, but later
+the monad on the cartesian closed category is commutative, but later
 Benton and Wadler \cite{Benton:1996} wonder, is it possible to model
 non-commutative monads using adjoint models similar to LNL models? The
 following shows that LAMs correspond to strong non-commutative
@@ -109,7 +109,7 @@ strong.
   closed category in LAM is strong.
 \end{lemma}
 \begin{proof}
-The proof is done by first defining a natural transformation $\tau$, called
+The proof is done by frist defining a natural transformation $\tau$, called
 the \textbf{tensorial strength}, with components
 $\tau_{A,B}:A\tri TB\rightarrow T(A\tri B)$, and then proving the
 commutativity of several diagrams through diagram chasing. The formal
@@ -117,7 +117,7 @@ definition for a strong monad and the full proof are in
 Appendix~\ref{app:strong-monad}.
 \end{proof}
 \noindent
-Finally, we obtain the non-commutativity of the monad induced by some 
+Finally, we obtain the non-communativity of the monad induced by some 
 LAM as follows.
 \begin{lemma}[Due to Kock~\cite{kock1972strong}]
 \label{lem:monad-com-iff-sym}

@@ -2,10 +2,10 @@
 \label{app:strong-normalization}
 
 Following a similar syntax, we use $<<Ph, P>>$, $<<X>>,<<Y>>$ for the
-Cartesian closed category in LNL, and $<<G,D>>$, $<<A>>, <<B>>$ for the
+cartesian closed category in LNL, and $<<G,D>>$, $<<A>>, <<B>>$ for the
 SMCC. The term assignment for LNL is included in Figure~\ref{fig:lnl} for
-reference. Note that substitutions $\NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{2}}}}$, $\NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}$,
-and $\NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{2}}}}$ are also present in LNL.
+reference. Note that subsitutions $[[ [t1 / x] t2 ]]$, $[[ [t / x] s ]]$,
+and $[[ [s1 / x] s2 ]]$ are also present in LNL.
 
 \begin{figure}[!h]
  \scriptsize
@@ -47,73 +47,73 @@ $$\LNLdruleSXXsubOne{}$$
 $$\LNLdruleSXXsubTwo{}$$
 $$\LNLdruleTXXweakening{}, \qquad \LNLdruleSXXweakening{}$$
 
-The following definition defines how to map terms, formulas, and sequents
+The following definition defines how to map terms, formumlas, and sequents
 from CNC to LNL. For example, the sequent
-$\NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{;}  \NDmv{y}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}  \NDsym{;}  \NDmv{z}  \NDsym{:}  \NDnt{Y}  \multimap  \NDnt{Z}  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{C_{{\mathrm{1}}}}  \rightharpoonup  \NDnt{C_{{\mathrm{2}}}}$ is mapped to
-$<<x : X, z : Y -> Z; y : A (x) B |-l s : C1 -o C2>>$, where $\NDnt{X}$,
-$\NDnt{A}$, $\NDnt{B}$, $\NDnt{Y}$, $\NDnt{Z}$, $\NDnt{C_{{\mathrm{1}}}}$ and $\NDnt{C_{{\mathrm{2}}}}$ are all atomic
+$[[x : X; y : A (>) B; z : Y -o Z |-l s : C1 -> C2]]$ is mapped to
+$<<x : X, z : Y -> Z; y : A (x) B |-l s : C1 -o C2>>$, where $[[X]]$,
+$[[A]]$, $[[B]]$, $[[Y]]$, $[[Z]]$, $[[C1]]$ and $[[C2]]$ are all atomic
 types, and $s$ is an atomic term.
 
 \begin{definition}
   The function $CL$ that maps CNC to LNL is defined recursively as follows:
   \begin{itemize}
-  \item Variables map to themselves: $CL(\NDmv{x}) = <<x>>$
-  \item Commutative unit: $CL( \mathsf{triv} ) = <<u>> \qquad CL( \mathsf{Unit} ) = <<1>>$
-  \item Non-commutative unit: $CL( \mathsf{triv} ) = <<*>>, \qquad CL( \mathsf{Unit} ) = <<I>>$
-  \item Other atomic types map to themselves: $CL(\NDnt{X}) = <<X>>$,
-        $CL(\NDnt{A}) = <<A>>$
-  \item Other atomic terms map to themselves: $CL(\NDnt{t}) = <<t>>$,
-        $CL(\NDnt{s}) = <<s>>$
-  \item $CL(\NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}}) = (CL(t_1),CL(t_2)), \qquad CL(\NDnt{X}  \otimes  \NDnt{Y})=CL(X)\times CL(Y) $
-  \item $CL(\NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}) = CL(s_1)\otimes CL(s_2), \qquad CL(\NDnt{A}  \triangleright  \NDnt{B})=CL(A)\otimes CL(B)$
-  \item $CL( \NDnt{t_{{\mathrm{1}}}}   \NDnt{t_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(t_1)\,\,\,CL(t_2)$,
-        $\qquad CL( \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t} ) = \lambda CL(x):CL(X).CL(t)$,\\
-        $CL(\NDnt{X}  \multimap  \NDnt{Y}) = CL(X) \rightarrow CL(Y)$
-  \item $CL( \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2)$,
-        $\qquad CL( \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s} ) = \lambda CL(x):CL(A).CL(s)$,\\
-        $CL(\NDnt{A}  \rightharpoonup  \NDnt{B}) = CL(A) \multimap CL(B)$
-  \item $CL( \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}} ) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2)$,
-        $\qquad CL( \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s} ) = \lambda CL(x):CL(A).CL(s)$,\\
-        $CL(\NDnt{B}  \leftharpoonup  \NDnt{A}) = CL(A) \multimap CL(B)$
-  \item $CL( \mathsf{G}\, \NDnt{s} ) = \mathsf{G}\,CL(<<s>>)$, \qquad $CL( \mathsf{G} \NDnt{A} ) = \mathsf{G}\,CL(<<A>>)$
-  \item $CL( \mathsf{F} \NDnt{t} ) = \mathsf{F}\,CL(<<t>>)$, \qquad $CL( \mathsf{F} \NDnt{X} ) = \mathsf{F}\,CL(<<X>>)$
-  \item Suppose $\Phi$ is a commutative context, i.e.,
-        $\Phi=\{x_1:X_1,...,x_n:X_n\}$. Then \\
-        $CL(\Phi)=\{CL(x_1):CL(X_1),...,CL(x_n):CL(X_n)$.
-  \item Suppose $\Gamma$ is a mixed non-commutative context. Then
-        $CL(\Gamma)=CL(<<P>>);\LNL(<<D>>)$, where $<<P>>$ is the multiset of
-        commutative contexts in $\Gamma$, and $<<D>>$ is the multiset of
-        non-commutative contexts in $\Gamma$.
-  \item $CL( \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X} \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}} ) = << [ t1' / x' ] t2' >>$,
-        where $<<t1'>> = CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>> = CL(\NDnt{t_{{\mathrm{2}}}})$, and $<<x'>>$
-        is any variable of type $<<X'>> = CL(\NDnt{X})$.
-  \item $CL( \mathsf{let}\, \NDnt{t}  :  \NDnt{X} \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \NDnt{s} ) = << [ t' / x' ] s' >>$,
-        where $<<t'>> = CL(\NDnt{t})$, $<<s'>> = CL(\NDnt{s})$, and $<<x'>>$
-        is any variable of type $<<X'>> = CL(\NDnt{X})$.
-  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\,  \mathsf{triv}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A be * in s2'>>$,
-        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$, and
-        $<<A'>> = CL(\NDnt{A})$.
-  \item $CL( \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{Z} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}} ) = [snd(t1') / y'][fst(t1') / x']t2'$
-        where $<<t1'>> = CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>> = CL(\NDnt{t_{{\mathrm{2}}}})$,
-        $<<x'>> = CL(\NDmv{x})$, and $<<y'>> = CL(\NDmv{y})$.
-  \item $CL( \mathsf{let}\, \NDnt{t}  :  \NDnt{Z} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{s} ) = [snd(t') / y'][fst(t') / x']s'$
-        where $<<t'>> = CL(\NDnt{t})$, $<<s'>> = CL(\NDnt{s})$,
-        $<<x'>> = CL(\NDmv{x})$, and $<<y'>> = CL(\NDmv{y})$.
-  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A' be x' (x) y' in s2'>>$,
-        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$,
-        $<<x'>> = CL(\NDmv{x})$, $<<y'>> = CL(\NDmv{y})$, $<<A'>> = CL(\NDnt{A})$.
-  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A' be x' (x) y' in s2'>>$,
-        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$,
-        $<<x'>> = CL(\NDmv{x})$, $<<y'>> = CL(\NDmv{y})$, and
-        $<<A'>> = CL(\NDnt{A})$.
-  \item $CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\,  \mathsf{F}\, \NDmv{x}  \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} ) = <<let s1' : A' be F x' in s2'>>$,
-        where $<<s1'>> = CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>> = CL(\NDnt{s_{{\mathrm{2}}}})$,
-        $<<x'>> = CL(\NDmv{x})$, and $<<A'>> = CL(\NDnt{A})$.
+  \item Variables map to themselves: $CL([[x]]) = <<x>>$
+  \item Commutative unit: $CL([[trivT]]) = <<u>> \qquad CL([[UnitT]]) = <<1>>$
+  \item Non-commutative unit: $CL([[trivS]]) = <<*>>, \qquad CL([[UnitS]]) = <<I>>$
+  \item Other atomic types map to themselves: $CL([[X]]) = <<X>>$,
+        $CL([[A]]) = <<A>>$
+  \item Other atomic terms map to themselves: $CL([[t]]) = <<t>>$,
+        $CL([[s]]) = <<s>>$
+  \item $CL([[t1 (*) t2]]) = (CL(t_1),CL(t_2)), \qquad CL([[X (*) Y]])=CL(X)\times CL(Y) $
+  \item $CL([[s_1 (>) s_2]]) = CL(s_1)\otimes CL(s_2), \qquad CL([[A (>) B]])=CL(A)\otimes CL(B)$
+  \item $CL([[t1 t2]]) = \mathsf{app}\,\,\,CL(t_1)\,\,\,CL(t_2)$,
+        $\qquad CL([[\ x : X.t]]) = \lambda CL(x):CL(X).CL(t)$,\\
+        $CL([[X -o Y]]) = CL(X) \rightarrow CL(Y)$
+  \item $CL([[appr s1 s2]]) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2)$,
+        $\qquad CL([[\r x : A.s]]) = \lambda CL(x):CL(A).CL(s)$,\\
+        $CL([[A -> B]]) = CL(A) \multimap CL(B)$
+  \item $CL([[appl s1 s2]]) = \mathsf{app}\,\,\,CL(s_1)\,\,\,CL(s_2)$,
+        $\qquad CL([[\l x : A.s]]) = \lambda CL(x):CL(A).CL(s)$,\\
+        $CL([[B <- A]]) = CL(A) \multimap CL(B)$
+  \item $CL([[Gf s]]) = \mathsf{G}\,CL(<<s>>)$, \qquad $CL([[Gf A]]) = \mathsf{G}\,CL(<<A>>)$
+  \item $CL([[F t]]) = \mathsf{F}\,CL(<<t>>)$, \qquad $CL([[F X]]) = \mathsf{F}\,CL(<<X>>)$
+  \item Suppose $[[I]]$ is a commutative context, i.e.,
+        $[[I]]=\{x_1:X_1,...,x_n:X_n\}$. Then \\
+        $CL([[I]])=\{CL(x_1):CL(X_1),...,CL(x_n):CL(X_n)$.
+  \item Suppose $[[G]]$ is a mixed non-commutative context. Then
+        $CL([[G]])=CL(<<P>>);\LNL(<<D>>)$, where $<<P>>$ is the multiset of
+        commutative contexts in $[[G]]$, and $<<D>>$ is the multiset of
+        non-commutative contexts in $[[G]]$.
+  \item $CL([[let t1 : X be trivTp in t2]]) = << [ t1' / x' ] t2' >>$,
+        where $<<t1'>> = CL([[t1]])$, $<<t2'>> = CL([[t2]])$, and $<<x'>>$
+        is any variable of type $<<X'>> = CL([[X]])$.
+  \item $CL([[let t : X be trivTp in s]]) = << [ t' / x' ] s' >>$,
+        where $<<t'>> = CL([[t]])$, $<<s'>> = CL([[s]])$, and $<<x'>>$
+        is any variable of type $<<X'>> = CL([[X]])$.
+  \item $CL([[let s1 : A be trivSp in s2]]) = <<let s1' : A be * in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$, and
+        $<<A'>> = CL([[A]])$.
+  \item $CL([[let t1 : Z be x (*) y in t2]]) = [snd(t1') / y'][fst(t1') / x']t2'$
+        where $<<t1'>> = CL([[t1]])$, $<<t2'>> = CL([[t2]])$,
+        $<<x'>> = CL([[x]])$, and $<<y'>> = CL([[y]])$.
+  \item $CL([[let t : Z be x (*) y in s]]) = [snd(t') / y'][fst(t') / x']s'$
+        where $<<t'>> = CL([[t]])$, $<<s'>> = CL([[s]])$,
+        $<<x'>> = CL([[x]])$, and $<<y'>> = CL([[y]])$.
+  \item $CL([[let s1 : A be x (>) y in s2]]) = <<let s1' : A' be x' (x) y' in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$,
+        $<<x'>> = CL([[x]])$, $<<y'>> = CL([[y]])$, $<<A'>> = CL([[A]])$.
+  \item $CL([[let s1 : A be x (>) y in s2]]) = <<let s1' : A' be x' (x) y' in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$,
+        $<<x'>> = CL([[x]])$, $<<y'>> = CL([[y]])$, and
+        $<<A'>> = CL([[A]])$.
+  \item $CL([[let s1 : A be F x in s2]]) = <<let s1' : A' be F x' in s2'>>$,
+        where $<<s1'>> = CL([[s1]])$, $<<s2'>> = CL([[s2]])$,
+        $<<x'>> = CL([[x]])$, and $<<A'>> = CL([[A]])$.
   \end{itemize}
 \end{definition}
 
 \begin{lemma}
-  Each sequent $\Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$ or $\Gamma  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$ in CNC maps to a
+  Each sequent $[[I |-c t : X]]$ or $[[G |-l s : A]]$ in CNC maps to a
   corresponding sequent in LNL.
 \end{lemma}
 \begin{proof}
@@ -152,7 +152,7 @@ types, and $s$ is an atomic term.
               }{<<. |-c u : 1>>}
             \end{math}
           \end{center}
-          since $CL( \mathsf{triv} ) = <<u>>$ and $CL( \mathsf{Unit} ) = <<1>>$ for
+          since $CL([[trivT]]) = <<u>>$ and $CL([[UnitT]]) = <<1>>$ for
           the commutative unit.
 
     \item $\NDdruleTXXunitEName:$
@@ -177,9 +177,9 @@ types, and $s$ is an atomic term.
               }{<<Ph', P' |-c [t1' / x']t2' : Y'>>}
             \end{math}
           \end{center}
-          where $<<P'>>=CL(\Psi)$, $<<Ph'>>=CL(\Phi)$,
-          $<<t1'>>=CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>>=CL(\NDnt{t_{{\mathrm{2}}}})$, and
-          $<<Y'>>=CL(\NDnt{Y})$.
+          where $<<P'>>=CL([[P]])$, $<<Ph'>>=CL([[I]])$,
+          $<<t1'>>=CL([[t1]])$, $<<t2'>>=CL([[t2]])$, and
+          $<<Y'>>=CL([[Y]])$.
 
     \item $\NDdruleTXXtenIName:$
           \begin{center}
@@ -207,11 +207,11 @@ types, and $s$ is an atomic term.
               }{<<Ph', P' |-c (t1' , t2') : X' (t) Y'>>}
             \end{math}
           \end{center}
-          where $<<P'>>=CL(\Psi)$, $<<Ph'>>=CL(\Phi)$,
-          $<<t1'>>=CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>>=CL(\NDnt{t_{{\mathrm{2}}}})$, and
-          $<<X'>>=CL(\NDnt{X})$, $<<Y'>>=CL(\NDnt{Y})$. Note that
-          $\NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}} : \NDnt{X}  \otimes  \NDnt{Y}$ is mapped to 
-          $(CL(\NDnt{t_{{\mathrm{1}}}}),CL(\NDnt{t_{{\mathrm{2}}}})) : CL(\NDnt{X})\times CL(\NDnt{Y})$.
+          where $<<P'>>=CL([[P]])$, $<<Ph'>>=CL([[I]])$,
+          $<<t1'>>=CL([[t1]])$, $<<t2'>>=CL([[t2]])$, and
+          $<<X'>>=CL([[X]])$, $<<Y'>>=CL([[Y]])$. Note that
+          $[[t1 (*) t2]] : [[X (*) Y]]$ is mapped to 
+          $(CL([[t1]]),CL([[t2]])) : CL([[X]])\times CL([[Y]])$.
 
     \item $\NDdruleTXXtenEName:$
           \begin{center}
@@ -250,12 +250,12 @@ types, and $s$ is an atomic term.
               }{<<P1', Ph', P2' |-c [snd(t1') / y'][fst(t1') / x']t2' : Z'>>}
             \end{math}
           \end{center}
-          where $<<P'>>=CL(\Psi)$, $<<Ph1'>>=CL(\Phi_{{\mathrm{1}}})$,
-          $<<Ph2'>>=CL(\Phi_{{\mathrm{2}}})$, $<<x'>>=CL(\NDmv{x})=x$,
-          $<<y'>>=CL(\NDmv{y})=y$, $<<t1'>>=CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>>=CL(\NDnt{t_{{\mathrm{2}}}})$,
-          $<<X'>>=CL(\NDnt{X})$, $<<Y'>>=CL(\NDnt{Y})$, $<<Z'>>=CL(\NDnt{Z})$.
-          Note that $\NDnt{t_{{\mathrm{1}}}} : \NDnt{X}  \otimes  \NDnt{Y}$ is mapped to \\
-          $CL(\NDnt{t_{{\mathrm{1}}}}) : CL(\NDnt{X})\times CL(\NDnt{Y})$.
+          where $<<P'>>=CL([[P]])$, $<<Ph1'>>=CL([[I1]])$,
+          $<<Ph2'>>=CL([[I2]])$, $<<x'>>=CL([[x]])=x$,
+          $<<y'>>=CL([[y]])=y$, $<<t1'>>=CL([[t1]])$, $<<t2'>>=CL([[t2]])$,
+          $<<X'>>=CL([[X]])$, $<<Y'>>=CL([[Y]])$, $<<Z'>>=CL([[Z]])$.
+          Note that $[[t1]] : [[X (*) Y]]$ is mapped to \\
+          $CL([[t1]]) : CL([[X]])\times CL([[Y]])$.
 
     \item $\NDdruleTXXimpIName:$
           \begin{center}
@@ -272,8 +272,8 @@ types, and $s$ is an atomic term.
               }{<<Ph' |-c \ x' : X'.t' : X' -> Y'>>}
             \end{math}
           \end{center}
-          where $<<Ph'>>=CL(\Phi)$, $<<x'>>=CL(\NDmv{x})=x$,
-          $<<t'>>=CL(\NDnt{t})$, $<<X'>>=CL(\NDnt{X})$, $<<Y'>>=CL(\NDnt{Y})$.
+          where $<<Ph'>>=CL([[I]])$, $<<x'>>=CL([[x]])=x$,
+          $<<t'>>=CL([[t]])$, $<<X'>>=CL([[X]])$, $<<Y'>>=CL([[Y]])$.
 
     \item $\NDdruleTXXimpEName{}:$
           \begin{center}
@@ -301,9 +301,9 @@ types, and $s$ is an atomic term.
               }{<<Ph', P' |-c app t1' t2' : Y'>>}
             \end{math}
           \end{center}
-          where $<<P'>>=CL(\Psi)$, $<<Ph'>>=CL(\Phi)$,
-          $<<t1'>>=CL(\NDnt{t_{{\mathrm{1}}}})$, $<<t2'>>=CL(\NDnt{t_{{\mathrm{2}}}})$, $<<X'>>=CL(\NDnt{X})$,
-          $<<Y'>>=CL(\NDnt{Y})$.
+          where $<<P'>>=CL([[P]])$, $<<Ph'>>=CL([[I]])$,
+          $<<t1'>>=CL([[t1]])$, $<<t2'>>=CL([[t2]])$, $<<X'>>=CL([[X]])$,
+          $<<Y'>>=CL([[Y]])$.
 
     \item $\NDdruleTXXGIName:$
           \begin{center}
@@ -320,7 +320,7 @@ types, and $s$ is an atomic term.
                 }{<<Ph' |-c Gf s' : Gf A'>>}
             \end{math}
           \end{center}
-          where $<<Ph'>>=CL(\Phi)$, $<<s'>>=CL(\NDnt{s})$, $<<A'>>=CL(\NDnt{A})$,
+          where $<<Ph'>>=CL([[I]])$, $<<s'>>=CL([[s]])$, $<<A'>>=CL([[A]])$,
 
     \item $\NDdruleSXXidName:$
           \begin{center}
@@ -337,7 +337,7 @@ types, and $s$ is an atomic term.
               }{<<.; x' : A' |-l x' : A'>>}
             \end{math}
           \end{center}
-          where $<<x'>>=CL(\NDmv{x})$, $<<A'>>=CL(\NDnt{A})$,
+          where $<<x'>>=CL([[x]])$, $<<A'>>=CL([[A]])$,
 
     \item $\NDdruleSXXunitIName:$
           \begin{center}
@@ -354,7 +354,7 @@ types, and $s$ is an atomic term.
               }{<<. |-l * : I>>}
             \end{math}
           \end{center}
-          since $CL( \mathsf{triv} ) = <<*>>$ and $CL( \mathsf{Unit} ) = <<I>>$ for the
+          since $CL([[trivS]]) = <<*>>$ and $CL([[UnitS]]) = <<I>>$ for the
           non-commutative unit.
 
     \item $\NDdruleSXXunitEOneName:$
@@ -379,9 +379,9 @@ types, and $s$ is an atomic term.
               }{<<Ph', P'; G1' |-l [t' / x']s' : A'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<P>>$ and $<<G1>>$,
-          $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$, $<<P'>>=CL(\Psi)$, $<<Ph'>>=CL(\Phi)$,
-          $<<s'>>=CL(\NDnt{s})$, $<<t'>>=CL(\NDnt{t})$, $<<A'>>=CL(\NDnt{A})$.
+          where $[[G]]$ is divided into $<<P>>$ and $<<G1>>$,
+          $<<G1'>>=CL([[G1]])$, $<<P'>>=CL([[P]])$, $<<Ph'>>=CL([[I]])$,
+          $<<s'>>=CL([[s]])$, $<<t'>>=CL([[t]])$, $<<A'>>=CL([[A]])$.
 
     \item $\NDdruleSXXunitETwoName:$
           \begin{center}
@@ -409,10 +409,10 @@ types, and $s$ is an atomic term.
               }{<<Ph', P'; G', D1' |-l let s1' : I be * in s2' : A'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$, and $\Delta$
-          is divided into $<<P>>$ and $<<D1>>$; and $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$,
-          $<<Ph'>>=CL(\Phi)$, $<<D1'>>=CL(\Delta_{{\mathrm{1}}})$, $<<P'>>=CL(\Psi)$, 
-          $<<s1'>>=CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>>=CL(\NDnt{s_{{\mathrm{2}}}})$, $<<A'>>=CL(\NDnt{A})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$, and $[[D]]$
+          is divided into $<<P>>$ and $<<D1>>$; and $<<G1'>>=CL([[G1]])$,
+          $<<Ph'>>=CL([[I]])$, $<<D1'>>=CL([[D1]])$, $<<P'>>=CL([[P]])$, 
+          $<<s1'>>=CL([[s1]])$, $<<s2'>>=CL([[s2]])$, $<<A'>>=CL([[A]])$.
 
     \item $\NDdruleSXXtenIName:$
           \begin{center}
@@ -440,11 +440,11 @@ types, and $s$ is an atomic term.
               }{<<Ph', P'; G1', D1' |-l s1' (x) s2' : A' (x) B'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$, and $\Delta$
-          is divided into $<<P>>$ and $<<D1>>$; and $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$,
-          $<<Ph'>>=CL(\Phi)$, $<<D1'>>=CL(\Delta_{{\mathrm{1}}})$, $<<P'>>=CL(\Psi)$, 
-          $<<s1'>>=CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>>=CL(\NDnt{s_{{\mathrm{2}}}})$, $<<A'>>=CL(\NDnt{A})$,
-          $<<B'>>=CL(\NDnt{B})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$, and $[[D]]$
+          is divided into $<<P>>$ and $<<D1>>$; and $<<G1'>>=CL([[G1]])$,
+          $<<Ph'>>=CL([[I]])$, $<<D1'>>=CL([[D1]])$, $<<P'>>=CL([[P]])$, 
+          $<<s1'>>=CL([[s1]])$, $<<s2'>>=CL([[s2]])$, $<<A'>>=CL([[A]])$,
+          $<<B'>>=CL([[B]])$.
 
     \item $\NDdruleSXXtenEOneName:$
           \begin{center}
@@ -479,12 +479,12 @@ types, and $s$ is an atomic term.
               }{<<Ph', P1', P2'; D1', D2' |-l [snd(t') / y'][fst(t') / x']s' : A'>>}
             \end{math}
           \end{center}
-          where $\Gamma_{{\mathrm{1}}}$ is divided into $<<P1>>$ and $<<D1>>$, and $\Gamma_{{\mathrm{2}}}$
-          is divided into $<<P2>>$ and $<<D2>>$; and $<<Ph'>>=CL(\Phi)$,
-          $<<D1'>>=CL(\Delta_{{\mathrm{1}}})$, $<<D2'>>=CL(\Delta_{{\mathrm{2}}})$, $<<P1'>>=CL(\Psi_{{\mathrm{1}}})$,
-          $<<P2'>>=CL(\Psi_{{\mathrm{2}}})$,
-          $<<x'>>=CL(\NDmv{x})$, $<<y'>>=CL(\NDmv{y})$, $<<X'>>=CL(\NDnt{X})$,
-          $<<Y'>>=CL(\NDnt{Y})$, $<<A'>>=CL(\NDnt{A})$.
+          where $[[G1]]$ is divided into $<<P1>>$ and $<<D1>>$, and $[[G2]]$
+          is divided into $<<P2>>$ and $<<D2>>$; and $<<Ph'>>=CL([[I]])$,
+          $<<D1'>>=CL([[D1]])$, $<<D2'>>=CL([[D2]])$, $<<P1'>>=CL([[P1]])$,
+          $<<P2'>>=CL([[P2]])$,
+          $<<x'>>=CL([[x]])$, $<<y'>>=CL([[y]])$, $<<X'>>=CL([[X]])$,
+          $<<Y'>>=CL([[Y]])$, $<<A'>>=CL([[A]])$.
 
     \item $\NDdruleSXXtenETwoName:$
           \begin{center}
@@ -515,14 +515,14 @@ types, and $s$ is an atomic term.
               }{<<Ph, P1, P2; D3', G1', D4' |-l let s1 : A (x) B be x (x) y in s2 : C>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$, $\Delta_{{\mathrm{1}}}$ is
-          divided into $<<P1>>$ and $<<D3>>$, and $\Delta_{{\mathrm{2}}}$ is divided into
-          $<<P2>>$ and $<<D4>>$; and $<<Ph'>>=CL(\Phi)$,
-          $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$, $<<D3'>>=CL(\Delta_{{\mathrm{3}}})$, $<<D4'>>=CL(\Delta_{{\mathrm{4}}})$,
-          $<<P1'>>=CL(\Psi_{{\mathrm{1}}})$, $<<P2'>>=CL(\Psi_{{\mathrm{2}}})$,
-          $<<x'>>=CL(\NDmv{x})$, $<<y'>>=CL(\NDmv{y})$, $<<s1'>>=CL(\NDnt{s_{{\mathrm{1}}}})$,
-          $<<s2'>>=CL(\NDnt{s_{{\mathrm{2}}}})$, $<<A'>>=CL(\NDnt{A})$, $<<B'>>=CL(\NDnt{B})$,
-          $<<C'>>=CL(\NDnt{C})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$, $[[D1]]$ is
+          divided into $<<P1>>$ and $<<D3>>$, and $[[D2]]$ is divided into
+          $<<P2>>$ and $<<D4>>$; and $<<Ph'>>=CL([[I]])$,
+          $<<G1'>>=CL([[G1]])$, $<<D3'>>=CL([[D3]])$, $<<D4'>>=CL([[D4]])$,
+          $<<P1'>>=CL([[P1]])$, $<<P2'>>=CL([[P2]])$,
+          $<<x'>>=CL([[x]])$, $<<y'>>=CL([[y]])$, $<<s1'>>=CL([[s1]])$,
+          $<<s2'>>=CL([[s2]])$, $<<A'>>=CL([[A]])$, $<<B'>>=CL([[B]])$,
+          $<<C'>>=CL([[C]])$.
 
 
     \item $\NDdruleSXXimprIName:$
@@ -540,9 +540,9 @@ types, and $s$ is an atomic term.
               }{<<Ph'; G1' |-l \ x' : A'. s' : A' -o B'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$; and
-          $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$, $<<Ph'>>=CL(\Phi)$, $<<x'>>=CL(\NDmv{x})$,
-          $<<A'>>=CL(\NDnt{A})$, $<<B'>>=CL(\NDnt{B})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$; and
+          $<<G1'>>=CL([[G1]])$, $<<Ph'>>=CL([[I]])$, $<<x'>>=CL([[x]])$,
+          $<<A'>>=CL([[A]])$, $<<B'>>=CL([[B]])$.
 
     \item $\NDdruleSXXimprEName:$
           \begin{center}
@@ -570,11 +570,11 @@ types, and $s$ is an atomic term.
               }{<<Ph', P'; G1', D1' |-l app s1' s2' : B'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$, and $\Delta$
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$, and $[[D]]$
           is divided into $<<P>>$ and $<<D1>>$; and 
-          $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$, $<<Ph'>>=CL(\Phi)$, $<<D1'>>=CL(\Delta_{{\mathrm{1}}})$,
-          $<<P'>>=CL(\Psi)$, $<<s1'>>=CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>>=CL(\NDnt{s_{{\mathrm{2}}}})$,
-          $<<A'>>=CL(\NDnt{A})$, and $<<B'>>=CL(\NDnt{B})$.
+          $<<G1'>>=CL([[G1]])$, $<<Ph'>>=CL([[I]])$, $<<D1'>>=CL([[D1]])$,
+          $<<P'>>=CL([[P]])$, $<<s1'>>=CL([[s1]])$, $<<s2'>>=CL([[s2]])$,
+          $<<A'>>=CL([[A]])$, and $<<B'>>=CL([[B]])$.
 
     \item $\NDdruleSXXimplIName:$
           \begin{center}
@@ -594,9 +594,9 @@ types, and $s$ is an atomic term.
               }{<<Ph'; G1' |-l \ x' : A' . s' : A' -o B'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$,
-          $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$, $<<Ph'>>=CL(\Phi)$, $<<x'>>=CL(\NDmv{x})$,
-          $<<s'>>=CL(\NDnt{s})$, $<<A'>>=CL(\NDnt{A})$, and $<<B'>>=CL(\NDnt{B})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$,
+          $<<G1'>>=CL([[G1]])$, $<<Ph'>>=CL([[I]])$, $<<x'>>=CL([[x]])$,
+          $<<s'>>=CL([[s]])$, $<<A'>>=CL([[A]])$, and $<<B'>>=CL([[B]])$.
 
     \item $\NDdruleSXXimplEName:$
           \begin{center}
@@ -627,11 +627,11 @@ types, and $s$ is an atomic term.
               }{<<P', Ph'; D1', G1' |-l app s1' s2' : B'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$, and $\Delta$
-          is divided into $<<P>>$ and $<<D1>>$; and $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$,
-          $<<D1'>>=CL(\Delta_{{\mathrm{1}}})$, $<<Ph'>>=CL(\Phi)$, $<<P'>>=CL(\Psi)$,
-          $<<s1'>>=CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>>=CL(\NDnt{s_{{\mathrm{2}}}})$, $<<A'>>=CL(\NDnt{A})$,
-          and $<<B'>>=CL(\NDnt{B})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$, and $[[D]]$
+          is divided into $<<P>>$ and $<<D1>>$; and $<<G1'>>=CL([[G1]])$,
+          $<<D1'>>=CL([[D1]])$, $<<Ph'>>=CL([[I]])$, $<<P'>>=CL([[P]])$,
+          $<<s1'>>=CL([[s1]])$, $<<s2'>>=CL([[s2]])$, $<<A'>>=CL([[A]])$,
+          and $<<B'>>=CL([[B]])$.
 
     \item $\NDdruleSXXFIName:$
           \begin{center}
@@ -648,8 +648,8 @@ types, and $s$ is an atomic term.
               }{<<Ph' |-l F t' : F X'>>}
             \end{math}
           \end{center}
-          where $<<Ph'>>=CL(\Phi)$, $<<t'>>=CL(\NDnt{t})$,
-          $<<X'>>=CL(\NDnt{X})$.
+          where $<<Ph'>>=CL([[I]])$, $<<t'>>=CL([[t]])$,
+          $<<X'>>=CL([[X]])$.
 
     \item $\NDdruleSXXFEName:$
           \begin{center}
@@ -680,13 +680,13 @@ types, and $s$ is an atomic term.
               }{<<Ph', P1', P2'; D3', G1', D4' |-l let s1' : F X' be F x' in s2' : A'>>}
             \end{math}
           \end{center}
-          where $\Gamma$ is divided into $<<Ph>>$ and $<<G1>>$, $\Delta_{{\mathrm{1}}}$ is
-          divided into $<<P1>>$ and $<<D3>>$, and $\Delta_{{\mathrm{2}}}$ is divided into
-          $<<P2>>$ and $<<D4>>$; and $<<Ph'>>=CL(\Phi)$,
-          $<<G1'>>=CL(\Gamma_{{\mathrm{1}}})$, $<<D3'>>=CL(\Delta_{{\mathrm{3}}})$, $<<D4'>>=CL(\Delta_{{\mathrm{4}}})$,
-          $<<P1'>>=CL(\Psi_{{\mathrm{1}}})$, $<<P2'>>=CL(\Psi_{{\mathrm{2}}})$, $<<x'>>=CL(\NDmv{x})$,
-          $<<s1'>>=CL(\NDnt{s_{{\mathrm{1}}}})$, $<<s2'>>=CL(\NDnt{s_{{\mathrm{2}}}})$, $<<A'>>=CL(\NDnt{A})$,
-          $<<X'>>=CL(\NDnt{X})$.
+          where $[[G]]$ is divided into $<<Ph>>$ and $<<G1>>$, $[[D1]]$ is
+          divided into $<<P1>>$ and $<<D3>>$, and $[[D2]]$ is divided into
+          $<<P2>>$ and $<<D4>>$; and $<<Ph'>>=CL([[I]])$,
+          $<<G1'>>=CL([[G1]])$, $<<D3'>>=CL([[D3]])$, $<<D4'>>=CL([[D4]])$,
+          $<<P1'>>=CL([[P1]])$, $<<P2'>>=CL([[P2]])$, $<<x'>>=CL([[x]])$,
+          $<<s1'>>=CL([[s1]])$, $<<s2'>>=CL([[s2]])$, $<<A'>>=CL([[A]])$,
+          $<<X'>>=CL([[X]])$.
 
     \item $\NDdruleSXXGEName:$
           \begin{center}
@@ -703,17 +703,17 @@ types, and $s$ is an atomic term.
               }{<<Ph' |-l derelict t' : A'>>}
             \end{math}
           \end{center}
-          where $<<Ph'>>=CL(\Phi)$, $<<t'>>=CL(\NDnt{t})$,
-          $<<A'>>=CL(\NDnt{A})$.
+          where $<<Ph'>>=CL([[I]])$, $<<t'>>=CL([[t]])$,
+          $<<A'>>=CL([[A]])$.
   \end{itemize}
 \end{proof}
 
 \begin{lemma}
-  Suppose $\NDnt{t_{{\mathrm{1}}}}  \leadsto_\beta  \NDnt{t_{{\mathrm{2}}}}$ holds in CNC. Then $CL(t_1)\leadsto CL(t_2)$ holds
+  Suppose $[[t1 ~> t2]]$ holds in CNC. Then $CL(t_1)\leadsto CL(t_2)$ holds
   in LNL.
 \end{lemma}
 \begin{proof}
-  This proof is by induction on the form of $\NDnt{t_{{\mathrm{1}}}}  \leadsto_\beta  \NDnt{t_{{\mathrm{2}}}}$, but by
+  This proof is by induction on the form of $[[t1 ~> t2]]$, but by
   inspecting the definition of the translation from CNC to LNL it is
   straightforward to see that there is a correspondence between the
   reduction rules in CNC and those in LNL.  We give a few cases of the
@@ -726,7 +726,7 @@ types, and $s$ is an atomic term.
     \end{center}
     By the definition of the translation from CNC to LNL we know the following:
     \[
-    CL\NDsym{(}   \mathsf{app}_l\, \NDsym{(}   \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)} = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
+    CL[[(appl (\l x:A.s1) s2)]] = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
     \]
     Thus, this translation will clearly reduce to $<< [CL(s2)/x]CL(s1)>>$.
 
@@ -736,7 +736,7 @@ types, and $s$ is an atomic term.
     \end{center}
     By the definition of the translation from CNC to LNL we know the following:
     \[
-    CL\NDsym{(}   \mathsf{app}_r\, \NDsym{(}   \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s_{{\mathrm{1}}}}   \NDsym{)} \, \NDnt{s_{{\mathrm{2}}}}   \NDsym{)} = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
+    CL[[(appr (\r x:A.s1) s2)]] = <<app (\x:CL(A).CL(s1)) CL(s2)>>\\
     \]
     Thus, this translation will clearly reduce to $<< [CL(s2)/x]CL(s1)>>$.
 
@@ -746,7 +746,7 @@ types, and $s$ is an atomic term.
     \end{center}
     By the definition of the translation from CNC to LNL we know the following:
     \[
-    CL( \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{3}}}} ) = <<let CL(s1) (x) CL(s2) : CL(A) (x) CL(B) be x (x) y in CL(s3)>>\\
+    CL([[let s1 (>) s2 : A (>) B be x (>) y in s3]]) = <<let CL(s1) (x) CL(s2) : CL(A) (x) CL(B) be x (x) y in CL(s3)>>\\
     \]
     Again, this will clearly reduce to $<< [CL(s1)/x][CL(s2)/y]CL(s3) >>$.
 

@@ -2,9 +2,9 @@
 \label{app:strong-normalization}
 
 Following a similar syntax, we use $[[Ph, P]]$, $[[X]],[[Y]]$ for the
-cartesian closed category in LNL, and $[[G,D]]$, $[[A]], [[B]]$ for the
+Cartesian closed category in LNL, and $[[G,D]]$, $[[A]], [[B]]$ for the
 SMCC. The term assignment for LNL is included in Figure~\ref{fig:lnl} for
-reference. Note that subsitutions $\NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{2}}}}$, $\NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}$,
+reference. Note that substitutions $\NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{t_{{\mathrm{2}}}}$, $\NDsym{[}  \NDnt{t}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s}$,
 and $\NDsym{[}  \NDnt{s_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{x}  \NDsym{]}  \NDnt{s_{{\mathrm{2}}}}$ are also present in LNL.
 
 \begin{figure}[!h]
@@ -47,7 +47,7 @@ $$\LNLdruleSXXsubOne{}$$
 $$\LNLdruleSXXsubTwo{}$$
 $$\LNLdruleTXXweakening{}, \qquad \LNLdruleSXXweakening{}$$
 
-The following definition defines how to map terms, formumlas, and sequents
+The following definition defines how to map terms, formulas, and sequents
 from CNC to LNL. For example, the sequent
 $\NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{;}  \NDmv{y}  \NDsym{:}  \NDnt{A}  \triangleright  \NDnt{B}  \NDsym{;}  \NDmv{z}  \NDsym{:}  \NDnt{Y}  \multimap  \NDnt{Z}  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{C_{{\mathrm{1}}}}  \rightharpoonup  \NDnt{C_{{\mathrm{2}}}}$ is mapped to
 $[[x : X, z : Y -> Z; y : A (x) B |-l s : C1 -o C2]]$, where $\NDnt{X}$,

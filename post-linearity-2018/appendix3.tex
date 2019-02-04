@@ -2,9 +2,9 @@
 \label{app:strong-normalization}
 
 Following a similar syntax, we use $<<Ph, P>>$, $<<X>>,<<Y>>$ for the
-cartesian closed category in LNL, and $<<G,D>>$, $<<A>>, <<B>>$ for the
+Cartesian closed category in LNL, and $<<G,D>>$, $<<A>>, <<B>>$ for the
 SMCC. The term assignment for LNL is included in Figure~\ref{fig:lnl} for
-reference. Note that subsitutions $[[ [t1 / x] t2 ]]$, $[[ [t / x] s ]]$,
+reference. Note that substitutions $[[ [t1 / x] t2 ]]$, $[[ [t / x] s ]]$,
 and $[[ [s1 / x] s2 ]]$ are also present in LNL.
 
 \begin{figure}[!h]
@@ -47,7 +47,7 @@ $$\LNLdruleSXXsubOne{}$$
 $$\LNLdruleSXXsubTwo{}$$
 $$\LNLdruleTXXweakening{}, \qquad \LNLdruleSXXweakening{}$$
 
-The following definition defines how to map terms, formumlas, and sequents
+The following definition defines how to map terms, formulas, and sequents
 from CNC to LNL. For example, the sequent
 $[[x : X; y : A (>) B; z : Y -o Z |-l s : C1 -> C2]]$ is mapped to
 $<<x : X, z : Y -> Z; y : A (x) B |-l s : C1 -o C2>>$, where $[[X]]$,
