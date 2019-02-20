@@ -1,0 +1,63 @@
+Joachim Lambek first introduced the Syntactic Calculus, now known as
+the Lambek Calculus, in 1958 \cite{Lambek1958}.  Since then the Lambek
+Calculus has largely been motivated by providing an explanation of the
+mathematics of sentence structure, and can be found at the core of
+Categorical Grammar; a term first used in the title of Bar-Hillel,
+Gaifman and Shamir (1960), but categorical grammar began with
+Ajdukiewicz (1935) quite a few years earlier. At the end of the
+eighties the Lambek calculus and other systems of categorical grammars
+were taken up by computational linguists as exemplified by
+\cite{oehrle2012categorial,moortgat1988categorial,Barry:1991:PFS:977180.977215,hepple1990grammar}.
+
+It was computational linguists who posed the question of whether it is
+possible to isolate exchange using a modality in the same way that the
+of-course modality of linear logic, $!A$, isolates weakening and
+contraction.  de Paiva and Eades \cite{dePaiva2018} propose one
+solution to this problem by extending the Lambek calculus with the
+modality characterized by the following sequent calculus inference
+rules:
+\[
+\small
+\begin{array}{ccccccccccccccccccccc}  
+  \LdruleEr{} & & \LdruleEl{} & & \LdruleEOne{} & & \LdruleETwo{} 
+\end{array}
+\]
+The thing to note is that the modality $\kappa A$ appears on only one
+of the operands being exchanged.  That is, these rules along with
+those for the tensor product allow one to prove that $\kappa A \otimes
+B \multimap B \otimes \kappa A$ holds.  This is somewhat at odds with
+algebraic intuition, and it is unclear how this modality could be
+decomposed into adjoint functors in a linear/non-linear (LNL)
+formalization of the Lambek calculus.
+
+In this paper we show how to add an exchange modality, $eA$, where the
+modality now occurs on both operands being exchanged. That is, one can
+show that $eA \otimes eB \multimap eB \otimes eA$ holds.  We give a sequent
+calculus and a LNL natural deduction formalization for the Lambek calculus
+with this new modality, and two categorical models: a LNL model and a
+concrete model in dialectica spaces. Thus giving a second solution to the
+problem proposed above.
+
+The Lambek Calculus also has the potential for many applications in
+other areas of computer science, such as, modeling processes.  Linear
+Logic has been at the forefront of the study of process calculi for
+many years \cite{HONDA20102223,Pratt:1997,ABRAMSKY19945}. We can think
+of the commutative tensor product of linear logic as a parallel
+operator.  For example, given a process $A$ and a process $B$, then we
+can form the process $A \otimes B$ which runs both processes in
+parallel.  If we remove commutativity from the tensor product we
+obtain a sequential composition instead of parallel composition.  That
+is, the process $A \rhd B$ first runs process $A$ and then process $B$
+in that order.  Vaughan Pratt has stated that , ``sequential
+composition has no evident counterpart in type theory'' see page 11 of
+\cite{Pratt:1997}.  We believe that the Lambek Calculus will lead to
+filling this hole.  
+
+\textbf{Acknowledgments.}  The first two authors were supported by NSF
+award \#1565557.  We thank the anonymous reviewers for their helpful
+feedback that made this a better paper.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: main.tex
+%%% End:

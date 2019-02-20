@@ -1,0 +1,319 @@
+\documentclass[submission,copyright,creativecommons]{eptcs}
+
+\providecommand{\event}{LINEARITY 2018} % Name of the event you are submitting to
+\usepackage{underscore}           % Only needed if you use pdflatex.
+
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{cmll}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{stmaryrd}
+\usepackage{todonotes}
+\usepackage{mathpartir}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage[barr]{xy}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage[inline]{enumitem}
+\usepackage{bbm}
+\usepackage{array}
+
+\usepackage{caption}
+\captionsetup[figure]{name=Figure}
+
+\input{Elle-ND-inc}
+\renewcommand{\NDdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+\renewcommand{\NDdruleTXXidName}{\mathcal{C}\text{-ax}}
+\renewcommand{\NDdruleTXXunitIName}{\mathcal{C}\text{-}\mathsf{Unit}_I}
+\renewcommand{\NDdruleTXXunitEName}{\mathcal{C}\text{-}\mathsf{Unit}_E}
+\renewcommand{\NDdruleTXXtenIName}{\mathcal{C}\text{-}\otimes_I}
+\renewcommand{\NDdruleTXXtenEName}{\mathcal{C}\text{-}\otimes_E}
+\renewcommand{\NDdruleTXXimpIName}{\mathcal{C}\text{-}\multimap_I}
+\renewcommand{\NDdruleTXXimpEName}{\mathcal{C}\text{-}\multimap_E}
+\renewcommand{\NDdruleTXXGIName}{\mathcal{C}\text{-}\mathsf{G}_I}
+\renewcommand{\NDdruleTXXbetaName}{\mathcal{C}\text{-}\mathsf{ex}}
+\renewcommand{\NDdruleTXXcutName}{\mathcal{C}\text{-}\mathsf{Cut}}
+\renewcommand{\NDdruleSXXidName}{\mathcal{L}\text{-ax}}
+\renewcommand{\NDdruleSXXunitIName}{\mathcal{L}\text{-}\mathsf{Unit}_I}
+\renewcommand{\NDdruleSXXunitEOneName}{\mathcal{LC}\text{-}\mathsf{Unit}_E}
+\renewcommand{\NDdruleSXXunitETwoName}{\mathcal{L}\text{-}\mathsf{Unit}_E}
+\renewcommand{\NDdruleSXXtenIName}{\mathcal{L}\text{-}\otimes_I}
+\renewcommand{\NDdruleSXXtenEOneName}{\mathcal{LC}\text{-}\otimes_E}
+\renewcommand{\NDdruleSXXtenETwoName}{\mathcal{L}\text{-}\otimes_E}
+\renewcommand{\NDdruleSXXimprIName}{\mathcal{L}\text{-}\rightharpoonup_I}
+\renewcommand{\NDdruleSXXimprEName}{\mathcal{L}\text{-}\rightharpoonup_E}
+\renewcommand{\NDdruleSXXimplIName}{\mathcal{L}\text{-}\leftharpoonup_I}
+\renewcommand{\NDdruleSXXimplEName}{\mathcal{L}\text{-}\leftharpoonup_E}
+\renewcommand{\NDdruleSXXFIName}{\mathcal{L}\text{-}\mathsf{F}_I}
+\renewcommand{\NDdruleSXXFEName}{\mathcal{L}\text{-}\mathsf{F}_E}
+\renewcommand{\NDdruleSXXGEName}{\mathcal{L}\text{-}\mathsf{G}_E}
+\renewcommand{\NDdruleSXXbetaName}{\mathcal{L}\text{-}\mathsf{ex}}
+\renewcommand{\NDdruleSXXcutOneName}{\mathcal{LC}\text{-}\mathsf{Cut}}
+\renewcommand{\NDdruleSXXcutTwoName}{\mathcal{L}\text{-}\mathsf{Cut}}
+
+\input{ElleType-inc}
+\renewcommand{\SCdrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+\renewcommand{\SCdruleTXXaxName}{\mathcal{C}\text{-ax}}
+\renewcommand{\SCdruleTXXunitLName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleTXXunitRName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleTXXtenLName}{\mathcal{C}\text{-}\otimes_L}
+\renewcommand{\SCdruleTXXtenRName}{\mathcal{C}\text{-}\otimes_R}
+\renewcommand{\SCdruleTXXimpLName}{\mathcal{C}\text{-}\multimap_L}
+\renewcommand{\SCdruleTXXimpRName}{\mathcal{C}\text{-}\multimap_R}
+\renewcommand{\SCdruleTXXGrName}{\mathcal{C}\text{-}\mathsf{G}_R}
+\renewcommand{\SCdruleTXXcutName}{\mathcal{C}\text{-}\mathsf{Cut}}
+\renewcommand{\SCdruleTXXexName}{\mathcal{C}\text{-}\mathsf{ex}}
+\renewcommand{\SCdruleSXXaxName}{\mathcal{L}\text{-ax}}
+\renewcommand{\SCdruleSXXunitLOneName}{\mathcal{LC}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleSXXunitLTwoName}{\mathcal{L}\text{-}\mathsf{Unit}_L}
+\renewcommand{\SCdruleSXXunitRName}{\mathcal{L}\text{-}\mathsf{Unit}_R}
+\renewcommand{\SCdruleSXXexName}{\mathcal{L}\text{-}\mathsf{ex}}
+\renewcommand{\SCdruleSXXtenLOneName}{\mathcal{LC}\text{-}\otimes_L}
+\renewcommand{\SCdruleSXXtenLTwoName}{\mathcal{L}\text{-}\otimes_L}
+\renewcommand{\SCdruleSXXtenRName}{\mathcal{L}\text{-}\otimes_R}
+\renewcommand{\SCdruleSXXimpLName}{\mathcal{L}\text{-}\multimap_L}
+\renewcommand{\SCdruleSXXimprLName}{\mathcal{L}\text{-}\rightharpoonup_L}
+\renewcommand{\SCdruleSXXimprRName}{\mathcal{L}\text{-}\rightharpoonup_R}
+\renewcommand{\SCdruleSXXimplLName}{\mathcal{L}\text{-}\leftharpoonup_L}
+\renewcommand{\SCdruleSXXimplRName}{\mathcal{L}\text{-}\leftharpoonup_R}
+\renewcommand{\SCdruleSXXFlName}{\mathcal{L}\text{-}\mathsf{F}_L}
+\renewcommand{\SCdruleSXXFrName}{\mathcal{L}\text{-}\mathsf{F}_R}
+\renewcommand{\SCdruleSXXGlName}{\mathcal{L}\text{-}\mathsf{G}_L}
+\renewcommand{\SCdruleSXXcutOneName}{\mathcal{LC}\text{-}\mathsf{Cut}}
+\renewcommand{\SCdruleSXXcutTwoName}{\mathcal{L}\text{-}\mathsf{Cut}}
+
+\input{Elle-inc}
+\renewcommand{\Elledrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,#4}}
+\renewcommand{\ElledruleTXXaxName}{\mathcal{C}\text{-ax}}
+\renewcommand{\ElledruleTXXunitLName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleTXXunitRName}{\mathcal{C}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleTXXtenLName}{\mathcal{C}\text{-}\otimes_L}
+\renewcommand{\ElledruleTXXtenRName}{\mathcal{C}\text{-}\otimes_R}
+\renewcommand{\ElledruleTXXimpLName}{\mathcal{C}\text{-}\multimap_L}
+\renewcommand{\ElledruleTXXimpRName}{\mathcal{C}\text{-}\multimap_R}
+\renewcommand{\ElledruleTXXGrName}{\mathcal{C}\text{-}\mathsf{G}_R}
+\renewcommand{\ElledruleTXXcutName}{\mathcal{C}\text{-}\mathsf{Cut}}
+\renewcommand{\ElledruleTXXexName}{\mathcal{C}\text{-}\mathsf{ex}}
+\renewcommand{\ElledruleSXXaxName}{\mathcal{L}\text{-ax}}
+\renewcommand{\ElledruleSXXunitLOneName}{\mathcal{LC}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleSXXunitLTwoName}{\mathcal{L}\text{-}\mathsf{Unit}_L}
+\renewcommand{\ElledruleSXXunitRName}{\mathcal{L}\text{-}\mathsf{Unit}_R}
+\renewcommand{\ElledruleSXXexName}{\mathcal{L}\text{-}\mathsf{ex}}
+\renewcommand{\ElledruleSXXtenLOneName}{\mathcal{LC}\text{-}\otimes_L}
+\renewcommand{\ElledruleSXXtenLTwoName}{\mathcal{L}\text{-}\otimes_L}
+\renewcommand{\ElledruleSXXtenRName}{\mathcal{L}\text{-}\otimes_R}
+\renewcommand{\ElledruleSXXimpLName}{\mathcal{L}\text{-}\multimap_L}
+\renewcommand{\ElledruleSXXimprLName}{\mathcal{L}\text{-}\rightharpoonup_L}
+\renewcommand{\ElledruleSXXimprRName}{\mathcal{L}\text{-}\rightharpoonup_R}
+\renewcommand{\ElledruleSXXimplLName}{\mathcal{L}\text{-}\leftharpoonup_L}
+\renewcommand{\ElledruleSXXimplRName}{\mathcal{L}\text{-}\leftharpoonup_R}
+\renewcommand{\ElledruleSXXFlName}{\mathcal{L}\text{-}\mathsf{F}_L}
+\renewcommand{\ElledruleSXXFrName}{\mathcal{L}\text{-}\mathsf{F}_R}
+\renewcommand{\ElledruleSXXGlName}{\mathcal{L}\text{-}\mathsf{G}_L}
+\renewcommand{\ElledruleSXXcutOneName}{\mathcal{LC}\text{-}\mathsf{Cut}}
+\renewcommand{\ElledruleSXXcutTwoName}{\mathcal{L}\text{-}\mathsf{Cut}}
+
+\input{LNL-inc}
+
+\input{dePaiva-Eades-LAM-ott}
+\renewcommand{\Ldrule}[4][]{{\displaystyle\frac{\begin{array}{l}#2\end{array}}{#3}\,\Ldrulename{#4}}}
+%% End Ott Renaming
+
+%% This renames Barr's \to to \mto.  This allows us to use \to for imp
+%% and \mto for a inline morphism.
+\let\mto\to
+\let\to\relax
+\newcommand{\to}{\rightarrow}
+\newcommand{\ndto}[1]{\to_{#1}}
+\newcommand{\ndwedge}[1]{\wedge_{#1}}
+\newcommand{\rto}{\leftharpoonup}
+\newcommand{\lto}{\rightharpoonup}
+\newcommand{\tri}{\triangleright}
+\newcommand{\LNL}{\mathit{LNL}}
+
+% Commands that are useful for writing about type theory and programming language design.
+%% \newcommand{\case}[4]{\text{case}\ #1\ \text{of}\ #2\text{.}#3\text{,}#2\text{.}#4}
+\newcommand{\interp}[1]{\llbracket #1 \rrbracket}
+\newcommand{\normto}[0]{\rightsquigarrow^{!}}
+\newcommand{\join}[0]{\downarrow}
+\newcommand{\redto}[0]{\rightsquigarrow}
+\newcommand{\nat}[0]{\mathbb{N}}
+\newcommand{\fun}[2]{\lambda #1.#2}
+\newcommand{\CRI}[0]{\text{CR-Norm}}
+\newcommand{\CRII}[0]{\text{CR-Pres}}
+\newcommand{\CRIII}[0]{\text{CR-Prog}}
+\newcommand{\subexp}[0]{\sqsubseteq}
+
+%% Must include \usepackage{mathrsfs} for this to work.
+
+%% \date{}
+
+\let\b\relax
+\let\d\relax
+\let\t\relax
+\let\r\relax
+\let\c\relax
+\let\j\relax
+\let\wn\relax
+\let\H\relax
+
+% Cat commands.
+\newcommand{\powerset}[1]{\mathcal{P}(#1)}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\func}[1]{\mathsf{#1}}
+\newcommand{\iso}[0]{\mathsf{iso}}
+\newcommand{\H}[0]{\func{H}}
+\newcommand{\J}[0]{\func{J}}
+\newcommand{\catop}[1]{\cat{#1}^{\mathsf{op}}}
+\newcommand{\Hom}[3]{\mathsf{Hom}_{\cat{#1}}(#2,#3)}
+\newcommand{\limp}[0]{\multimap}
+\newcommand{\colimp}[0]{\multimapdotinv}
+\newcommand{\dial}[1]{\mathsf{Dial_{#1}}(\mathsf{Sets^{op}})}
+\newcommand{\dialSets}[1]{\mathsf{Dial_{#1}}(\mathsf{Sets})}
+\newcommand{\dcSets}[1]{\mathsf{DC_{#1}}(\mathsf{Sets})}
+\newcommand{\sets}[0]{\mathsf{Sets}}
+\newcommand{\obj}[1]{\mathsf{Obj}(#1)}
+\newcommand{\mor}[1]{\mathsf{Mor(#1)}}
+\newcommand{\id}[0]{\mathsf{id}}
+\newcommand{\Id}[0]{\mathsf{Id}}
+\newcommand{\lett}[0]{\mathsf{let}\,}
+\newcommand{\inn}[0]{\,\mathsf{in}\,}
+\newcommand{\cur}[1]{\mathsf{cur}(#1)}
+\newcommand{\curi}[1]{\mathsf{cur}^{-1}(#1)}
+
+\newcommand{\w}[1]{\mathsf{weak}_{#1}}
+\newcommand{\c}[1]{\mathsf{contra}_{#1}}
+\newcommand{\cL}[1]{\mathsf{contraL}_{#1}}
+\newcommand{\cR}[1]{\mathsf{contraR}_{#1}}
+\newcommand{\e}[1]{\mathsf{ex}_{#1}}
+
+\newcommand{\m}[1]{\mathsf{m}_{#1}}
+\newcommand{\n}[1]{\mathsf{n}_{#1}}
+\newcommand{\b}[1]{\mathsf{b}_{#1}}
+\newcommand{\d}[1]{\mathsf{d}_{#1}}
+\newcommand{\h}[1]{\mathsf{h}_{#1}}
+\newcommand{\p}[1]{\mathsf{p}_{#1}}
+\newcommand{\q}[1]{\mathsf{q}_{#1}}
+\newcommand{\t}[1]{\mathsf{t}_{#1}}
+\newcommand{\r}[1]{\mathsf{r}_{#1}}
+\newcommand{\s}[1]{\mathsf{s}_{#1}}
+\newcommand{\j}[1]{\mathsf{j}_{#1}}
+\newcommand{\jinv}[1]{\mathsf{j}^{-1}_{#1}}
+\newcommand{\wn}[0]{\mathop{?}}
+\newcommand{\codiag}[1]{\bigtriangledown_{#1}}
+
+\newcommand{\seq}{\rhd}
+
+\newenvironment{changemargin}[2]{%
+  \begin{list}{}{%
+    \setlength{\topsep}{0pt}%
+    \setlength{\leftmargin}{#1}%
+    \setlength{\rightmargin}{#2}%
+    \setlength{\listparindent}{\parindent}%
+    \setlength{\itemindent}{\parindent}%
+    \setlength{\parsep}{\parskip}%
+  }%
+  \item[]}{\end{list}}
+
+\newenvironment{diagram}{
+  \begin{center}
+    \begin{math}
+      \bfig
+}{
+      \efig
+    \end{math}
+  \end{center}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+
+\title{On the Lambek Calculus with an Exchange Modality}
+
+\author{Jiaming Jiang
+\institute{Computer Science \\ North Carolina State University \\ Raleigh, North Carolina, USA}
+\email{jjiang13@ncsu.edu}
+\and
+Harley Eades III
+\institute{Computer Science \\ Augusta University \\ Augusta, Georgia, USA}
+\email{harley.eades@gmail.com}
+\and
+Valeria de Paiva
+\institute{Nuance Communications \\ Sunnyvale, California, USA}
+\email{valeria.depaiva@gmail.com}
+}
+\def\titlerunning{Adjoint Models for the Lambek Calculus}
+\def\authorrunning{J. Jiang \& H. Eades III \& V. de Paiva}
+
+\begin{document}
+\maketitle 
+
+\begin{abstract}
+  In this paper we introduce Commutative/Non-Commutative Logic (CNC
+  logic) and two categorical models for CNC logic.  This work
+  abstracts Benton's Linear/Non-Linear Logic \cite{Benton:1994} by
+  removing the existence of the exchange structural rule. One should
+  view this logic as composed of two logics; one sitting to the left
+  of the other.  On the left, there is intuitionistic linear logic,
+  and on the right is a mixed commutative/non-commutative
+  formalization of the Lambek calculus. Then both of these logics are
+  connected via a pair of monoidal adjoint functors.  An exchange
+  modality is then derivable within the logic using the adjunction
+  between both sides.  Thus, the adjoint functors allow one to pull
+  the exchange structural rule from the left side to the right side.
+  We then give a categorical model in terms of a monoidal adjunction,
+  and then a concrete model in terms of dialectica Lambek spaces.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+\input{introduction}
+% section introduction (end)
+
+\section{A Sequent Calculus Formalization of CNC Logic}
+\label{sec:sequent-calc}
+\input{sequent-output}
+% section sequent_calculus (end)
+
+\section{A Type Theoretic Formalization of CNC Logic}
+\label{sec:the-lambek-calculus}
+\input{LAM-output}
+% section the (end)
+
+\section{An Adjoint Model}
+\label{sec:adjoint-model}
+\input{adjoint-models}
+% section adjoint_models (end)
+
+\section{A Model in Dialectica Spaces}
+\label{sec:a-model-in-dialectica-spaces}
+\input{dialectica-spaces}
+% section a_model_in_dialectica_spaces (end)
+
+\section{Future Work}
+\label{sec:future-work}
+\input{fwork}
+% section future_work (end)
+
+\bibliographystyle{plainurl}
+\bibliography{ref}
+
+\appendix
+\label{sec:appendix}
+\input{appendix-output}
+\input{appendix2-output}
+%% \input{appendix3-output}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

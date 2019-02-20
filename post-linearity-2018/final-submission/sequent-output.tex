@@ -1,0 +1,254 @@
+We now introduce Commutative/Non-commutative (CNC) logic in the form of a
+sequent calculus. One should view this logic as composed of two logics; one
+sitting to the left of the other. On the left, there is intuitionistic
+linear logic, denoted by $\cat{C}$ and on the right is the Lambek calculus
+denoted by $\cat{L}$. Then we connect these two systems by a pair of
+monoidal adjoint functors $\cat{C} : \func{F} \dashv \func{G} : \cat{L}$.
+Keeping this intuition in mind we now define the syntax for CNC logic.
+
+\begin{definition}
+  \label{def:Lambek-syntax}
+  The following grammar describes the syntax of the sequent calculus of
+  CNC logic:
+  \begin{center}\vspace{-3px}\small
+    \begin{math}
+      \begin{array}{lll}
+        \text{($\cat{C}$-Types)} & \SCnt{W},\SCnt{X},\SCnt{Y},\SCnt{Z} ::=  \mathsf{Unit}  \mid \SCnt{X}  \otimes  \SCnt{Y} \mid \SCnt{X}  \multimap  \SCnt{Y} \mid  \mathsf{G} \SCnt{A} \\
+        \text{($\cat{L}$-Types)} & \SCnt{A},\SCnt{B},\SCnt{C},D ::=  \mathsf{Unit}  \mid \SCnt{A}  \triangleright  \SCnt{B} \mid \SCnt{A}  \rightharpoonup  \SCnt{B} \mid \SCnt{B}  \leftharpoonup  \SCnt{A} \mid  \mathsf{F} \SCnt{X} \\
+        \text{($\cat{C}$-Contexts)} & \Phi,\Psi ::=  \cdot  \mid \SCnt{X} \mid \Phi  \SCsym{,}  \Psi\\
+        \text{($\cat{L}$-Contexts)} & \Gamma,\Delta ::=  \cdot  \mid \SCnt{A} \mid \SCnt{X} \mid \Gamma  \SCsym{;}  \Delta\\
+      \end{array}
+    \end{math}
+  \end{center}
+\end{definition}
+
+The syntax for $\cat{C}$-types are the standard types for intuitionistic
+linear logic. We have a constant $ \mathsf{Unit} $, tensor product $\SCnt{X}  \otimes  \SCnt{Y}$,
+and linear implication $\SCnt{X}  \multimap  \SCnt{Y}$, but just as in LNL logic we also have a
+type $ \mathsf{G} \SCnt{A} $ where $\SCnt{A}$ is an $\cat{L}$-type; that is, a type from the
+non-commutative side corresponding to the right-adjoint functor between
+$\cat{L}$ and $\cat{C}$. This functor can be used to import types from the
+non-commutative side into the commutative side. Now a sequent in the the
+commutative side is denoted by $\Phi  \vdash_\mathcal{C}  \SCnt{X}$ where $\Phi$ is a
+$\cat{C}$-context, which is a sequence of types $\SCnt{X}$.
+
+The non-commutative side is a bit more interesting than the commutative side
+just introduced. Sequents in the non-commutative side are denoted by
+$\Gamma  \vdash_\mathcal{L}  \SCnt{A}$ where $\Gamma$ is now a $\cat{L}$-context. These contexts are
+ordered sequences of types from \emph{both} sides denoted by $\SCnt{B}$ and
+$\SCnt{X}$ respectively. Given two contexts $\Gamma$ and $\Delta$ we denote their
+concatenation by $\Gamma  \SCsym{;}  \Delta$; we use a semicolon here to emphasize the fact
+that the contexts are ordered.
+
+The context consisting of hypotheses from both sides goes back to
+Benton~\cite{Benton:1994} and is a property unique to adjoint logics such as
+Benton's LNL logic and CNC logic. This is also a very useful property
+because it allows one to make use of both sides within the Lambek calculus
+without the need to annotate every formula with a modality.
+
+The reader familiar with LNL logic will notice that our sequent,
+$\Gamma  \vdash_\mathcal{L}  \SCnt{A}$, differs from Benton's. His is of the form $\Gamma  \SCsym{;}  \Delta  \vdash_\mathcal{L}  \SCnt{A}$,
+where $\Gamma$ contains non-linear types, and $\Delta$ contains linear
+formulas. Just as Benton remarks, the splitting of his contexts was a
+presentational device. One should view his contexts as merged, and hence,
+linear formulas were fully mixed with non-linear formulas. Now why did we
+not use this presentational device? Because, when contexts from LNL logic
+become out of order Benton could use the exchange rule to put them back in
+order again, but we no longer have general exchange. Thus, we are not able
+to keep the context organized in this way.
+
+The syntax for $\cat{L}$-types are of the typical form for the Lambek
+Calculus. We have two unit types $ \mathsf{Unit} $ (one for each side), a
+non-commutative tensor product $\SCnt{A}  \triangleright  \SCnt{B}$, right implication $\SCnt{A}  \rightharpoonup  \SCnt{B}$, and left implication $\SCnt{B}  \leftharpoonup  \SCnt{A}$. In standard Lambek
+Calculus \cite{Pentus1995}, $\SCnt{A}  \rightharpoonup  \SCnt{B}$ is written as $B / A$ and
+$\SCnt{B}  \leftharpoonup  \SCnt{A}$ as $A \backslash B$. We use $\rightharpoonup$ and
+$\leftharpoonup$ here instead to indicate they are two directions of
+the linear implication $\multimap$.
+
+The sequent calculus for CNC logic can be found in
+Figure~\ref{fig:CNC-sequent-calculus}. We split the figure in two: the top
+of the figure are the rules of intuitionistic linear logic whose sequents
+are the $\mathcal{C}$-sequents denoted by $\Psi  \vdash_\mathcal{C}  \SCnt{X}$, and the bottom of
+the figure are the rules for the mixed commutative/non-commutative Lambek
+calculus whose sequents are the $\mathcal{L}$-sequents denoted by
+$\Gamma  \vdash_\mathcal{L}  \SCnt{A}$, but the two halves are connected via the functor rules
+$\SCdruleTXXGrName{}$, $\SCdruleSXXGlName{}$, $\SCdruleSXXFlName{}$, and
+$\SCdruleSXXFrName{}$, and the rules $\SCdruleSXXunitLOneName{}$,
+$\SCdruleSXXexName{}$, $\SCdruleSXXtenLOneName{}$, $\SCdruleSXXimpLName{}$,
+$\NDdruleSXXcutOneName{}$.
+\begin{figure}[!h]
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+    \begin{mathpar}
+    \SCdruleTXXax{} \and
+    \SCdruleTXXunitL{} \and
+    \SCdruleTXXunitR{} \and
+    \SCdruleTXXtenL{} \and
+    \SCdruleTXXtenR{} \and
+    \SCdruleTXXimpL{} \and
+    \SCdruleTXXimpR{} \and
+    \SCdruleTXXGr{} \and
+    \SCdruleTXXex{} \and
+    \SCdruleTXXcut{}
+    \end{mathpar}\\\\
+    \hline
+    \\[5px]
+    \begin{mathpar}
+    \SCdruleSXXax{} \and
+    \SCdruleSXXunitLOne{} \and
+    \SCdruleSXXunitLTwo{} \and
+    \SCdruleSXXunitR{} \and
+    \SCdruleSXXex{} \and
+    \SCdruleSXXtenLOne{} \and
+    \SCdruleSXXtenLTwo{} \and
+    \SCdruleSXXtenR{} \and
+    \SCdruleSXXimpL{} \and
+    \SCdruleSXXimprL{} \and
+    \SCdruleSXXimprR{} \and
+    \SCdruleSXXimplL{} \and
+    \SCdruleSXXimplR{} \and
+    \SCdruleSXXFl{} \and
+    \SCdruleSXXFr{} \and
+    \SCdruleSXXGl{} \and
+    \SCdruleSXXcutOne{} \and
+    \SCdruleSXXcutTwo{} \and
+    \end{mathpar}\\\\
+    \hline
+  \end{tabular}
+  \caption{Sequent Calculus for CNC Logic}
+  \label{fig:CNC-sequent-calculus}
+\end{figure}
+
+We prove cut elimination for the sequent calculus. We define the
+\textit{rank} $|X|$ (resp. $|A|$) of a commutative (resp. non-commutative)
+formula to be the number of logical connectives in the proposition. For
+instance, $|\SCnt{X}  \otimes  \SCnt{Y}| = |\SCnt{X}| + |\SCnt{Y}| + 1$. The \textit{cut rank}
+$c(\Pi)$ of a proof $\Pi$ is one more than the maximum of the ranks of all
+the cut formulae in $\Pi$, and $0$ if $\Pi$ is cut-free. Then the
+\textit{depth} $d(\Pi)$ of a proof $\Pi$ is the length of the longest path
+in the proof tree (so the depth of an axiom is $0$). The key to the proof
+of cut elimination is the following lemma, which shows how to transform a
+single cut, either by removing it or by replacing it with one or more
+simpler cuts.
+\begin{lemma}[Cut Reduction]
+  \label{lem:cut-reduction}
+  The cut-reduction steps are as follows:
+  \begin{enumerate}
+  \item If $\Pi_1$ is a proof of $\Phi  \vdash_\mathcal{C}  \SCnt{X}$ and $\Pi_2$ is a proof of
+  $\Psi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}$ with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there exists
+  a proof $\Pi$ of $\Psi_{{\mathrm{1}}}  \SCsym{,}  \Phi  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}$ with $c(\Pi)\leq |X|$.
+  \item If $\Pi_1$ is a proof of $\Phi  \vdash_\mathcal{C}  \SCnt{X}$ and $\Pi_2$ is a proof of
+  $\Gamma_{{\mathrm{1}}}  \SCsym{;}  \SCnt{X}  \SCsym{;}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{A}$ with $c(\Pi_1)$, $c(\Pi_2)\leq |X|$, then there
+  exists a proof $\Pi$ of $\Gamma_{{\mathrm{1}}}  \SCsym{;}  \Phi  \SCsym{;}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{A}$ with $c(\Pi)\leq |X|$.
+  \item If $\Pi_1$ is a proof of $\Gamma  \vdash_\mathcal{L}  \SCnt{A}$ and $\Pi_2$ is a proof of
+  $\Delta_{{\mathrm{1}}}  \SCsym{;}  \SCnt{A}  \SCsym{;}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{B}$ with $c(\Pi_1)$, $c(\Pi_2)\leq |A|$, then there
+  exists a proof $\Pi$ of $\Delta_{{\mathrm{1}}}  \SCsym{;}  \Gamma  \SCsym{;}  \Delta_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{B}$ with $c(\Pi)\leq |A|$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  This proof is done case by case on the last step of $\Pi_1$ and
+  $\Pi_2$ and by induction on $d(\Pi_1)$ and $d(\Pi_2)$, following
+  \cite{Mellies:2009}. For instance, suppose $\Pi_1$ is a proof of
+  $\Phi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X_{{\mathrm{2}}}}  \SCsym{,}  \SCnt{X_{{\mathrm{1}}}}  \SCsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}$ and $\Pi_2$ is a proof of $\Psi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{Y}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Z}$.  Consider the case where the last step in $\Pi_1$ uses
+  the rule $\NDdruleTXXbetaName{}$. $\Pi_1$ can be depicted as
+  follows, where the previous steps are denoted by $\pi$:
+  \begin{center}
+    \scriptsize
+    $\Pi_1$:
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\SCdruleTXXexName$}] {
+        {
+          \begin{array}{c}
+            \pi \\
+                {\Phi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X_{{\mathrm{1}}}}  \SCsym{,}  \SCnt{X_{{\mathrm{2}}}}  \SCsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}}
+          \end{array}
+        }
+      }{\Phi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X_{{\mathrm{2}}}}  \SCsym{,}  \SCnt{X_{{\mathrm{1}}}}  \SCsym{,}  \Phi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}}
+    \end{math}
+  \end{center}
+  By assumption, $c(\Pi_1),c(\Pi_2)\leq |Y|$. By induction on $\pi$ and
+  $\Pi_2$, there is a proof $\Pi'$ for the sequent \\
+  $\Psi_{{\mathrm{1}}}  \SCsym{,}  \Phi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X_{{\mathrm{1}}}}  \SCsym{,}  \SCnt{X_{{\mathrm{2}}}}  \SCsym{,}  \Phi_{{\mathrm{2}}}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Z}$ s.t. $c(\Pi')\leq|Y|$. Therefore, the
+  proof $\Pi$ can be constructed as follows, and $c(\Pi)=c(\Pi')\leq|Y|$.
+  \begin{center}
+    \scriptsize
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\SCdruleTXXexName$}] {
+        {
+          \begin{array}{c}
+            \Pi' \\
+                 {\Psi_{{\mathrm{1}}}  \SCsym{,}  \Phi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X_{{\mathrm{1}}}}  \SCsym{,}  \SCnt{X_{{\mathrm{2}}}}  \SCsym{,}  \Phi_{{\mathrm{2}}}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Z}}
+          \end{array}
+        }
+      }{\Psi_{{\mathrm{1}}}  \SCsym{,}  \Phi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X_{{\mathrm{2}}}}  \SCsym{,}  \SCnt{X_{{\mathrm{1}}}}  \SCsym{,}  \Phi_{{\mathrm{2}}}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Z}}
+    \end{math}
+  \end{center}
+  The full proof can be found in Appendix~\ref{app:cut-reduction}.
+\end{proof}
+\noindent
+Then we have the following lemma.
+
+\begin{lemma}
+  \label{lem:less-cut-rank}
+  Let $\Pi$ be a proof of a sequent $\Phi  \vdash_\mathcal{C}  \SCnt{X}$ or $\Gamma  \vdash_\mathcal{L}  \SCnt{A}$ s.t.
+  $c(\Pi)>0$. Then there is a proof $\Pi'$ of the same sequent with
+  $c(\Pi')<c(\Pi)$.
+\end{lemma}
+\begin{proof}
+  We prove the lemma by induction on $d(\Pi)$. We denote the proof $\Pi$ by 
+  $\pi+r$, where $r$ is the last inference of $\Pi$ and $\pi$ denotes the
+  rest of the proof. If $r$ is not a cut, then by induction hypothesis on
+  $\pi$, there is a proof $\pi'$ s.t. $c(\pi')<c(\pi)$ and $\Pi'=\pi'+r$.
+  Otherwise, we assume $r$ is a cut on a formula $Y$. If $c(\Pi)>|X|+1$,
+  then there is a cut on $|Y|$ in $\pi$ with $|Y|>|X|$. So we can apply
+  the induction hypothesis on $\pi$ to get $\Pi'$ with $c(\Pi')<c(\Pi)$. The
+  last case to consider is when $c(\Pi)=|X|+1$ (note that $c(\Pi)$ cannot be
+  less than $|X|+1$). In this case, $\Pi$ is in the form of
+  \begin{center}
+    \scriptsize
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\SCdruleTXXcutName$}] {
+        {
+          \begin{array}{cc}
+            \Pi_1 & \Pi_2 \\
+            {\Phi  \vdash_\mathcal{C}  \SCnt{X}} & {\Psi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}}
+          \end{array}
+        }
+      }{\Psi_{{\mathrm{1}}}  \SCsym{,}  \Phi  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}}
+    \end{math}
+    \qquad\qquad
+    or,
+    \qquad\qquad
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\tiny $\SCdruleSXXcutOneName$}] {
+        {
+          \begin{array}{cc}
+            \Pi_1 & \Pi_2 \\
+            {\Phi  \vdash_\mathcal{C}  \SCnt{X}} & {\Gamma_{{\mathrm{1}}}  \SCsym{;}  \SCnt{X}  \SCsym{;}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{A}}
+          \end{array}
+        }
+      }{\Gamma_{{\mathrm{1}}}  \SCsym{;}  \Phi  \SCsym{;}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{A}}
+    \end{math}
+  \end{center}
+  By assumption, $c(\Pi_1),c(\Pi_2)\leq |X|+1$. By induction, we can
+  construct $c(\Pi_1')$ proving $\Phi  \vdash_\mathcal{C}  \SCnt{X}$ and $c(\Pi_2')$ proving
+  $\Psi_{{\mathrm{1}}}  \SCsym{,}  \SCnt{X}  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}$ (or $<\Gamma_{{\mathrm{1}}}  \SCsym{;}  \SCnt{X}  \SCsym{;}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{A}$) with
+  $c(\Pi_1'), c(\Pi_2')\leq |X|$. Then by Lemma~\ref{lem:cut-reduction}, we
+  can construct $\Pi'$ proving $\Psi_{{\mathrm{1}}}  \SCsym{,}  \Phi  \SCsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \SCnt{Y}$ (or
+  $\Gamma_{{\mathrm{1}}}  \SCsym{;}  \Phi  \SCsym{;}  \Gamma_{{\mathrm{2}}}  \vdash_\mathcal{L}  \SCnt{A}$) with $c(\Pi')\leq |X|$. \\
+  The case where the last inference is a cut on a formula $A$ is similar as
+  when it is a cut on $X$.
+\end{proof}
+\noindent
+By induction on $c(\Pi)$ and Lemma~\ref{lem:less-cut-rank}, the cut
+elimination theorem follows immediately.
+\begin{theorem}[Cut Elimination]
+  Let $\Pi$ be a proof of a sequent $\Phi  \vdash_\mathcal{C}  \SCnt{X}$ or $\Gamma  \vdash_\mathcal{L}  \SCnt{A}$ s.t.
+  $c(\Pi)>0$. Then there is an algorithm which yields a cut-free proof
+  $\Pi'$ of the same sequent.
+\end{theorem}

@@ -1,0 +1,327 @@
+Similar as the sequent calculus, the term assignment for CNC logic is
+also composed of two logics; intuitionistic linear logic on the left,
+denoted by $\cat{C}$, and the Lambek calculus on the right, denoted by
+$\cat{L}$. The syntax for types and contexts we use in the term
+assignment is the same as in the sequent calculus. The rest of the
+syntax for the term assignment is defined as follows.
+\begin{definition}
+  \label{def:Lambek-syntax}
+  The following grammar describes the syntax of the term assignment of the
+  CNC logic:
+  \begin{center}\vspace{-3px}\small
+    \begin{math}
+      \begin{array}{lll}        
+        \text{($\cat{C}$-Terms)} & \NDnt{t} ::= \NDmv{x} \mid  \mathsf{triv}  \mid \NDnt{t_{{\mathrm{1}}}}  \otimes  \NDnt{t_{{\mathrm{2}}}} \mid  \mathsf{let}\, \NDnt{t_{{\mathrm{1}}}}  :  \NDnt{X} \,\mathsf{be}\, \NDnt{q} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}  \mid  \lambda  \NDmv{x}  :  \NDnt{X} . \NDnt{t}  \mid  \NDnt{t_{{\mathrm{1}}}}   \NDnt{t_{{\mathrm{2}}}}  \mid  \mathsf{ex}\, \NDnt{t_{{\mathrm{1}}}} , \NDnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \NDmv{x_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{2}}}} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}}  \mid  \mathsf{G}\, \NDnt{s} \\
+        \text{($\cat{L}$-Terms)} & \NDnt{s} ::= \NDmv{x} \mid  \mathsf{triv}  \mid \NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}} \mid  \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A} \,\mathsf{be}\, \NDnt{p} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}}  \mid  \mathsf{let}\, \NDnt{t}  :  \NDnt{X} \,\mathsf{be}\, \NDnt{q} \,\mathsf{in}\, \NDnt{s}  \mid  \lambda_l  \NDmv{x}  :  \NDnt{A} . \NDnt{s}  \mid  \lambda_r  \NDmv{x}  :  \NDnt{A} . \NDnt{s}  \\
+        & \,\,\,\,\,\,\,\,\,\mid  \mathsf{app}_l\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}}  \mid  \mathsf{app}_r\, \NDnt{s_{{\mathrm{1}}}} \, \NDnt{s_{{\mathrm{2}}}}  \mid  \mathsf{F} \NDnt{t} \\        
+        \text{($\cat{C}$-Patterns)} & \NDnt{q} ::=  \mathsf{triv}  \mid \NDmv{x} \mid \NDnt{q_{{\mathrm{1}}}}  \otimes  \NDnt{q_{{\mathrm{2}}}} \mid  \mathsf{G}\, \NDnt{p} \\
+        \text{($\cat{L}$-Patterns)} & \NDnt{p} ::=  \mathsf{triv}  \mid \NDmv{x} \mid \NDnt{p_{{\mathrm{1}}}}  \triangleright  \NDnt{p_{{\mathrm{2}}}} \mid  \mathsf{F}\, \NDnt{q} \\        
+        \text{($\cat{C}$-Typing Judgment)} & \Phi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}\\
+        \text{($\cat{L}$-Typing Judgment)} & \Gamma  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}\\
+      \end{array}
+    \end{math}
+  \end{center}
+\end{definition}
+
+Now $\cat{C}$-typing judgments are denoted by $\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$ where
+$\Psi$ is a sequence of pairs of variables and their types, denoted by
+$\NDmv{x}  \NDsym{:}  \NDnt{X}$, $\NDnt{t}$ is a $\cat{C}$-term, and $\NDnt{X}$ is a $\cat{C}$-type.  
+The $\cat{C}$-terms are all standard, but $ \mathsf{G}\, \NDnt{s} $ corresponds to the
+morphism part of the right-adjoint of the adjunction between both logics,
+and $ \mathsf{ex}\, \NDnt{t_{{\mathrm{1}}}} , \NDnt{t_{{\mathrm{2}}}} \,\mathsf{with}\, \NDmv{x_{{\mathrm{1}}}} , \NDmv{x_{{\mathrm{2}}}} \,\mathsf{in}\, \NDnt{t_{{\mathrm{3}}}} $ is the introduction form for the
+structural rule exchange.
+
+The $\cat{L}$-typing judgment has the form $\Gamma  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$ where $\Gamma$
+is now a $\cat{L}$-context, denoted by $\Gamma$ or $\Delta$. These contexts
+are ordered sequences of pairs of free variables with their types from
+\emph{both} sides denoted by $\NDmv{x}  \NDsym{:}  \NDnt{B}$ and $\NDmv{x}  \NDsym{:}  \NDnt{X}$ respectively.
+Finally, the term $\NDnt{s}$ is a $\cat{L}$-term, and $\NDnt{A}$ is a
+$\cat{L}$-type.  Given two typing contexts $\Gamma$ and $\Delta$ we denote
+their concatenation by $\Gamma  \NDsym{;}  \Delta$; we use a semicolon here to emphasize the
+fact that the contexts are ordered. $\cat{L}$-terms correspond to
+introduction and elimination forms for each of the previous types. For
+example, $\NDnt{s_{{\mathrm{1}}}}  \triangleright  \NDnt{s_{{\mathrm{2}}}}$ introduces a tensor, and
+$ \mathsf{let}\, \NDnt{s_{{\mathrm{1}}}}  :  \NDnt{A}  \triangleright  \NDnt{B} \,\mathsf{be}\, \NDmv{x}  \triangleright  \NDmv{y} \,\mathsf{in}\, \NDnt{s_{{\mathrm{2}}}} $ eliminates a tensor.
+
+The typing rules for CNC logic can be found in
+Figure~\ref{fig:CNC-typing-rules}.
+\begin{figure}
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+      \begin{mathpar}
+      \NDdruleTXXid{} \and
+      \NDdruleTXXunitI{} \and
+      \NDdruleTXXunitE{} \and
+      \NDdruleTXXtenI{} \and
+      \NDdruleTXXtenE{} \and
+      \NDdruleTXXimpI{} \and
+      \NDdruleTXXimpE{} \and
+      \NDdruleTXXGI{} \and
+      \NDdruleTXXbeta{} \and
+      \NDdruleTXXcut{}      
+      \end{mathpar}
+      \\
+      \\
+      \hline
+      \\[5px]
+    \begin{mathpar}
+      \NDdruleSXXid{} \and
+      \NDdruleSXXunitI{} \and
+      \NDdruleSXXunitETwo{} \and
+      \NDdruleSXXunitEOne{} \and
+      \NDdruleSXXtenI{} \and
+      \NDdruleSXXtenETwo{} \and
+      \NDdruleSXXtenEOne{} \and
+      \NDdruleSXXimprI{} \and
+      \NDdruleSXXimprE{} \and
+      \NDdruleSXXimplI{} \and
+      \NDdruleSXXimplE{} \and
+      \NDdruleSXXFI{} \and
+      \NDdruleSXXFE{} \and
+      \NDdruleSXXGE{} \and
+      \NDdruleSXXbeta{} \and
+      \NDdruleSXXcutTwo{} \and
+      \NDdruleSXXcutOne{}
+    \end{mathpar}\\\\
+    \hline
+  \end{tabular}  
+  \caption{Typing Rules for CNC Logic}
+  \label{fig:CNC-typing-rules}
+\end{figure}
+We split the figure in two: the top of the figure are the rules of
+intuitionistic linear logic whose judgment is the $\mathcal{C}$-typing
+judgment denoted by $\Psi  \vdash_\mathcal{C}  \NDnt{t}  \NDsym{:}  \NDnt{X}$, and the bottom of the figure
+are the rules for the mixed commutative/non-commutative Lambek
+calculus whose judgment is the $\mathcal{L}$-judgment denoted by
+$\Gamma  \vdash_\mathcal{L}  \NDnt{s}  \NDsym{:}  \NDnt{A}$, and the two halves are connected via the rules 
+rules $\NDdruleTXXGIName{}$, $\NDdruleSXXGEName{}$,
+$\NDdruleSXXFIName{}$, and $\NDdruleSXXFEName{}$,
+$\NDdruleSXXunitEOneName{}$, $\NDdruleSXXtenEOneName{}$, and
+$\NDdruleSXXcutOneName{}$.
+
+The one step $\beta$-reduction rules are listed in
+Figure~\ref{fig:CNC-beta-reductions}. Similarly to the typing rules,
+the figure is split in two: the top lists the rules of the
+intuitionistic linear logic, and the bottom are those of the mixed
+commutative/non-commutative Lambek calculus. 
+\renewcommand{\NDdruleTbetaXXletUName}{}
+\renewcommand{\NDdruleTbetaXXletTName}{}
+\renewcommand{\NDdruleTbetaXXlamName}{}
+\renewcommand{\NDdruleTbetaXXappOneName}{}
+\renewcommand{\NDdruleTbetaXXappTwoName}{}
+\renewcommand{\NDdruleTbetaXXappLetName}{}
+\renewcommand{\NDdruleTbetaXXletLetName}{}
+\renewcommand{\NDdruleTbetaXXletAppName}{}
+\renewcommand{\NDdruleSbetaXXletUOneName}{}
+\renewcommand{\NDdruleSbetaXXletTOneName}{}
+\renewcommand{\NDdruleSbetaXXletTTwoName}{}
+\renewcommand{\NDdruleSbetaXXletFName}{}
+\renewcommand{\NDdruleSbetaXXlamLName}{}
+\renewcommand{\NDdruleSbetaXXlamRName}{}
+\renewcommand{\NDdruleSbetaXXapplOneName}{}
+\renewcommand{\NDdruleSbetaXXapplTwoName}{}
+\renewcommand{\NDdruleSbetaXXapprOneName}{}
+\renewcommand{\NDdruleSbetaXXapprTwoName}{}
+\renewcommand{\NDdruleSbetaXXderelictName}{}
+\renewcommand{\NDdruleSbetaXXapplLetName}{}
+\renewcommand{\NDdruleSbetaXXapprLetName}{}
+\renewcommand{\NDdruleSbetaXXletLetName}{}
+\renewcommand{\NDdruleSbetaXXletApplName}{}
+\renewcommand{\NDdruleSbetaXXletApprName}{}
+\renewcommand{\NDdruleTcomXXunitEXXunitEName}{}
+\renewcommand{\NDdruleTcomXXunitEXXtenEName}{}
+\renewcommand{\NDdruleTcomXXunitEXXimpEName}{}
+\renewcommand{\NDdruleTcomXXtenEXXunitEName}{}
+\renewcommand{\NDdruleTcomXXtenEXXtenEName}{}
+\renewcommand{\NDdruleTcomXXtenEXXimpEName}{}
+\renewcommand{\NDdruleTcomXXimpEXXunitEName}{}
+\renewcommand{\NDdruleScomXXunitEXXunitEName}{}
+\renewcommand{\NDdruleScomXXunitETwoXXunitEName}{}
+\renewcommand{\NDdruleScomXXunitEXXimprEName}{}
+\renewcommand{\NDdruleScomXXunitETwoXXimprEName}{}
+\renewcommand{\NDdruleScomXXunitEXXFEName}{}
+\renewcommand{\NDdruleScomXXunitETwoXXFEName}{}
+\renewcommand{\NDdruleScomXXtenEXXunitEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXunitEName}{}
+\renewcommand{\NDdruleScomXXtenEXXtenEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXtenEName}{}
+\renewcommand{\NDdruleScomXXtenEXXimprEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXimprEName}{}
+\renewcommand{\NDdruleScomXXtenEXXimplEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXimplEName}{}
+\renewcommand{\NDdruleScomXXtenEXXFEName}{}
+\renewcommand{\NDdruleScomXXtenETwoXXFEName}{}
+\renewcommand{\NDdruleScomXXFEXXunitEName}{}
+\renewcommand{\NDdruleScomXXFEXXtenEName}{}
+\renewcommand{\NDdruleScomXXFEXXimprEName}{}
+\renewcommand{\NDdruleScomXXFEXXimplEName}{}
+\renewcommand{\NDdruleScomXXFEXXFEName}{}
+\begin{figure}[!h]
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+      \begin{mathpar}
+      \NDdruleTbetaXXletU{} \and
+      \NDdruleTbetaXXletT{} \and
+      \NDdruleTbetaXXlam{}
+      \end{mathpar}
+      \\
+      \\
+      \hline
+      \\
+    \begin{mathpar}
+      \NDdruleSbetaXXletUOne{} \and
+      \NDdruleSbetaXXletTOne{} \and
+      \NDdruleSbetaXXletTTwo{} \and
+      \NDdruleSbetaXXletF{} \and
+      \NDdruleSbetaXXlamL{} \and
+      \NDdruleSbetaXXlamR{} \and
+      \NDdruleSbetaXXderelict{}
+    \end{mathpar}\\\\
+    \hline
+  \end{tabular}  
+  \caption{$\beta$-reductions for CNC Logic}
+  \label{fig:CNC-beta-reductions}
+\end{figure}
+
+
+The commuting conversions can be found in
+Figures~\ref{fig:CNC-commutating-conversions-intuitionistic}-\ref{fig:CNC-commutating-conversions-both}. We
+divide the rules into three parts due to the length. The first part,
+Figure~\ref{fig:CNC-commutating-conversions-intuitionistic}, includes
+the rules for the intuitionistic linear logic. The second,
+Figure~\ref{fig:CNC-commutating-conversions-mixed}, includes the rules
+for the commutative/non-commutative Lambek calculus. The third,
+Figure~\ref{fig:CNC-commutating-conversions-both}, includes the mixed
+rules $\NDdruleSXXunitEOneName{}$ and $\NDdruleSXXtenEOneName{}$.
+
+\begin{figure}[!h]
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+    \begin{mathpar}
+      \NDdruleTcomXXunitEXXunitE{} \and
+      \NDdruleTcomXXunitEXXtenE{} \and
+      \NDdruleTcomXXunitEXXimpE{} \and
+      \NDdruleTcomXXtenEXXunitE{} \and
+      \NDdruleTcomXXtenEXXtenE{} \and
+      \NDdruleTcomXXtenEXXimpE{} \and
+      \NDdruleTcomXXimpEXXunitE{}
+    \end{mathpar}
+    \\
+    \\
+    \hline
+  \end{tabular}  
+  \caption{Commuting Conversions: Intuitionistic Linear Logic}
+  \label{fig:CNC-commutating-conversions-intuitionistic}
+\end{figure}
+\begin{figure}[!h]
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+    \begin{mathpar}
+      \NDdruleScomXXunitEXXunitE{} \and
+      \NDdruleScomXXunitEXXimprE{} \and
+      \NDdruleScomXXunitEXXFE{} \and
+      \NDdruleScomXXtenEXXunitE{} \and
+      \NDdruleScomXXtenEXXtenE{} \and
+      \NDdruleScomXXtenEXXimprE{} \and
+      \NDdruleScomXXtenEXXimplE{} \and
+      \NDdruleScomXXtenEXXFE{} \and
+      \NDdruleScomXXFEXXunitE{} \and
+      \NDdruleScomXXFEXXtenE{} \and
+      \NDdruleScomXXFEXXimprE{} \and
+      \NDdruleScomXXFEXXimplE{} \and
+      \NDdruleScomXXFEXXFE{}
+    \end{mathpar}\\\\
+    \hline
+  \end{tabular}  
+  \caption{Commuting Conversions: Commutative/Non-commutative Lambek Calculus}
+  \label{fig:CNC-commutating-conversions-mixed}
+\end{figure}
+\begin{figure}[!h]
+  \footnotesize
+  \begin{tabular}{|c|}
+    \hline\\
+    \begin{mathpar}
+      \NDdruleScomXXunitETwoXXunitE{} \and
+      \NDdruleScomXXunitETwoXXimprE{} \and
+      \NDdruleScomXXunitETwoXXFE{} \and
+      \NDdruleScomXXtenETwoXXunitE{} \and
+      \NDdruleScomXXtenETwoXXtenE{} \and
+      \NDdruleScomXXtenETwoXXimprE{} \and
+      \NDdruleScomXXtenETwoXXimplE{} \and
+      \NDdruleScomXXtenETwoXXFE{}
+    \end{mathpar}\\\\
+    \hline
+  \end{tabular}  
+  \caption{Commuting Conversions: Mixed Rules}
+  \label{fig:CNC-commutating-conversions-both}
+\end{figure}
+
+We also proved that the sequent calculus formalization given in
+Figure~\ref{fig:CNC-sequent-calculus} is equivalent to the typing rules (or
+else called the natural deduction formalization) given in
+Figure~\ref{fig:CNC-typing-rules} are equivalent, as stated in the following
+theorem.
+\begin{theorem}
+  \label{thm:sc-nd-equiv}
+  The sequent calculus ($\mathit{SC}$) and natural deduction ($\mathit{ND}$)
+  formalizations for CNC logic are equivalent in the sense that there are
+  two mappings $N:\mathit{SC}\rightarrow\mathit{ND}$ and
+  $S:\mathit{ND}\rightarrow\mathit{SC}$ that map each rule in $\mathit{SC}$
+  to a proof in $\mathit{ND}$, and each rule in $\mathit{ND}$ to a proof
+  in $\mathit{SC}$, respectively.
+\end{theorem}
+\begin{proof}
+  The proof is done case by case on each rule in the sequence calculus and
+  natural deduction formalizations. It is obvious that the axioms in one
+  formalization can be mapped to the axioms in the other. The introduction
+  rules in $\mathit{ND}$ are mapped to the right rules in $\mathit{SC}$, and
+  vice versa. The elimination rules and lefts rules are mapped to each other
+  with some fiddling. For instance, the elimination rule for the
+  non-commutative tensor is mapped to the following proof in $\mathit{SC}$:
+  \begin{center}
+    \scriptsize
+    \begin{math}
+      $$\mprset{flushleft}
+      \inferrule* [right={\scriptsize $\ElledruleTXXcutName$}] {
+        {\Phi  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}} \\
+        $$\mprset{flushleft}
+        \inferrule* [right={\scriptsize $\ElledruleTXXtenLName$}] {
+          {\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{x}  \NDsym{:}  \NDnt{X}  \NDsym{,}  \NDmv{y}  \NDsym{:}  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDnt{t_{{\mathrm{2}}}}  \NDsym{:}  \NDnt{Z}}
+        }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \NDmv{z}  \NDsym{:}  \NDnt{X}  \otimes  \NDnt{Y}  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}   \NDsym{:}  \NDnt{Z}}
+      }{\Psi_{{\mathrm{1}}}  \NDsym{,}  \Phi  \NDsym{,}  \Psi_{{\mathrm{2}}}  \vdash_\mathcal{C}  \NDsym{[}  \NDnt{t_{{\mathrm{1}}}}  \NDsym{/}  \NDmv{z}  \NDsym{]}  \NDsym{(}   \mathsf{let}\, \NDmv{z}  :  \NDnt{X}  \otimes  \NDnt{Y} \,\mathsf{be}\, \NDmv{x}  \otimes  \NDmv{y} \,\mathsf{in}\, \NDnt{t_{{\mathrm{2}}}}   \NDsym{)}  \NDsym{:}  \NDnt{Z}}
+    \end{math}
+  \end{center}
+  The full proof is in Appendix~\ref{app:sc-nd-equiv}.
+\end{proof}
+
+%% \noindent
+%% Finally, we have strong normalization of CNC logic.
+%% 
+%% \begin{theorem}[Strong Normalization]
+%%   \label{thm:strong-normalization}
+%%   CNC logic is strongly normalizing.
+%% \end{theorem}
+%% \begin{proof}
+%%   The proof is via a translation to LNL logic, which has been proved to be
+%%   strongly normalizing \cite{Mellies:2009}. The proof is in
+%%   Appendix~\ref{app:strong-normalization}. We first define a function
+%%   $CL$ that maps our term assignment for natural deduction to Benton's
+%%   term assignment, and then shows that if there is reduction $\NDnt{t_{{\mathrm{1}}}}  \leadsto_\beta  \NDnt{t_{{\mathrm{2}}}}$ (resp. $\NDnt{s_{{\mathrm{1}}}}  \leadsto_\beta  \NDnt{s_{{\mathrm{2}}}}$) in CNC, then there is a reduction
+%%   $CL(t_1)\leadsto CL(t_2)$ (resp. $CL(s_1)\leadsto CL(s_2)$) in
+%%   LNL. Recall that a LNL model consists of an adjunction
+%%   $F:\cat{C}\dashv\cat{L}:G$ in which $\cat{C}$ is a Cartesian closed
+%%   category and $\cat{L}$ is a SMCC.  The basic idea of mapping a LAM
+%%   model to a LNL model is mapping the SMCC in LAM to the Cartesian
+%%   closed category in LNL, and the Lambek category in LAM to the SMCC in
+%%   LNL. For instance, $s_1\triangleright s_2$ in CNC, where $\NDnt{s_{{\mathrm{1}}}}$ and
+%%   $\NDnt{s_{{\mathrm{2}}}}$ are atomic terms, maps to $CL(s_1)\otimes CL(s_2)$ in LNL.
+%% \end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: main.tex
+%%% End:
