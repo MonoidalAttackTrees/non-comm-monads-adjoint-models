@@ -19,7 +19,7 @@ become a sound and complete model for CNC logic, with both the
 exchange and of-course modalities.  Due to the complexities of working
 with dialectica categories we have formally verified\footnote{The
   complete formalization can be found online at
-  \url{https://github.com/MonoidalAttackTrees/non-comm-monads-adjoint-models/tree/master/dialectica-formalization}.}
+  \href{https://github.com/MonoidalAttackTrees/non-comm-monads-adjoint-models/tree/master/dialectica-formalization}{our Github repository}.}
 this section in the proof assistant Agda~\cite{bove2009}.
 
 First, we define the notion of a biclosed poset.  These are used to
@@ -46,9 +46,8 @@ Now using the previous definition we define dialectica Lambek spaces.
   $\mathsf{Dial}_M(\Set)$, as follows:
   \begin{itemize}
   \item[-] objects, or dialectica Lambek spaces, are triples $(U, X,
-    \alpha)$ where $U$ and $X$ are sets, and $\alpha : U \times X \mto
-    M$ is a generalized relation over $M$, and
-
+    \alpha)$ where $U$ and $X$ are sets, and \\
+    $\alpha : U \times X \mto M$ is a generalized relation over $M$, and
   \item[-] maps that are pairs $(f, F) : (U , X, \alpha) \mto (V , Y ,
     \beta)$ where $f : U \mto V$, and $F : Y \mto X$ are functions
     such that the weak adjointness condition
@@ -143,7 +142,7 @@ a biclosed poset with exchange.
   Suppose $(U, X, \alpha)$ is an object of $\Dial{M}{\Set}$ where $M$
   is a biclosed poset with exchange. Then the \textbf{of-course} and
   \textbf{exchange} modalities can be defined as 
-  $! (U, X, \alpha) = (U, U \to X^*, !\alpha)$ and
+  $! (U, X, \alpha) = (U, U \to X^*, !\alpha)$ and \\
   $\xi (U, X, \alpha) = (U, X, \xi \alpha)$
   where $X^*$ is the free commutative monoid on $X$, $(!\alpha)(u, f)
   = \alpha(u, x_1) \circ \cdots \circ \alpha(u, x_i)$ for $f(u) =
